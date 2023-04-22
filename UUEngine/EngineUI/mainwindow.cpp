@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    scene = new SceneWidget(this);
+    scene = new SceneWidget(ui->openGLWidget);
+    scene->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 }
 
 MainWindow::~MainWindow()

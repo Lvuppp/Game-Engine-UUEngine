@@ -14,3 +14,8 @@ void EngineCore::initGraphicsEngine()
 {
     graphicsEngine->initGraphics();
 }
+
+void EngineCore::paintScene()
+{
+    graphicsEngine->paintScene();
+}
