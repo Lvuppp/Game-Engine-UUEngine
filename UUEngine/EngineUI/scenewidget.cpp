@@ -19,3 +19,4 @@ void SceneWidget::paintGL()
 {
     engine->paintScene();
 }
+

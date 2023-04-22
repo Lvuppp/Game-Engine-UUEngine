@@ -9,8 +9,21 @@
 #include <QMatrix4x4>
 #include <QVector>
 
+struct VertexData{
+    VertexData(){
+
+    }
+    VertexData(QVector3D position, QVector2D texture, QVector3D normal):
+        position(position), normal(normal), texture(texture){};
+
+    QVector3D position;
+    QVector3D normal;
+    QVector2D texture;
+
+};
+
 //сделать классы поддвижков singltone
-class GraphicsEngine
+class GraphicsEngine : public QOpenGLFunctions
 {
 public:
     ~GraphicsEngine();
@@ -18,6 +31,9 @@ public:
     void initGraphics();
     void paintScene();
     void resizeScene(int w, int h);
+
+    void initShaders();
+    void initCube(float width, float height, float depth);
 
     //Scene *getCurrentScene() const;
 
@@ -32,9 +48,15 @@ private:
     GraphicsEngine(const GraphicsEngine&) = delete;
     GraphicsEngine& operator=(const GraphicsEngine&) = delete;
 
- //   Scene* _currentScene;
- //   QVector<Scene*> _sceneVector;
     QMatrix4x4 projectionMatrix;
+    QOpenGLShaderProgram shaderProgram;
+    QOpenGLBuffer vertexesBuffer;
+    QOpenGLBuffer indexesBuffer;
+    QOpenGLTexture* texture;
+    QVector<VertexData> vertexes;
+
+    //   Scene* _currentScene;
+    //   QVector<Scene*> _sceneVector;
 
     static GraphicsEngine* _instance;
 };

@@ -14,7 +14,6 @@ CONFIG += staticlib
 SOURCES += \
         enginecore.cpp \
         graphicsengine.cpp \
-        main.cpp \
         physicsengine.cpp \
         scriptengine.cpp
 
@@ -24,14 +23,19 @@ HEADERS += \
     physicsengine.h \
     scriptengine.h
 
+RESOURCES += \
+    resourses.qrc
+
 DISTFILES += \
+    fshader.fsh \
     vshader.vsh
 
-
+unix: LIBS += -L/usr/lib64 -lGL
 win32: LIBS += -lopengl32 #подключение на windows
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
 

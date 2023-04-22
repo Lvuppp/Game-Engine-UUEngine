@@ -14,8 +14,10 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
+    void initshaders();
 
     EngineCore* engine;
+    QOpenGLShaderProgram shaderProgram;
 };
 
 #endif // SCENEWIDGET_H
