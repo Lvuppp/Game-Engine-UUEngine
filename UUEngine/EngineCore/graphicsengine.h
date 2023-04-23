@@ -53,7 +53,6 @@ private:
     QOpenGLBuffer vertexesBuffer;
     QOpenGLBuffer indexesBuffer;
     QOpenGLTexture* texture;
-    QVector<VertexData> vertexes;
 
     //   Scene* _currentScene;
     //   QVector<Scene*> _sceneVector;

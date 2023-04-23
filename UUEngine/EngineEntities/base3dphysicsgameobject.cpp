@@ -4,3 +4,8 @@
 //{
 
 //}
+
+float Base3DPhysicsGameObject::getScale()
+{
+
+}

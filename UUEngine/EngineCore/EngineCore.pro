@@ -1,5 +1,5 @@
 QT -= gui
-QT += opengl
+QT += opengl widgets
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -14,21 +14,19 @@ CONFIG += staticlib
 SOURCES += \
         enginecore.cpp \
         graphicsengine.cpp \
+        inputengine.cpp \
         physicsengine.cpp \
         scriptengine.cpp
 
 HEADERS += \
     enginecore.h \
     graphicsengine.h \
+    inputengine.h \
     physicsengine.h \
     scriptengine.h
 
 RESOURCES += \
     resourses.qrc
-
-DISTFILES += \
-    fshader.fsh \
-    vshader.vsh
 
 unix: LIBS += -L/usr/lib64 -lGL
 win32: LIBS += -lopengl32 #подключение на windows

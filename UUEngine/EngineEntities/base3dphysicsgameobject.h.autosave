@@ -1,0 +1,15 @@
+#ifndef BASE3DPHYSICSGAMEOBJECT_H
+#define BASE3DPHYSICSGAMEOBJECT_H
+
+#include "baseengineobject.h"
+#include 
+
+class Base3DPhysicsGameObject : public BaseEngineObject
+{
+public:
+    Base3DPhysicsGameObject();
+
+
+};
+
+#endif // BASE3DPHYSICSGAMEOBJECT_H

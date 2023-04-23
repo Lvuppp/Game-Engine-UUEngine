@@ -31,26 +31,31 @@ void GraphicsEngine::paintScene()
 
     QMatrix4x4 modelViewMatrix;
     modelViewMatrix.setToIdentity();
-    modelViewMatrix.translate(0.0f,0.0f,-1.0f);
+    modelViewMatrix.translate(0.0f,0.0f,-5.0f);
+    modelViewMatrix.rotate(30, 1.0f, 0.0f, 0.0f);
+    modelViewMatrix.rotate(30, 0.0f, 1.0f, 0.0f);
 
     texture->bind(0);
 
+    shaderProgram.bind();
     shaderProgram.setUniformValue("qt_ModelViewProjectionMatrix", projectionMatrix * modelViewMatrix);
     shaderProgram.setUniformValue("qt_TexCoord0", 0);
 
+    vertexesBuffer.bind();
+
     int offset = 0;
     int vertLoc = shaderProgram.attributeLocation("qt_Vertex");
-    int textLoc = shaderProgram.attributeLocation("qt_MultiTextCoord0");
 
     shaderProgram.enableAttributeArray(vertLoc);
     shaderProgram.setAttributeBuffer(vertLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
 
-    offset += sizeof(VertexData);
+    offset += sizeof(QVector3D);
+    int textLoc = shaderProgram.attributeLocation("qt_MultiTextCoord0");
 
-    shaderProgram.enableAttributeArray(vertLoc);
+    shaderProgram.enableAttributeArray(textLoc);
     shaderProgram.setAttributeBuffer(textLoc, GL_FLOAT, offset, 2, sizeof(VertexData));
 
-    vertexesBuffer.bind();
+    indexesBuffer.bind();
 
     glDrawElements(GL_TRIANGLES, indexesBuffer.size(), GL_UNSIGNED_INT, 0);
 }
@@ -68,11 +73,14 @@ void GraphicsEngine::initShaders()
 {
     qDebug() << "Start initialize shaders";
 
-    if(!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.vsh")){
+    if(!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
+                                               "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/vshader.vsh"))
+    {
         qDebug() << "BROKEN SHADER!";
     }
 
-    if(!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.fsh")){
+    if(!shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
+                                               "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/fshader.fsh")){
         qDebug() << "BROKEN SHADER!";
     }
 
@@ -80,13 +88,12 @@ void GraphicsEngine::initShaders()
         qDebug() << "BROKEN LINKING!";
     }
 
-    if(!shaderProgram.bind()){
-        qDebug() << "BROKEN BIND!";
-    }
     qDebug() << "End initialize shaders";
 }
 
 void GraphicsEngine::initCube(float width, float height, float depth){
+
+    QVector<VertexData> vertexes;
 
     vertexes.append(VertexData(QVector3D(-width, height, depth), QVector2D(0.0, 1.0), QVector3D(0.0, 0.0, 1.0)));
     vertexes.append(VertexData(QVector3D(-width, -height, depth), QVector2D(0.0, 0.0), QVector3D(0.0, 0.0, 1.0)));
@@ -140,7 +147,7 @@ void GraphicsEngine::initCube(float width, float height, float depth){
     indexesBuffer.allocate(indexes.constData(),indexes.size() * sizeof(GLuint));
     indexesBuffer.release();
 
-    texture = new QOpenGLTexture(QImage(":/Resources/test_block.png").mirrored());
+    texture = new QOpenGLTexture(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/test_block.png").mirrored());
 
     texture->setMinificationFilter(QOpenGLTexture::Nearest);
     texture->setMinificationFilter(QOpenGLTexture::Linear);

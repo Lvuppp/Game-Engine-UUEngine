@@ -17,10 +17,10 @@
    <widget class="QOpenGLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>130</y>
-      <width>300</width>
-      <height>200</height>
+      <x>120</x>
+      <y>70</y>
+      <width>551</width>
+      <height>411</height>
      </rect>
     </property>
    </widget>

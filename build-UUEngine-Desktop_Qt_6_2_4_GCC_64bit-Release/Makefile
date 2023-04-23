@@ -30,7 +30,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = UUEngine1.0.0
-DISTDIR = /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/build-UUEngine-Desktop_Qt_6_2_4_GCC_64bit-Release/.tmp/UUEngine1.0.0
+DISTDIR = /home/egorbagrovets/OOP_Coursework/build-UUEngine-Desktop_Qt_6_2_4_GCC_64bit-Release/.tmp/UUEngine1.0.0
 SUBTARGETS    =  \
 		sub-EngineUI \
 		sub-EngineCore \
@@ -39,570 +39,570 @@ SUBTARGETS    =  \
 
 sub-EngineUI-qmake_all:  FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler
+	cd EngineUI/ && $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler
 	cd EngineUI/ && $(MAKE) -f Makefile qmake_all
 sub-EngineUI: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile
 sub-EngineUI-make_first: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile 
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile 
 sub-EngineUI-all: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile all
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile all
 sub-EngineUI-clean: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile clean
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile clean
 sub-EngineUI-distclean: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile distclean
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile distclean
 sub-EngineUI-install_subtargets: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile install
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile install
 sub-EngineUI-uninstall_subtargets: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile uninstall
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile uninstall
 sub-EngineCore-qmake_all:  FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler
+	cd EngineCore/ && $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler
 	cd EngineCore/ && $(MAKE) -f Makefile qmake_all
 sub-EngineCore: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile
 sub-EngineCore-make_first: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile 
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile 
 sub-EngineCore-all: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile all
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile all
 sub-EngineCore-clean: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile clean
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile clean
 sub-EngineCore-distclean: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile distclean
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile distclean
 sub-EngineCore-install_subtargets: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile install
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile install
 sub-EngineCore-uninstall_subtargets: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile uninstall
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile uninstall
 sub-EngineEntities-qmake_all:  FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler
+	cd EngineEntities/ && $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler
 	cd EngineEntities/ && $(MAKE) -f Makefile qmake_all
 sub-EngineEntities: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile
 sub-EngineEntities-make_first: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile 
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile 
 sub-EngineEntities-all: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile all
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile all
 sub-EngineEntities-clean: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile clean
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile clean
 sub-EngineEntities-distclean: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile distclean
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile distclean
 sub-EngineEntities-install_subtargets: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile install
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile install
 sub-EngineEntities-uninstall_subtargets: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile uninstall
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile uninstall
 
-Makefile: ../UUEngine/UUEngine.pro ../../../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/common/unix.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/common/linux.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/common/sanitize.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base-unix.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/common/g++-base.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/common/g++-unix.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/qconfig.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_ext_libpng.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bodymovin_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediaquick_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_tools_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_compositor_hw_integration_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/qt_functions.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/qt_config.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/spec_post.prf \
+Makefile: ../UUEngine/UUEngine.pro ../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf ../../Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/common/unix.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/common/linux.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/common/sanitize.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base-unix.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/common/g++-base.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/common/g++-unix.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/qconfig.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_ext_libpng.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bodymovin_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediaquick_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_tools_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_compositor_hw_integration_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/qt_functions.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/qt_config.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/spec_post.prf \
 		.qmake.stash \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/exclusive_builds.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/toolchain.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/default_pre.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/resolve_config.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/default_post.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/qtquickcompiler.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/warn_on.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/testcase_targets.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
-		../../../../Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/exclusive_builds.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/toolchain.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/default_pre.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/resolve_config.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/default_post.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/qtquickcompiler.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/warn_on.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/testcase_targets.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
+		../../Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
 		../UUEngine/UUEngine.pro
 	$(QMAKE) -o Makefile ../UUEngine/UUEngine.pro -spec linux-g++ CONFIG+=qtquickcompiler
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/common/unix.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/common/linux.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/common/sanitize.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base-unix.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/common/g++-base.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/common/g++-unix.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/qconfig.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_ext_libpng.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bodymovin_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediaquick_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_tools_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_compositor_hw_integration_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml_private.pri:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/qt_functions.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/qt_config.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/spec_post.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/common/unix.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/common/linux.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/common/sanitize.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base-unix.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/common/g++-base.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/common/g++-unix.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/qconfig.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_ext_libpng.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bodymovin_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediaquick_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_tools_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_compositor_hw_integration_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml_private.pri:
+../../Qt/6.2.4/gcc_64/mkspecs/features/qt_functions.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/qt_config.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/spec_post.prf:
 .qmake.stash:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/exclusive_builds.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/toolchain.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/default_pre.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/resolve_config.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/default_post.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/qtquickcompiler.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/warn_on.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/testcase_targets.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf:
-../../../../Qt/6.2.4/gcc_64/mkspecs/features/lex.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/exclusive_builds.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/toolchain.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/default_pre.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/resolve_config.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/default_post.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/qtquickcompiler.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/warn_on.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/testcase_targets.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf:
+../../Qt/6.2.4/gcc_64/mkspecs/features/lex.prf:
 ../UUEngine/UUEngine.pro:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../UUEngine/UUEngine.pro -spec linux-g++ CONFIG+=qtquickcompiler
@@ -620,24 +620,24 @@ uninstall_subtargets: sub-EngineUI-uninstall_subtargets sub-EngineCore-uninstall
 
 sub-EngineUI-check:
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile check
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile check
 sub-EngineCore-check:
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile check
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile check
 sub-EngineEntities-check:
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile check
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile check
 check: sub-EngineUI-check sub-EngineCore-check sub-EngineEntities-check
 
 sub-EngineUI-benchmark:
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile benchmark
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile benchmark
 sub-EngineCore-benchmark:
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile benchmark
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile benchmark
 sub-EngineEntities-benchmark:
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile benchmark
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -f Makefile benchmark
 benchmark: sub-EngineUI-benchmark sub-EngineCore-benchmark sub-EngineEntities-benchmark
 install:install_subtargets  FORCE
 
@@ -650,17 +650,17 @@ dist: distdir FORCE
 
 distdir: sub-EngineUI-distdir sub-EngineCore-distdir sub-EngineEntities-distdir FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
-	$(COPY_FILE) --parents ../../../../Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/common/unix.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/common/linux.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/common/sanitize.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base-unix.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/common/g++-base.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/common/g++-unix.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/qconfig.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_ext_libpng.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bodymovin_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediaquick_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_tools_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_compositor_hw_integration_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml_private.pri ../../../../Qt/6.2.4/gcc_64/mkspecs/features/qt_functions.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/qt_config.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/spec_post.prf .qmake.stash ../../../../Qt/6.2.4/gcc_64/mkspecs/features/exclusive_builds.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/toolchain.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/default_pre.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/resolve_config.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/default_post.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/qtquickcompiler.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/warn_on.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/testcase_targets.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf ../../../../Qt/6.2.4/gcc_64/mkspecs/features/lex.prf ../UUEngine/UUEngine.pro $(DISTDIR)/
+	$(COPY_FILE) --parents ../../Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf ../../Qt/6.2.4/gcc_64/mkspecs/common/unix.conf ../../Qt/6.2.4/gcc_64/mkspecs/common/linux.conf ../../Qt/6.2.4/gcc_64/mkspecs/common/sanitize.conf ../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base.conf ../../Qt/6.2.4/gcc_64/mkspecs/common/gcc-base-unix.conf ../../Qt/6.2.4/gcc_64/mkspecs/common/g++-base.conf ../../Qt/6.2.4/gcc_64/mkspecs/common/g++-unix.conf ../../Qt/6.2.4/gcc_64/mkspecs/qconfig.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_ext_libpng.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3danimation_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dextras_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dlogic_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickanimation_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickextras_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickinput_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickrender_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_3drender_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_bodymovin_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_charts_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_chartsqml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core5compat_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_core_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_datavisualization_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designer_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_gui_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_help_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsanimation_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsfolderlistmodel_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labsqmlmodels_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssettings_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labssharedimage_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_labswavefrontmesh_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_linguist_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediaquick_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_network_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_networkauth_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_openglwidgets_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_positioningquick_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcompiler_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlcore_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmldom_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmllocalstorage_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_qmlxmllistmodel_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3d_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetimport_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dassetutils_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3deffects_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dhelpers_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3diblbaker_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dparticles_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3druntimerender_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick3dutils_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quick_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrols2impl_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickcontrolstestutilsprivate_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2quickimpl_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickdialogs2utils_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicklayouts_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktestutilsprivate_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quicktimeline_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_remoteobjectsqml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_scxmlqml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sensorsquick_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_shadertools_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_sql_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachine_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_statemachineqml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svg_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_svgwidgets_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_tools_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_virtualkeyboard_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_client_hw_integration_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wayland_egl_compositor_hw_integration_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_waylandcompositor_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequick_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginequickdelegatesqml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webview_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_webviewquick_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_wl_shell_integration_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml.pri ../../Qt/6.2.4/gcc_64/mkspecs/modules/qt_lib_xml_private.pri ../../Qt/6.2.4/gcc_64/mkspecs/features/qt_functions.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/qt_config.prf ../../Qt/6.2.4/gcc_64/mkspecs/linux-g++/qmake.conf ../../Qt/6.2.4/gcc_64/mkspecs/features/spec_post.prf .qmake.stash ../../Qt/6.2.4/gcc_64/mkspecs/features/exclusive_builds.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/toolchain.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/default_pre.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/resolve_config.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/default_post.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/qtquickcompiler.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/warn_on.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/testcase_targets.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf ../../Qt/6.2.4/gcc_64/mkspecs/features/lex.prf ../UUEngine/UUEngine.pro $(DISTDIR)/
 
 sub-EngineUI-distdir: FORCE
 	@test -d EngineUI/ || mkdir -p EngineUI/
-	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/EngineUI
+	cd EngineUI/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineUI/EngineUI.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/EngineUI
 
 sub-EngineCore-distdir: FORCE
 	@test -d EngineCore/ || mkdir -p EngineCore/
-	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/EngineCore
+	cd EngineCore/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/EngineCore.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/EngineCore
 
 sub-EngineEntities-distdir: FORCE
 	@test -d EngineEntities/ || mkdir -p EngineEntities/
-	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/OOP_Coursework/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/EngineEntities
+	cd EngineEntities/ && ( test -e Makefile || $(QMAKE) -o Makefile /home/egorbagrovets/OOP_Coursework/UUEngine/EngineEntities/EngineEntities.pro -spec linux-g++ CONFIG+=qtquickcompiler ) && $(MAKE) -e -f Makefile distdir DISTDIR=$(DISTDIR)/EngineEntities
 

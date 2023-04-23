@@ -1,5 +1,5 @@
-QT += gui
-
+QT -= gui
+QT += opengl
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -17,12 +17,8 @@ SOURCES += \
         camera.cpp \
         lighting.cpp \
         main.cpp \
-        scene.cpp
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+        scene.cpp \
+        vertexdata.cpp
 
 HEADERS += \
     base3dnonphysicsgameobject.h \
@@ -30,4 +26,13 @@ HEADERS += \
     baseengineobject.h \
     camera.h \
     lighting.h \
-    scene.h
+    scene.h \
+    vertexdata.h
+
+
+unix: LIBS += -L/usr/lib64 -lGL
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
