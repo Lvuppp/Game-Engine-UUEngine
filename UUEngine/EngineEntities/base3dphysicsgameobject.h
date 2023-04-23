@@ -2,28 +2,29 @@
 //#define BASE3DPHYSICSGAMEOBJECT_H
 
 //#include "baseengineobject.h"
+//#include
 
 //class Base3DPhysicsGameObject : public BaseEngineObject
 //{
 //public:
-//    Base3DPhysicsGameObject();
+//    Base3DPhysicsGameObject(QMatrix4x4 projectionMatrix);
 
 //    // BaseEngineObject interface
-//public:
-//    void move(QVector3D) override;
-//    void rotate(QVector3D) override;
-//    void scale(int) override;
+//    float getScale() override;
+//    QVector3D getCoordinates() override;
+//    void getRotation(QVector3D) override;
+
+//    void setScale(float) override;
 //    void setRotation(QVector3D) override;
 //    void setCoordinates(QVector3D) override;
+
+//    void move(QVector3D) override;
+//    void rotate(QVector3D) override;
+//    void scale(float) override;
+
 //    void lock() override;
 //    void unlock() override;
 //    void update() override;
-//    double getScale()override;
-//    QVector3D getCoordinates()override;
-
-
-
-//private:
 
 
 //};

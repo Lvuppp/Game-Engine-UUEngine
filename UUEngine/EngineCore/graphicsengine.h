@@ -5,22 +5,9 @@
 
 #include <QtOpenGL>
 #include <GL/gl.h>
-
 #include <QMatrix4x4>
 #include <QVector>
 
-struct VertexData{
-    VertexData(){
-
-    }
-    VertexData(QVector3D position, QVector2D texture, QVector3D normal):
-        position(position), normal(normal), texture(texture){};
-
-    QVector3D position;
-    QVector3D normal;
-    QVector2D texture;
-
-};
 
 //сделать классы поддвижков singltone
 class GraphicsEngine : public QOpenGLFunctions
@@ -34,6 +21,9 @@ public:
 
     void initShaders();
     void initCube(float width, float height, float depth);
+
+    void rotateModelViewMatrix(QQuaternion rotation);
+    void translateModelViewMatrix(QVector3D translation);
 
     //Scene *getCurrentScene() const;
 
@@ -53,6 +43,9 @@ private:
     QOpenGLBuffer vertexesBuffer;
     QOpenGLBuffer indexesBuffer;
     QOpenGLTexture* texture;
+
+    QQuaternion modelViewRotate;
+    QVector3D modelViewTranslate;
 
     //   Scene* _currentScene;
     //   QVector<Scene*> _sceneVector;

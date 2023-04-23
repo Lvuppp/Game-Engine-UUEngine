@@ -1,25 +1,25 @@
-//#ifndef BASE3DNONPHYSICSGAMEOBJECT_H
-//#define BASE3DNONPHYSICSGAMEOBJECT_H
+#ifndef BASE3DNONPHYSICSGAMEOBJECT_H
+#define BASE3DNONPHYSICSGAMEOBJECT_H
 
-//#include "baseengineobject.h"
+#include "baseengineobject.h"
+#include "vertexdata.h"
 
-//class Base3DNonPhysicsGameObject : public BaseEngineObject
-//{
-//public:
-//    Base3DNonPhysicsGameObject();
+#include <QImage>
 
-//    // BaseEngineObject interface
-//public:
-//    void move(QVector3D)override;
-//    void rotate(QVector3D)override;
-//    void scale(int)override;
-//    void setRotation(QVector3D)override;
-//    void setCoordinates(QVector3D)override;
-//    void lock()override;
-//    void unlock()override;
-//    void update()override;
-//    double getScale()override;
-//    QVector3D getCoordinates()override;
-//};
+class Base3DNonPhysicsGameObject : public BaseEngineObject
+{
+public:
+    Base3DNonPhysicsGameObject(
+        QVector3D coordinates= QVector3D(0.0f, 0.0f, 0.0f),
+        QQuaternion rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
+        float scale = 1.0f,
+        bool isObjectLocked = false);
 
-//#endif // BASE3DNONPHYSICSGAMEOBJECT_H
+    void update() override;
+
+protected:
+    QImage texture;
+    QVector<VertexData> vertexes;
+};
+
+#endif // BASE3DNONPHYSICSGAMEOBJECT_H

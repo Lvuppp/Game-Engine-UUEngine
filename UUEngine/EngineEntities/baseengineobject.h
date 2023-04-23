@@ -1,6 +1,7 @@
 #ifndef BASEENGINEOBJECT_H
 #define BASEENGINEOBJECT_H
 
+#include <QtOpenGL>
 #include <QVector3D>
 #include <QMatrix4x4>
 #include <QQuaternion>
@@ -8,43 +9,42 @@
 class BaseEngineObject
 {
 public:
-    BaseEngineObject(
-        QVector3D coordinates= QVector3D(0.0f, 0.0f, 0.0f),
-        QQuaternion rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
-        float scale = 1.0f);
+    BaseEngineObject(QVector3D coordinates, QQuaternion rotation, float scale, bool isObjectLocked);
 
     ~BaseEngineObject();
+
+    bool isLocked();
+    bool isModified();
+    void lock();
+    void unlock();
+    virtual void update();
 
     //получение текущих
     float getScale();
     QVector3D getCoordinates();
-    void getRotation(QVector3D);
+    QQuaternion getRotation();
     QMatrix4x4 getProjectinMatrix();
 
     //задание текущих
-    void setScale(float);
-    void setRotation(QVector3D);
-    void setCoordinates(QVector3D);
+    void setScale(float scale);
+    void setRotation(QQuaternion rotation);
+    void setCoordinates(QVector3D coordinates);
 
     //изменение относительно текущих
-    void move(QVector3D);
-    void rotate(QVector3D);
-    void scale(float);
-    void lock();
-    void unlock();
-    void update();
-
+    void translate(QVector3D translation);
+    void rotate(QQuaternion rotation);
+    void scale(float scale);
 
 private:
     void changeProjectionMatrix();
-
 
 private:
     QMatrix4x4 objectProjectionMatrix;
     QVector3D coordinatesParam;
     QQuaternion rotateParam;
     float scaleParam;
-    bool isLock;
+    bool lockStatment;
+    bool modifiedStatement;
 
 };
 

@@ -1,4 +1,5 @@
 #include "graphicsengine.h"
+#include "vertexdata.h"
 
 GraphicsEngine* GraphicsEngine::_instance = nullptr;
 
@@ -6,6 +7,8 @@ GraphicsEngine::GraphicsEngine()
 {
     indexesBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 
+    modelViewTranslate = QVector3D(0.0f, 0.0f, -100.0f);
+    modelViewRotate = QQuaternion(30, 1.0f, 0.0f, 0.0f);
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -30,10 +33,10 @@ void GraphicsEngine::paintScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     QMatrix4x4 modelViewMatrix;
+
     modelViewMatrix.setToIdentity();
-    modelViewMatrix.translate(0.0f,0.0f,-5.0f);
-    modelViewMatrix.rotate(30, 1.0f, 0.0f, 0.0f);
-    modelViewMatrix.rotate(30, 0.0f, 1.0f, 0.0f);
+    modelViewMatrix.translate(modelViewTranslate);
+    modelViewMatrix.rotate(modelViewRotate);
 
     texture->bind(0);
 
@@ -65,7 +68,7 @@ void GraphicsEngine::resizeScene(int w,int h)
     float aspect = w / (float)h;
 
     projectionMatrix.setToIdentity();
-    projectionMatrix.perspective(45, aspect, 0.1f, 10.0f);
+    projectionMatrix.perspective(45, aspect, 0.1f, 100.0f);
 
 }
 
@@ -147,11 +150,21 @@ void GraphicsEngine::initCube(float width, float height, float depth){
     indexesBuffer.allocate(indexes.constData(),indexes.size() * sizeof(GLuint));
     indexesBuffer.release();
 
-    texture = new QOpenGLTexture(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/test_block.png").mirrored());
+    texture = new QOpenGLTexture(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg").mirrored());
 
     texture->setMinificationFilter(QOpenGLTexture::Nearest);
     texture->setMinificationFilter(QOpenGLTexture::Linear);
     texture->setWrapMode(QOpenGLTexture::Repeat);
+}
+
+void GraphicsEngine::rotateModelViewMatrix(QQuaternion rotation)
+{
+    modelViewRotate *= rotation;
+}
+
+void GraphicsEngine::translateModelViewMatrix(QVector3D translation)
+{
+    modelViewTranslate += translation;
 }
 
 //Scene *GraphicsEngine::getCurrentScene() const

@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "scenewidget.h"
-
+#include "baseengineobject.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
