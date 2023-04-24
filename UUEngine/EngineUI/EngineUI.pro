@@ -1,6 +1,6 @@
 QT       += core gui
 QT       += opengl
-QT  += core gui openglwidgets
+QT  += openglwidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -21,8 +21,6 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui
-
-INCLUDEPATH += $$PWD/../EngineCore
 
 win32: LIBS += -lopengl32 #подключение на windows
 win32: LIBS += -lGLU32 #подключение на windows

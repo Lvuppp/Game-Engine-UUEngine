@@ -1,6 +1,8 @@
 TEMPLATE = subdirs
 
+CONFIG += ordered
+
 SUBDIRS += \
-    EngineUI \
-    EngineCore \
     EngineEntities \
+    EngineCore \
+    EngineUI

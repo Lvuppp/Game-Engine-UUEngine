@@ -905,7 +905,8 @@ compiler_rcc_clean:
 qrc_resourses.cpp: ../../UUEngine/EngineCore/resourses.qrc \
 		../../../Qt/6.2.4/gcc_64/libexec/rcc \
 		../../UUEngine/EngineCore/Shaders/vshader.vsh \
-		../../UUEngine/EngineCore/Shaders/fshader.fsh
+		../../UUEngine/EngineCore/Shaders/fshader.fsh \
+		../../UUEngine/EngineCore/Textures/texture1.jpg
 	/home/egorbagrovets/Qt/6.2.4/gcc_64/libexec/rcc -name resourses ../../UUEngine/EngineCore/resourses.qrc -o qrc_resourses.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h

@@ -35,6 +35,7 @@ public:
 
 
     //script engine part
+
 public slots:
     void getEvent(QEvent* event);
 

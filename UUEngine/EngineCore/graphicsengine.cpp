@@ -6,9 +6,8 @@ GraphicsEngine* GraphicsEngine::_instance = nullptr;
 GraphicsEngine::GraphicsEngine()
 {
     indexesBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-
-    modelViewTranslate = QVector3D(0.0f, 0.0f, -100.0f);
-    modelViewRotate = QQuaternion(30, 1.0f, 0.0f, 0.0f);
+    viewTranslate = QVector3D(0.0f, 0.0f, -5.0f);
+    viewRotate = QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 0);
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -25,38 +24,50 @@ void GraphicsEngine::initGraphics()
     glEnable(GL_CULL_FACE);
 
     initShaders();
-    initCube(1.0f, 1.0f, 1.0f);
+    initCube(1.0f,1.0f,1.0f);
 }
 
 void GraphicsEngine::paintScene()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    QMatrix4x4 modelViewMatrix;
+    QMatrix4x4 viewMatrix;
+    viewMatrix.setToIdentity();
+    viewMatrix.translate(viewTranslate);
+    viewMatrix.rotate(viewRotate);
 
-    modelViewMatrix.setToIdentity();
-    modelViewMatrix.translate(modelViewTranslate);
-    modelViewMatrix.rotate(modelViewRotate);
+    QMatrix4x4 modelMatrix;
+    modelMatrix.setToIdentity();
 
     texture->bind(0);
 
     shaderProgram.bind();
-    shaderProgram.setUniformValue("qt_ModelViewProjectionMatrix", projectionMatrix * modelViewMatrix);
-    shaderProgram.setUniformValue("qt_TexCoord0", 0);
+    shaderProgram.setUniformValue("u_projectionMatrix", projectionMatrix);
+    shaderProgram.setUniformValue("u_viewMatrix", viewMatrix);
+    shaderProgram.setUniformValue("u_modelMatrix", modelMatrix);
+    shaderProgram.setUniformValue("u_texture", 0);
+    shaderProgram.setUniformValue("u_lightPosition", QVector4D(0.0f,0.0,0.0f,1.0f));
+    shaderProgram.setUniformValue("u_lightPower", 5.0f);
 
     vertexesBuffer.bind();
 
     int offset = 0;
-    int vertLoc = shaderProgram.attributeLocation("qt_Vertex");
+    int vertLoc = shaderProgram.attributeLocation("a_position");
 
     shaderProgram.enableAttributeArray(vertLoc);
     shaderProgram.setAttributeBuffer(vertLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
 
-    offset += sizeof(QVector3D);
-    int textLoc = shaderProgram.attributeLocation("qt_MultiTextCoord0");
+    offset += sizeof(QVector2D);
+    int textLoc = shaderProgram.attributeLocation("a_texcoord");
 
     shaderProgram.enableAttributeArray(textLoc);
     shaderProgram.setAttributeBuffer(textLoc, GL_FLOAT, offset, 2, sizeof(VertexData));
+
+    offset += sizeof(QVector2D);
+    int normLoc = shaderProgram.attributeLocation("a_normal");
+
+    shaderProgram.enableAttributeArray(textLoc);
+    shaderProgram.setAttributeBuffer(normLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
 
     indexesBuffer.bind();
 
@@ -68,7 +79,7 @@ void GraphicsEngine::resizeScene(int w,int h)
     float aspect = w / (float)h;
 
     projectionMatrix.setToIdentity();
-    projectionMatrix.perspective(45, aspect, 0.1f, 100.0f);
+    projectionMatrix.perspective(45, aspect, 0.1f, 10.0f);
 
 }
 
@@ -159,12 +170,12 @@ void GraphicsEngine::initCube(float width, float height, float depth){
 
 void GraphicsEngine::rotateModelViewMatrix(QQuaternion rotation)
 {
-    modelViewRotate *= rotation;
+    viewRotate *= rotation;
 }
 
 void GraphicsEngine::translateModelViewMatrix(QVector3D translation)
 {
-    modelViewTranslate += translation;
+    viewTranslate += translation;
 }
 
 //Scene *GraphicsEngine::getCurrentScene() const

@@ -44,8 +44,8 @@ private:
     QOpenGLBuffer indexesBuffer;
     QOpenGLTexture* texture;
 
-    QQuaternion modelViewRotate;
-    QVector3D modelViewTranslate;
+    QQuaternion viewRotate;
+    QVector3D viewTranslate;
 
     //   Scene* _currentScene;
     //   QVector<Scene*> _sceneVector;
