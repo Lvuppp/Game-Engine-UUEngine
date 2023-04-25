@@ -17,25 +17,21 @@ void InputEngine::setMouseEvent(QEvent* event)
 {
     auto mouseEvent = (QMouseEvent*)event;
 
-    if(event->type() == QEvent::Type::MouseButtonPress){
-        mouseCoordinates = QVector2D(mouseEvent->position());
-        mouseEvent->accept();
-        return;
-    }
-
     if(event->type() == QEvent::Type::MouseMove){
         QVector2D diff = QVector2D(mouseEvent->position()) - mouseCoordinates;
         mouseCoordinates = QVector2D(mouseEvent->position());
 
         float angle = diff.length() / 2.0f;
+
         QVector3D axis = QVector3D(diff.y(), diff.x(), 0.0f);
 
         rotate = QQuaternion::fromAxisAndAngle(axis,angle);
-
-        mouseEvent->accept();
-        return;
+    }
+    else if(event->type() == QEvent::Type::MouseButtonPress){
+        mouseCoordinates = QVector2D(mouseEvent->position());
     }
 
+    mouseEvent->accept();
 }
 
 QQuaternion InputEngine::getRotate()

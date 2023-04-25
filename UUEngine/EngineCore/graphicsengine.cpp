@@ -6,8 +6,6 @@ GraphicsEngine* GraphicsEngine::_instance = nullptr;
 GraphicsEngine::GraphicsEngine()
 {
     indexesBuffer = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-    viewTranslate = QVector3D(0.0f, 0.0f, -5.0f);
-    viewRotate = QQuaternion::fromAxisAndAngle(QVector3D(1.0f, 0.0f, 0.0f), 0);
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -24,7 +22,7 @@ void GraphicsEngine::initGraphics()
     glEnable(GL_CULL_FACE);
 
     initShaders();
-    initCube(1.0f,1.0f,1.0f);
+    initCube(0.5,1.5,0.5);
 }
 
 void GraphicsEngine::paintScene()
@@ -32,8 +30,9 @@ void GraphicsEngine::paintScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     QMatrix4x4 viewMatrix;
+
     viewMatrix.setToIdentity();
-    viewMatrix.translate(viewTranslate);
+    viewMatrix.translate(0.0f, 0.0f, -5.0f);
     viewMatrix.rotate(viewRotate);
 
     QMatrix4x4 modelMatrix;
@@ -45,19 +44,21 @@ void GraphicsEngine::paintScene()
     shaderProgram.setUniformValue("u_projectionMatrix", projectionMatrix);
     shaderProgram.setUniformValue("u_viewMatrix", viewMatrix);
     shaderProgram.setUniformValue("u_modelMatrix", modelMatrix);
+    shaderProgram.setUniformValue("u_lightPosition", QVector4D(0.0,0.0, 0.0,1.0)); // позиция источника света
+    shaderProgram.setUniformValue("u_eyePosition", QVector4D(0.0,0.0, 0.0,1.0)); // позиция наблюдателя
+    shaderProgram.setUniformValue("u_specularFactor", 40.0f); // блик от объекта
+    shaderProgram.setUniformValue("u_ambientFactor", 0.1f); // свечение материала
+    shaderProgram.setUniformValue("u_lightPower", 5.0f); // сила свечения
     shaderProgram.setUniformValue("u_texture", 0);
-    shaderProgram.setUniformValue("u_lightPosition", QVector4D(0.0f,0.0,0.0f,1.0f));
-    shaderProgram.setUniformValue("u_lightPower", 5.0f);
 
     vertexesBuffer.bind();
-
     int offset = 0;
     int vertLoc = shaderProgram.attributeLocation("a_position");
 
     shaderProgram.enableAttributeArray(vertLoc);
     shaderProgram.setAttributeBuffer(vertLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
 
-    offset += sizeof(QVector2D);
+    offset += sizeof(QVector3D);
     int textLoc = shaderProgram.attributeLocation("a_texcoord");
 
     shaderProgram.enableAttributeArray(textLoc);
@@ -66,12 +67,12 @@ void GraphicsEngine::paintScene()
     offset += sizeof(QVector2D);
     int normLoc = shaderProgram.attributeLocation("a_normal");
 
-    shaderProgram.enableAttributeArray(textLoc);
+    shaderProgram.enableAttributeArray(normLoc);
     shaderProgram.setAttributeBuffer(normLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
 
     indexesBuffer.bind();
 
-    glDrawElements(GL_TRIANGLES, indexesBuffer.size(), GL_UNSIGNED_INT, 0);
+    QOpenGLFunctions::glDrawElements(GL_TRIANGLES, indexesBuffer.size(), GL_UNSIGNED_INT, 0);
 }
 
 void GraphicsEngine::resizeScene(int w,int h)
