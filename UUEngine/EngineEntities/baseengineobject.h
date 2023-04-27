@@ -17,29 +17,24 @@ public:
     bool isModified();
     void lock();
     void unlock();
-    virtual void update();
 
     //получение текущих
-    float getScale();
-    QVector3D getCoordinates();
-    QQuaternion getRotation();
-    QMatrix4x4 getProjectinMatrix();
+    float scale() const;
+    QVector3D coordinates() const;
+    QQuaternion rotation() const;
+    QMatrix4x4 modelMatrix() const;
 
     //задание текущих
-    void setScale(float scale);
-    void setRotation(QQuaternion rotation);
-    void setCoordinates(QVector3D coordinates);
+    void setScale(const float &scale);
+    void setRotation(const QQuaternion &rotation);
+    void setCoordinates(const QVector3D &coordinates);
 
     //изменение относительно текущих
-    void translate(QVector3D translation);
-    void rotate(QQuaternion rotation);
-    void scale(float scale);
+    void translate(const QVector3D &coordinates);
+    void rotate(const QQuaternion &rotatio);
+    void scale(const float &scale);
 
 private:
-    void changeProjectionMatrix();
-
-private:
-    QMatrix4x4 objectProjectionMatrix;
     QVector3D coordinatesParam;
     QQuaternion rotateParam;
     float scaleParam;

@@ -1,28 +1,18 @@
-//#ifndef CAMERA_H
-//#define CAMERA_H
+#ifndef CAMERA_H
+#define CAMERA_H
 
-//#include "baseengineobject.h"
+#include "baseengineobject.h"
 
-//class Camera : public BaseEngineObject
-//{
-//public:
-//    Camera();
-//    ~Camera();
+class Camera : public BaseEngineObject
+{
+public:
+    Camera(
+        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
+        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
+        const float &scale = 1.0f,
+        const bool &isObjectLocked = false);
+    ~Camera();
 
-//    // BaseEngineObject interface
-//public:
-//    void move(QVector3D) override;
-//    void rotate(QVector3D)override;
-//    void scale(int)override;
-//    void setRotation(QVector3D)override;
-//    void setCoordinates(QVector3D)override;
-//    void lock()override;
-//    void unlock()override;
-//    void update()override;
-//    double getScale()override;
-//    QVector3D getCoordinates()override;
+};
 
-
-//};
-
-//#endif // CAMERA_H
+#endif // CAMERA_H

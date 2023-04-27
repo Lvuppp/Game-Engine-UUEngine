@@ -22,52 +22,52 @@ bool BaseEngineObject::isModified()
     return modifiedStatement;
 }
 
-float BaseEngineObject::getScale()
+float BaseEngineObject::scale() const
 {
     return scaleParam;
 }
 
-QVector3D BaseEngineObject::getCoordinates()
+QVector3D BaseEngineObject::coordinates() const
 {
     return coordinatesParam;
 }
 
-QQuaternion BaseEngineObject::getRotation()
+QQuaternion BaseEngineObject::rotation() const
 {
     return rotateParam;
 }
 
-void BaseEngineObject::setScale(float scale)
+void BaseEngineObject::setScale(const float &scale)
 {
     if(lockStatment) return;
     scaleParam = scale;
 }
 
-void BaseEngineObject::setRotation(QQuaternion rotation)
+void BaseEngineObject::setRotation(const QQuaternion &rotation)
 {
     if(lockStatment) return;
     rotateParam = rotation;
 }
 
-void BaseEngineObject::setCoordinates(QVector3D coordinates)
+void BaseEngineObject::setCoordinates(const QVector3D &coordinates)
 {
     if(lockStatment) return;
     coordinatesParam = coordinates;
 }
 
-void BaseEngineObject::translate(QVector3D translation)
+void BaseEngineObject::translate(const QVector3D &translation)
 {
     if(lockStatment) return;
     coordinatesParam += translation;
 }
 
-void BaseEngineObject::rotate(QQuaternion rotation)
+void BaseEngineObject::rotate(const QQuaternion &rotation)
 {
     if(lockStatment) return;
     rotateParam += rotation;
 }
 
-void BaseEngineObject::scale(float scale)
+void BaseEngineObject::scale(const float &scale)
 {
     if(lockStatment) return;
     scaleParam += scale;
@@ -83,11 +83,14 @@ void BaseEngineObject::unlock()
     lockStatment = false;
 }
 
-void BaseEngineObject::changeProjectionMatrix()
+QMatrix4x4 BaseEngineObject::modelMatrix() const
 {
-    objectProjectionMatrix.setToIdentity();
+    QMatrix4x4 modelMatrix;
+    modelMatrix.setToIdentity();
 
-    objectProjectionMatrix.translate(coordinatesParam);
-    objectProjectionMatrix.rotate(rotateParam);
-    objectProjectionMatrix.scale(scaleParam);
+    modelMatrix.translate(coordinatesParam);
+    modelMatrix.rotate(rotateParam);
+    modelMatrix.scale(scaleParam);
+
+    return modelMatrix;
 }

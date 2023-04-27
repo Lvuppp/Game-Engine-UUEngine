@@ -1,7 +1,8 @@
 #ifndef GRAPHICSENGINE_H
 #define GRAPHICSENGINE_H
 
-//#include "scene.h"
+#include "scene.h"
+#include "base3dgameobject.h"
 
 #include <QtOpenGL>
 #include <GL/gl.h>
@@ -18,9 +19,11 @@ public:
     void initGraphics();
     void paintScene();
     void resizeScene(int w, int h);
+    void paintGameObjects(Base3DGameObject *object);
 
     void initShaders();
     void initCube(float width, float height, float depth);
+
 
     void rotateModelViewMatrix(QQuaternion rotation);
     void translateModelViewMatrix(QVector3D translation);
@@ -39,18 +42,19 @@ private:
     GraphicsEngine& operator=(const GraphicsEngine&) = delete;
 
     QMatrix4x4 projectionMatrix;
-    QOpenGLShaderProgram shaderProgram;
-    QOpenGLBuffer vertexesBuffer;
-    QOpenGLBuffer indexesBuffer;
-    QOpenGLTexture* texture;
-
+    QOpenGLShaderProgram m_shaderProgram;
+//    QOpenGLBuffer vertexesBuffer;
+//    QOpenGLBuffer indexesBuffer;
+//    QOpenGLTexture* texture;
+    QVector<GLuint> indexes;
+    QVector<VertexData> vertexes;
     QQuaternion viewRotate;
     QVector3D viewTranslate;
 
-    //   Scene* _currentScene;
-    //   QVector<Scene*> _sceneVector;
+    Scene* m_currentScene;
+    QVector<Base3DGameObject *> gameObjects;
 
-    static GraphicsEngine* _instance;
+    static GraphicsEngine* m_instance;
 };
 
 #endif // GRAPHICSENGINE_H

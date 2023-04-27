@@ -11,7 +11,7 @@ CONFIG += staticlib
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        base3dnonphysicsgameobject.cpp \
+        base3dgameobject.cpp \
         base3dphysicsgameobject.cpp \
         baseengineobject.cpp \
         camera.cpp \
@@ -21,7 +21,7 @@ SOURCES += \
         vertexdata.cpp
 
 HEADERS += \
-    base3dnonphysicsgameobject.h \
+    base3dgameobject.h \
     base3dphysicsgameobject.h \
     baseengineobject.h \
     camera.h \

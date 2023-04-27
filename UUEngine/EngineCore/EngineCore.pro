@@ -16,6 +16,7 @@ SOURCES += \
         eventhandler.cpp \
         graphicsengine.cpp \
         inputengine.cpp \
+        modelprocessor.cpp \
         physicsengine.cpp \
         scriptengine.cpp
 
@@ -24,6 +25,7 @@ HEADERS += \
     eventhandler.h \
     graphicsengine.h \
     inputengine.h \
+    modelprocessor.h \
     physicsengine.h \
     scriptengine.h
 

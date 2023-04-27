@@ -11,7 +11,7 @@ varying highp vec2 v_texcoord;
 void main(void)
 {
     vec4 resultColor = vec4(0.0, 0.0, 0.0, 0.0);
-    vec4 diffMatColor = texture2D(u_texture, v_texcoord);
+    vec4 diffMatColor = vec4(0.9, 0.9, 0.9, 1.0);/*texture2D(u_texture, v_texcoord)*/;
 
     vec3 eyeVector = normalize(vec3(v_position - u_eyePosition));
     vec3 lightVector = normalize(vec3(v_position - u_lightPosition));
