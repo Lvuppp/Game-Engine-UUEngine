@@ -9,37 +9,54 @@ Scene::~Scene()
 {
     for(auto object : m_gameObjects)
         delete object;
+
+    for(auto camera : m_cameras)
+        delete camera;
+
+    for(auto lighting : m_lightings)
+        delete lighting;
 }
 
-void Scene::addGameObject(Base3DGameObject object)
+Base3DGameObject *Scene::addGameObject(const QVector<VertexData> &vertexes, const QVector<GLuint> &indexes,
+                          const QImage &texture, const float &ambiendFactor, const float &specularFactor,
+                          const QVector3D &coordinates, const QQuaternion &rotation,
+                          const float &scale, const bool &isObjectLocked)
 {
-    m_gameObjects.append(new Base3DGameObject(object));
+    m_gameObjects.append(new Base3DGameObject(vertexes, indexes, texture, ambiendFactor, specularFactor, coordinates, rotation, scale, isObjectLocked));
+    return m_gameObjects.last();
 }
 
-void Scene::addPhysicsObject(Base3DGameObject)
+Camera *Scene::addCamera(const QVector3D &coordinates, const QQuaternion &rotation,
+                         const float &scale, const bool &isObjectLocked)
 {
-
+    m_cameras.append(new Camera(coordinates, rotation, scale, isObjectLocked));
 }
 
-Camera Scene::camera() const
+
+//void Scene::addPhysicsObject(Base3DGameObject)
+//{
+
+//}
+
+Camera *Scene::camera()
 {
     return m_camera;
 }
 
-void Scene::setCamera(const Camera &newCamera)
+//void Scene::setCamera(const Camera &newCamera)
+//{
+//    m_camera = newCamera;
+//}
+
+QVector<Lighting*> Scene::lighings()
 {
-    m_camera = newCamera;
+    return m_lightings;
 }
 
-Lighting Scene::lighing() const
-{
-    return m_lighting;
-}
-
-void Scene::setLighing(const Lighting &newLighing)
-{
-    m_lighting = newLighing;
-}
+//void Scene::setLighingы(const Lighting &newLighing)
+//{
+//    m_lightings = newLighing;
+//}
 
 QVector<Base3DGameObject *> Scene::gameObjects()
 {

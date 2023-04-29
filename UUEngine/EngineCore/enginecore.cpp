@@ -31,9 +31,15 @@ void EngineCore::initInputEngine()
 void EngineCore::getEvent(QEvent *event)
 {
     if(event->type() == QEvent::MouseMove){
-        inputEngine->setMouseEvent(event);
+        inputEngine->mouseEvent(event);
 
         graphicsEngine->rotateModelViewMatrix(inputEngine->getRotate());
+
+        emit updateGraphics();
+    }
+    else if(event->type() == QEvent::Wheel){
+        inputEngine->wheelEvent(event);
+
         graphicsEngine->translateModelViewMatrix(inputEngine->getTranslate());
 
         emit updateGraphics();

@@ -12,21 +12,43 @@ public:
     Scene();
     ~Scene();
 
-    void addGameObject(Base3DGameObject);
-    void addPhysicsObject(Base3DGameObject);
+    Base3DGameObject *addGameObject(
+        const QVector<VertexData> &vertexes,
+        const QVector<GLuint> &indexes,
+        const QImage &texture,
+        const float &ambiendFactor = 0.1f,
+        const float &specularFactor = 10.0f,
+        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
+        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
+        const float &scale = 1.0f,
+        const bool &isObjectLocked = false);
 
-    Camera camera() const;
-    void setCamera(const Camera &newCamera);
+    Camera * addCamera(
+        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
+        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
+        const float &scale = 1.0f,
+        const bool &isObjectLocked = false);
+    //void addPhysicsObject();
 
-    Lighting lighing() const;
-    void setLighing(const Lighting &newLighing);
+// добавить добавление объектов камеры и света, а также добавить назначенеи текущей камеры.
+
+    Camera *camera();
+//    void setCamera(const Camera &newCamera);
+
+    QVector<Lighting*> lighings();
+
+//    void setLighing(const Lighting &newLighing);
 
     QVector<Base3DGameObject *> gameObjects();
 
+    Camera *currentCamera();
+    void setCurrentCamera(Camera *newCurrentCamera);
+
 private:
+    Camera *m_currentCamera;
     QVector<Base3DGameObject *> m_gameObjects;
-    Camera m_camera;
-    Lighting m_lighting;
+    QVector<Camera *> m_cameras;
+    QVector<Lighting *> m_lightings;
 };
 
 #endif // SCENE_H

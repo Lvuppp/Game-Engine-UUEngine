@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include "baseengineobject.h"
+#include "base3dgameobject.h"
 
 class Camera : public BaseEngineObject
 {
@@ -12,6 +13,9 @@ public:
         const float &scale = 1.0f,
         const bool &isObjectLocked = false);
     ~Camera();
+
+    void link(Base3DGameObject *);
+
 
 };
 

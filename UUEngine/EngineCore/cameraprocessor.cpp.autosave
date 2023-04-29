@@ -1,0 +1,14 @@
+#include "cameraprocessor.h"
+
+
+
+CameraProcessor::CameraProcessor(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *function)
+{
+    m_shaderProgram = shaderProgram;
+    m_functions = function;
+}
+
+void CameraProcessor::processCamera(Camera *camera)
+{
+    m_shaderProgram.setUniformValue("u_viewMatrix", camera->modelMatrix());
+}

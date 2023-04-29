@@ -12,6 +12,7 @@ CONFIG += staticlib
 
 
 SOURCES += \
+        cameraprocessor.cpp \
         enginecore.cpp \
         eventhandler.cpp \
         graphicsengine.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
         scriptengine.cpp
 
 HEADERS += \
+    cameraprocessor.h \
     enginecore.h \
     eventhandler.h \
     graphicsengine.h \

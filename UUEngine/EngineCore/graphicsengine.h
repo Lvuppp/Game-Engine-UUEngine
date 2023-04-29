@@ -3,6 +3,7 @@
 
 #include "scene.h"
 #include "base3dgameobject.h"
+#include "modelprocessor.h"
 
 #include <QtOpenGL>
 #include <GL/gl.h>
@@ -11,7 +12,7 @@
 
 
 //сделать классы поддвижков singltone
-class GraphicsEngine : public QOpenGLFunctions
+class GraphicsEngine
 {
 public:
     ~GraphicsEngine();
@@ -40,19 +41,19 @@ private:
 
     GraphicsEngine(const GraphicsEngine&) = delete;
     GraphicsEngine& operator=(const GraphicsEngine&) = delete;
+    QOpenGLFunctions *m_functions;
+    QOpenGLShaderProgram m_shaderProgram;
 
     QMatrix4x4 projectionMatrix;
-    QOpenGLShaderProgram m_shaderProgram;
-//    QOpenGLBuffer vertexesBuffer;
-//    QOpenGLBuffer indexesBuffer;
-//    QOpenGLTexture* texture;
+    ModelProcessor m_modelProcessor;
+
     QVector<GLuint> indexes;
     QVector<VertexData> vertexes;
+
     QQuaternion viewRotate;
     QVector3D viewTranslate;
 
     Scene* m_currentScene;
-    QVector<Base3DGameObject *> gameObjects;
 
     static GraphicsEngine* m_instance;
 };

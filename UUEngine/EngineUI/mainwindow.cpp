@@ -17,3 +17,9 @@ MainWindow::~MainWindow()
     delete scene;
 }
 
+//void MainWindow::resizeEvent(QResizeEvent *event)
+//{
+//    scene->resize(ui->openGLWidget->sizeHint().width(), ui->openGLWidget->sizeHint().height());
+//    QMainWindow::resizeEvent(event);
+//}
+

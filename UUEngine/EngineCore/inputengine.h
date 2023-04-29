@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QObject>
 #include <QMouseEvent>
+#include <QWheelEvent>
 #include <QQuaternion>
 
 //применить паттерн стратегия
@@ -15,7 +16,8 @@ class InputEngine
 public:
     ~InputEngine();
 
-    void setMouseEvent(QEvent* event);
+    void mouseEvent(QEvent* event);
+    void wheelEvent(QEvent* event);
 
     QQuaternion getRotate();
     QVector3D getTranslate();
@@ -27,12 +29,12 @@ private:
     InputEngine(const InputEngine&) = delete;
     InputEngine& operator=(const InputEngine&) = delete;
 
-    static InputEngine* _instance;
+    static InputEngine* m_instance;
 
-    QVector2D mouseCoordinates;
+    QVector2D m_mouseCoordinates;
 
-    QQuaternion rotate;
-    QVector3D translate;
+    QQuaternion m_rotateDelta;
+    QVector3D m_translateDelta;
 
 };
 

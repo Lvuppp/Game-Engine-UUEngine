@@ -4,6 +4,7 @@
 #include "scenewidget.h"
 #include "baseengineobject.h"
 #include <QMainWindow>
+#include <QResizeEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+ //   void resizeEvent(QResizeEvent *event) override;
 private:
     Ui::MainWindow *ui;
 

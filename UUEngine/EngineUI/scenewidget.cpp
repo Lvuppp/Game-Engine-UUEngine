@@ -6,6 +6,7 @@ SceneWidget::SceneWidget(QWidget *parent)  : QOpenGLWidget(parent)
 
     connect(this, &SceneWidget::mousePressEvent, engine, &EngineCore::getEvent);
     connect(this, &SceneWidget::mouseMoveEvent, engine, &EngineCore::getEvent);
+    connect(this, &SceneWidget::wheelEvent, engine, &EngineCore::getEvent);
     connect(engine, &EngineCore::updateGraphics, this, &SceneWidget::updateGraphics);
 
 }

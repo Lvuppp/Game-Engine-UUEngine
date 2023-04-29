@@ -1,9 +1,9 @@
 #include "baseengineobject.h"
 
 BaseEngineObject::BaseEngineObject(QVector3D coordinates, QQuaternion rotation, float scale, bool isObjectLocked):
-    coordinatesParam(coordinates), rotateParam(rotation), scaleParam(scale), lockStatment(isObjectLocked)
+    coordinatesParam(coordinates), scaleParam(scale), lockStatment(isObjectLocked)
 {
-
+    rotateParam *=  rotation;
 }
 
 BaseEngineObject::~BaseEngineObject()
@@ -64,7 +64,7 @@ void BaseEngineObject::translate(const QVector3D &translation)
 void BaseEngineObject::rotate(const QQuaternion &rotation)
 {
     if(lockStatment) return;
-    rotateParam += rotation;
+    rotateParam *= rotation;
 }
 
 void BaseEngineObject::scale(const float &scale)

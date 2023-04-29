@@ -5,6 +5,7 @@
 
 #include <QOpenGLWidget>
 #include <QMouseEvent>
+#include <QWheelEvent>
 
 class SceneWidget : public QOpenGLWidget
 {
@@ -15,6 +16,7 @@ public:
 signals:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
 
 public slots:
     void updateGraphics();
