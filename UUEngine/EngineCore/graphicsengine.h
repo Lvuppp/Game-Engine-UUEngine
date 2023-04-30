@@ -3,7 +3,9 @@
 
 #include "scene.h"
 #include "base3dgameobject.h"
-#include "modelprocessor.h"
+#include "igraphicsengineservices.h"
+#include "skybox.h"
+#include "objectabstractfactory.h"
 
 #include <QtOpenGL>
 #include <GL/gl.h>
@@ -25,10 +27,10 @@ public:
     void initShaders();
     void initCube(float width, float height, float depth);
 
-
     void rotateModelViewMatrix(QQuaternion rotation);
     void translateModelViewMatrix(QVector3D translation);
 
+    // сделать перенос объекто текущей сцены в определённые processor-ы
     //Scene *getCurrentScene() const;
 
 //    void loadScene(Scene* scene);
@@ -41,20 +43,29 @@ private:
 
     GraphicsEngine(const GraphicsEngine&) = delete;
     GraphicsEngine& operator=(const GraphicsEngine&) = delete;
-    QOpenGLFunctions *m_functions;
-    QOpenGLShaderProgram m_shaderProgram;
 
-    QMatrix4x4 projectionMatrix;
-    ModelProcessor m_modelProcessor;
+    //openGL функции
+    QOpenGLFunctions *m_functions;
+    QOpenGLShaderProgram m_sceneShaderProgram;
+    QOpenGLShaderProgram m_skyBoxShaderProgram;
+
+    QMatrix4x4 m_projectionMatrix;
+    IGraphicsEngineServices *m_graphicsServies;
+
+    ObjectAbstractFactory factory;
 
     QVector<GLuint> indexes;
     QVector<VertexData> vertexes;
-
-    QQuaternion viewRotate;
-    QVector3D viewTranslate;
+    Base3DGameObject *testObject;
 
     Scene* m_currentScene;
 
+    // камера и освещение во время создания сцены
+    Camera *m_engineCamera;
+    Lighting *m_engineLighting;
+    SkyBox *m_skyBox;
+
+    bool sceneStart;
     static GraphicsEngine* m_instance;
 };
 

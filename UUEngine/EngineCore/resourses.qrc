@@ -3,5 +3,20 @@
         <file>Shaders/vshader.vsh</file>
         <file>Shaders/fshader.fsh</file>
         <file>Textures/texture1.jpg</file>
+        <file>Shaders/fskybox.fsh</file>
+        <file>Shaders/vskybox.vsh</file>
+        <file>Textures/skybox.jpg</file>
+        <file>Models/TestModel/Stonefbx.fbx</file>
+        <file>Models/TestModel/Stone.obj</file>
+        <file>Models/TestModel/Stone.mtl</file>
+        <file>Models/TestModel/rough.tif</file>
+        <file>Models/TestModel/normal.png</file>
+        <file>Models/TestModel/ICE.blend</file>
+        <file>Models/TestModel/diffuso.tif</file>
+        <file>Textures/skyboxTexture.png</file>
+        <file>Textures/skybox4.png</file>
+        <file>Textures/skybox3.png</file>
+        <file>Textures/skybox2.jpg</file>
+        <file>Textures/rockTexture.jpeg</file>
     </qresource>
 </RCC>

@@ -30,6 +30,7 @@ Camera *Scene::addCamera(const QVector3D &coordinates, const QQuaternion &rotati
                          const float &scale, const bool &isObjectLocked)
 {
     m_cameras.append(new Camera(coordinates, rotation, scale, isObjectLocked));
+    return m_cameras.last();
 }
 
 
@@ -38,9 +39,9 @@ Camera *Scene::addCamera(const QVector3D &coordinates, const QQuaternion &rotati
 
 //}
 
-Camera *Scene::camera()
+Camera* Scene::camera() const
 {
-    return m_camera;
+    return m_cameras.last();
 }
 
 //void Scene::setCamera(const Camera &newCamera)
@@ -48,7 +49,7 @@ Camera *Scene::camera()
 //    m_camera = newCamera;
 //}
 
-QVector<Lighting*> Scene::lighings()
+QVector<Lighting*> Scene::lighings() const
 {
     return m_lightings;
 }
@@ -58,7 +59,17 @@ QVector<Lighting*> Scene::lighings()
 //    m_lightings = newLighing;
 //}
 
-QVector<Base3DGameObject *> Scene::gameObjects()
+QVector<Base3DGameObject *> Scene::gameObjects() const
 {
     return m_gameObjects;
+}
+
+Camera *Scene::currentCamera() const
+{
+    return m_cameras.last();
+}
+
+void Scene::setCurrentCamera(Camera *newCurrentCamera)
+{
+    m_currentCamera = newCurrentCamera;
 }

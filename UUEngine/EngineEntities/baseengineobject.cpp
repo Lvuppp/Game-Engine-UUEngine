@@ -1,86 +1,85 @@
 #include "baseengineobject.h"
 
+BaseEngineObject::BaseEngineObject()
+{
+
+}
+
 BaseEngineObject::BaseEngineObject(QVector3D coordinates, QQuaternion rotation, float scale, bool isObjectLocked):
-    coordinatesParam(coordinates), scaleParam(scale), lockStatment(isObjectLocked)
+    m_coordinates(coordinates), m_scale(scale), m_lock(isObjectLocked)
 {
-    rotateParam *=  rotation;
+    m_rotate *= rotation;
 }
-
-BaseEngineObject::~BaseEngineObject()
-{
-
-}
-
 
 bool BaseEngineObject::isLocked()
 {
-    return lockStatment;
+    return m_lock;
 }
 
 bool BaseEngineObject::isModified()
 {
-    return modifiedStatement;
+    return m_modified;
 }
 
 float BaseEngineObject::scale() const
 {
-    return scaleParam;
+    return m_scale;
 }
 
 QVector3D BaseEngineObject::coordinates() const
 {
-    return coordinatesParam;
+    return m_coordinates;
 }
 
 QQuaternion BaseEngineObject::rotation() const
 {
-    return rotateParam;
+    return m_rotate;
 }
 
 void BaseEngineObject::setScale(const float &scale)
 {
-    if(lockStatment) return;
-    scaleParam = scale;
+    if(m_lock) return;
+    m_scale = scale;
 }
 
 void BaseEngineObject::setRotation(const QQuaternion &rotation)
 {
-    if(lockStatment) return;
-    rotateParam = rotation;
+    if(m_lock) return;
+    m_rotate = rotation;
 }
 
 void BaseEngineObject::setCoordinates(const QVector3D &coordinates)
 {
-    if(lockStatment) return;
-    coordinatesParam = coordinates;
+    if(m_lock) return;
+    m_coordinates = coordinates;
 }
 
 void BaseEngineObject::translate(const QVector3D &translation)
 {
-    if(lockStatment) return;
-    coordinatesParam += translation;
+    if(m_lock) return;
+    m_coordinates += translation;
 }
 
 void BaseEngineObject::rotate(const QQuaternion &rotation)
 {
-    if(lockStatment) return;
-    rotateParam *= rotation;
+    if(m_lock) return;
+    m_rotate = m_rotate * rotation;
 }
 
 void BaseEngineObject::scale(const float &scale)
 {
-    if(lockStatment) return;
-    scaleParam += scale;
+    if(m_lock) return;
+    m_scale += scale;
 }
 
 void BaseEngineObject::lock()
 {
-    lockStatment = true;
+    m_lock = true;
 }
 
 void BaseEngineObject::unlock()
 {
-    lockStatment = false;
+    m_lock = false;
 }
 
 QMatrix4x4 BaseEngineObject::modelMatrix() const
@@ -88,9 +87,9 @@ QMatrix4x4 BaseEngineObject::modelMatrix() const
     QMatrix4x4 modelMatrix;
     modelMatrix.setToIdentity();
 
-    modelMatrix.translate(coordinatesParam);
-    modelMatrix.rotate(rotateParam);
-    modelMatrix.scale(scaleParam);
+    modelMatrix.translate(m_coordinates);
+    modelMatrix.rotate(m_rotate);
+    modelMatrix.scale(m_scale);
 
     return modelMatrix;
 }

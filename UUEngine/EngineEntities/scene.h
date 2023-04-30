@@ -32,16 +32,16 @@ public:
 
 // добавить добавление объектов камеры и света, а также добавить назначенеи текущей камеры.
 
-    Camera *camera();
+    Camera *camera() const;
 //    void setCamera(const Camera &newCamera);
 
-    QVector<Lighting*> lighings();
+    QVector<Lighting*> lighings() const;
 
 //    void setLighing(const Lighting &newLighing);
 
-    QVector<Base3DGameObject *> gameObjects();
+    QVector<Base3DGameObject *> gameObjects() const;
 
-    Camera *currentCamera();
+    Camera *currentCamera() const;
     void setCurrentCamera(Camera *newCurrentCamera);
 
 private:

@@ -5,6 +5,7 @@
 #include "physicsengine.h"
 #include "scriptengine.h"
 #include "inputengine.h"
+#include "scenefolder.h"
 
 //#include"camera.h"
 
@@ -48,6 +49,8 @@ private:
     PhysicsEngine* phyicsEngine;
     ScriptEngine* scriptEngine;
     InputEngine* inputEngine;
+
+    SceneFolder* sceneFolder;
 
 };
 

@@ -11,7 +11,7 @@ class Base3DGameObject : public BaseEngineObject
 public:
     Base3DGameObject(
         const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
-        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
+        const QQuaternion &rotation = QQuaternion(),
         const float &scale = 1.0f,
         const bool &isObjectLocked = false);
 
@@ -22,19 +22,14 @@ public:
         const float &ambiendFactor = 0.1f,
         const float &specularFactor = 10.0f,
         const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
-        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
+        const QQuaternion &rotation = QQuaternion(),
         const float &scale = 1.0f,
         const bool &isObjectLocked = false);
 
     ~Base3DGameObject();
 
-    QOpenGLTexture* texture();
     void setTexture(const QImage &newTexture);
-
-    QOpenGLBuffer* vertexesBuffer();
     void setVertexesBuffer(const QVector<VertexData> &newVertexes);
-
-    QOpenGLBuffer* indexesBuffer();
     void setIndexesBuffer(const QVector<GLuint> &newIndexes);
 
     float specularFactor() const;
@@ -43,7 +38,7 @@ public:
     float ambiendFactor() const;
     void setAmbiendFactor(float newAmbiendFactor);
 
-    virtual float g() = 0;
+    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
 
 protected:
     QOpenGLBuffer s_vertexes;

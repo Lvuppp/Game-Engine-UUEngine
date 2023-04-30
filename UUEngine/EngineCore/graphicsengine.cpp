@@ -1,19 +1,19 @@
 #include "graphicsengine.h"
 #include "vertexdata.h"
+#include "graphicsengineservices.h"
 
 GraphicsEngine* GraphicsEngine::m_instance = nullptr;
 
 GraphicsEngine::GraphicsEngine()
 {
-    //m_functions = new QOpenGLFunctions();
     m_currentScene = new Scene();
-    m_modelProcessor = ModelProcessor(&m_shaderProgram, m_functions);
-    viewTranslate = QVector3D(0.0f, 0.0f, -5.0f);
+
+    m_graphicsServies = new GraphicsEngineServices(m_functions);
+
 }
 
 GraphicsEngine::~GraphicsEngine()
 {
-    m_shaderProgram.release();
 }
 
 void GraphicsEngine::initGraphics()
@@ -27,11 +27,15 @@ void GraphicsEngine::initGraphics()
     initShaders();
     initCube(0.5f,0.5f,0.5f);
 
+    testObject = factory.createObject("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Models/TestModel/Stone.obj");
+
     m_currentScene->addGameObject(vertexes,indexes,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"),
-                                  0.1f, 40.0f, QVector3D(0.0f,0.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1);
+                                  0.1f, 40.0f, QVector3D(0.0f,-2.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1);
     m_currentScene->addGameObject(vertexes,indexes,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"),
                                   0.1f, 40.0f, QVector3D(0.0f,2.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1.5);
-    //third = new Base3DGameObject(vertexes,indexes,QImage(),QVector3D(0.0f,0.0f,0.0f),QQuaternion(30, 1.0f, 0.0f, 0.0f), 1);
+
+    m_engineCamera = new Camera(QVector3D(0.0f, 0.0f, -5.0f));
+    m_skyBox = new SkyBox(50.0f, QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/skybox4.png"));
 
 }
 
@@ -39,32 +43,43 @@ void GraphicsEngine::paintScene()
 {
     m_functions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    QMatrix4x4 viewMatrix;
+    m_skyBoxShaderProgram.bind();
+    m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
 
-    viewMatrix.setToIdentity();
-    viewMatrix.translate(viewTranslate);
-    viewMatrix.rotate(viewRotate);
+    //m_graphicsServies->processCamera(m_engineCamera, &m_sceneShaderProgram);
 
-   m_shaderProgram.bind();
-   m_shaderProgram.setUniformValue("u_projectionMatrix", projectionMatrix);
-   m_shaderProgram.setUniformValue("u_isDrawDynamic", true);
-   m_shaderProgram.setUniformValue("u_viewMatrix", viewMatrix);
-   m_shaderProgram.setUniformValue("u_lightPosition", QVector4D(0.0,0.0, 0.0,1.0)); // позиция источника света
-   m_shaderProgram.setUniformValue("u_eyePosition", QVector4D(0.0,0.0, 0.0,1.0)); // позиция наблюдателя
-   m_shaderProgram.setUniformValue("u_lightPower", 10.0f); // сила свечения
+    //m_engineCamera->draw(&m_sceneShaderProgram,m_functions);
+    //m_skyBox->model()->draw(&m_skyBoxShaderProgram,m_functions);
+
+    m_skyBoxShaderProgram.release();
+
+    m_sceneShaderProgram.bind();
+
+    m_sceneShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
+    m_sceneShaderProgram.setUniformValue("u_isDrawDynamic", false);// освещение динамическое или статическое
+    m_sceneShaderProgram.setUniformValue("u_lightPosition", QVector4D(0.0,0.0,0.0,1.0)); // позиция источника света
+    m_sceneShaderProgram.setUniformValue("u_eyePosition", QVector4D(0.0,0.0, 0.0,1.0)); // позиция наблюдателя
+    m_sceneShaderProgram.setUniformValue("u_lightPower", 5.0f); // сила свечения
+
+//    m_graphicsServies->processCamera(m_engineCamera, &m_sceneShaderProgram);
 
     for (auto object : m_currentScene->gameObjects()) {
-        m_modelProcessor.processModel(object);
+        //m_graphicsServies->processModel(object, &m_sceneShaderProgram);
+        //object->draw(&m_sceneShaderProgram,m_functions);
     }
+    m_engineCamera->draw(&m_sceneShaderProgram,m_functions);
 
+//    m_graphicsServies->processModel(testObject,&m_sceneShaderProgram);
+    testObject->draw(&m_sceneShaderProgram,m_functions);
+    m_sceneShaderProgram.release();
 }
 
 void GraphicsEngine::resizeScene(int w,int h)
 {
     float aspect = w / (float)h;
 
-    projectionMatrix.setToIdentity();
-    projectionMatrix.perspective(45, aspect, 0.001f, 1000.0f);
+    m_projectionMatrix.setToIdentity();
+    m_projectionMatrix.perspective(45, aspect, 0.01f, 1000.0f);
 
 }
 
@@ -72,19 +87,32 @@ void GraphicsEngine::resizeScene(int w,int h)
 void GraphicsEngine::initShaders()
 {
     qDebug() << "Start initialize shaders";
-
-    if(!m_shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                               "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/vshader.vsh"))
-    {
+    
+    if(!m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
+                                               "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/vshader.vsh")){
         qDebug() << "BROKEN SHADER!";
     }
-
-    if(!m_shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
+    
+    if(!m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
                                                "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/fshader.fsh")){
         qDebug() << "BROKEN SHADER!";
     }
 
-    if(!m_shaderProgram.link()){
+    if(!m_sceneShaderProgram.link()){
+        qDebug() << "BROKEN LINKING!";
+    }
+
+    if(!m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
+                                                "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/fskybox.fsh")){
+        qDebug() << "BROKEN SHADER!";
+    }
+
+    if(!m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
+                                                "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/vskybox.vsh")){
+        qDebug() << "BROKEN SHADER!";
+    }
+
+    if(!m_skyBoxShaderProgram.link()){
         qDebug() << "BROKEN LINKING!";
     }
 
@@ -129,6 +157,7 @@ void GraphicsEngine::initCube(float width, float height, float depth){
         indexes.append(i + 0);
         indexes.append(i + 1);
         indexes.append(i + 2);
+
         indexes.append(i + 2);
         indexes.append(i + 1);
         indexes.append(i + 3);
@@ -136,16 +165,14 @@ void GraphicsEngine::initCube(float width, float height, float depth){
 
 }
 
-
-
 void GraphicsEngine::rotateModelViewMatrix(QQuaternion rotation)
 {
-    viewRotate *= rotation;
+    m_engineCamera->rotate(rotation);
 }
 
 void GraphicsEngine::translateModelViewMatrix(QVector3D translation)
 {
-    viewTranslate += translation;
+    m_engineCamera->translate(translation);
 }
 
 //Scene *GraphicsEngine::getCurrentScene() const
