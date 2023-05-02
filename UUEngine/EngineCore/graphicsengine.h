@@ -3,7 +3,6 @@
 
 #include "scene.h"
 #include "base3dgameobject.h"
-#include "igraphicsengineservices.h"
 #include "skybox.h"
 #include "objectabstractfactory.h"
 
@@ -50,13 +49,14 @@ private:
     QOpenGLShaderProgram m_skyBoxShaderProgram;
 
     QMatrix4x4 m_projectionMatrix;
-    IGraphicsEngineServices *m_graphicsServies;
-
+    QVector<Model *>model;
     ObjectAbstractFactory factory;
 
     QVector<GLuint> indexes;
     QVector<VertexData> vertexes;
     Base3DGameObject *testObject;
+    Base3DGameObject *testObject2;
+
 
     Scene* m_currentScene;
 

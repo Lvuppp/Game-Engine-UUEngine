@@ -12,16 +12,7 @@ public:
     Scene();
     ~Scene();
 
-    Base3DGameObject *addGameObject(
-        const QVector<VertexData> &vertexes,
-        const QVector<GLuint> &indexes,
-        const QImage &texture,
-        const float &ambiendFactor = 0.1f,
-        const float &specularFactor = 10.0f,
-        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
-        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
-        const float &scale = 1.0f,
-        const bool &isObjectLocked = false);
+    Base3DGameObject *addGameObject(Base3DGameObject *object);
 
     Camera * addCamera(
         const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),

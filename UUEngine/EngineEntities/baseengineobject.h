@@ -1,6 +1,8 @@
 #ifndef BASEENGINEOBJECT_H
 #define BASEENGINEOBJECT_H
 
+#include "model.h"
+
 #include <QtOpenGL>
 #include <QVector3D>
 #include <QMatrix4x4>
@@ -37,6 +39,8 @@ public:
     void rotate(const QQuaternion &rotation);
     void scale(const float &scale);
 
+    virtual void setModel(QVector<Model *>models) = 0;
+    virtual void setModel(Model *models) = 0;
     virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) = 0;
 
 private:

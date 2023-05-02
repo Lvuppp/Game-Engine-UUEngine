@@ -23,8 +23,11 @@ Base3DGameObject *ObjectAbstractFactory::createObject(const QString &filePath)
 
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
+    QVector<Model *> models;
+    Material *material = 0;
 
     while(!stream.atEnd()){
+
         auto split = stream.readLine().split(" ");
 
         if(split[0] == "v"){
@@ -46,14 +49,27 @@ Base3DGameObject *ObjectAbstractFactory::createObject(const QString &filePath)
             }
         }
         else if(split[0] == "mtllib"){
-        //материал
+            auto mtlPath = QFileInfo(filePath);
+            library.loadMaterialsFromFile(QString("%1/%2").arg(mtlPath.absolutePath()).arg(split[1]));
+        }
+        else if(split[0] == "usemtl"){
+            if(vertexes.size() == 0 || indexes.size() == 0){
+                material = library.material(split[1]);
+                continue;
+            }
+
+            models.append(new Model(vertexes,indexes,material));
+
+            material = library.material(split[1]);
+            vertexes.clear();
+            indexes.clear();
         }
     }
 
     objFile.close();
 
-    auto obj = new Base3DGameObject(vertexes,indexes,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"),
-                                    0.1f, 40.0f, QVector3D(0.0f,2.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1.5);
-    obj->setTexture(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"));
-    return obj;
+    models.append(new Model(vertexes,indexes,material));
+    auto object = new Base3DGameObject(models);
+
+    return object;
 }

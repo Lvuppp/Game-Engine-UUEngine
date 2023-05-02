@@ -5,7 +5,7 @@ MaterialLibrary::MaterialLibrary()
 
 }
 
-inline void MaterialLibrary::addMaterial(Material *material)
+void MaterialLibrary::addMaterial(Material *material)
 {
     if (!material)
         return;
@@ -48,24 +48,24 @@ void MaterialLibrary::loadMaterialsFromFile(const QString &path)
             newMtl = new Material;
             newMtl->setName(std::move(list[1]));
         }
-
-        else if (list[0] == "Ns")
+        else if (list[0] == "Ns"){
             newMtl->setShinnes(list[1].toFloat());
-
-        else if (list[0] == "Ka")
+        }
+        else if (list[0] == "Ka"){
             newMtl->setAmbienceColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
-
-        else if (list[0] == "Kd")
+        }
+        else if (list[0] == "Kd"){
             newMtl->setDiffuseColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
-
-        else if (list[0] == "Ks")
+        }
+        else if (list[0] == "Ks"){
             newMtl->setSpecularColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
-
-        else if (list[0] == "map_Kd")
+        }
+        else if (list[0] == "map_Kd"){
             newMtl->setDiffuseMap(std::move(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1]))));
-
-        else if (list[0] == "map_Normal")
+        }
+        else if (list[0] == "map_Bump"){
             newMtl->setNormalMap(std::move(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1]))));
+        }
     }
 
     addMaterial(newMtl);
@@ -73,7 +73,7 @@ void MaterialLibrary::loadMaterialsFromFile(const QString &path)
     file.close();
 }
 
-Material *MaterialLibrary::getMaterial(quint32 index)
+Material *MaterialLibrary::material(quint32 index)
 {
     if (index < m_materials.size())
         return m_materials[index];
@@ -81,16 +81,16 @@ Material *MaterialLibrary::getMaterial(quint32 index)
         return nullptr;
 }
 
-Material *MaterialLibrary::getMaterial(const QString &mtlName)
+Material *MaterialLibrary::material(const QString &mtlName)
 {
     for (int i = 0; i < m_materials.size(); ++i)
-        if (m_materials[i]->MtlName() == mtlName)
+        if (m_materials[i]->mtlName() == mtlName)
             return m_materials[i];
 
     return nullptr;
 }
 
-quint32 MaterialLibrary::getCountMaterials()
+quint32 MaterialLibrary::countMaterials()
 {
     return m_materials.size();
 }

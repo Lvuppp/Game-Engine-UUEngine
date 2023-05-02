@@ -17,12 +17,9 @@ Scene::~Scene()
         delete lighting;
 }
 
-Base3DGameObject *Scene::addGameObject(const QVector<VertexData> &vertexes, const QVector<GLuint> &indexes,
-                          const QImage &texture, const float &ambiendFactor, const float &specularFactor,
-                          const QVector3D &coordinates, const QQuaternion &rotation,
-                          const float &scale, const bool &isObjectLocked)
+Base3DGameObject *Scene::addGameObject(Base3DGameObject *object)
 {
-    m_gameObjects.append(new Base3DGameObject(vertexes, indexes, texture, ambiendFactor, specularFactor, coordinates, rotation, scale, isObjectLocked));
+    m_gameObjects.append(object);
     return m_gameObjects.last();
 }
 

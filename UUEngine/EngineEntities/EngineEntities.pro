@@ -17,6 +17,7 @@ SOURCES += \
         camera.cpp \
         lighting.cpp \
         material.cpp \
+        model.cpp \
         scene.cpp \
         skybox.cpp \
         vertexdata.cpp
@@ -28,6 +29,7 @@ HEADERS += \
     camera.h \
     lighting.h \
     material.h \
+    model.h \
     scene.h \
     skybox.h \
     vertexdata.h

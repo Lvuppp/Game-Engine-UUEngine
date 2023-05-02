@@ -48,7 +48,9 @@ SkyBox::SkyBox(const float& size, const QImage& texture)
         indexes.append(i + 1);
     }
 
-    m_model = new Base3DGameObject(vertexes,indexes, texture);
+    //Model *
+
+    //m_model = new Base3DGameObject();
 }
 
 SkyBox::~SkyBox()

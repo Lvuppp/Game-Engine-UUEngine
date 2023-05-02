@@ -13,6 +13,10 @@ public:
         const bool &isObjectLocked = false);
     ~Camera();
 
+    void setModel(QVector<Model *>models) override;
+    void setModel(Model *models)  override;
+
+
     void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
 
 };

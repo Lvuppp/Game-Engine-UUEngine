@@ -15,8 +15,6 @@ SOURCES += \
         enginecore.cpp \
         eventhandler.cpp \
         graphicsengine.cpp \
-        graphicsengineservices.cpp \
-        igraphicsengineservices.cpp \
         inputengine.cpp \
         materiallib.cpp \
         objectabstractfactory.cpp \
@@ -29,8 +27,6 @@ HEADERS += \
     enginecore.h \
     eventhandler.h \
     graphicsengine.h \
-    graphicsengineservices.h \
-    igraphicsengineservices.h \
     inputengine.h \
     materiallib.h \
     objectabstractfactory.h \

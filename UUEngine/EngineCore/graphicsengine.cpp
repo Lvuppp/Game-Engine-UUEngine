@@ -1,14 +1,11 @@
 #include "graphicsengine.h"
 #include "vertexdata.h"
-#include "graphicsengineservices.h"
 
 GraphicsEngine* GraphicsEngine::m_instance = nullptr;
 
 GraphicsEngine::GraphicsEngine()
 {
     m_currentScene = new Scene();
-
-    m_graphicsServies = new GraphicsEngineServices(m_functions);
 
 }
 
@@ -27,13 +24,26 @@ void GraphicsEngine::initGraphics()
     initShaders();
     initCube(0.5f,0.5f,0.5f);
 
-    testObject = factory.createObject("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Models/TestModel/Stone.obj");
+    testObject2 = factory.createObject("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Models/TestModel/Stone.obj");
 
-    m_currentScene->addGameObject(vertexes,indexes,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"),
-                                  0.1f, 40.0f, QVector3D(0.0f,-2.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1);
-    m_currentScene->addGameObject(vertexes,indexes,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"),
-                                  0.1f, 40.0f, QVector3D(0.0f,2.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1.5);
+//    m_currentScene->addGameObject(new Base3DGameObject(vertexes,indexes,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"),
+//                                                       0.1f, 40.0f, QVector3D(0.0f,-2.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1));
+//    m_currentScene->addGameObject(new Base3DGameObject(vertexes,indexes,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"),
+//                                                       0.1f, 40.0f, QVector3D(0.0f,2.0f,0.0f),QQuaternion(0, 0.0f, 0.0f, 0.0f), 1.5));
+    Material *material = new Material();
+    material->setAmbienceColor(QVector3D(0.0f,0.0f,0.0f));
+    material->setDiffuseColor(QVector3D(0.1f,0.0f,0.0f));
+    material->setSpecularColor(QVector3D(0.1f,0.1f,0.1f));
+    material->setShinnes(60.0f);
 
+    material->setDiffuseMap("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg");
+
+    model.append(new Model(vertexes,indexes,material));
+
+    testObject = new Base3DGameObject();
+    testObject->setModel(model);
+    testObject->setScale(0.5f);
+    testObject2->setScale(0.1f);
     m_engineCamera = new Camera(QVector3D(0.0f, 0.0f, -5.0f));
     m_skyBox = new SkyBox(50.0f, QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/skybox4.png"));
 
@@ -56,21 +66,19 @@ void GraphicsEngine::paintScene()
     m_sceneShaderProgram.bind();
 
     m_sceneShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
-    m_sceneShaderProgram.setUniformValue("u_isDrawDynamic", false);// освещение динамическое или статическое
+    m_sceneShaderProgram.setUniformValue("u_isDrawDynamic", true);// освещение динамическое или статическое
     m_sceneShaderProgram.setUniformValue("u_lightPosition", QVector4D(0.0,0.0,0.0,1.0)); // позиция источника света
     m_sceneShaderProgram.setUniformValue("u_eyePosition", QVector4D(0.0,0.0, 0.0,1.0)); // позиция наблюдателя
     m_sceneShaderProgram.setUniformValue("u_lightPower", 5.0f); // сила свечения
 
-//    m_graphicsServies->processCamera(m_engineCamera, &m_sceneShaderProgram);
 
     for (auto object : m_currentScene->gameObjects()) {
-        //m_graphicsServies->processModel(object, &m_sceneShaderProgram);
         //object->draw(&m_sceneShaderProgram,m_functions);
     }
     m_engineCamera->draw(&m_sceneShaderProgram,m_functions);
-
-//    m_graphicsServies->processModel(testObject,&m_sceneShaderProgram);
     testObject->draw(&m_sceneShaderProgram,m_functions);
+    testObject2->draw(&m_sceneShaderProgram,m_functions);
+
     m_sceneShaderProgram.release();
 }
 

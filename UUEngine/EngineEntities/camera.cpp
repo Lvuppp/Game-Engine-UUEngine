@@ -9,6 +9,17 @@ Camera::Camera(const QVector3D &coordinates, const QQuaternion &rotation, const 
 Camera::~Camera()
 {
 
+
+}
+void Camera::setModel(Model *models)
+{
+
+}
+
+
+void Camera::setModel(QVector<Model *> models)
+{
+
 }
 
 void Camera::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)

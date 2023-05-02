@@ -1,103 +1,102 @@
 #include "material.h"
 
 
-Material::Material() : isUsingDiffuseMap(false), isUsingNormalMap (false)
+Material::Material() : m_isUsingDiffuseMap(false), m_isUsingNormalMap(false)
 {
-
 }
 
-void Material::setName(const QString &&_mtlName)
+void Material::setName(const QString &&mtlName)
 {
-    mtlName = _mtlName;
+    m_mtlName = mtlName;
 }
 
-const QString &Material::MtlName() const
+const QString &Material::mtlName() const
 {
-    return mtlName;
+    return m_mtlName;
 }
 
 void Material::setDiffuseColor(const QVector3D &&_diffuseColor)
 {
-    diffuseColor = std::move(_diffuseColor);
-
-    isUsingDiffuseMap = true;
+    m_diffuseColor = std::move(_diffuseColor);
 }
 
-const QVector3D &Material::getDiffuseColor() const
+const QVector3D &Material::diffuseColor() const
 {
-    return diffuseColor;
+    return m_diffuseColor;
 }
 
 void Material::setAmbienceColor(const QVector3D &&_ambienceColor)
 {
-    ambienceColor = std::move(_ambienceColor);
+    m_ambienceColor = std::move(_ambienceColor);
 }
 
-const QVector3D &Material::AmbienceColor() const
+const QVector3D &Material::ambienceColor() const
 {
-    return ambienceColor;
+    return m_ambienceColor;
 }
 
 void Material::setSpecularColor(const QVector3D &&_specularColor)
 {
-    specularColor = std::move(_specularColor);
+    m_specularColor = std::move(_specularColor);
 }
 
-const QVector3D &Material::SpecularColor() const
+const QVector3D &Material::specularColor() const
 {
-    return specularColor;
+    return m_specularColor;
 }
 
 void Material::setShinnes(const qreal &&shinnes)
 {
-    this->shinnes = shinnes;
+    this->m_shinnes = shinnes;
 }
 
-const float &Material::getShinnes() const
+const float &Material::shinnes() const
 {
-    return shinnes;
+    return m_shinnes;
 }
 
 void Material::setDiffuseMap(const QString &&path)
 {
-    diffuseMap = QImage(std::move(path));
+    m_diffuseMap = QImage(std::move(path));
+    m_isUsingDiffuseMap = true;
 }
 
 void Material::setDiffuseMap(const QImage &image)
 {
-    diffuseMap = image;
+    m_diffuseMap = image;
+    m_isUsingDiffuseMap = true;
 }
 
-const QImage &Material::getDiffuseMap() const
+const QImage &Material::diffuseMap() const
 {
-    return diffuseMap;
+    return m_diffuseMap;
 }
 
 bool Material::isDiffuseMapSet() const
 {
-    return isUsingDiffuseMap;
+    return m_isUsingDiffuseMap;
 }
 
 void Material::setNormalMap(const QString &&path)
 {
-    normalMap = QImage(std::move(path));
+    m_normalMap = QImage(std::move(path));
 
-    isUsingNormalMap = true;
+    m_isUsingNormalMap = true;
 }
 
 void Material::setNormalMap(const QImage &image)
 {
-    normalMap = image;
+    m_normalMap = image;
 
-    isUsingNormalMap = true;
+    m_isUsingNormalMap = true;
 }
 
-const QImage &Material::getNormalMap() const
+const QImage &Material::normalMap() const
 {
-    return normalMap;
+    return m_normalMap;
 }
 
 bool Material::isNormalMapSet() const
 {
-    return isUsingNormalMap;
+    return m_isUsingNormalMap;
 }

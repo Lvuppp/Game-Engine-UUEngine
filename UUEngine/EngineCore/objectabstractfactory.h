@@ -2,7 +2,7 @@
 #define OBJECTABSTRACTFACTORY_H
 
 #include "base3dgameobject.h"
-
+#include "materiallib.h"
 
 class ModelAbstractFactory
 {
@@ -17,6 +17,7 @@ public:
     Base3DGameObject *createObject(const QString& filePath);
 private:
     ModelAbstractFactory *m_factory;
+    MaterialLibrary library;
 };
 
 

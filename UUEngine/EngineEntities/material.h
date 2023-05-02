@@ -40,11 +40,11 @@ public:
 private:
     QString m_mtlName;
 
-    QVector3D m_diffuseColor;
-    QVector3D m_ambienceColor;
-    QVector3D m_specularColor;
+    QVector3D m_diffuseColor = QVector3D(1.0f,1.0f,1.0f);
+    QVector3D m_ambienceColor = QVector3D(1.0f,1.0f,1.0f);
+    QVector3D m_specularColor = QVector3D(1.0f,1.0f,1.0f);
 
-    float m_shinnes;
+    float m_shinnes = 60.0f;
 
     QImage m_diffuseMap;
     QImage m_normalMap;

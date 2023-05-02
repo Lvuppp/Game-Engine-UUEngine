@@ -4,6 +4,5 @@ CONFIG += ordered
 
 SUBDIRS += \
     EngineEntities \
-    GraphicsEngineServices \
     EngineCore \
     EngineUI \
