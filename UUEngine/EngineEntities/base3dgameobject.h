@@ -9,27 +9,19 @@
 class Base3DGameObject : public BaseEngineObject
 {
 public:
-    Base3DGameObject(
-        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
-        const QQuaternion &rotation = QQuaternion(),
-        const float &scale = 1.0f,
-        const bool &isObjectLocked = false);
-
-    Base3DGameObject(
-        QVector<Model*> models,
-        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
-        const QQuaternion &rotation = QQuaternion(),
-        const float &scale = 1.0f,
-        const bool &isObjectLocked = false);
+    Base3DGameObject();
+    Base3DGameObject(Model *model);
+    Base3DGameObject(QVector<Model*> models);
 
     ~Base3DGameObject();
 
-    void setModel(QVector<Model *>models) override;
-    void setModel(Model *models) override;
+    QVector<Model *> model();
+    void setModel(QVector<Model *> models);
+    void setModel(Model *models);
+
     void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
 
 protected:
     QVector<Model *> m_modelParticulars;
-
 };
 #endif // BASE3DGAMEOBJECT_H

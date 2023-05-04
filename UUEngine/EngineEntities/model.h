@@ -12,15 +12,18 @@ class Model
 public:
     Model();
     ~Model();
-    Model(const QVector<VertexData> &vertexes, const QVector<GLuint> &indexes,Material *material);
+    Model(QVector<VertexData> &vertexes, QVector<GLuint> &indexes,Material *material);
 
-    void initModel(const QVector<VertexData> &vertexes, const QVector<GLuint> &indexes,Material *material);
+    void initModel(QVector<VertexData> &vertexes,QVector<GLuint> &indexes,Material *material);
+    void calculateTBN(QVector<VertexData> &vertexes);
     void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0);
 
+    void setDiffuseMap(QImage texture);
+    void setNormalMap(QImage texture);
     Material *material() const;
     void setMaterial(Material *newMaterial);
 
-public:
+private:
     QOpenGLBuffer m_vertexes;
     QOpenGLBuffer m_indexes;
     QOpenGLTexture *m_diffuseMap;

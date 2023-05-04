@@ -5,6 +5,7 @@
 #include "base3dgameobject.h"
 #include "skybox.h"
 #include "objectabstractfactory.h"
+#include "objectbuilder.h"
 
 #include <QtOpenGL>
 #include <GL/gl.h>
@@ -19,21 +20,16 @@ public:
     ~GraphicsEngine();
 
     void initGraphics();
+    void initShaders();
     void paintScene();
     void resizeScene(int w, int h);
-    void paintGameObjects(Base3DGameObject *object);
 
-    void initShaders();
     void initCube(float width, float height, float depth);
 
     void rotateModelViewMatrix(QQuaternion rotation);
     void translateModelViewMatrix(QVector3D translation);
 
-    // сделать перенос объекто текущей сцены в определённые processor-ы
-    //Scene *getCurrentScene() const;
-
-//    void loadScene(Scene* scene);
-//    void loadScene(QVector<Scene*> scene);
+    void loadScene(Scene* scene);
 
     static GraphicsEngine *getInstance();
 
@@ -47,23 +43,25 @@ private:
     QOpenGLFunctions *m_functions;
     QOpenGLShaderProgram m_sceneShaderProgram;
     QOpenGLShaderProgram m_skyBoxShaderProgram;
+    QOpenGLShaderProgram m_depthShaderProgram;
 
     QMatrix4x4 m_projectionMatrix;
-    QVector<Model *>model;
     ObjectAbstractFactory factory;
-
-    QVector<GLuint> indexes;
-    QVector<VertexData> vertexes;
-    Base3DGameObject *testObject;
-    Base3DGameObject *testObject2;
-
-
+    ObjectBuilder builder;
+    ////
+    QOpenGLFramebufferObject *m_frameBuffer;
+    int m_frameBufferHeight;
+    int m_frameBufferWidth;
+    QMatrix4x4 m_projectionLightMatrix;
+    QMatrix4x4 m_lightMatrix;
+    QMatrix4x4 m_shadowLightMatrix;
+    ////
     Scene* m_currentScene;
 
     // камера и освещение во время создания сцены
     Camera *m_engineCamera;
     Lighting *m_engineLighting;
-    SkyBox *m_skyBox;
+    Base3DGameObject *testObject;
 
     bool sceneStart;
     static GraphicsEngine* m_instance;

@@ -10,7 +10,8 @@ struct VertexData{
     QVector3D position;
     QVector2D texture;
     QVector3D normal;
-
+    QVector3D tangent;
+    QVector3D bitangent;
 };
 
 

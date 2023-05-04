@@ -12,14 +12,9 @@ class BaseEngineObject
 {
 public:
     BaseEngineObject();
-    BaseEngineObject(QVector3D coordinates, QQuaternion rotation,
-                     float scale, bool isObjectLocked);
-
-    virtual ~BaseEngineObject(){};
-
+    virtual ~BaseEngineObject();
 
     bool isLocked();
-    bool isModified();
     void lock();
     void unlock();
 
@@ -29,7 +24,7 @@ public:
     QQuaternion rotation() const;
     QMatrix4x4 modelMatrix() const;
 
-    //задание текущих
+    //задание текущих5
     void setScale(const float &scale);
     void setRotation(const QQuaternion &rotation);
     void setCoordinates(const QVector3D &coordinates);
@@ -39,8 +34,6 @@ public:
     void rotate(const QQuaternion &rotation);
     void scale(const float &scale);
 
-    virtual void setModel(QVector<Model *>models) = 0;
-    virtual void setModel(Model *models) = 0;
     virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) = 0;
 
 private:
@@ -48,8 +41,6 @@ private:
     QQuaternion m_rotate;
     float m_scale;
     bool m_lock;
-    bool m_modified;
-
 };
 
 #endif // BASEENGINEOBJECT_H

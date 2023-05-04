@@ -16,6 +16,11 @@ void SceneWidget::updateGraphics()
     update();
 }
 
+void SceneWidget::testLoadFromUI()
+{
+
+}
+
 void SceneWidget::initializeGL()
 {
     engine->initGraphicsEngine();

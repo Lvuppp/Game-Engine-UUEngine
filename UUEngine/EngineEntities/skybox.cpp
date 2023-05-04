@@ -1,7 +1,7 @@
 #include "skybox.h"
 #include "vertexdata.h"
 
-SkyBox::SkyBox(const float& size, const QImage& texture)
+SkyBox::SkyBox(const float& size, QImage texture)
 {
     QVector<VertexData> vertexes;
 
@@ -48,9 +48,9 @@ SkyBox::SkyBox(const float& size, const QImage& texture)
         indexes.append(i + 1);
     }
 
-    //Model *
-
-    //m_model = new Base3DGameObject();
+    Material *material = new Material();
+    material->setDiffuseMap(texture);
+    m_model = new Model(vertexes,indexes, material);
 }
 
 SkyBox::~SkyBox()
@@ -58,7 +58,7 @@ SkyBox::~SkyBox()
     delete m_model;
 }
 
-Base3DGameObject *SkyBox::model()
+Model *SkyBox::model()
 {
     return m_model;
 }

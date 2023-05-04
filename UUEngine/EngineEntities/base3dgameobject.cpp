@@ -1,16 +1,19 @@
 #include "base3dgameobject.h"
 
-Base3DGameObject::Base3DGameObject(const QVector3D &coordinates, const QQuaternion &rotation,
-                                   const float &scale, const bool &isObjectLocked):
-    BaseEngineObject(coordinates, rotation, scale, isObjectLocked)
+Base3DGameObject::Base3DGameObject():
+    BaseEngineObject()
 {
 }
 
-Base3DGameObject::Base3DGameObject(QVector<Model *> models, const QVector3D &coordinates,
-                                   const QQuaternion &rotation, const float &scale, const bool &isObjectLocked):
-    BaseEngineObject(coordinates, rotation, scale, isObjectLocked)
+Base3DGameObject::Base3DGameObject(Model *model)
 {
-    m_modelParticulars.append(models);
+    setModel(model);
+}
+
+Base3DGameObject::Base3DGameObject(QVector<Model *> models):
+    BaseEngineObject()
+{
+    setModel(models);
 }
 
 Base3DGameObject::~Base3DGameObject()
@@ -18,6 +21,11 @@ Base3DGameObject::~Base3DGameObject()
     for(auto model : m_modelParticulars){
         delete model;
     }
+}
+
+QVector<Model *> Base3DGameObject::model()
+{
+    return m_modelParticulars;
 }
 
 void Base3DGameObject::setModel(QVector<Model *>models)
@@ -29,7 +37,6 @@ void Base3DGameObject::setModel(Model *models)
 {
     m_modelParticulars.append(models);
 }
-
 
 void Base3DGameObject::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
 {

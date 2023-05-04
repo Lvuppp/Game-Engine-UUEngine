@@ -4,6 +4,7 @@
 #include "base3dgameobject.h"
 #include "camera.h"
 #include "lighting.h"
+#include "skybox.h"
 
 class Scene
 {
@@ -12,34 +13,30 @@ public:
     Scene();
     ~Scene();
 
-    Base3DGameObject *addGameObject(Base3DGameObject *object);
-
-    Camera * addCamera(
-        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
-        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
-        const float &scale = 1.0f,
-        const bool &isObjectLocked = false);
+    void addGameObject(Base3DGameObject *object);
+    void addLighting(Lighting *light);
+    void addCamera(Camera *camera);
     //void addPhysicsObject();
 
 // добавить добавление объектов камеры и света, а также добавить назначенеи текущей камеры.
-
-    Camera *camera() const;
-//    void setCamera(const Camera &newCamera);
-
-    QVector<Lighting*> lighings() const;
-
-//    void setLighing(const Lighting &newLighing);
-
+public:
+    QVector<Lighting *> lighings() const;
     QVector<Base3DGameObject *> gameObjects() const;
-
+    Base3DGameObject *gameObjectById(int id) const;
     Camera *currentCamera() const;
-    void setCurrentCamera(Camera *newCurrentCamera);
+    SkyBox *skybox() const;
+
+    void setCurrentCamera(int id);
 
 private:
     Camera *m_currentCamera;
+
+    //QVector<Base3DPhysicsObject *> m_physicsObject;
     QVector<Base3DGameObject *> m_gameObjects;
     QVector<Camera *> m_cameras;
     QVector<Lighting *> m_lightings;
+
+    SkyBox *m_skybox;
 };
 
 #endif // SCENE_H

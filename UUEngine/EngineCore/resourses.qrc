@@ -11,6 +11,7 @@
         <file>Textures/skybox3.png</file>
         <file>Textures/skybox2.jpg</file>
         <file>Textures/rockTexture.jpeg</file>
-        <file>Stonefbx.fbx</file>
+        <file>Shaders/vdepth.vsh</file>
+        <file>Shaders/fdepth.fsh</file>
     </qresource>
 </RCC>

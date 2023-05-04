@@ -2,23 +2,19 @@
 
 BaseEngineObject::BaseEngineObject()
 {
-
+    m_coordinates = QVector3D(0.0f, 0.0f, 0.0f);
+    m_rotate *= QQuaternion();
+    m_scale = 1.0f;
+    m_lock = false;
 }
 
-BaseEngineObject::BaseEngineObject(QVector3D coordinates, QQuaternion rotation, float scale, bool isObjectLocked):
-    m_coordinates(coordinates), m_scale(scale), m_lock(isObjectLocked)
+BaseEngineObject::~BaseEngineObject()
 {
-    m_rotate *= rotation;
 }
 
 bool BaseEngineObject::isLocked()
 {
     return m_lock;
-}
-
-bool BaseEngineObject::isModified()
-{
-    return m_modified;
 }
 
 float BaseEngineObject::scale() const

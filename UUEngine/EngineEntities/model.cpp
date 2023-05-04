@@ -1,5 +1,5 @@
 #include "model.h"
-Model::Model(): m_diffuseMap(0),m_normalMap(0)
+Model::Model(): m_diffuseMap(nullptr),m_normalMap(nullptr)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 }
@@ -20,15 +20,17 @@ Model::~Model()
         if(m_normalMap->isCreated())
             delete m_normalMap;
 
+    delete m_material;
+
 }
 
-Model::Model(const QVector<VertexData> &vertexes, const QVector<GLuint> &indexes, Material *material)
+Model::Model(QVector<VertexData> &vertexes,QVector<GLuint> &indexes, Material *material)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     initModel(vertexes,indexes, material);
 }
 
-void Model::initModel(const QVector<VertexData> &vertexes, const QVector<GLuint> &indexes, Material *material)
+void Model::initModel(QVector<VertexData> &vertexes, QVector<GLuint> &indexes, Material *material)
 {
     if(vertexes.size() == 0){
         return;
@@ -46,11 +48,7 @@ void Model::initModel(const QVector<VertexData> &vertexes, const QVector<GLuint>
         m_indexes.destroy();
     }
 
-    //    if(m_texture != 0){
-    //        if(m_texture->isCreated()){
-    //            delete m_texture;
-    //        }
-    //    }
+    calculateTBN(vertexes);
 
     m_vertexes.create();
     m_vertexes.bind();
@@ -62,27 +60,21 @@ void Model::initModel(const QVector<VertexData> &vertexes, const QVector<GLuint>
     m_indexes.allocate(indexes.constData(), indexes.size() * sizeof(GLuint));
     m_indexes.release();
 
+
     m_material = material;
 
     if(m_material->isDiffuseMapSet()){
-        m_diffuseMap = new QOpenGLTexture(m_material->diffuseMap().mirrored());
-
-        m_diffuseMap->setMinificationFilter(QOpenGLTexture::Nearest);
-        m_diffuseMap->setMinificationFilter(QOpenGLTexture::Linear);
-        m_diffuseMap->setWrapMode(QOpenGLTexture::Repeat);
+        setDiffuseMap(m_material->diffuseMap());
     }
 
     if(m_material->isNormalMapSet()){
-        m_normalMap = new QOpenGLTexture(m_material->normalMap().mirrored());
-
-        m_normalMap->setMinificationFilter(QOpenGLTexture::Nearest);
-        m_normalMap->setMinificationFilter(QOpenGLTexture::Linear);
-        m_normalMap->setWrapMode(QOpenGLTexture::Repeat);
+        setNormalMap(m_material->normalMap());
     }
 }
 
 void Model::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
 {
+
     if(m_material->isDiffuseMapSet()){
         m_diffuseMap->bind(0);
         shaderProgram->setUniformValue("u_model.diffuseMap", 0);
@@ -94,8 +86,8 @@ void Model::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shade
     }
 
     shaderProgram->setUniformValue("u_modelMatrix", modelMatrix);
-    shaderProgram->setUniformValue("u_model.u_isDiffuseMapUsing", m_material->isDiffuseMapSet());
-    shaderProgram->setUniformValue("u_model.u_isNormalMapUsing", m_material->isNormalMapSet());
+    shaderProgram->setUniformValue("u_model.isDiffuseMapUsing", m_material->isDiffuseMapSet());
+    shaderProgram->setUniformValue("u_model.isNormalMapUsing", m_material->isNormalMapSet());
     shaderProgram->setUniformValue("u_model.diffuseColor", m_material->diffuseColor());
     shaderProgram->setUniformValue("u_model.specularColor", m_material->specularColor());
     shaderProgram->setUniformValue("u_model.ambienceColor", m_material->ambienceColor());
@@ -120,6 +112,18 @@ void Model::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shade
     shaderProgram->enableAttributeArray(normLoc);
     shaderProgram->setAttributeBuffer(normLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
 
+    offset += sizeof(QVector3D);
+    int tanLoc = shaderProgram->attributeLocation("a_tangent");
+
+    shaderProgram->enableAttributeArray(tanLoc);
+    shaderProgram->setAttributeBuffer(tanLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
+
+    offset += sizeof(QVector3D);
+    int bitanLoc = shaderProgram->attributeLocation("a_bitangent");
+
+    shaderProgram->enableAttributeArray(bitanLoc);
+    shaderProgram->setAttributeBuffer(bitanLoc, GL_FLOAT, offset, 3, sizeof(VertexData));
+
     m_indexes.bind();
 
     functions->glDrawElements(GL_TRIANGLES, m_indexes.size(), GL_UNSIGNED_INT, 0);
@@ -129,6 +133,63 @@ void Model::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shade
 
     if(m_material->isDiffuseMapSet()) m_diffuseMap->release();
     if(m_material->isNormalMapSet()) m_normalMap->release();
+}
+
+void Model::calculateTBN(QVector<VertexData> &vertexes)
+{
+
+    for (int i = 0; i < vertexes.size(); i += 3) {
+        QVector3D &v1 = vertexes[i].position;
+        QVector3D &v2 = vertexes[i + 1].position;
+        QVector3D &v3 = vertexes[i + 2].position;
+
+        QVector2D &uv1 = vertexes[i].texture;
+        QVector2D &uv2 = vertexes[i + 1].texture;
+        QVector2D &uv3 = vertexes[i + 2].texture;
+
+        QVector3D deltaV1 = v2 - v1;
+        QVector3D deltaV2 = v3 - v1;
+
+        QVector2D deltaUV1 = uv2 - uv1;
+        QVector2D deltaUV2 = uv3 - uv1;
+
+        float r = 1.0f / (deltaV1.x() * deltaUV2.y() - deltaUV1.y() * deltaUV2.x());
+
+        QVector3D tangent = (deltaV1 * deltaUV1.y() - deltaV2 * deltaUV1.y()) * r;
+        QVector3D bitangent = (deltaV2 * deltaUV1.x() - deltaV1 * deltaUV2.x()) * r;
+
+        vertexes[i].tangent = tangent;
+        vertexes[i + 1].tangent = tangent;
+        vertexes[i + 2].tangent = tangent;
+
+        vertexes[i].bitangent = bitangent;
+        vertexes[i + 1].bitangent = bitangent;
+        vertexes[i + 2].bitangent = bitangent;
+    }
+
+}
+
+
+
+void Model::setDiffuseMap(QImage texture)
+{
+    m_material->setDiffuseMap(texture);
+    m_diffuseMap = new QOpenGLTexture(m_material->diffuseMap().mirrored());
+
+    m_diffuseMap->setMinificationFilter(QOpenGLTexture::Nearest);
+    m_diffuseMap->setMinificationFilter(QOpenGLTexture::Linear);
+    m_diffuseMap->setWrapMode(QOpenGLTexture::Repeat);
+}
+
+void Model::setNormalMap(QImage texture)
+{
+    m_material->setNormalMap(texture);
+    m_normalMap = new QOpenGLTexture(m_material->normalMap().mirrored());
+
+    m_normalMap->setMinificationFilter(QOpenGLTexture::Nearest);
+    m_normalMap->setMinificationFilter(QOpenGLTexture::Linear);
+    m_normalMap->setWrapMode(QOpenGLTexture::Repeat);
+
 }
 
 Material *Model::material() const

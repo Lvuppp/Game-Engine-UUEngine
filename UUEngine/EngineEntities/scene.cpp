@@ -2,7 +2,7 @@
 
 Scene::Scene()
 {
-
+    m_skybox = new SkyBox(100.0f,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/skybox3.png"));
 }
 
 Scene::~Scene()
@@ -17,48 +17,35 @@ Scene::~Scene()
         delete lighting;
 }
 
-Base3DGameObject *Scene::addGameObject(Base3DGameObject *object)
+void Scene::addGameObject(Base3DGameObject *object)
 {
     m_gameObjects.append(object);
-    return m_gameObjects.last();
 }
 
-Camera *Scene::addCamera(const QVector3D &coordinates, const QQuaternion &rotation,
-                         const float &scale, const bool &isObjectLocked)
+void Scene::addLighting(Lighting *light)
 {
-    m_cameras.append(new Camera(coordinates, rotation, scale, isObjectLocked));
-    return m_cameras.last();
+    m_lightings.append(light);
 }
 
-
-//void Scene::addPhysicsObject(Base3DGameObject)
-//{
-
-//}
-
-Camera* Scene::camera() const
+void Scene::addCamera(Camera *camera)
 {
-    return m_cameras.last();
+    m_cameras.append(camera);
+
+    if(m_cameras.size() == 0) m_currentCamera = m_cameras.last();
 }
-
-//void Scene::setCamera(const Camera &newCamera)
-//{
-//    m_camera = newCamera;
-//}
-
 QVector<Lighting*> Scene::lighings() const
 {
     return m_lightings;
 }
 
-//void Scene::setLighingы(const Lighting &newLighing)
-//{
-//    m_lightings = newLighing;
-//}
-
 QVector<Base3DGameObject *> Scene::gameObjects() const
 {
     return m_gameObjects;
+}
+
+Base3DGameObject *Scene::gameObjectById(int id) const
+{
+    return m_gameObjects.at(id);
 }
 
 Camera *Scene::currentCamera() const
@@ -66,7 +53,13 @@ Camera *Scene::currentCamera() const
     return m_cameras.last();
 }
 
-void Scene::setCurrentCamera(Camera *newCurrentCamera)
+SkyBox *Scene::skybox() const
 {
-    m_currentCamera = newCurrentCamera;
+    return m_skybox;
 }
+
+void Scene::setCurrentCamera(int id)
+{
+    m_currentCamera = m_cameras.at(id);
+}
+

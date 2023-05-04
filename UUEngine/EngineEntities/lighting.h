@@ -6,13 +6,14 @@
 class Lighting : public BaseEngineObject
 {
 public:
-    Lighting(
-        const QVector3D &coordinates = QVector3D(0.0f, 0.0f, 0.0f),
-        const QQuaternion &rotation = QQuaternion(0.0f, 0.0f, 0.0f, 0.0f),
-        const float &scale = 1.0f,
-        const bool &isObjectLocked = false);
+    Lighting();
+    ~Lighting();
+
+    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
 
 private:
+    float m_lightPower;
+    bool m_isLightingDynamic;
 
 };
 

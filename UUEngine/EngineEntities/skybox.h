@@ -1,20 +1,20 @@
 #ifndef SKYBOX_H
 #define SKYBOX_H
 
-#include "base3dgameobject.h"
+#include "model.h"
 
 #include <QImage>
 
 class SkyBox
 {
 public:
-    SkyBox(const float& size, const QImage& texture);
+    SkyBox(const float& size, QImage texture);
     ~SkyBox();
 
-    Base3DGameObject *model();
+    Model *model();
 
 private:
-    Base3DGameObject *m_model;
+    Model *m_model;
 
 };
 
