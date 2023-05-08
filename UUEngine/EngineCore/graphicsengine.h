@@ -10,6 +10,7 @@
 #include <QtOpenGL>
 #include <GL/gl.h>
 #include <QMatrix4x4>
+#include <QOpenGLFramebufferObject>
 #include <QVector>
 
 
@@ -62,6 +63,9 @@ private:
     Camera *m_engineCamera;
     Lighting *m_engineLighting;
     Base3DGameObject *testObject;
+
+    int m_windowWidth;
+    int m_windowHeight;
 
     bool sceneStart;
     static GraphicsEngine* m_instance;

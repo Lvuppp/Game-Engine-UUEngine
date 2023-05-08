@@ -1,8 +1,6 @@
 #ifndef BASEENGINEOBJECT_H
 #define BASEENGINEOBJECT_H
 
-#include "model.h"
-
 #include <QtOpenGL>
 #include <QVector3D>
 #include <QMatrix4x4>
@@ -22,7 +20,7 @@ public:
     float scale() const;
     QVector3D coordinates() const;
     QQuaternion rotation() const;
-    QMatrix4x4 modelMatrix() const;
+    QMatrix4x4 modelMatrix();
 
     //задание текущих5
     void setScale(const float &scale);
@@ -37,6 +35,7 @@ public:
     virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) = 0;
 
 private:
+    QMatrix4x4 m_modelMatrix;
     QVector3D m_coordinates;
     QQuaternion m_rotate;
     float m_scale;

@@ -6,6 +6,13 @@ BaseEngineObject::BaseEngineObject()
     m_rotate *= QQuaternion();
     m_scale = 1.0f;
     m_lock = false;
+
+
+    m_modelMatrix.setToIdentity();
+
+    m_modelMatrix.translate(m_coordinates);
+    m_modelMatrix.rotate(m_rotate);
+    m_modelMatrix.scale(m_scale);
 }
 
 BaseEngineObject::~BaseEngineObject()
@@ -78,7 +85,7 @@ void BaseEngineObject::unlock()
     m_lock = false;
 }
 
-QMatrix4x4 BaseEngineObject::modelMatrix() const
+QMatrix4x4 BaseEngineObject::modelMatrix()
 {
     QMatrix4x4 modelMatrix;
     modelMatrix.setToIdentity();

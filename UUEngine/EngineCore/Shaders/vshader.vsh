@@ -17,6 +17,7 @@ varying highp vec4 v_position;
 varying highp vec2 v_texcoord;
 varying highp vec3 v_normal;
 varying highp mat3 v_tbnMatrix;
+
 varying highp vec4 v_lightDirection;
 varying highp vec4 v_positionLightMatrix;
 
@@ -45,6 +46,7 @@ void main(void)
     vec3 bitangent = normalize(vec4(mv_matrix * vec4(a_bitangent, 0.0)).xyz);
     vec3 normal  = normalize(vec4(mv_matrix * vec4(a_normal, 0.0)).xyz);
 
+    v_positionLightMatrix = u_projectionLightMatrix * u_shadowLightMatrix * u_modelMatrix * a_position;
     v_tbnMatrix = transpose(mat3(tangent, bitangent, normal));
     v_lightDirection = u_viewMatrix * u_lightMatrix * u_lightDirection;
 }
