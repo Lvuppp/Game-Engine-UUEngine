@@ -5,6 +5,7 @@
 #include "model.h"
 
 #include <QImage>
+#include <QVector3D>
 
 class Base3DGameObject : public BaseEngineObject
 {

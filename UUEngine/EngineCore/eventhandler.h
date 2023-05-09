@@ -6,6 +6,8 @@
 //#include <QWheelEvent>
 
 
+//попробовать сделать как интерфейс изменяемый для разных ивентов
+
 //class QuaternionEventHandler
 //{
 //public:

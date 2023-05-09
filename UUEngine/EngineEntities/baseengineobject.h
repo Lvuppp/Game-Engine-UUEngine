@@ -1,10 +1,10 @@
 #ifndef BASEENGINEOBJECT_H
 #define BASEENGINEOBJECT_H
 
-#include <QtOpenGL>
 #include <QVector3D>
 #include <QMatrix4x4>
 #include <QQuaternion>
+#include <QtOpenGL>
 
 class BaseEngineObject
 {

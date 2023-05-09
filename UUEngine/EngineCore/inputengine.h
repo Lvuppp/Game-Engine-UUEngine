@@ -35,6 +35,7 @@ private:
 
     QQuaternion m_rotateXDelta;
     QQuaternion m_rotateYDelta;
+    QQuaternion m_rotateDelta;
     QVector3D m_translateDelta;
 
 };

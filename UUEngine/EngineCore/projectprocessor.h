@@ -9,6 +9,7 @@ public:
 
     bool saveProject();
     bool loadProject();
+
 };
 
 #endif // PROJECTPROCESSOR_H

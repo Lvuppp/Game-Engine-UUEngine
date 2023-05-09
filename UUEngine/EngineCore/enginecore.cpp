@@ -7,7 +7,7 @@ EngineCore::EngineCore()
     m_sceneFolder = new SceneFolder();
     m_graphicsEngine = GraphicsEngine::getInstance();
     m_inputEngine = InputEngine::getInstance();
-    //m_scriptEngine = ScriptEngine::getInstance();
+    m_scriptEngine = ScriptEngine::getInstance();
 }
 ////////////////////////////////////////////////////Graphics Engine
 void EngineCore::resizeScene(int w, int h)
@@ -47,6 +47,7 @@ void EngineCore::initGraphicsEngine()
 {
     m_graphicsEngine->initGraphics();
     createSimpleScene();
+    m_scriptEngine->loadScript(m_sceneFolder->object("Golem"));
 }
 
 ////////////////////////////////////////////////////Input Engine

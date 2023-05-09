@@ -1,8 +1,9 @@
 #ifndef SCRIPTENGINE_H
 #define SCRIPTENGINE_H
 
-#include <QDir>
+#include "base3dgameobject.h"
 
+#include <QDir>
 #include <dlfcn.h>
 
 // В данный момент он довольно таки примитивный, но он старается :)
@@ -12,7 +13,7 @@ class ScriptEngine
 public:
     ~ScriptEngine();
 
-    void loadScript();
+    void loadScript(Base3DGameObject *object);
 
 
     static ScriptEngine *getInstance();

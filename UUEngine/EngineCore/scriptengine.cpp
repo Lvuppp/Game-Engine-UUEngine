@@ -1,4 +1,5 @@
 #include "scriptengine.h"
+#include "base3dgameobject.h"
 
 ScriptEngine *ScriptEngine::m_instance = nullptr;
 
@@ -7,31 +8,33 @@ ScriptEngine::~ScriptEngine()
 
 }
 
-void ScriptEngine::loadScript()
+void ScriptEngine::loadScript(Base3DGameObject *object)
 {
-    QStringList filters;
-    filters << "*.cpp"; // добавить фильтр для поиска только файлов с расширением .cpp
-    currentDirectory.setNameFilters(filters);
+//    QStringList filters;
+//    filters << "*.cpp"; // добавить фильтр для поиска только файлов с расширением .cpp
+//    currentDirectory.setNameFilters(filters);
 
-    auto scriptsFiles = currentDirectory.entryInfoList(QDir::Files);
-    QString dllCreatorCommand = "g++ ";
-    QString dllParams = "-shared -fPIC -o scripts_library.so"; // параметры должны быть через пробел
+//    auto scriptsFiles = currentDirectory.entryInfoList(QDir::Files);
+//    if(scriptsFiles.empty()) return;
 
-    foreach (QFileInfo file, scriptsFiles) {
-        dllCreatorCommand += "Scripts/" + file.fileName() + " ";
-    }
+//    QString dllCreatorCommand = "g++ ";
+//    QString dllParams = "-shared -fPIC -o scripts_library.so"; // параметры должны быть через пробел
 
-    dllCreatorCommand += dllParams;
+//    foreach (QFileInfo file, scriptsFiles) {
+//        dllCreatorCommand += "Scripts/" + file.fileName() + " ";
+//    }
 
-    int isDLLCreated = system(dllCreatorCommand.toStdString().c_str());
-    if (isDLLCreated != 0)
-    {
-        qCritical() << "Error compiling library";
-        return;
-    }
-    typedef int (*my_function_t)(int, int);
+//    dllCreatorCommand += dllParams;
 
-    void* my_library = dlopen("./scripts_library.so", RTLD_LAZY);
+//    int isDLLCreated = system(dllCreatorCommand.toStdString().c_str());
+//    if (isDLLCreated != 0)
+//    {
+//        qCritical() << "Error compiling library";
+//        return;
+//    }
+    typedef void (*my_function_t)(Base3DGameObject *);
+
+    void* my_library = dlopen("./libcube.so.1.0.0", RTLD_NOW | RTLD_GLOBAL);
 
     // Проверяем, успешно ли загрузилась библиотека
     if (my_library == NULL)
@@ -41,7 +44,7 @@ void ScriptEngine::loadScript()
     }
 
     // Получаем указатель на экспортируемую функцию
-    my_function_t my_function = (my_function_t) dlsym(my_library, "my_function");
+    my_function_t my_function = (my_function_t) dlsym(my_library, "update");
 
     // Проверяем, успешно ли получили указатель на функцию
     if (my_function == NULL)
@@ -52,10 +55,9 @@ void ScriptEngine::loadScript()
     }
 
     // Вызываем экспортированную функцию
-    int result = my_function(1, 2);
+    my_function(object);
 
-    // Выводим результат
-    qDebug() << "Result: " << result ;
+    qDebug() << "Coordinates changes: " << object->coordinates();
 
     // Выгружаем библиотеку
     dlclose(my_library);
@@ -77,6 +79,5 @@ ScriptEngine::ScriptEngine()
         currentDirectory.mkdir("Scripts");
     currentDirectory = currentDirectory.absolutePath() + "/Scripts";
 
-   loadScript();
 }
 

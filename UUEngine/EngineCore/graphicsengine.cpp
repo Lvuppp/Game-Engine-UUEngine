@@ -129,6 +129,7 @@ void GraphicsEngine::initShaders()
                                                "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/fshader.fsh")){
         qDebug() << "BROKEN SHADER!";
     }
+
     if(!m_sceneShaderProgram.link()){
         qDebug() << "BROKEN LINKING!";
     }
@@ -165,8 +166,9 @@ void GraphicsEngine::initShaders()
 
 void GraphicsEngine::rotateModelViewMatrix(QVector<QQuaternion> rotation)
 {
-    m_currentScene->currentCamera()->rotate(rotation[0]);
-    m_currentScene->currentCamera()->rotate(rotation[1]);
+    foreach (auto rotate, rotation){
+        m_currentScene->currentCamera()->rotate(rotate);
+    }
 }
 
 void GraphicsEngine::translateModelViewMatrix(QVector3D translation)

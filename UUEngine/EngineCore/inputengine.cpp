@@ -21,16 +21,16 @@ void InputEngine::mouseEvent(QEvent* event)
         QVector2D diffpos = QVector2D(mouseEvent->localPos()) - m_mouseCoordinates;
         m_mouseCoordinates = QVector2D(mouseEvent->localPos());
 
-        float angleX = diffpos.x() / 2.0f;
-        float angleY = diffpos.y() / 2.0f;
+//        float angleX = diffpos.x() / 2.0f;
+//        float angleY = diffpos.y() / 2.0f;
 
-        m_rotateXDelta = QQuaternion(angleX, 1.0f ,0.0f ,0.0f);
-        m_rotateYDelta = QQuaternion(angleY, 0.0f ,1.0f ,0.0f);
+//        m_rotateXDelta = QQuaternion(angleX, 1.0f ,0.0f ,0.0f);
+//        m_rotateYDelta = QQuaternion(angleY, 0.0f ,1.0f ,0.0f);
 
-//        float angel = diffpos.length() / 2.0f;
-//        QVector3D axis = QVector3D(diffpos.y(), diffpos.x(), 0.0f);
+        float angle = diffpos.length() / 2.0f;
+        QVector3D axis = QVector3D(diffpos.y(), diffpos.x(), 0.0f);
 
-//        m_rotateDelta = QQuaternion::fromAxisAndAngle(axis,angle);
+        m_rotateDelta = QQuaternion::fromAxisAndAngle(axis, angle);
 
     }
     else if(event->type() == QEvent::Type::MouseButtonPress){
@@ -55,7 +55,7 @@ void InputEngine::wheelEvent(QEvent *event)
 
 QVector<QQuaternion> InputEngine::getRotate()
 {
-    return {m_rotateXDelta, m_rotateYDelta};
+    return {m_rotateDelta/*m_rotateXDelta, m_rotateYDelta*/};
 }
 
 QVector3D InputEngine::getTranslate()
