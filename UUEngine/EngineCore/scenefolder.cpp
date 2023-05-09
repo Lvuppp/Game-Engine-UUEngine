@@ -2,41 +2,76 @@
 
 SceneFolder::SceneFolder(): m_currentScene(nullptr)
 {
+    m_scenes = QHash<QString, Scene*>();
 }
 
-Scene *SceneFolder::createScene()
+SceneFolder::~SceneFolder()
 {
-    m_scenes.append(new Scene());
-    m_currentScene = m_scenes.last();
+    foreach (auto scene, m_scenes){
+        delete scene;
+    }
+}
 
-    m_currentScene->addCamera(new Camera());
-    m_currentScene->addLighting(new Lighting());
+bool SceneFolder::createScene(const QString &sceneName)
+{
+    if(m_scenes.contains(sceneName)) return false;
 
+    m_scenes.insert(sceneName, new Scene());
+    m_currentScene = m_scenes.take(sceneName);
+
+    m_currentScene->addCamera("Camera");
+    m_currentScene->addLighting("Light");
+
+    return true;
+}
+
+Scene *SceneFolder::setCurrentScene(const QString &sceneName)
+{
+    m_currentScene = m_scenes.take(sceneName);
     return m_currentScene;
 }
 
-Scene *SceneFolder::setCurrentScene(int id)
+Scene *SceneFolder::currentScene()
 {
-    m_currentScene = m_scenes.at(id);
     return m_currentScene;
 }
 
-void SceneFolder::addObjectInCurrentScene(Base3DGameObject *object)
+void SceneFolder::addObject(const QString &objectName)
 {
-    m_currentScene->addGameObject(object);
+    m_currentScene->addGameObject(objectName);
 }
 
-void SceneFolder::addLight(Lighting *lighting)
+void SceneFolder::addLight(const QString &lightName)
 {
-    m_currentScene->addLighting(lighting);
+    m_currentScene->addLighting(lightName);
 }
 
-void SceneFolder::addCamera(Camera *camera)
+void SceneFolder::addCamera(const QString &cameraName)
 {
-    m_currentScene->addCamera(camera);
+    m_currentScene->addCamera(cameraName);
 }
 
 void SceneFolder::setSkyBox(QImage skyBoxImage)
 {
-    m_currentScene->skybox()->model()->material()->setDiffuseMap(skyBoxImage);
+    m_currentScene->skybox()->setDiffuseMap(skyBoxImage);
+}
+
+void SceneFolder::setCurrentCamera(const QString &cameraName)
+{
+    m_currentScene->setCurrentCamera(cameraName);
+}
+
+Base3DGameObject *SceneFolder::object(const QString &objectName)
+{
+    return m_currentScene->gameObject(objectName);
+}
+
+Camera *SceneFolder::camera(const QString &objectName)
+{
+    return m_currentScene->camera(objectName);
+}
+
+Lighting *SceneFolder::lighting(const QString &objectName)
+{
+   return m_currentScene->lighting(objectName);
 }

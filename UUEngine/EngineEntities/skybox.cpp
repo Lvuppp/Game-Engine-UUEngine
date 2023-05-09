@@ -63,4 +63,9 @@ Model *SkyBox::model()
     return m_model;
 }
 
+void SkyBox::setDiffuseMap(QImage texture)
+{
+    m_model->material()->setDiffuseMap(texture);
+}
+
 

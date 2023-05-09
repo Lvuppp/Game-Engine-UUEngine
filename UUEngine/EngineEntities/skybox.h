@@ -12,6 +12,7 @@ public:
     ~SkyBox();
 
     Model *model();
+    void setDiffuseMap(QImage texture);
 
 private:
     Model *m_model;

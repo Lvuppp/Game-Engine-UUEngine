@@ -15,42 +15,47 @@ class EngineCore : public QObject
 
 public:
     EngineCore();
-
+// иницализация всех частей движка
     void initGraphicsEngine();
     void initPhysicsEngine();
     void initScriptEngine();
     void initInputEngine();
 
-    //graphics engine part
+//graphics engine part
+public:
+
     void paintScene();
     void resizeScene(int w, int h);
-
-    void loadScene();
-    void setCurrentScene();
-
-    //input engine part
-
-
-
-    //physics engine part
-
-
-    //script engine part
-
-public slots:
-    void getEvent(QEvent* event);
 
 signals:
     void updateGraphics();
 
+//input engine part
+public slots:
+    void getEvent(QEvent* event);
+
+//physics engine part
+public:
+
+//script engine part
+public:
+
+//scene folder part
+public:
+    void setCurrentScene();
+    void createSimpleScene();
+
+
 private:
 
-    GraphicsEngine* graphicsEngine;
-    PhysicsEngine* phyicsEngine;
-    ScriptEngine* scriptEngine;
-    InputEngine* inputEngine;
+    GraphicsEngine *m_graphicsEngine;
+    PhysicsEngine *m_phyicsEngine;
+    ScriptEngine *m_scriptEngine;
+    InputEngine *m_inputEngine;
 
-    SceneFolder* sceneFolder;
+    SceneFolder *m_sceneFolder;
+    ModelLoader *m_modelLoader;
+    ObjectBuilder *m_objectBuilder;
 
 };
 

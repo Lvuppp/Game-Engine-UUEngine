@@ -17,40 +17,57 @@ Scene::~Scene()
         delete lighting;
 }
 
-void Scene::addGameObject(Base3DGameObject *object)
+bool Scene::addGameObject(const QString &name)
 {
-    m_gameObjects.append(object);
+    if(m_gameObjects.contains(name)) return false;
+
+    m_gameObjects.insert(name, new Base3DGameObject());
+    return true;
 }
 
-void Scene::addLighting(Lighting *light)
+bool Scene::addLighting(const QString &name)
 {
-    m_lightings.append(light);
+    if(m_lightings.contains(name)) return false;
+
+    m_lightings.insert(name, new Lighting());
+    return true;
 }
 
-void Scene::addCamera(Camera *camera)
+bool Scene::addCamera(const QString &name)
 {
-    m_cameras.append(camera);
+    if(m_cameras.contains(name)) return false;
 
-    if(m_cameras.size() == 0) m_currentCamera = m_cameras.last();
+    m_cameras.insert(name, new Camera());
+    return true;
 }
 QVector<Lighting*> Scene::lighings() const
 {
-    return m_lightings;
+    return m_lightings.values();
 }
 
 QVector<Base3DGameObject *> Scene::gameObjects() const
 {
-    return m_gameObjects;
+    return m_gameObjects.values();
 }
 
-Base3DGameObject *Scene::gameObjectById(int id) const
+Base3DGameObject *Scene::gameObject(const QString &objectName) const
 {
-    return m_gameObjects.at(id);
+    return m_gameObjects.value(objectName);
+}
+
+Camera *Scene::camera(const QString &cameraName) const
+{
+    return m_cameras.value(cameraName);
+}
+
+Lighting *Scene::lighting(const QString &lightName) const
+{
+    return m_lightings.value(lightName);
 }
 
 Camera *Scene::currentCamera() const
 {
-    return m_cameras.last();
+    return m_currentCamera;
 }
 
 SkyBox *Scene::skybox() const
@@ -58,8 +75,8 @@ SkyBox *Scene::skybox() const
     return m_skybox;
 }
 
-void Scene::setCurrentCamera(int id)
+void Scene::setCurrentCamera(const QString &name)
 {
-    m_currentCamera = m_cameras.at(id);
+    m_currentCamera = m_cameras.value(name);
 }
 

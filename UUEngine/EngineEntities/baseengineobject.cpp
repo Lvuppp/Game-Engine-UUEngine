@@ -6,13 +6,6 @@ BaseEngineObject::BaseEngineObject()
     m_rotate *= QQuaternion();
     m_scale = 1.0f;
     m_lock = false;
-
-
-    m_modelMatrix.setToIdentity();
-
-    m_modelMatrix.translate(m_coordinates);
-    m_modelMatrix.rotate(m_rotate);
-    m_modelMatrix.scale(m_scale);
 }
 
 BaseEngineObject::~BaseEngineObject()
@@ -41,37 +34,31 @@ QQuaternion BaseEngineObject::rotation() const
 
 void BaseEngineObject::setScale(const float &scale)
 {
-    if(m_lock) return;
     m_scale = scale;
 }
 
 void BaseEngineObject::setRotation(const QQuaternion &rotation)
 {
-    if(m_lock) return;
     m_rotate = rotation;
 }
 
 void BaseEngineObject::setCoordinates(const QVector3D &coordinates)
 {
-    if(m_lock) return;
     m_coordinates = coordinates;
 }
 
 void BaseEngineObject::translate(const QVector3D &translation)
 {
-    if(m_lock) return;
     m_coordinates += translation;
 }
 
 void BaseEngineObject::rotate(const QQuaternion &rotation)
 {
-    if(m_lock) return;
     m_rotate = m_rotate * rotation;
 }
 
 void BaseEngineObject::scale(const float &scale)
 {
-    if(m_lock) return;
     m_scale += scale;
 }
 

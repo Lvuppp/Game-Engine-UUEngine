@@ -19,7 +19,7 @@ public:
     void mouseEvent(QEvent* event);
     void wheelEvent(QEvent* event);
 
-    QQuaternion getRotate();
+    QVector<QQuaternion> getRotate();
     QVector3D getTranslate();
     static InputEngine *getInstance();
 
@@ -33,7 +33,8 @@ private:
 
     QVector2D m_mouseCoordinates;
 
-    QQuaternion m_rotateDelta;
+    QQuaternion m_rotateXDelta;
+    QQuaternion m_rotateYDelta;
     QVector3D m_translateDelta;
 
 };

@@ -17,9 +17,10 @@ SOURCES += \
         graphicsengine.cpp \
         inputengine.cpp \
         materiallib.cpp \
-        objectabstractfactory.cpp \
+        modelloader.cpp \
         objectbuilder.cpp \
         physicsengine.cpp \
+        projectprocessor.cpp \
         scenefolder.cpp \
         scriptengine.cpp
 
@@ -29,9 +30,10 @@ HEADERS += \
     graphicsengine.h \
     inputengine.h \
     materiallib.h \
-    objectabstractfactory.h \
+    modelloader.h \
     objectbuilder.h \
     physicsengine.h \
+    projectprocessor.h \
     scenefolder.h \
     scriptengine.h
 

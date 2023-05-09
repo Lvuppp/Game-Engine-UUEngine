@@ -1,21 +1,28 @@
-#include "objectabstractfactory.h"
+#include "modelloader.h"
 
-ObjectAbstractFactory::ObjectAbstractFactory()
+ModelLoadStraregy::ModelLoadStraregy()
 {
 
 }
 
-Base3DGameObject *ObjectAbstractFactory::createObject(const QString &filePath)
+ModelLoadStraregy::~ModelLoadStraregy()
+{
+
+}
+
+OBJModelLoadStraregy::OBJModelLoadStraregy() : ModelLoadStraregy()
+{
+
+}
+
+OBJModelLoadStraregy::~OBJModelLoadStraregy()
+{
+
+}
+
+QVector<Model *> OBJModelLoadStraregy::createModel(const QString &filePath)
 {
     QFile objFile(filePath);
-
-    if(!objFile.exists()){
-        qDebug() << "cant read file";
-        return 0;
-    }
-
-    objFile.open(QIODevice::ReadOnly);
-    QTextStream stream(&objFile);
 
     QVector<QVector3D> coordinates;
     QVector<QVector2D> textureCoordinates;
@@ -24,6 +31,15 @@ Base3DGameObject *ObjectAbstractFactory::createObject(const QString &filePath)
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
     QVector<Model *> models;
+
+    if(!objFile.exists()){
+        qDebug() << "cant read file";
+        return models;
+    }
+
+    objFile.open(QIODevice::ReadOnly);
+    QTextStream stream(&objFile);
+
     Material *material = 0;
 
     while(!stream.atEnd()){
@@ -69,7 +85,40 @@ Base3DGameObject *ObjectAbstractFactory::createObject(const QString &filePath)
     objFile.close();
 
     models.append(new Model(vertexes,indexes,material));
-    auto object = new Base3DGameObject(models);
 
-    return object;
+    return models;
 }
+
+FBXModelLoadStraregy::FBXModelLoadStraregy() : ModelLoadStraregy()
+{
+
+}
+
+FBXModelLoadStraregy::~FBXModelLoadStraregy()
+{
+
+}
+
+QVector<Model *> FBXModelLoadStraregy::createModel(const QString &filePath)
+{
+    return QVector<Model *>();
+}
+
+ModelLoader::ModelLoader(ModelLoadStraregy *strategy) : m_strategy(strategy)
+{
+
+}
+
+void ModelLoader::setStrategy(ModelLoadStraregy *strategy)
+{
+    delete m_strategy;
+    m_strategy = strategy;
+}
+
+QVector<Model *> ModelLoader::createModel(const QString &filePath)
+{
+    return m_strategy->createModel(filePath);
+}
+
+
+

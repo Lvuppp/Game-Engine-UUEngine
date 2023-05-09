@@ -7,19 +7,28 @@ class SceneFolder
 {
 public:
     SceneFolder();
+    ~SceneFolder();
 
-    Scene *createScene();
-    Scene *setCurrentScene(int id);
+
+    bool createScene(const QString &sceneName);
+    Scene *setCurrentScene(const QString &sceneName);
+    Scene *currentScene();
 
 public:
-    void addObjectInCurrentScene(Base3DGameObject *object);
-    void addLight(Lighting *lighting);
-    void addCamera(Camera *camera);
+    void addObject(const QString &objectName);
+    void addLight(const QString &lightName);
+    void addCamera(const QString &cameraName);
     void setSkyBox(QImage skyBoxImage);
+    void setCurrentCamera(const QString &cameraName);
+
+public:
+    Base3DGameObject *object(const QString &objectName);
+    Camera *camera(const QString &objectName);
+    Lighting *lighting(const QString &objectName);
 
 private:
     Scene *m_currentScene;
-    QVector<Scene *> m_scenes;
+    QHash<QString, Scene *> m_scenes;
 };
 
 #endif // SCENEFOLDER_H

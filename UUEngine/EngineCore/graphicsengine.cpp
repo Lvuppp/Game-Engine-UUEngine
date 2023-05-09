@@ -7,6 +7,8 @@ GraphicsEngine::GraphicsEngine()
 
 GraphicsEngine::~GraphicsEngine()
 {
+    delete m_frameBuffer;
+    delete m_functions;
 }
 
 void GraphicsEngine::initGraphics()
@@ -19,8 +21,7 @@ void GraphicsEngine::initGraphics()
 
     initShaders();
 
-
-    ////////
+    /// создания буффера для отображениыя тени
     m_frameBufferHeight = 1024;
     m_frameBufferWidth = 1024;
 
@@ -28,8 +29,10 @@ void GraphicsEngine::initGraphics()
 
     m_projectionLightMatrix.setToIdentity();
     m_projectionLightMatrix.ortho(-40.0f, 40.0f, -40.0f, 40.0f, -40.0f, 40.0f); // можно параметризировать
+
     float m_LightRotateY = 50;
     float m_LightRotateX = 40;
+
     m_shadowLightMatrix.setToIdentity();
     m_shadowLightMatrix.rotate(m_LightRotateX, 1.0f, 0.0f, 0.0f); // * Важен порядок
     m_shadowLightMatrix.rotate(m_LightRotateY, 0.0f, 1.0f, 0.0f); // *
@@ -37,22 +40,6 @@ void GraphicsEngine::initGraphics()
     m_lightMatrix.setToIdentity();
     m_lightMatrix.rotate(-m_LightRotateY, 0.0f, 1.0f, 0.0f); // *
     m_lightMatrix.rotate(-m_LightRotateX, 1.0f, 0.0f, 0.0f); // *
-
-    ////////
-
-    m_currentScene = new Scene();
-
-    m_engineCamera = new Camera();
-    m_engineCamera->translate(QVector3D(0.0f, 1.0f, -5.0));
-    m_engineLighting = new Lighting();
-    m_currentScene->addGameObject(factory.createObject("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Models/TestModel/Stone.obj"));
-    m_currentScene->addGameObject(new Base3DGameObject(builder.createCube(20.0f, 1.0f, 20.0f)));
-    m_currentScene->gameObjectById(1)->model().last()->setDiffuseMap(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"));
-    m_currentScene->gameObjectById(1)->translate(QVector3D(0.0f,0.0f,0.0f));
-    m_currentScene->addGameObject(new Base3DGameObject(builder.createCube(0.5f,0.5f,0.5)));
-    m_currentScene->gameObjectById(2)->translate(QVector3D(10.0f,1.5f,1.0f));
-    m_currentScene->gameObjectById(2)->model().last()->setDiffuseMap(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"));
-    m_currentScene->gameObjectById(2)->model().last()->setNormalMap(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/normal.jpeg"));
 }
 
 void GraphicsEngine::paintScene()
@@ -85,7 +72,8 @@ void GraphicsEngine::paintScene()
     m_skyBoxShaderProgram.bind();
 
     m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
-    m_engineCamera->draw(&m_skyBoxShaderProgram,m_functions);
+    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,m_functions);
+
     QMatrix4x4 mat;
     mat.setToIdentity();
     m_currentScene->skybox()->model()->drawModel(mat,&m_skyBoxShaderProgram,m_functions);
@@ -106,7 +94,7 @@ void GraphicsEngine::paintScene()
     m_sceneShaderProgram.setUniformValue("u_lightPower", 1.0f); // сила свечения
 
     //m_engineLighting->draw(&m_sceneShaderProgram, m_functions);
-    m_engineCamera->draw(&m_sceneShaderProgram,m_functions);
+    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,m_functions);
 
     for (auto object : m_currentScene->gameObjects()) {
         object->draw(&m_sceneShaderProgram,m_functions);
@@ -175,22 +163,21 @@ void GraphicsEngine::initShaders()
     qDebug() << "End initialize shaders";
 }
 
-void GraphicsEngine::rotateModelViewMatrix(QQuaternion rotation)
+void GraphicsEngine::rotateModelViewMatrix(QVector<QQuaternion> rotation)
 {
-    m_engineCamera->rotate(rotation);
+    m_currentScene->currentCamera()->rotate(rotation[0]);
+    m_currentScene->currentCamera()->rotate(rotation[1]);
 }
 
 void GraphicsEngine::translateModelViewMatrix(QVector3D translation)
 {
-    m_engineCamera->translate(translation);
+    m_currentScene->currentCamera()->translate(translation);
 }
 
-
-void GraphicsEngine::loadScene(Scene *scene)
+void GraphicsEngine::setCurrentScene(Scene *scene)
 {
     m_currentScene = scene;
 }
-
 
 GraphicsEngine *GraphicsEngine::getInstance()
 {
