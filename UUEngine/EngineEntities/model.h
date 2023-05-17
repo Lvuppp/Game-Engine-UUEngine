@@ -18,8 +18,8 @@ public:
     void calculateTBN(QVector<VertexData> &vertexes);
     void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0);
 
-    void setDiffuseMap(QImage texture);
-    void setNormalMap(QImage texture);
+    void setDiffuseMap(QString texture);
+    void setNormalMap(QString texture);
     Material *material() const;
     void setMaterial(Material *newMaterial);
 

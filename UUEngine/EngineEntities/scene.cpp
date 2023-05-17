@@ -2,26 +2,42 @@
 
 Scene::Scene()
 {
-    m_skybox = new SkyBox(100.0f,QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/skybox3.png"));
+
 }
 
 Scene::~Scene()
 {
-    for(auto object : m_gameObjects)
-        delete object;
+    for (auto it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it) {
+        delete it.value();
+    }
+    m_gameObjects.clear();
 
-    for(auto camera : m_cameras)
-        delete camera;
+    // Удаление камер
+    for (auto it = m_cameras.begin(); it != m_cameras.end(); ++it) {
+        delete *it;
+    }
+    m_cameras.clear();
 
-    for(auto lighting : m_lightings)
-        delete lighting;
+    // Удаление освещения
+    for (auto it = m_lightings.begin(); it != m_lightings.end(); ++it) {
+        delete *it;
+    }
+    m_lightings.clear();
 }
 
-bool Scene::addGameObject(const QString &name)
+bool Scene::addGameObject(const QString &name, ModelType modelType, QVector<Model *> model, const QString &modelPath)
 {
     if(m_gameObjects.contains(name)) return false;
 
-    m_gameObjects.insert(name, new Base3DGameObject());
+    m_gameObjects.insert(name, new Base3DGameObject(modelType, model, modelPath));
+    return true;
+}
+
+bool Scene::addGameObject(const QString &name, ModelType modelType, Model *model, const QString &modelPath)
+{
+    if(m_gameObjects.contains(name)) return false;
+
+    m_gameObjects.insert(name, new Base3DGameObject(modelType, model, modelPath));
     return true;
 }
 
@@ -40,6 +56,14 @@ bool Scene::addCamera(const QString &name)
     m_cameras.insert(name, new Camera());
     return true;
 }
+
+bool Scene::setSkybox(Model *model)
+{
+    m_skybox = new SkyBox(model);
+    return true;
+}
+
+
 QVector<Lighting*> Scene::lighings() const
 {
     return m_lightings.values();
@@ -48,6 +72,26 @@ QVector<Lighting*> Scene::lighings() const
 QVector<Base3DGameObject *> Scene::gameObjects() const
 {
     return m_gameObjects.values();
+}
+
+QVector<Camera *> Scene::cameras() const
+{
+    return m_cameras.values();
+}
+
+QHash<QString, Lighting *> Scene::lighingsHash() const
+{
+    return m_lightings;
+}
+
+QHash<QString, Base3DGameObject *> Scene::gameObjectsHash() const
+{
+    return m_gameObjects;
+}
+
+QHash<QString, Camera *> Scene::camerasHash() const
+{
+    return m_cameras;
 }
 
 Base3DGameObject *Scene::gameObject(const QString &objectName) const

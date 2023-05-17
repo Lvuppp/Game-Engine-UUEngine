@@ -11,6 +11,16 @@ Lighting::~Lighting()
 
 }
 
+void Lighting::addScript(QString script)
+{
+    m_scriptsNames.append(script);
+}
+
+QVector<QString> Lighting::scripts()
+{
+    return m_scriptsNames;
+}
+
 void Lighting::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
 {
     shaderProgram->setUniformValue("u_isDrawDynamic", m_isLightingDynamic);// освещение динамическое или статическое

@@ -10,31 +10,31 @@ ScriptEngine::~ScriptEngine()
 
 void ScriptEngine::loadScript(Base3DGameObject *object)
 {
-//    QStringList filters;
-//    filters << "*.cpp"; // добавить фильтр для поиска только файлов с расширением .cpp
-//    currentDirectory.setNameFilters(filters);
+    QStringList filters;
+    filters << "*.so"; // добавить фильтр для поиска только файлов с расширением .cpp
+    currentDirectory.setNameFilters(filters);
 
-//    auto scriptsFiles = currentDirectory.entryInfoList(QDir::Files);
-//    if(scriptsFiles.empty()) return;
+    auto scriptsFiles = currentDirectory.entryInfoList(QDir::Files);
+    if(scriptsFiles.empty()) return;
 
-//    QString dllCreatorCommand = "g++ ";
-//    QString dllParams = "-shared -fPIC -o scripts_library.so"; // параметры должны быть через пробел
+    QString dllCreatorCommand = "g++ ";
+    QString dllParams = "-shared -fPIC -o scripts_library.so"; // параметры должны быть через пробел
 
-//    foreach (QFileInfo file, scriptsFiles) {
-//        dllCreatorCommand += "Scripts/" + file.fileName() + " ";
-//    }
+    foreach (QFileInfo file, scriptsFiles) {
+        dllCreatorCommand += "Scripts/" + file.fileName() + " ";
+    }
 
-//    dllCreatorCommand += dllParams;
+    dllCreatorCommand += dllParams;
 
-//    int isDLLCreated = system(dllCreatorCommand.toStdString().c_str());
-//    if (isDLLCreated != 0)
-//    {
-//        qCritical() << "Error compiling library";
-//        return;
-//    }
+    int isDLLCreated = system(dllCreatorCommand.toStdString().c_str());
+    if (isDLLCreated != 0)
+    {
+        qCritical() << "Error compiling library";
+        return;
+    }
     typedef void (*my_function_t)(Base3DGameObject *);
 
-    void* my_library = dlopen("./libcube.so.1.0.0", RTLD_NOW | RTLD_GLOBAL);
+    void* my_library = dlopen("./libcube.so", RTLD_NOW | RTLD_GLOBAL);
 
     // Проверяем, успешно ли загрузилась библиотека
     if (my_library == NULL)

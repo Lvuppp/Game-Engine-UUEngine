@@ -9,7 +9,14 @@ public:
     Camera();
     ~Camera();
 
+
+    void addScript(QString);
+    QVector<QString> scripts();
+
     void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
+
+private:
+    QVector<QString> m_scriptsNames;
 
 };
 

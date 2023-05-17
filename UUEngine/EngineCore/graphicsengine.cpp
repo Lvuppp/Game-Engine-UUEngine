@@ -119,46 +119,32 @@ void GraphicsEngine::resizeScene(int w,int h)
 void GraphicsEngine::initShaders()
 {
     qDebug() << "Start initialize shaders";
-    
-    if(!m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                               "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/vshader.vsh")){
-        qDebug() << "BROKEN SHADER!";
-    }
-    
-    if(!m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                               "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/fshader.fsh")){
-        qDebug() << "BROKEN SHADER!";
+
+    try {
+        m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vshader.vsh");
+        m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fshader.fsh");
+        m_sceneShaderProgram.link();
+
+    } catch (...) {
+        throw std::runtime_error("Broken main engine shaders!");
     }
 
-    if(!m_sceneShaderProgram.link()){
-        qDebug() << "BROKEN LINKING!";
-    }
-    if(!m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                                      "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/vdepth.vsh")){
-        qDebug() << "BROKEN SHADER!";
+    try {
+
+        m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vdepth.vsh");
+        m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fdepth.fsh");
+        m_depthShaderProgram.link();
+
+    } catch (...) {
+        throw std::runtime_error("Broken depth shaders!");
     }
 
-    if(!m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                                      "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/fdepth.fsh")){
-        qDebug() << "BROKEN SHADER!";
-    }
-
-    if(!m_depthShaderProgram.link()){
-        qDebug() << "BROKEN LINKING!";
-    }
-
-    if(!m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment,
-                                                "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/fskybox.fsh")){
-        qDebug() << "BROKEN SHADER!";
-    }
-
-    if(!m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex,
-                                                "/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Shaders/vskybox.vsh")){
-        qDebug() << "BROKEN SHADER!";
-    }
-
-    if(!m_skyBoxShaderProgram.link()){
-        qDebug() << "BROKEN LINKING!";
+    try {
+        m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fskybox.fsh");
+        m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vskybox.vsh");
+        m_skyBoxShaderProgram.link();
+    } catch (...) {
+        throw std::runtime_error("Broken skybox shaders!");
     }
 
     qDebug() << "End initialize shaders";

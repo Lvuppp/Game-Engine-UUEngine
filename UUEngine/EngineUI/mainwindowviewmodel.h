@@ -1,29 +1,29 @@
-#ifndef SCENEWIDGET_H
-#define SCENEWIDGET_H
+#ifndef MAINWINDOWVIEWMODEL_H
+#define MAINWINDOWVIEWMODEL_H
 
 #include "enginecore.h"
 
 #include <QOpenGLWidget>
+#include <QVBoxLayout>
 #include <QMouseEvent>
 #include <QWheelEvent>
 
-class SceneWidget : public QOpenGLWidget
+class MainWindowViewModel : public QOpenGLWidget
 {
     Q_OBJECT
 public:
-    SceneWidget(QWidget *parent);
+    MainWindowViewModel(QWidget *parent);
 
 signals:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
     void createObjects();
+    void setProjectLayout(QLayout *layout);
 
 public slots:
     void updateGraphics();
-
-public:
-    void testLoadFromUI();
+    void loadProject();
 
 private:
     void initializeGL() override;
@@ -33,4 +33,4 @@ private:
     EngineCore* engine;
 };
 
-#endif // SCENEWIDGET_H
+#endif // MAINWINDOWVIEWMODEL_H

@@ -11,6 +11,14 @@
 #include <QQuaternion>
 
 //применить паттерн стратегия
+enum class InputMode{
+    CameraMove,
+    Move,
+    Rotate,
+    Create,
+    Edit
+};
+
 class InputEngine
 {
 public:

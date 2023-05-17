@@ -7,19 +7,31 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    scene = new SceneWidget(ui->openGLWidget);
-    scene->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
+
+    m_viewModel = new MainWindowViewModel(ui->openGLWidget);
+    m_viewModel->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
+
+
+    connect(m_viewModel, &MainWindowViewModel::setProjectLayout, this, &MainWindow::loadProjectStructure);
+
+    ui->moveButton->setIcon(QIcon(":/UIImages/translate.png"));
+    ui->rotateButton->setIcon(QIcon(":/UIImages/rotate.png"));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete scene;
+    delete m_viewModel;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    scene->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
     QMainWindow::resizeEvent(event);
+    m_viewModel->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 }
 
+void MainWindow::loadProjectStructure(QLayout *layout)
+{
+    ui->projectFrame->setLayout(layout);
+
+}

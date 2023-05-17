@@ -5,17 +5,17 @@ Base3DGameObject::Base3DGameObject():
 {
 }
 
-Base3DGameObject::Base3DGameObject(Model *model)
-{
-    setModel(model);
-}
-
-Base3DGameObject::Base3DGameObject(QVector<Model *> models):
+Base3DGameObject::Base3DGameObject(ModelType modelType, QVector<Model *>models, QString modelPath):
     BaseEngineObject()
 {
-    setModel(models);
+    setModel(modelType, models, modelPath);
 }
 
+Base3DGameObject::Base3DGameObject(ModelType modelType, Model *models, QString modelPath):
+    BaseEngineObject()
+{
+    setModel(modelType, models, modelPath);
+}
 Base3DGameObject::~Base3DGameObject()
 {
     for(auto model : m_modelParticulars){
@@ -23,19 +23,43 @@ Base3DGameObject::~Base3DGameObject()
     }
 }
 
+void Base3DGameObject::addScript(QString script)
+{
+    m_scriptsName.append(script);
+}
+
+QVector<QString> Base3DGameObject::scripts()
+{
+    return m_scriptsName;
+}
+
 QVector<Model *> Base3DGameObject::model()
 {
     return m_modelParticulars;
 }
 
-void Base3DGameObject::setModel(QVector<Model *>models)
+QString Base3DGameObject::modelPath()
 {
-    m_modelParticulars.append(models);
+    return m_modelPath;
 }
 
-void Base3DGameObject::setModel(Model *models)
+ModelType Base3DGameObject::modelType()
+{
+    return m_modelType;
+}
+
+void Base3DGameObject::setModel(ModelType modelType, QVector<Model *>models, QString modelPath)
 {
     m_modelParticulars.append(models);
+    m_modelPath = modelPath;
+    m_modelType = modelType;
+}
+
+void Base3DGameObject::setModel(ModelType modelType, Model *models, QString modelPath)
+{
+    m_modelParticulars.append(models);
+    m_modelPath = modelPath;
+    m_modelType = modelType;
 }
 
 void Base3DGameObject::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)

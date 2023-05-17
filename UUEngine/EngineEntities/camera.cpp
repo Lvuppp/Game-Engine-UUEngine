@@ -12,6 +12,16 @@ Camera::~Camera()
 
 }
 
+void Camera::addScript(QString script)
+{
+    m_scriptsNames.append(script);
+}
+
+QVector<QString> Camera::scripts()
+{
+    return m_scriptsNames;
+}
+
 
 void Camera::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
 {

@@ -7,22 +7,38 @@
 #include <QImage>
 #include <QVector3D>
 
+enum class ModelType{
+    Cube,
+    Pyramide,
+    CustomeModel
+};
+
 class Base3DGameObject : public BaseEngineObject
 {
 public:
     Base3DGameObject();
-    Base3DGameObject(Model *model);
-    Base3DGameObject(QVector<Model*> models);
+    Base3DGameObject(ModelType modelType, QVector<Model *>models, QString modelPath = "");
+    Base3DGameObject(ModelType modelType, Model *models, QString modelPath = "");
 
     ~Base3DGameObject();
 
+    void addScript(QString);
+
+    QVector<QString> scripts();
     QVector<Model *> model();
-    void setModel(QVector<Model *> models);
-    void setModel(Model *models);
+    QString modelPath();
+    ModelType modelType();
+
+    void setModel(ModelType modelType, QVector<Model *>models, QString modelPath = "");
+    void setModel(ModelType modelType, Model *models, QString modelPath = "");
 
     void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
 
-protected:
+private:
     QVector<Model *> m_modelParticulars;
+    QVector<QString> m_scriptsName;
+
+    ModelType m_modelType;
+    QString m_modelPath;
 };
 #endif // BASE3DGAMEOBJECT_H

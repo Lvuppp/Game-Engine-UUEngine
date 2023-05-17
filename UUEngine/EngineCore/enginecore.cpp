@@ -8,6 +8,8 @@ EngineCore::EngineCore()
     m_graphicsEngine = GraphicsEngine::getInstance();
     m_inputEngine = InputEngine::getInstance();
     m_scriptEngine = ScriptEngine::getInstance();
+
+
 }
 ////////////////////////////////////////////////////Graphics Engine
 void EngineCore::resizeScene(int w, int h)
@@ -23,20 +25,21 @@ void EngineCore::createSimpleScene()
     m_sceneFolder->camera("Camera")->translate(QVector3D(0.0f, 1.0f, -5.0));
     m_sceneFolder->setCurrentCamera("Camera");
     m_sceneFolder->addLight("Light");
-    m_sceneFolder->addObject("Golem");
-    m_sceneFolder->addObject("Platform");
-    m_sceneFolder->addObject("Cube");
+    m_sceneFolder->addObject("Golem", ModelType::CustomeModel, m_modelLoader->createModel(":/Models/TestModel/Stone.obj"), ":/Models/TestModel/Stone.obj");
+    m_sceneFolder->addObject("Platform", ModelType::Cube, m_objectBuilder->createCube(20.0f, 1.0f, 20.0f));
+    m_sceneFolder->addObject("Cube", ModelType::Cube, m_objectBuilder->createCube(0.5f, 0.5f, 0.5f));
+    m_sceneFolder->setSkyBox(m_objectBuilder->createSkybox(100.0f, ":/Textures/skybox3.png"));
 
-    m_sceneFolder->object("Platform")->setModel(m_objectBuilder->createCube(20.0f, 1.0f, 20.0f));
-    m_sceneFolder->object("Cube")->setModel(m_objectBuilder->createCube(0.5f, 0.5f, 0.5f));
     m_sceneFolder->object("Cube")->translate(QVector3D(10.0f,1.5f,1.0f));
 
-    m_sceneFolder->object("Golem")->setModel(m_modelLoader->createModel("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Models/TestModel/Stone.obj"));
-    m_sceneFolder->object("Platform")->model().last()->setDiffuseMap(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"));
-    m_sceneFolder->object("Cube")->model().last()->setDiffuseMap(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/texture1.jpg"));
-    m_sceneFolder->object("Cube")->model().last()->setNormalMap(QImage("/home/egorbagrovets/OOP_Coursework/UUEngine/EngineCore/Textures/normal.jpeg"));
+    m_sceneFolder->object("Platform")->model().last()->setDiffuseMap(":/Textures/texture1.jpg");
+    m_sceneFolder->object("Platform")->model().last()->setNormalMap(":/Textures/normal2.jpg");
+    m_sceneFolder->object("Cube")->model().last()->setDiffuseMap(":/Textures/rockTexture.jpeg");
+    m_sceneFolder->object("Cube")->model().last()->setNormalMap(":/Textures/normal.jpeg");
+
 
     m_graphicsEngine->setCurrentScene(m_sceneFolder->currentScene());
+
 }
 void EngineCore::paintScene()
 {
@@ -47,7 +50,8 @@ void EngineCore::initGraphicsEngine()
 {
     m_graphicsEngine->initGraphics();
     createSimpleScene();
-    m_scriptEngine->loadScript(m_sceneFolder->object("Golem"));
+    ProjectProcessor::saveProject("", m_sceneFolder->scenes(), "project");
+    //m_scriptEngine->loadScript(m_sceneFolder->object("Golem"));
 }
 
 ////////////////////////////////////////////////////Input Engine

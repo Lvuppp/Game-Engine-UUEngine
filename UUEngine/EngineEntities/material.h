@@ -26,19 +26,22 @@ public:
     const float &shinnes() const;
 
     void setDiffuseMap(const QString &&path);
-    void setDiffuseMap(const QImage &image);
     const QImage &diffuseMap() const;
+    QString diffuseMapPath() const;
 
     bool isDiffuseMapSet() const;
 
     void setNormalMap(const QString &&path);
-    void setNormalMap(const QImage &image);
     const QImage &normalMap() const;
+    QString normalMapPath() const;
 
     bool isNormalMapSet() const;
 
+
 private:
     QString m_mtlName;
+    QString m_diffuseMapPath;
+    QString m_normalMapPath;
 
     QVector3D m_diffuseColor = QVector3D(0.7f,0.7f,0.7f);
     QVector3D m_ambienceColor = QVector3D(1.0f,1.0f,1.0f);

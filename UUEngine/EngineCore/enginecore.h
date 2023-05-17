@@ -6,7 +6,10 @@
 #include "scriptengine.h"
 #include "inputengine.h"
 #include "scenefolder.h"
-
+#include "modelloader.h"
+#include "objectbuilder.h"
+#include "base3dgameobject.h"
+#include "projectprocessor.h"
 //#include"camera.h"
 
 class EngineCore : public QObject

@@ -64,11 +64,11 @@ void Model::initModel(QVector<VertexData> &vertexes, QVector<GLuint> &indexes, M
     m_material = material;
 
     if(m_material->isDiffuseMapSet()){
-        setDiffuseMap(m_material->diffuseMap());
+        setDiffuseMap(m_material->diffuseMapPath());
     }
 
     if(m_material->isNormalMapSet()){
-        setNormalMap(m_material->normalMap());
+        setNormalMap(m_material->normalMapPath());
     }
 }
 
@@ -171,9 +171,9 @@ void Model::calculateTBN(QVector<VertexData> &vertexes)
 
 
 
-void Model::setDiffuseMap(QImage texture)
+void Model::setDiffuseMap(QString texture)
 {
-    m_material->setDiffuseMap(texture);
+    m_material->setDiffuseMap(std::move(texture));
     m_diffuseMap = new QOpenGLTexture(m_material->diffuseMap().mirrored());
 
     m_diffuseMap->setMinificationFilter(QOpenGLTexture::Nearest);
@@ -181,9 +181,9 @@ void Model::setDiffuseMap(QImage texture)
     m_diffuseMap->setWrapMode(QOpenGLTexture::Repeat);
 }
 
-void Model::setNormalMap(QImage texture)
+void Model::setNormalMap(QString texture)
 {
-    m_material->setNormalMap(texture);
+    m_material->setNormalMap(std::move(texture));
     m_normalMap = new QOpenGLTexture(m_material->normalMap().mirrored());
 
     m_normalMap->setMinificationFilter(QOpenGLTexture::Nearest);

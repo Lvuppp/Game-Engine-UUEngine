@@ -8,11 +8,11 @@
 class SkyBox
 {
 public:
-    SkyBox(const float& size, QImage texture);
+    SkyBox(Model *model);
     ~SkyBox();
 
     Model *model();
-    void setDiffuseMap(QImage texture);
+    void setDiffuseMap(QString texturePath);
 
 private:
     Model *m_model;

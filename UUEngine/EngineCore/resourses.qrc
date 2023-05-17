@@ -1,17 +1,1 @@
-<RCC>
-    <qresource prefix="/">
-        <file>Shaders/vshader.vsh</file>
-        <file>Shaders/fshader.fsh</file>
-        <file>Textures/texture1.jpg</file>
-        <file>Shaders/fskybox.fsh</file>
-        <file>Shaders/vskybox.vsh</file>
-        <file>Textures/skybox.jpg</file>
-        <file>Textures/skyboxTexture.png</file>
-        <file>Textures/skybox4.png</file>
-        <file>Textures/skybox3.png</file>
-        <file>Textures/skybox2.jpg</file>
-        <file>Textures/rockTexture.jpeg</file>
-        <file>Shaders/vdepth.vsh</file>
-        <file>Shaders/fdepth.fsh</file>
-    </qresource>
-</RCC>
+<RCC/>

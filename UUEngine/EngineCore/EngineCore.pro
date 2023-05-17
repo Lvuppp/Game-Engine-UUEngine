@@ -37,8 +37,7 @@ HEADERS += \
     scenefolder.h \
     scriptengine.h
 
-RESOURCES += \
-    resourses.qrc
+RESOURCES +=
 
 win32: LIBS += -lopengl32 #подключение на windows
 

@@ -2,10 +2,6 @@
 #define GRAPHICSENGINE_H
 
 #include "scene.h"
-#include "base3dgameobject.h"
-#include "skybox.h"
-#include "modelloader.h"
-#include "objectbuilder.h"
 
 #include <QtOpenGL>
 #include <GL/gl.h>

@@ -1,9 +1,9 @@
 #ifndef MATERIALLIB_H
 #define MATERIALLIB_H
-#include <QVector>
 
 #include "material.h"
 
+#include <QVector>
 #include <QFile>
 #include <QTextStream>
 #include <QFileInfo>

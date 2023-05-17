@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "scenewidget.h"
+#include "mainwindowviewmodel.h"
 #include "baseengineobject.h"
 #include <QMainWindow>
 #include <QResizeEvent>
@@ -19,10 +19,13 @@ public:
     ~MainWindow();
 
     void resizeEvent(QResizeEvent *event) override;
+public slots:
+    void loadProjectStructure(QLayout *layout);
+
 private:
     Ui::MainWindow *ui;
 
-    SceneWidget *scene;
+    MainWindowViewModel *m_viewModel;
 
 };
 #endif // MAINWINDOW_H

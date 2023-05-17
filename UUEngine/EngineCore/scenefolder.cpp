@@ -19,8 +19,8 @@ bool SceneFolder::createScene(const QString &sceneName)
     m_scenes.insert(sceneName, new Scene());
     m_currentScene = m_scenes.take(sceneName);
 
-    m_currentScene->addCamera("Camera");
-    m_currentScene->addLighting("Light");
+    m_currentScene->addCamera("DefaultCamera");
+    m_currentScene->addLighting("DefaultLight");
 
     return true;
 }
@@ -36,9 +36,14 @@ Scene *SceneFolder::currentScene()
     return m_currentScene;
 }
 
-void SceneFolder::addObject(const QString &objectName)
+void SceneFolder::addObject(const QString &objectName, ModelType modelType, QVector<Model *> model, const QString &modelPath)
 {
-    m_currentScene->addGameObject(objectName);
+    m_currentScene->addGameObject(objectName, modelType, model, modelPath);
+}
+
+void SceneFolder::addObject(const QString &objectName, ModelType modelType, Model *model, const QString &modelPath)
+{
+    m_currentScene->addGameObject(objectName, modelType, model, modelPath);
 }
 
 void SceneFolder::addLight(const QString &lightName)
@@ -51,9 +56,9 @@ void SceneFolder::addCamera(const QString &cameraName)
     m_currentScene->addCamera(cameraName);
 }
 
-void SceneFolder::setSkyBox(QImage skyBoxImage)
+void SceneFolder::setSkyBox(Model *model)
 {
-    m_currentScene->skybox()->setDiffuseMap(skyBoxImage);
+    m_currentScene->setSkybox(model);
 }
 
 void SceneFolder::setCurrentCamera(const QString &cameraName)
@@ -73,5 +78,10 @@ Camera *SceneFolder::camera(const QString &objectName)
 
 Lighting *SceneFolder::lighting(const QString &objectName)
 {
-   return m_currentScene->lighting(objectName);
+    return m_currentScene->lighting(objectName);
+}
+
+QHash<QString, Scene *> SceneFolder::scenes() const
+{
+    return m_scenes;
 }

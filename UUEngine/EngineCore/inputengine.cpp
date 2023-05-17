@@ -33,10 +33,9 @@ void InputEngine::mouseEvent(QEvent* event)
         m_rotateDelta = QQuaternion::fromAxisAndAngle(axis, angle);
 
     }
-    else if(event->type() == QEvent::Type::MouseButtonPress){
+    if(event->type() == QEvent::Type::MouseButtonPress){
         m_mouseCoordinates = QVector2D(mouseEvent->localPos());
     }
-
     mouseEvent->accept();
 }
 

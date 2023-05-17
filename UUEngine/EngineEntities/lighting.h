@@ -9,11 +9,16 @@ public:
     Lighting();
     ~Lighting();
 
+    void addScript(QString);
+    QVector<QString> scripts();
+
     void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
 
 private:
     float m_lightPower;
     bool m_isLightingDynamic;
+
+    QVector<QString> m_scriptsNames;
 
 };
 

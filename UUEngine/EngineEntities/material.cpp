@@ -57,13 +57,8 @@ const float &Material::shinnes() const
 
 void Material::setDiffuseMap(const QString &&path)
 {
+    m_diffuseMapPath = std::move(path);
     m_diffuseMap = QImage(std::move(path));
-    m_isUsingDiffuseMap = true;
-}
-
-void Material::setDiffuseMap(const QImage &image)
-{
-    m_diffuseMap = image;
     m_isUsingDiffuseMap = true;
 }
 
@@ -80,14 +75,7 @@ bool Material::isDiffuseMapSet() const
 void Material::setNormalMap(const QString &&path)
 {
     m_normalMap = QImage(std::move(path));
-
-    m_isUsingNormalMap = true;
-}
-
-void Material::setNormalMap(const QImage &image)
-{
-    m_normalMap = image;
-
+    m_normalMapPath = std::move(path);
     m_isUsingNormalMap = true;
 }
 
@@ -99,4 +87,14 @@ const QImage &Material::normalMap() const
 bool Material::isNormalMapSet() const
 {
     return m_isUsingNormalMap;
+}
+
+QString Material::diffuseMapPath() const
+{
+    return m_diffuseMapPath;
+}
+
+QString Material::normalMapPath() const
+{
+    return m_normalMapPath;
 }
