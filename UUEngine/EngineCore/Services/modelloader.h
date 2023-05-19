@@ -2,8 +2,8 @@
 #define MODELLOADER_H
 
 #include "base3dgameobject.h"
-#include "materiallib.h"
-
+#include "Folders/materiallib.h"
+#include "projectinfo.h"
 
 class ModelLoadStraregy
 {
@@ -39,7 +39,7 @@ private:
 
 class ModelLoader{
 public:
-    explicit ModelLoader(ModelLoadStraregy* strategy = 0);
+    explicit ModelLoader(ModelLoadStraregy* strategy = nullptr);
 
     void setStrategy(ModelLoadStraregy *strategy);
     QVector<Model *> createModel(const QString& filePath);

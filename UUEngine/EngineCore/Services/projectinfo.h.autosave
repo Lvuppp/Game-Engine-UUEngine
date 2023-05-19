@@ -1,0 +1,13 @@
+#ifndef PROJECTINFO_H
+#define PROJECTINFO_H
+
+
+class ProjectInfo
+{
+public:
+    ProjectInfo();
+    
+priva
+};
+
+#endif // PROJECTINFO_H

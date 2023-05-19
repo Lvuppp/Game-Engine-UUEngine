@@ -17,7 +17,7 @@ bool SceneFolder::createScene(const QString &sceneName)
     if(m_scenes.contains(sceneName)) return false;
 
     m_scenes.insert(sceneName, new Scene());
-    m_currentScene = m_scenes.take(sceneName);
+    m_currentScene = m_scenes.value(sceneName);
 
     m_currentScene->addCamera("DefaultCamera");
     m_currentScene->addLighting("DefaultLight");
@@ -27,7 +27,7 @@ bool SceneFolder::createScene(const QString &sceneName)
 
 Scene *SceneFolder::setCurrentScene(const QString &sceneName)
 {
-    m_currentScene = m_scenes.take(sceneName);
+    m_currentScene = m_scenes.value(sceneName);
     return m_currentScene;
 }
 

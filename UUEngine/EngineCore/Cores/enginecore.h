@@ -5,11 +5,12 @@
 #include "physicsengine.h"
 #include "scriptengine.h"
 #include "inputengine.h"
-#include "scenefolder.h"
-#include "modelloader.h"
-#include "objectbuilder.h"
-#include "base3dgameobject.h"
-#include "projectprocessor.h"
+#include "Folders/scenefolder.h"
+#include "Services/modelloader.h"
+#include "Services/modelbuilder.h"
+#include "Services/projectprocessor.h"
+
+#include <QVBoxLayout>
 //#include"camera.h"
 
 class EngineCore : public QObject
@@ -17,12 +18,14 @@ class EngineCore : public QObject
     Q_OBJECT
 
 public:
-    EngineCore();
-// иницализация всех частей движка
+// intitializing of all engine parts
     void initGraphicsEngine();
     void initPhysicsEngine();
     void initScriptEngine();
     void initInputEngine();
+    void initProjectProcessor(QVBoxLayout *layout);
+
+    static EngineCore *getInstance();
 
 //graphics engine part
 public:
@@ -43,10 +46,17 @@ public:
 //script engine part
 public:
 
-//scene folder part
+//scene project part
 public:
     void setCurrentScene();
     void createSimpleScene();
+
+signals:
+    void projectLoaded();
+
+public slots:
+    void loadProject(QString path);
+    void saveProject(QString path);
 
 
 private:
@@ -56,10 +66,19 @@ private:
     ScriptEngine *m_scriptEngine;
     InputEngine *m_inputEngine;
 
-    SceneFolder *m_sceneFolder;
-    ModelLoader *m_modelLoader;
-    ObjectBuilder *m_objectBuilder;
+    ProjectProcessor *m_projectProcessor;
+    ModelLoader m_modelLoader;
+    ModelBuilder m_modelBuilder;
 
+    SceneFolder *m_sceneFolder;
+
+    EngineCore();
+
+    EngineCore(const GraphicsEngine&) = delete;
+    EngineCore& operator=(const GraphicsEngine&) = delete;
+
+
+    static EngineCore* m_instance;
 };
 
 #endif // ENGINECORE_H

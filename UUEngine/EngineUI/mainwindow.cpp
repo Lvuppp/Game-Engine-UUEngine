@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_viewModel = new MainWindowViewModel(ui->openGLWidget);
     m_viewModel->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
-
+    m_projectWidget = new ProjectWidgetViewModel(ui->projectHierarchyFrame);
 
     connect(m_viewModel, &MainWindowViewModel::setProjectLayout, this, &MainWindow::loadProjectStructure);
 
@@ -32,6 +32,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
 void MainWindow::loadProjectStructure(QLayout *layout)
 {
-    ui->projectFrame->setLayout(layout);
+    ui->projectHierarchyFrame->setLayout(layout);
 
 }

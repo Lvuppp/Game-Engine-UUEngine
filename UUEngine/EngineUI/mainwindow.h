@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include "mainwindowviewmodel.h"
-#include "baseengineobject.h"
+#include "projectwidgetviewmodel.h"
+
 #include <QMainWindow>
 #include <QResizeEvent>
 
@@ -25,6 +26,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
 
+    ProjectWidgetViewModel * m_projectWidget;
     MainWindowViewModel *m_viewModel;
 
 };

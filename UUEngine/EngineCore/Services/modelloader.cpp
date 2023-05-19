@@ -111,7 +111,9 @@ ModelLoader::ModelLoader(ModelLoadStraregy *strategy) : m_strategy(strategy)
 
 void ModelLoader::setStrategy(ModelLoadStraregy *strategy)
 {
-    delete m_strategy;
+    if(m_strategy != nullptr){
+        delete m_strategy;
+    }
     m_strategy = strategy;
 }
 

@@ -30,18 +30,6 @@ varying highp vec2 v_texcoord;
 varying highp mat3 v_tbnMatrix;
 varying highp vec4 v_lightDirection;
 
-//highp float SamplerShadowMap(sampler2D map, vec2 coords, float compare){
-
-//    vec4 v = texture2D(map, coords);
-//    float value = v.x * 255.0f + (v.y * 255.0f + (v.z * 255.0f + v.w) / 255.0f) / 255.0f;
-//    return step(compare, value);
-
-//}
-//highp float CalcShadowAmount(sampler2D map, vec4 initialShadowCoords){
-
-//    vec3 transformedCoords = (initialShadowCoords.xyz / initialShadowCoords.w)  * vec3(0.5) + vec3(0.5);
-//    return SamplerShadowMap(map, transformedCoords.xy, transformedCoords.z * 255.0 - 0.5);
-//}
 
 
 highp float SamplerShadowMap(sampler2D map, vec2 coords, float compare)

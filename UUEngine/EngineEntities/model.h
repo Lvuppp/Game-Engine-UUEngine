@@ -17,6 +17,7 @@ public:
     void initModel(QVector<VertexData> &vertexes,QVector<GLuint> &indexes,Material *material);
     void calculateTBN(QVector<VertexData> &vertexes);
     void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0);
+    QVector<VertexData> vertexesData();
 
     void setDiffuseMap(QString texture);
     void setNormalMap(QString texture);
@@ -24,6 +25,7 @@ public:
     void setMaterial(Material *newMaterial);
 
 private:
+    QVector<VertexData> m_vertexesData;
     QOpenGLBuffer m_vertexes;
     QOpenGLBuffer m_indexes;
     QOpenGLTexture *m_diffuseMap;

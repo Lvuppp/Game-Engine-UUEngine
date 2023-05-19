@@ -23,9 +23,7 @@ public:
     QMatrix4x4 modelMatrix();
 
     //задание текущих5
-    void setScale(const float &scale);
-    void setRotation(const QQuaternion &rotation);
-    void setCoordinates(const QVector3D &coordinates);
+    void setModelMatrix(const QMatrix4x4 &modelMatrix);
 
     //изменение относительно текущих
     void translate(const QVector3D &coordinates);

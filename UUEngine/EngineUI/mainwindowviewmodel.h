@@ -1,7 +1,7 @@
 #ifndef MAINWINDOWVIEWMODEL_H
 #define MAINWINDOWVIEWMODEL_H
 
-#include "enginecore.h"
+#include "Cores/enginecore.h"
 
 #include <QOpenGLWidget>
 #include <QVBoxLayout>

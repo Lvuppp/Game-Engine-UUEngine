@@ -13,7 +13,7 @@ public:
     void addScript(QString);
     QVector<QString> scripts();
 
-    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
+    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0) override;
 
 private:
     QVector<QString> m_scriptsNames;

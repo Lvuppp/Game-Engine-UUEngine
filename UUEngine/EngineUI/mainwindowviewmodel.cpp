@@ -2,7 +2,7 @@
 
 MainWindowViewModel::MainWindowViewModel(QWidget *parent)  : QOpenGLWidget(parent)
 {
-    engine = new EngineCore();
+    engine = EngineCore::getInstance();
 
     connect(this, &MainWindowViewModel::mousePressEvent, engine, &EngineCore::getEvent);
     connect(this, &MainWindowViewModel::mouseMoveEvent, engine, &EngineCore::getEvent);

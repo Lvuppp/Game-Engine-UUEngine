@@ -18,6 +18,7 @@ SOURCES += \
         lighting.cpp \
         material.cpp \
         model.cpp \
+        modelparticle.cpp \
         scene.cpp \
         skybox.cpp \
         vertexdata.cpp
@@ -30,6 +31,7 @@ HEADERS += \
     lighting.h \
     material.h \
     model.h \
+    modelparticle.h \
     scene.h \
     skybox.h \
     vertexdata.h

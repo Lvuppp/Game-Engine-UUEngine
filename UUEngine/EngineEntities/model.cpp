@@ -49,6 +49,7 @@ void Model::initModel(QVector<VertexData> &vertexes, QVector<GLuint> &indexes, M
     }
 
     calculateTBN(vertexes);
+    m_vertexesData = vertexes;
 
     m_vertexes.create();
     m_vertexes.bind();
@@ -133,6 +134,11 @@ void Model::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shade
 
     if(m_material->isDiffuseMapSet()) m_diffuseMap->release();
     if(m_material->isNormalMapSet()) m_normalMap->release();
+}
+
+QVector<VertexData> Model::vertexesData()
+{
+    return m_vertexesData;
 }
 
 void Model::calculateTBN(QVector<VertexData> &vertexes)

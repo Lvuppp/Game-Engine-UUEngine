@@ -1,11 +1,11 @@
-#include "objectbuilder.h"
+#include "modelbuilder.h"
 
-ObjectBuilder::ObjectBuilder()
+ModelBuilder::ModelBuilder()
 {
 
 }
 
-Model *ObjectBuilder::createCube(const float &width, const float &height, const float &depth)
+Model *ModelBuilder::createCube(const float &width, const float &height, const float &depth)
 {
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
@@ -58,7 +58,7 @@ Model *ObjectBuilder::createCube(const float &width, const float &height, const 
     return new Model(vertexes,indexes, material);
 }
 
-Model *ObjectBuilder::createSkybox(const float &size, const QString &texture)
+Model *ModelBuilder::createSkybox(const float &size, const QString &texture)
 {
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
@@ -108,4 +108,9 @@ Model *ObjectBuilder::createSkybox(const float &size, const QString &texture)
     Material *material = new Material();
     material->setDiffuseMap(std::move(texture));
     return new Model(vertexes,indexes, material);
+}
+
+Model *ModelBuilder::createPyramide(const float &width, const float &height)
+{
+    return nullptr;
 }

@@ -13,11 +13,13 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    mainwindowviewmodel.cpp
+    mainwindowviewmodel.cpp \
+    projectwidgetviewmodel.cpp
 
 HEADERS += \
     mainwindow.h \
-    mainwindowviewmodel.h
+    mainwindowviewmodel.h \
+    projectwidgetviewmodel.h
 
 FORMS += \
     mainwindow.ui

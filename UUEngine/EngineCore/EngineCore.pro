@@ -12,30 +12,38 @@ CONFIG += staticlib
 
 
 SOURCES += \
-        enginecore.cpp \
-        eventhandler.cpp \
-        graphicsengine.cpp \
-        inputengine.cpp \
-        materiallib.cpp \
-        modelloader.cpp \
-        objectbuilder.cpp \
-        physicsengine.cpp \
-        projectprocessor.cpp \
-        scenefolder.cpp \
-        scriptengine.cpp
+        Cores/enginecore.cpp \
+        Services/eventhandler.cpp \
+        Cores/graphicsengine.cpp \
+        Cores/inputengine.cpp \
+        Folders/materiallib.cpp \
+        Services/modelbuilder.cpp \
+        Folders/modelfolder.cpp \
+        Services/modelloader.cpp \
+        Cores/physicsengine.cpp \
+        Services/projectprocessor.cpp \
+        Folders/scenefolder.cpp \
+        Cores/scriptengine.cpp \
+        Folders/scriptfolder.cpp \
+        Folders/texturefolder.cpp \
+        Services/projectinfo.cpp
 
 HEADERS += \
-    enginecore.h \
-    eventhandler.h \
-    graphicsengine.h \
-    inputengine.h \
-    materiallib.h \
-    modelloader.h \
-    objectbuilder.h \
-    physicsengine.h \
-    projectprocessor.h \
-    scenefolder.h \
-    scriptengine.h
+    Cores/enginecore.h \
+    Services/eventhandler.h \
+    Cores/graphicsengine.h \
+    Cores/inputengine.h \
+    Folders/materiallib.h \
+    Services/modelbuilder.h \
+    Folders/modelfolder.h \
+    Services/modelloader.h \
+    Cores/physicsengine.h \
+    Services/projectprocessor.h \
+    Folders/scenefolder.h \
+    Cores/scriptengine.h \
+    Folders/scriptfolder.h \
+    Folders/texturefolder.h \
+    Services/projectinfo.h
 
 RESOURCES +=
 
