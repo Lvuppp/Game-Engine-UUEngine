@@ -1,7 +1,7 @@
 #ifndef SCRIPTFOLDER_H
 #define SCRIPTFOLDER_H
 
-#include "baseengineobject.h"
+#include "EngineEntities/baseengineobject.h"
 
 #include <QString>
 

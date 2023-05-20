@@ -20,7 +20,7 @@ OBJModelLoadStraregy::~OBJModelLoadStraregy()
 
 }
 
-QVector<Model *> OBJModelLoadStraregy::createModel(const QString &filePath)
+QVector<ModelParticle *> OBJModelLoadStraregy::createModel(const QString &filePath)
 {
     QFile objFile(filePath);
 
@@ -30,7 +30,7 @@ QVector<Model *> OBJModelLoadStraregy::createModel(const QString &filePath)
 
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
-    QVector<Model *> models;
+    QVector<ModelParticle *> models;
 
     if(!objFile.exists()){
         qDebug() << "cant read file";
@@ -74,7 +74,7 @@ QVector<Model *> OBJModelLoadStraregy::createModel(const QString &filePath)
                 continue;
             }
 
-            models.append(new Model(vertexes,indexes,material));
+            models.append(new ModelParticle(vertexes,indexes,material));
 
             material = library.material(split[1]);
             vertexes.clear();
@@ -84,7 +84,9 @@ QVector<Model *> OBJModelLoadStraregy::createModel(const QString &filePath)
 
     objFile.close();
 
-    models.append(new Model(vertexes,indexes,material));
+    //ProjectInfo projectInfo;
+
+    models.append(new ModelParticle(vertexes,indexes,material));
 
     return models;
 }
@@ -99,9 +101,9 @@ FBXModelLoadStraregy::~FBXModelLoadStraregy()
 
 }
 
-QVector<Model *> FBXModelLoadStraregy::createModel(const QString &filePath)
+QVector<ModelParticle *>FBXModelLoadStraregy::createModel(const QString &filePath)
 {
-    return QVector<Model *>();
+    return QVector<ModelParticle *>();
 }
 
 ModelLoader::ModelLoader(ModelLoadStraregy *strategy) : m_strategy(strategy)
@@ -117,7 +119,7 @@ void ModelLoader::setStrategy(ModelLoadStraregy *strategy)
     m_strategy = strategy;
 }
 
-QVector<Model *> ModelLoader::createModel(const QString &filePath)
+QVector<ModelParticle *>ModelLoader::createModel(const QString &filePath)
 {
     return m_strategy->createModel(filePath);
 }

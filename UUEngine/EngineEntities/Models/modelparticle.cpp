@@ -1,10 +1,11 @@
-#include "model.h"
-Model::Model(): m_diffuseMap(nullptr),m_normalMap(nullptr)
+#include "modelparticle.h"
+
+ModelParticle::ModelParticle(): m_diffuseMap(nullptr),m_normalMap(nullptr)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 }
 
-Model::~Model()
+ModelParticle::~ModelParticle()
 {
     if(m_vertexes.isCreated())
         m_vertexes.destroy();
@@ -24,13 +25,13 @@ Model::~Model()
 
 }
 
-Model::Model(QVector<VertexData> &vertexes,QVector<GLuint> &indexes, Material *material)
+ModelParticle::ModelParticle(QVector<VertexData> &vertexes,QVector<GLuint> &indexes, Material *material)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-    initModel(vertexes,indexes, material);
+    initModelParticle(vertexes,indexes, material);
 }
 
-void Model::initModel(QVector<VertexData> &vertexes, QVector<GLuint> &indexes, Material *material)
+void ModelParticle::initModelParticle(QVector<VertexData> &vertexes, QVector<GLuint> &indexes, Material *material)
 {
     if(vertexes.size() == 0){
         return;
@@ -73,7 +74,7 @@ void Model::initModel(QVector<VertexData> &vertexes, QVector<GLuint> &indexes, M
     }
 }
 
-void Model::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
+void ModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
 {
 
     if(m_material->isDiffuseMapSet()){
@@ -136,12 +137,12 @@ void Model::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shade
     if(m_material->isNormalMapSet()) m_normalMap->release();
 }
 
-QVector<VertexData> Model::vertexesData()
+QVector<VertexData> ModelParticle::vertexesData()
 {
     return m_vertexesData;
 }
 
-void Model::calculateTBN(QVector<VertexData> &vertexes)
+void ModelParticle::calculateTBN(QVector<VertexData> &vertexes)
 {
 
     for (int i = 0; i < vertexes.size(); i += 3) {
@@ -177,7 +178,7 @@ void Model::calculateTBN(QVector<VertexData> &vertexes)
 
 
 
-void Model::setDiffuseMap(QString texture)
+void ModelParticle::setDiffuseMap(QString texture)
 {
     m_material->setDiffuseMap(std::move(texture));
     m_diffuseMap = new QOpenGLTexture(m_material->diffuseMap().mirrored());
@@ -187,7 +188,7 @@ void Model::setDiffuseMap(QString texture)
     m_diffuseMap->setWrapMode(QOpenGLTexture::Repeat);
 }
 
-void Model::setNormalMap(QString texture)
+void ModelParticle::setNormalMap(QString texture)
 {
     m_material->setNormalMap(std::move(texture));
     m_normalMap = new QOpenGLTexture(m_material->normalMap().mirrored());
@@ -198,12 +199,12 @@ void Model::setNormalMap(QString texture)
 
 }
 
-Material *Model::material() const
+Material *ModelParticle::material() const
 {
     return m_material;
 }
 
-void Model::setMaterial(Material *newMaterial)
+void ModelParticle::setMaterial(Material *newMaterial)
 {
     m_material = newMaterial;
 }

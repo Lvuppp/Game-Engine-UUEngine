@@ -5,7 +5,7 @@ ModelBuilder::ModelBuilder()
 
 }
 
-Model *ModelBuilder::createCube(const float &width, const float &height, const float &depth)
+SimpleModel *ModelBuilder::createCube(const float &width, const float &height, const float &depth)
 {
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
@@ -55,10 +55,10 @@ Model *ModelBuilder::createCube(const float &width, const float &height, const f
     Material *material = new Material();
     material->setDiffuseColor(QVector3D(0.5, 0.5, 0.5));
 
-    return new Model(vertexes,indexes, material);
+    return new SimpleModel(new ModelParticle(vertexes,indexes, material));
 }
 
-Model *ModelBuilder::createSkybox(const float &size, const QString &texture)
+SimpleModel *ModelBuilder::createSkybox(const float &size, const QString &texture)
 {
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
@@ -107,10 +107,10 @@ Model *ModelBuilder::createSkybox(const float &size, const QString &texture)
 
     Material *material = new Material();
     material->setDiffuseMap(std::move(texture));
-    return new Model(vertexes,indexes, material);
+    return new SimpleModel(new ModelParticle(vertexes,indexes, material));
 }
 
-Model *ModelBuilder::createPyramide(const float &width, const float &height)
+SimpleModel *ModelBuilder::createPyramide(const float &width, const float &height)
 {
     return nullptr;
 }

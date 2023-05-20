@@ -3,7 +3,7 @@
 
 #include "scene.h"
 
-#include <model.h>
+#include "Models/custommodel.h"
 
 class SceneFolder
 {

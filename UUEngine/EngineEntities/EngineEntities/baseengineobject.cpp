@@ -39,17 +39,17 @@ void BaseEngineObject::setModelMatrix(const QMatrix4x4 &modelMatrix)
 
 void BaseEngineObject::translate(const QVector3D &translation)
 {
-    m_coordinates = translation;
+    m_coordinates += translation;
 }
 
 void BaseEngineObject::rotate(const QQuaternion &rotation)
 {
-    m_rotate = rotation;
+    m_rotate *= rotation;
 }
 
 void BaseEngineObject::scale(const float &scale)
 {
-    m_scale = scale;
+    m_scale += scale;
 }
 
 void BaseEngineObject::lock()
@@ -71,6 +71,5 @@ QMatrix4x4 BaseEngineObject::modelMatrix()
     modelMatrix.rotate(m_rotate);
     modelMatrix.scale(m_scale);
 
-    m_modelMatrix = modelMatrix + m_modelMatrix;
     return modelMatrix;
 }

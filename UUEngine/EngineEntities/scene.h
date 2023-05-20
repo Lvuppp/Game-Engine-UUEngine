@@ -1,10 +1,11 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "base3dgameobject.h"
-#include "camera.h"
-#include "lighting.h"
-#include "skybox.h"
+#include "EngineEntities/base3dgameobject.h"
+#include "EngineEntities/camera.h"
+#include "EngineEntities/lighting.h"
+#include "EngineEntities/skybox.h"
+#include "Models/simplemodel.h"
 
 class Scene
 {
@@ -13,12 +14,11 @@ public:
     Scene();
     ~Scene();
 
-    bool addGameObject(const QString &name, ModelType modelType, QVector<Model *> model, const QString &modelPath = "");
-    bool addGameObject(const QString &name,  ModelType modelType, Model *model, const QString &modelPath = "");
+    bool addGameObject(const QString &name, Model *model);
     bool addLighting(const QString &name);
     bool addCamera(const QString &name);
 
-    bool setSkybox(Model *model);
+    bool setSkybox(SimpleModel *model);
     void setCurrentCamera(const QString &name);
     //void addPhysicsObject();
 

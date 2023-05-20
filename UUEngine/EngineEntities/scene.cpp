@@ -25,19 +25,11 @@ Scene::~Scene()
     m_lightings.clear();
 }
 
-bool Scene::addGameObject(const QString &name, ModelType modelType, QVector<Model *> model, const QString &modelPath)
+bool Scene::addGameObject(const QString &name, Model *model)
 {
     if(m_gameObjects.contains(name)) return false;
 
-    m_gameObjects.insert(name, new Base3DGameObject(modelType, model, modelPath));
-    return true;
-}
-
-bool Scene::addGameObject(const QString &name, ModelType modelType, Model *model, const QString &modelPath)
-{
-    if(m_gameObjects.contains(name)) return false;
-
-    m_gameObjects.insert(name, new Base3DGameObject(modelType, model, modelPath));
+    m_gameObjects.insert(name, new Base3DGameObject(model));
     return true;
 }
 
@@ -57,7 +49,7 @@ bool Scene::addCamera(const QString &name)
     return true;
 }
 
-bool Scene::setSkybox(Model *model)
+bool Scene::setSkybox(SimpleModel *model)
 {
     m_skybox = new SkyBox(model);
     return true;

@@ -11,29 +11,33 @@ CONFIG += staticlib
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        base3dgameobject.cpp \
-        base3dphysicsgameobject.cpp \
-        baseengineobject.cpp \
-        camera.cpp \
-        lighting.cpp \
+        EngineEntities/base3dgameobject.cpp \
+        EngineEntities/base3dphysicsgameobject.cpp \
+        EngineEntities/baseengineobject.cpp \
+        EngineEntities/camera.cpp \
+        Models/custommodel.cpp \
+        EngineEntities/lighting.cpp \
         material.cpp \
-        model.cpp \
-        modelparticle.cpp \
+        Models/model.cpp \
+        Models/modelparticle.cpp \
         scene.cpp \
-        skybox.cpp \
+        Models/simplemodel.cpp \
+        EngineEntities/skybox.cpp \
         vertexdata.cpp
 
 HEADERS += \
-    base3dgameobject.h \
-    base3dphysicsgameobject.h \
-    baseengineobject.h \
-    camera.h \
-    lighting.h \
+    EngineEntities/base3dgameobject.h \
+    EngineEntities/base3dphysicsgameobject.h \
+    EngineEntities/baseengineobject.h \
+    EngineEntities/camera.h \
+    Models/custommodel.h \
+    EngineEntities/lighting.h \
     material.h \
-    model.h \
-    modelparticle.h \
+    Models/model.h \
+    Models/modelparticle.h \
     scene.h \
-    skybox.h \
+    Models/simplemodel.h \
+    EngineEntities/skybox.h \
     vertexdata.h
 
 

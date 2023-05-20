@@ -72,11 +72,9 @@ void GraphicsEngine::paintScene()
     m_skyBoxShaderProgram.bind();
 
     m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
-    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,m_functions);
+    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,m_functions);\
 
-    QMatrix4x4 mat;
-    mat.setToIdentity();
-    m_currentScene->skybox()->model()->drawModel(mat,&m_skyBoxShaderProgram,m_functions);
+    m_currentScene->skybox()->draw(&m_skyBoxShaderProgram,m_functions);
 
     m_skyBoxShaderProgram.release();
 

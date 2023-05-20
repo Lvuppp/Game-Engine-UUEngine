@@ -1,22 +1,21 @@
-#ifndef MODEL_H
-#define MODEL_H
-
+#ifndef MODELPARTICLE_H
+#define MODELPARTICLE_H
 
 #include "material.h"
 #include "vertexdata.h"
 
 #include <QtOpenGL>
 
-class Model
+class ModelParticle
 {
 public:
-    Model();
-    ~Model();
-    Model(QVector<VertexData> &vertexes, QVector<GLuint> &indexes,Material *material);
+    ModelParticle();
+    ~ModelParticle();
+    ModelParticle(QVector<VertexData> &vertexes, QVector<GLuint> &indexes,Material *material);
 
-    void initModel(QVector<VertexData> &vertexes,QVector<GLuint> &indexes,Material *material);
+    void initModelParticle(QVector<VertexData> &vertexes,QVector<GLuint> &indexes,Material *material);
     void calculateTBN(QVector<VertexData> &vertexes);
-    void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0);
+    void drawModelParticle(const QMatrix4x4 &ModelParticleMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0);
     QVector<VertexData> vertexesData();
 
     void setDiffuseMap(QString texture);
@@ -32,4 +31,4 @@ private:
     QOpenGLTexture *m_normalMap;
     Material *m_material;
 };
-#endif // MODEL_H
+#endif //MODELPARTICLE_H

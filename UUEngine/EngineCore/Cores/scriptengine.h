@@ -1,7 +1,7 @@
 #ifndef SCRIPTENGINE_H
 #define SCRIPTENGINE_H
 
-#include "base3dgameobject.h"
+#include "EngineEntities/base3dgameobject.h"
 
 #include <QDir>
 #include <dlfcn.h>

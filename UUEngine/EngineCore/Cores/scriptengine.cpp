@@ -1,5 +1,5 @@
 #include "scriptengine.h"
-#include "base3dgameobject.h"
+#include "EngineEntities/base3dgameobject.h"
 
 ScriptEngine *ScriptEngine::m_instance = nullptr;
 
