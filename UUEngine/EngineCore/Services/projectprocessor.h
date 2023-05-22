@@ -2,12 +2,15 @@
 #define PROJECTPROCESSOR_H
 
 #include "scene.h"
+#include "Models/custommodel.h"
+#include "Models/simplemodel.h"
 #include "modelloader.h"
 #include "modelbuilder.h"
 #include "projectinfo.h"
 #include "Folders/scriptfolder.h"
 #include "Folders/modelfolder.h"
 #include "Folders/texturefolder.h"
+
 
 
 #include <QString>
@@ -44,8 +47,8 @@ private:
     QHash<QString, Base3DGameObject *> loadGameObjects(const QVector<QString> &gameObjects);
     SkyBox *loadSkybox(const QString &skybox);
 
-    Base3DGameObject* saveModel(const QString &gameObject);
-    Material* saveMaterial(const QString &material);
+    Model *loadModel(const QString &objectType, const QString &gameObject);
+    Material* loadMaterial(const QString &material);
     QMatrix4x4 loadBaseParams(const QString &objectMatrix);
     QVector<QString> loadScripts(const QString &scripts);
 

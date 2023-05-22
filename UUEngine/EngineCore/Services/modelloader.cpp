@@ -1,5 +1,8 @@
 #include "modelloader.h"
 
+#include "Models/modelparticle.h"
+#include "Models/custommodel.h"
+
 ModelLoadStraregy::ModelLoadStraregy()
 {
 
@@ -20,7 +23,7 @@ OBJModelLoadStraregy::~OBJModelLoadStraregy()
 
 }
 
-QVector<ModelParticle *> OBJModelLoadStraregy::createModel(const QString &filePath)
+CustomModel* OBJModelLoadStraregy::createModel(const QString &filePath)
 {
     QFile objFile(filePath);
 
@@ -34,7 +37,7 @@ QVector<ModelParticle *> OBJModelLoadStraregy::createModel(const QString &filePa
 
     if(!objFile.exists()){
         qDebug() << "cant read file";
-        return models;
+        return new CustomModel(models);
     }
 
     objFile.open(QIODevice::ReadOnly);
@@ -88,7 +91,7 @@ QVector<ModelParticle *> OBJModelLoadStraregy::createModel(const QString &filePa
 
     models.append(new ModelParticle(vertexes,indexes,material));
 
-    return models;
+    return new CustomModel(models);
 }
 
 FBXModelLoadStraregy::FBXModelLoadStraregy() : ModelLoadStraregy()
@@ -101,9 +104,9 @@ FBXModelLoadStraregy::~FBXModelLoadStraregy()
 
 }
 
-QVector<ModelParticle *>FBXModelLoadStraregy::createModel(const QString &filePath)
+CustomModel* FBXModelLoadStraregy::createModel(const QString &filePath)
 {
-    return QVector<ModelParticle *>();
+    return new CustomModel();
 }
 
 ModelLoader::ModelLoader(ModelLoadStraregy *strategy) : m_strategy(strategy)
@@ -119,7 +122,7 @@ void ModelLoader::setStrategy(ModelLoadStraregy *strategy)
     m_strategy = strategy;
 }
 
-QVector<ModelParticle *>ModelLoader::createModel(const QString &filePath)
+CustomModel* ModelLoader::createModel(const QString &filePath)
 {
     return m_strategy->createModel(filePath);
 }

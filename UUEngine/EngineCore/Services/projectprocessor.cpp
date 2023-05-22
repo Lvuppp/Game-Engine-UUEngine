@@ -160,11 +160,12 @@ QString ProjectProcessor::saveModel(const QString &objectName, Base3DGameObject 
     QString savedObject;
 
     if(gameObject->model()->modelType() == ModelType::CustomModel){
-        return "CUSTOM_MODEL " + m_modelFolder->models(objectName).join(' ') + '|';
+        return "CUSTOM_MODEL|" + m_modelFolder->models(objectName).join(' ') + "|";
     }
     else{
         auto simpleModel = dynamic_cast<SimpleModel *>(gameObject->model());
-        return "SIMPLE_MODEL " + m_modelFolder->models(objectName).join(' ') + saveMaterial(simpleModel->modelParticle()->material()) + '|';
+        return "SIMPLE_MODEL|" + m_modelFolder->models(objectName).join(' ') + ",MATERIAL(" +
+               saveMaterial(simpleModel->modelParticle()->material()) + "|";
     }
     return savedObject;
 }
@@ -202,20 +203,20 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
                 QString fileInfo = stream.readAll();
                 QVector<QString> sceneInfo = fileInfo.split('#');
 
+                QRegularExpression regex("#(.*)SKYBOX(.+)CAMERAS(.+)LIGHTINGS(.+)BASE3DGAMEOBJECT(.+)");
+
                 foreach (auto scene, sceneInfo) {
-                    // надо прочитать имя сцены
-                    QString sceneName;//ИМЯ СЦЕНЫ СДЕЛАТЬ
+                    QRegularExpressionMatchIterator matchIterator = regex.globalMatch(scene);
 
-                    QVector<QString> sceneObjects = scene.split('+');
+                    while (matchIterator.hasNext()) {
+                        QRegularExpressionMatch matchObject = matchIterator.next();
+                        scenes.insert(matchObject.captured(0), new Scene(loadSkybox(matchObject.captured(1)),
+                                                                         loadCameras(matchObject.captured(2).split('+')),
+                                                                         loadLightins(matchObject.captured(3).split('+')),
+                                                                         loadGameObjects(matchObject.captured(4).split('+'))));
 
-//                    QString skyboxObject = sceneObjects[0].split('\n');
-//                    skyboxObject.erase(skyboxObject.begin(), skyboxObject.begin() + 1);
-//                    QVector<QString> cameraObject = sceneObjects[1].split('\n');
-//                    QVector<QString> lightingObject = sceneObjects[2].split('\n');
-//                    QVector<QString> gameObject = sceneObjects[3].split('\n');
+                    }
 
-//                    scenes.insert(sceneName, new Scene(loadSkybox(skyboxObject),loadCameras(cameraObject),
-//                                                       loadLightins(lightingObject),loadGameObjects(gameObject)));
                 }
 
             } catch (...) {
@@ -238,43 +239,66 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
 
 QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVector<QString> &gameObjectParams)
 {
-//    QHash<QString, Base3DGameObject *> gameObjects;
+    QHash<QString, Base3DGameObject *> gameObjects;
 
-//    foreach (auto objectParams, gameObjectParams) {
-//        auto params = objectParams.split('|');
+    foreach (auto objectParams, gameObjectParams) {
+        auto params = objectParams.split('|');
 
-//        ModelType modelType;
-//        QVector<Base3DGameObject *> models;
-//        auto modelParams = params[2].split(' ');
-
-//        if(modelParams[0] == "CUSTOM_MODEL"){
-//            modelType = ModelType::CustomeModel;
-
-//            m_modelLoader.setStrategy(new OBJModelLoadStraregy());
-//            models.append(m_modelLoader.createModel(modelParams[1]));
-//        }
-//        else{
-
-//            if(modelParams[0] == "CUBE"){
-//                modelType = ModelType::Cube;
-//                m_modelBuilder.createCube(modelParams[1].toFloat(), modelParams[2].toFloat(), modelParams[3].toFloat());
-//            }
-//            else if(modelParams[0] == "PYRAMID"){
-//                modelType = ModelType::Pyramide;
-//                m_modelBuilder.createPyramide(modelParams[1].toFloat(), modelParams[2].toFloat());
-//            }
+        auto object = new Base3DGameObject(loadModel(params[2],params[3]));
+        object->setModelMatrix(loadBaseParams(params[1]));
 
 
-//            //object->setModel();
-//        }
+        gameObjects.insert(objectParams[0], object);
 
-//        auto object = new Base3DGameObject(modelType, models, );
-//        object->setModelMatrix(loadBaseParams(params[1]));
+    }
+
+    return gameObjects;
+}
+
+Model *ProjectProcessor::loadModel(const QString &objectType, const QString &modelParams)
+{
+    if(objectType == "CUSTOM_MODEL"){
+        m_modelLoader.setStrategy(new OBJModelLoadStraregy());
+        return m_modelLoader.createModel(modelParams);
+
+    }
+
+    SimpleModel *model;
+
+    QRegularExpression paramsRegex("(\\w*)\\((.*?)\\)");
+    QRegularExpressionMatchIterator matchIterator = paramsRegex.globalMatch(modelParams);
+    QRegularExpressionMatch matchObject = matchIterator.next();
+
+    if(matchObject.captured(0) == "CUBE") {
+        QVector<QString> modelParams = matchObject.captured(1).split(' ');
+        model = m_modelBuilder.createCube(modelParams[0].toFloat(),modelParams[1].toFloat(),modelParams[2].toFloat());
+    }
+    else if(matchObject.captured(0) == "PYRAMID"){
+        QVector<QString> modelParams = matchObject.captured(1).split(' ');
+        model = m_modelBuilder.createPyramide(modelParams[0].toFloat(),modelParams[1].toFloat());
+    }
+    else{
+       model = new SimpleModel();
+    }
+
+    matchObject = matchIterator.next();
+    model->modelParticle()->setMaterial(loadMaterial(matchObject.captured(1)));
 
 
-//        gameObjects.insert(objectParams[0], object);
+}
 
-//    }
+Material *ProjectProcessor::loadMaterial(const QString &material)
+{
+    auto params = material.split(' ');
+
+    Material *mat = new Material();
+
+    mat->setAmbienceColor(QVector3D(params[0].toFloat(),params[1].toFloat(),params[2].toFloat()));
+    mat->setDiffuseColor(QVector3D(params[3].toFloat(),params[4].toFloat(),params[5].toFloat()));
+    mat->setSpecularColor(QVector3D(params[6].toFloat(),params[7].toFloat(),params[8].toFloat()));
+    mat->setDiffuseMap(std::move(params[9]));
+    mat->setNormalMap(std::move(params[10]));
+    mat->setShinnes(params[11].toFloat());
 }
 
 QHash<QString, Camera *> ProjectProcessor::loadCameras(const QVector<QString> &cameras)
