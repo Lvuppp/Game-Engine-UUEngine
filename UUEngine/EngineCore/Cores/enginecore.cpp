@@ -6,7 +6,7 @@ EngineCore::EngineCore()
 {
     m_modelLoader.setStrategy(new OBJModelLoadStraregy());
     m_sceneFolder = new SceneFolder();
-    //m_projectProcessor = ProjectProcessor::getInstance();
+    m_projectProcessor = ProjectProcessor::getInstance();
     m_graphicsEngine = GraphicsEngine::getInstance();
     m_inputEngine = InputEngine::getInstance();
     m_scriptEngine = ScriptEngine::getInstance();
@@ -72,7 +72,7 @@ void EngineCore::initGraphicsEngine()
 {
     m_graphicsEngine->initGraphics();
     createSimpleScene();
-    //m_projectProcessor->saveProject("", m_sceneFolder->scenes(), "project");
+    m_projectProcessor->saveProject("", m_sceneFolder->scenes(), "project");
     //m_scriptEngine->loadScript(m_sceneFolder->object("Golem"));
 }
 

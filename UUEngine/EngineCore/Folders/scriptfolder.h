@@ -3,14 +3,20 @@
 
 #include "EngineEntities/baseengineobject.h"
 
+#include <QPair>
+#include <QHash>
 #include <QString>
 
 class ScriptFolder
 {
 public:
-    void addScript( const QString & objectName, const QString &scriptName, const QString & objectType);
-    QHash<QString,QPair<QString,QString>> scripts();
+    void addScript( const QString & objectName, const QString &scriptName);
+    QVector<QString> scripts(const QString &name);
+
     static ScriptFolder *getInstance();
+
+private:
+    QHash<QString,QString> m_scripts;
 
 private:
     ScriptFolder();
@@ -18,7 +24,6 @@ private:
     ScriptFolder(const ScriptFolder&) = delete;
     ScriptFolder& operator=(const ScriptFolder&) = delete;
 
-    QHash<QString,QPair<QString,QString>> m_scripts;
     static ScriptFolder* m_instance;
 };
 

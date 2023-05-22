@@ -12,6 +12,7 @@ class Scene
 
 public:
     Scene();
+    Scene(SkyBox *skybox,QHash<QString, Camera *> cameras,QHash<QString,Lighting *> lightins,QHash<QString, Base3DGameObject*> gameObjects);
     ~Scene();
 
     bool addGameObject(const QString &name, Model *model);
@@ -46,12 +47,12 @@ private:
 
 private:
     //QVector<Base3DPhysicsObject *> m_physicsObject;
-    QHash<QString, Base3DGameObject *> m_gameObjects;
+    SkyBox *m_skybox;
     QHash<QString, Camera *> m_cameras;
     QHash<QString, Lighting *> m_lightings;
+    QHash<QString, Base3DGameObject *> m_gameObjects;
 
     Camera *m_currentCamera;
-    SkyBox *m_skybox;
 };
 
 #endif // SCENE_H

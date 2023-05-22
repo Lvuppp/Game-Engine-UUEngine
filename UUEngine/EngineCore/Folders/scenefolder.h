@@ -11,7 +11,6 @@ public:
     SceneFolder();
     ~SceneFolder();
 
-
     bool createScene(const QString &sceneName);
     Scene *setCurrentScene(const QString &sceneName);
     Scene *currentScene();

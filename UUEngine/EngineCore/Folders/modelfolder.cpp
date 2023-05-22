@@ -2,14 +2,21 @@
 
 ModelFolder *ModelFolder::m_instance = nullptr;
 
-ModelFolder::ModelFolder()
+ModelFolder::ModelFolder() : m_models(QHash<QString,QString>())
 {
 
 }
 
-QHash<QString, QString> ModelFolder::models() const
+QVector<QString> ModelFolder::models(const QString &name)
 {
-    return m_models;
+    QVector<QString> tmp;
+    auto modelsIters =  m_models.equal_range(name);
+
+    for (auto it = modelsIters.first; it != modelsIters.second; ++it) {
+        tmp.append(*it);
+    }
+
+    return tmp;
 }
 
 ModelFolder *ModelFolder::getInstance()

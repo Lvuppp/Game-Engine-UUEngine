@@ -9,3 +9,8 @@ Model::~Model()
 {
 
 }
+
+ModelType Model::modelType()
+{
+    return p_modelType;
+}

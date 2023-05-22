@@ -1,6 +1,7 @@
 #include "projectinfo.h"
 
-
+QString ProjectInfo::m_projectPath ="";
+QString ProjectInfo::m_projectName ="";
 
 
 ProjectInfo::ProjectInfo()

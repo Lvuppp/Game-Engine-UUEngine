@@ -66,7 +66,7 @@ private:
     ScriptEngine *m_scriptEngine;
     InputEngine *m_inputEngine;
 
-    //ProjectProcessor *m_projectProcessor;
+    ProjectProcessor *m_projectProcessor;
     ModelLoader m_modelLoader;
     ModelBuilder m_modelBuilder;
 
