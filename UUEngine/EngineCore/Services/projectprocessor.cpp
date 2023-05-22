@@ -236,6 +236,45 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
 }
 
 
+SkyBox *ProjectProcessor::loadSkybox(const QString &skybox)
+{
+    return new SkyBox(m_modelBuilder.createSkybox(100.0f,skybox));
+}
+
+
+QHash<QString, Camera *> ProjectProcessor::loadCameras(const QVector<QString> &cameraObjects)
+{
+    QHash<QString, Camera *> cameras;
+
+    foreach (auto cameraParams, cameraObjects) {
+        auto params = cameraParams.split('|');
+        auto camera = new Camera();
+
+        camera->setModelMatrix(loadBaseParams(params[1]));
+        cameras.insert(params[0], camera);
+
+        loadScripts(params[0],params[2]);
+    }
+
+    return cameras;
+}
+
+QHash<QString, Lighting *> ProjectProcessor::loadLightins(const QVector<QString> &lightingObjects)
+{
+    QHash<QString, Lighting *> lightings;
+
+    foreach (auto lighthingParams, lightingObjects) {
+        auto params = lighthingParams.split('|');
+        auto lighting = new Lighting();
+
+        lighting->setModelMatrix(loadBaseParams(params[1]));
+        lightings.insert(params[0], lighting);
+
+        loadScripts(params[0],params[2]);
+    }
+
+    return lightings;
+
 
 QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVector<QString> &gameObjectParams)
 {
@@ -247,13 +286,13 @@ QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVect
         auto object = new Base3DGameObject(loadModel(params[2],params[3]));
         object->setModelMatrix(loadBaseParams(params[1]));
 
-
         gameObjects.insert(objectParams[0], object);
-
+        m_scriptFolder->addScript(objectParams[0], params[4]);
     }
 
     return gameObjects;
 }
+
 
 Model *ProjectProcessor::loadModel(const QString &objectType, const QString &modelParams)
 {
@@ -284,7 +323,7 @@ Model *ProjectProcessor::loadModel(const QString &objectType, const QString &mod
     matchObject = matchIterator.next();
     model->modelParticle()->setMaterial(loadMaterial(matchObject.captured(1)));
 
-
+    return model;
 }
 
 Material *ProjectProcessor::loadMaterial(const QString &material)
@@ -299,16 +338,8 @@ Material *ProjectProcessor::loadMaterial(const QString &material)
     mat->setDiffuseMap(std::move(params[9]));
     mat->setNormalMap(std::move(params[10]));
     mat->setShinnes(params[11].toFloat());
-}
 
-QHash<QString, Camera *> ProjectProcessor::loadCameras(const QVector<QString> &cameras)
-{
-
-}
-
-QHash<QString, Lighting *> ProjectProcessor::loadLightins(const QVector<QString> &lights)
-{
-
+    return mat;
 }
 
 
@@ -323,9 +354,11 @@ QMatrix4x4 ProjectProcessor::loadBaseParams(const QString &matrixParams)
     mat.setRow(3, QVector4D(params[12].toFloat(),params[13].toFloat(),params[14].toFloat(),params[15].toFloat()));
 }
 
-QVector<QString> ProjectProcessor::loadScripts(const QString &scripts)
+void ProjectProcessor::loadScripts(const QString &objectName, const QString &scripts)
 {
-    return scripts.split(' ');
+    foreach (auto script, scripts.split(' ')) {
+       m_scriptFolder->addScript(objectName, script);
+    }
 }
 
 ProjectProcessor *ProjectProcessor::getInstance()

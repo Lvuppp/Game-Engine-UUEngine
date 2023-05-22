@@ -55,8 +55,8 @@ signals:
     void projectLoaded();
 
 public slots:
-    void loadProject(QString path);
-    void saveProject(QString path);
+    void loadProject(const QString & path);
+    void saveProject(const QString & path);
 
 
 private:

@@ -50,7 +50,7 @@ private:
     Model *loadModel(const QString &objectType, const QString &gameObject);
     Material* loadMaterial(const QString &material);
     QMatrix4x4 loadBaseParams(const QString &objectMatrix);
-    QVector<QString> loadScripts(const QString &scripts);
+    void loadScripts(const QString &objectName,const QString &scripts);
 
 private:
     TextureFolder *m_textureFolder;
