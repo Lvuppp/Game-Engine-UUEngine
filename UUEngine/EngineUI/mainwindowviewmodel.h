@@ -19,11 +19,9 @@ signals:
     void mouseMoveEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
     void createObjects();
-    void setProjectLayout(QLayout *layout);
 
 public slots:
     void updateGraphics();
-    void loadProject();
 
 private:
     void initializeGL() override;

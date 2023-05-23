@@ -5,8 +5,8 @@ Scene::Scene()
 
 }
 
-Scene::Scene(SkyBox *skybox, QHash<QString, Camera *> cameras, QHash<QString, Lighting *> lighting,
-             QHash<QString, Base3DGameObject *> gameObjects) : m_skybox(skybox), m_cameras(cameras), m_lightings(lighting),m_gameObjects(gameObjects)
+Scene::Scene(QHash<QString, Base3DGameObject *> gameObjects, QHash<QString, Lighting *> lighting ,
+             QHash<QString, Camera *> cameras, SkyBox *skybox) : m_skybox(skybox), m_cameras(cameras), m_lightings(lighting),m_gameObjects(gameObjects)
 
 {
 

@@ -12,7 +12,8 @@ class Scene
 
 public:
     Scene();
-    Scene(SkyBox *skybox,QHash<QString, Camera *> cameras,QHash<QString,Lighting *> lightins,QHash<QString, Base3DGameObject*> gameObjects);
+    Scene(QHash<QString, Base3DGameObject *> gameObjects, QHash<QString, Lighting *> lighting ,
+          QHash<QString, Camera *> cameras, SkyBox *skybox);
     ~Scene();
 
     bool addGameObject(const QString &name, Model *model);

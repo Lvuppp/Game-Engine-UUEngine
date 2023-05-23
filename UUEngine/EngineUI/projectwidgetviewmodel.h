@@ -11,10 +11,10 @@ class ProjectWidgetViewModel : public QWidget
 public:
     ProjectWidgetViewModel(QWidget *parent = nullptr);
 
-signals:
-
 public slots:
-    void presentProjectStructure();
+    void loadProject(const QString& path);
+    void updateProjectInfo();
+
 private:
     EngineCore *m_engine;
 

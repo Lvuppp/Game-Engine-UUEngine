@@ -22,6 +22,8 @@ bool SceneFolder::createScene(const QString &sceneName)
     m_currentScene->addCamera("DefaultCamera");
     m_currentScene->addLighting("DefaultLight");
 
+    m_currentScene->setCurrentCamera("DefaultCamera");
+
     return true;
 }
 

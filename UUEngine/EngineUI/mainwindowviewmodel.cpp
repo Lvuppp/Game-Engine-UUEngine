@@ -9,9 +9,6 @@ MainWindowViewModel::MainWindowViewModel(QWidget *parent)  : QOpenGLWidget(paren
     connect(this, &MainWindowViewModel::wheelEvent, engine, &EngineCore::getEvent);
     connect(engine, &EngineCore::updateGraphics, this, &MainWindowViewModel::updateGraphics);
 
-    QVBoxLayout *layout = new QVBoxLayout();
-
-    emit setProjectLayout(nullptr);
 
 }
 

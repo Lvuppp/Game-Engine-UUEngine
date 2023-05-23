@@ -165,7 +165,7 @@ QString ProjectProcessor::saveModel(const QString &objectName, Base3DGameObject 
     else{
         auto simpleModel = dynamic_cast<SimpleModel *>(gameObject->model());
         return "SIMPLE_MODEL|" + m_modelFolder->models(objectName).join(' ') + ",MATERIAL(" +
-               saveMaterial(simpleModel->modelParticle()->material()) + "|";
+               saveMaterial(simpleModel->modelParticle()->material()) + ")|";
     }
     return savedObject;
 }
@@ -201,21 +201,19 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
             QTextStream stream(&file);
             try {
                 QString fileInfo = stream.readAll();
-                QVector<QString> sceneInfo = fileInfo.split('#');
+                QVector<QString> sceneInfo = fileInfo.split('\n');
 
-                QRegularExpression regex("#(.*)SKYBOX(.+)CAMERAS(.+)LIGHTINGS(.+)BASE3DGAMEOBJECT(.+)");
+                QRegularExpression regex("#(.*) SKYBOX(.+) CAMERAS(.+) LIGHTINGS (.+) BASE3DGAMEOBJECT(.+)");
 
                 foreach (auto scene, sceneInfo) {
                     QRegularExpressionMatchIterator matchIterator = regex.globalMatch(scene);
 
-                    while (matchIterator.hasNext()) {
-                        QRegularExpressionMatch matchObject = matchIterator.next();
-                        scenes.insert(matchObject.captured(0), new Scene(loadSkybox(matchObject.captured(1)),
-                                                                         loadCameras(matchObject.captured(2).split('+')),
-                                                                         loadLightins(matchObject.captured(3).split('+')),
-                                                                         loadGameObjects(matchObject.captured(4).split('+'))));
+                    QRegularExpressionMatch matchObject = matchIterator.next();
+                    scenes.insert(matchObject.captured(0), new Scene(loadGameObjects(matchObject.captured(5).split('+')),
+                                                                        loadLightins(matchObject.captured(4).split('+')),
+                                                                        loadCameras(matchObject.captured(3).split('+')),
+                                                                     loadSkybox(matchObject.captured(2))));
 
-                    }
 
                 }
 
@@ -235,7 +233,6 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
     return scenes;
 }
 
-
 SkyBox *ProjectProcessor::loadSkybox(const QString &skybox)
 {
     return new SkyBox(m_modelBuilder.createSkybox(100.0f,skybox));
@@ -246,8 +243,8 @@ QHash<QString, Camera *> ProjectProcessor::loadCameras(const QVector<QString> &c
 {
     QHash<QString, Camera *> cameras;
 
-    foreach (auto cameraParams, cameraObjects) {
-        auto params = cameraParams.split('|');
+    for (int i = 1; i < cameraObjects.size(); ++i) {
+        auto params = cameraObjects[i].split('|');
         auto camera = new Camera();
 
         camera->setModelMatrix(loadBaseParams(params[1]));
@@ -263,8 +260,9 @@ QHash<QString, Lighting *> ProjectProcessor::loadLightins(const QVector<QString>
 {
     QHash<QString, Lighting *> lightings;
 
-    foreach (auto lighthingParams, lightingObjects) {
-        auto params = lighthingParams.split('|');
+    for (int i = 1; i < lightingObjects.size(); ++i) {
+
+        auto params = lightingObjects[i].split('|');
         auto lighting = new Lighting();
 
         lighting->setModelMatrix(loadBaseParams(params[1]));
@@ -274,20 +272,21 @@ QHash<QString, Lighting *> ProjectProcessor::loadLightins(const QVector<QString>
     }
 
     return lightings;
-
+}
 
 QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVector<QString> &gameObjectParams)
 {
     QHash<QString, Base3DGameObject *> gameObjects;
 
-    foreach (auto objectParams, gameObjectParams) {
-        auto params = objectParams.split('|');
+    for (int i = 1; i < gameObjectParams.size(); ++i) {
+
+        auto params = gameObjectParams[i].split('|');
 
         auto object = new Base3DGameObject(loadModel(params[2],params[3]));
         object->setModelMatrix(loadBaseParams(params[1]));
 
-        gameObjects.insert(objectParams[0], object);
-        m_scriptFolder->addScript(objectParams[0], params[4]);
+        gameObjects.insert(params[0], object);
+        m_scriptFolder->addScript(params[0], params[4]);
     }
 
     return gameObjects;
@@ -352,6 +351,8 @@ QMatrix4x4 ProjectProcessor::loadBaseParams(const QString &matrixParams)
     mat.setRow(1, QVector4D(params[4].toFloat(),params[5].toFloat(),params[6].toFloat(),params[7].toFloat()));
     mat.setRow(2, QVector4D(params[8].toFloat(),params[9].toFloat(),params[10].toFloat(),params[11].toFloat()));
     mat.setRow(3, QVector4D(params[12].toFloat(),params[13].toFloat(),params[14].toFloat(),params[15].toFloat()));
+
+    return mat;
 }
 
 void ProjectProcessor::loadScripts(const QString &objectName, const QString &scripts)
@@ -359,6 +360,12 @@ void ProjectProcessor::loadScripts(const QString &objectName, const QString &scr
     foreach (auto script, scripts.split(' ')) {
        m_scriptFolder->addScript(objectName, script);
     }
+}
+
+
+void ProjectProcessor::setLayout(QBoxLayout &layout)
+{
+    m_projectLayout = &layout;
 }
 
 ProjectProcessor *ProjectProcessor::getInstance()

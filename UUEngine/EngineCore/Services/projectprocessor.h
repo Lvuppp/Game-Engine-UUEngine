@@ -27,6 +27,7 @@ public:
     void saveProject(const QString &path, QHash<QString, Scene *> scenes, const QString &projectName="");
     QHash<QString, Scene *> loadProject(const QString & path);
 
+    void setLayout(QBoxLayout &layout);
     static ProjectProcessor *getInstance();
 private:
     QString saveScene(const QString &sceneName, Scene *scene);
