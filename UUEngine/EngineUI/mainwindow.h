@@ -1,8 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "mainwindowviewmodel.h"
+#include "openglwidgetviewmodel.h"
 #include "projectwidgetviewmodel.h"
+#include "mainwindowviewmodel.h"
 
 #include <QMainWindow>
 #include <QResizeEvent>
@@ -19,15 +20,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void resizeEvent(QResizeEvent *event) override;
 public slots:
     void loadProjectStructure(QLayout *layout);
+    void resizeEvent(QResizeEvent *event) override;
+
 
 private:
     Ui::MainWindow *ui;
 
-    ProjectWidgetViewModel * m_projectWidget;
     MainWindowViewModel *m_viewModel;
+    OpenGLWidgetViewModel *m_openGLWidget;
+    ProjectWidgetViewModel *m_projectWidget;
 
 };
 #endif // MAINWINDOW_H

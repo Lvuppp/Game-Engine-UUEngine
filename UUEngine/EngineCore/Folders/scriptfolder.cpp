@@ -24,6 +24,11 @@ QVector<QString> ScriptFolder::scripts(const QString &name)
     return tmp;
 }
 
+void ScriptFolder::clearFolder()
+{
+    m_scripts.clear();
+}
+
 ScriptFolder *ScriptFolder::getInstance()
 {
     if(m_instance == nullptr){

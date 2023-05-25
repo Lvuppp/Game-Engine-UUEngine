@@ -27,7 +27,11 @@ public:
     void mouseEvent(QEvent* event);
     void wheelEvent(QEvent* event);
 
-    QVector<QQuaternion> getRotate();
+    QQuaternion getRotateX();
+    QQuaternion getRotateY();
+
+    QVector3D getWorldCoordinates();
+
     QVector3D getTranslate();
     static InputEngine *getInstance();
 

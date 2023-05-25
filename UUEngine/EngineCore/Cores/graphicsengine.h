@@ -23,7 +23,7 @@ public:
 
     void initCube(float width, float height, float depth);
 
-    void rotateModelViewMatrix(QVector<QQuaternion> rotation);
+    void rotateModelViewMatrix(const QQuaternion &rotationX,const QQuaternion &rotationY);
     void translateModelViewMatrix(QVector3D translation);
 
     void setCurrentScene(Scene* scene);
@@ -54,7 +54,7 @@ private:
     //поле сцены
     Scene* m_currentScene;
 
-    // камера и освещение во время создания сцены
+
 
     int m_windowWidth;
     int m_windowHeight;

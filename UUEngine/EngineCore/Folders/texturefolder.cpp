@@ -24,6 +24,11 @@ QVector<QString> TextureFolder::texture(const QString &objectName)
     return tmp;
 }
 
+void TextureFolder::clearFolder()
+{
+    m_textures.clear();
+}
+
 TextureFolder *TextureFolder::getInstance()
 {
     if(m_instance == nullptr){

@@ -29,28 +29,42 @@ ProjectProcessor::~ProjectProcessor()
 // OBJECT_NAME|MODEL_MATRIX|(CUSTOM_MODEL|MODEL_NAME)|(CUBE|PYRAMID|MATERIAL_PARAMS)|SCRIPT_PATH ...
 // #SCENE_NAME ...
 
+//CREATE PROJECT FOLDER
+
+void ProjectProcessor::createProject(const QString &path, const QString &projectName)
+{
+
+    QDir dir(path);
+    m_projectInfo.m_projectPath = path;
+
+    dir.mkdir(projectName);
+    dir.cd(projectName);
+    dir.mkdir("Models");
+    dir.mkdir("Textures");
+    dir.mkdir("Scripts");
+
+    m_projectInfo.m_projectName = projectName;
+    m_projectInfo.m_projectPath = path + '/' + projectName;
+
+    QFile file(m_projectInfo.m_projectPath + "/" + m_projectInfo.m_projectName + ".uupj");
+    file.open(QIODevice::WriteOnly);
+    file.close();
+}
+
 
 //SAVE FILE
 
-void ProjectProcessor::saveProject(const QString & path, QHash<QString, Scene *> scenes, const QString &projectName)
+void ProjectProcessor::saveProject( QHash<QString, Scene *> scenes,const QString & path,const QString &projectName)
 {
     try{
 
-        if(projectName != ""){
+        if(projectName != "" && path != ""){
             m_projectInfo.m_projectName = projectName;
+            m_projectInfo.m_projectPath = path;
         }
 
-        QDir dir(path);
-//        if(dir.exists(projectName)){
-//            dir.mkdir(projectName);
-//            dir.cd(m_projectInfo.m_projectName);
-//            dir.mkdir("Models");
-//            dir.mkdir("Textures");
-//            dir.mkdir("Scripts");
 
-//        }
-
-        QFile file(dir.absolutePath() + "/" + m_projectInfo.m_projectName + ".uupj");
+        QFile file(m_projectInfo.m_projectPath + '/' + m_projectInfo.m_projectName + ".uupj");
 
         if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
             QTextStream stream(&file);
@@ -196,6 +210,9 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
 
     try {
         QFile file(path);
+        auto pathList = path.split('/');
+        m_projectInfo.m_projectPath = path;
+        m_projectInfo.m_projectName = pathList[pathList.size() - 1];
 
         if(file.open(QIODevice::ReadOnly)){
             QTextStream stream(&file);
@@ -232,6 +249,7 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
 
     return scenes;
 }
+
 
 SkyBox *ProjectProcessor::loadSkybox(const QString &skybox)
 {

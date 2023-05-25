@@ -12,6 +12,7 @@ public:
 
     void addTexture( const QString & objectName, const QString &textureName);
     QVector<QString> texture(const QString &objectName);
+    void clearFolder();
 
     static TextureFolder *getInstance();
 

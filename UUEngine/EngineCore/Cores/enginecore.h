@@ -23,7 +23,7 @@ public:
     void initPhysicsEngine();
     void initScriptEngine();
     void initInputEngine();
-    void initProjectProcessor(QVBoxLayout *&layout);
+    void initProjectProcessor(QVBoxLayout &layout);
 
     static EngineCore *getInstance();
 
@@ -51,18 +51,28 @@ public:
     void setCurrentScene();
     void createSimpleScene();
 
+public slots:
+    void createCustomObjectInScene();
+    void createSimpleObjectInScene();
+    void createCameraInScene();
+    void createLightingInScene();
+
+//project processor part
 signals:
     void projectLoaded();
 
 public slots:
+    void createProject(const QString &path, const QString &name);
     void loadProject(const QString & path);
-    void saveProject(const QString & path);
+    void saveProject(const QString &path = 0, const QString &projectName = 0);
+    void closeProject();
 
 //folders part
 public slots:
     void loadModel(const QString & path);
     void loadTexture(const QString & path);
     void loadScript(const QString & path);
+
 
 private:
 

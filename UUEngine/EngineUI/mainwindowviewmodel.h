@@ -1,34 +1,21 @@
 #ifndef MAINWINDOWVIEWMODEL_H
 #define MAINWINDOWVIEWMODEL_H
 
-#include "Cores/enginecore.h"
+#include"Cores/enginecore.h"
+#include"projectcreator.h"
 
-#include <QOpenGLWidget>
-#include <QVBoxLayout>
-#include <QMouseEvent>
-#include <QWheelEvent>
+#include <QFileDialog>
 
-class MainWindowViewModel : public QOpenGLWidget
+class MainWindowViewModel : public QWidget
 {
-    Q_OBJECT
 public:
-    MainWindowViewModel(QWidget *parent);
-
-signals:
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void wheelEvent(QWheelEvent* event) override;
-    void createObjects();
+    MainWindowViewModel(QWidget *parent = nullptr);
 
 public slots:
-    void updateGraphics();
+    void processProject();
 
 private:
-    void initializeGL() override;
-    void resizeGL(int w, int h) override;
-    void paintGL() override;
-
-    EngineCore* engine;
+    EngineCore *m_engine;
 };
 
 #endif // MAINWINDOWVIEWMODEL_H

@@ -1,40 +1,56 @@
 #include "mainwindowviewmodel.h"
 
-MainWindowViewModel::MainWindowViewModel(QWidget *parent)  : QOpenGLWidget(parent)
+MainWindowViewModel::MainWindowViewModel(QWidget *parent) : QWidget(parent)
 {
-    engine = EngineCore::getInstance();
-
-    connect(this, &MainWindowViewModel::mousePressEvent, engine, &EngineCore::getEvent);
-    connect(this, &MainWindowViewModel::mouseMoveEvent, engine, &EngineCore::getEvent);
-    connect(this, &MainWindowViewModel::wheelEvent, engine, &EngineCore::getEvent);
-    connect(engine, &EngineCore::updateGraphics, this, &MainWindowViewModel::updateGraphics);
-
-
+    m_engine = EngineCore::getInstance();
 }
 
-void MainWindowViewModel::updateGraphics()
+void MainWindowViewModel::processProject()
 {
-    update();
+    QAction *action = dynamic_cast<QAction *>(sender());
+
+    if(action->text() == "Create"){
+        ProjectCreator *projectCreator = new ProjectCreator();
+        connect(projectCreator, &ProjectCreator::getFolderPath, this, [this](QString path){
+            m_engine->createProject(path.split(' ')[0], path.split(' ')[1]);
+        });
+        projectCreator->exec();
+
+        delete projectCreator;
+
+    }
+    else if(action->text() == "Open"){
+        auto projectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.uupj*)").split('/');
+
+        if(projectPath.size()){
+            QString path;
+            for (int i = 0; i < projectPath.size() - 1; ++i) {
+                path += projectPath[i] + '/';
+            }
+
+            m_engine->loadProject(path);
+        }
+
+    }
+    else if(action->text() == "Save"){
+        m_engine->saveProject();
+
+    }
+    else if(action->text() == "Save as"){
+        ProjectCreator *projectCreator = new ProjectCreator();
+
+        connect(projectCreator, &ProjectCreator::getFolderPath, this, [this](QString path){
+            m_engine->createProject(path.split(' ')[0], path.split(' ')[1]);
+            m_engine->saveProject(path.split(' ')[0] + '/' + path.split(' ')[1]);
+        });
+
+        projectCreator->exec();
+
+        delete projectCreator;
+
+    }
+    else if(action->text() == "Close"){
+        m_engine->closeProject();
+
+    }
 }
-
-void MainWindowViewModel::loadProject()
-{
-
-}
-
-
-void MainWindowViewModel::initializeGL()
-{
-    engine->initGraphicsEngine();
-}
-
-void MainWindowViewModel::resizeGL(int w, int h)
-{
-    engine->resizeScene(w, h);
-}
-
-void MainWindowViewModel::paintGL()
-{
-    engine->paintScene();
-}
-

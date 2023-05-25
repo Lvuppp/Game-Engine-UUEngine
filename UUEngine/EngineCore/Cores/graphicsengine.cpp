@@ -1,4 +1,7 @@
 #include "graphicsengine.h"
+
+#include <QOpenGLFunctions>
+
 GraphicsEngine* GraphicsEngine::m_instance = nullptr;
 
 GraphicsEngine::GraphicsEngine()
@@ -91,7 +94,7 @@ void GraphicsEngine::paintScene()
     m_sceneShaderProgram.setUniformValue("u_lightDirection", QVector4D(0.0f,0.0f,-1.0f, 0.0f)); // позиция света
     m_sceneShaderProgram.setUniformValue("u_lightPower", 1.0f); // сила свечения
 
-    //m_engineLighting->draw(&m_sceneShaderProgram, m_functions);
+
     m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,m_functions);
 
     for (auto object : m_currentScene->gameObjects()) {
@@ -148,11 +151,10 @@ void GraphicsEngine::initShaders()
     qDebug() << "End initialize shaders";
 }
 
-void GraphicsEngine::rotateModelViewMatrix(QVector<QQuaternion> rotation)
+void GraphicsEngine::rotateModelViewMatrix(const QQuaternion &rotationX,const QQuaternion &rotationY)
 {
-    foreach (auto rotate, rotation){
-        m_currentScene->currentCamera()->rotate(rotate);
-    }
+    m_currentScene->currentCamera()->rotateX(rotationX);
+    m_currentScene->currentCamera()->rotateY(rotationY);
 }
 
 void GraphicsEngine::translateModelViewMatrix(QVector3D translation)

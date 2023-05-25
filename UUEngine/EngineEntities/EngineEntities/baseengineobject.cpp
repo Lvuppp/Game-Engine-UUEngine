@@ -47,6 +47,18 @@ void BaseEngineObject::rotate(const QQuaternion &rotation)
     m_rotate *= rotation;
 }
 
+void BaseEngineObject::rotateX(const QQuaternion &rotation)
+{
+    m_rotateX = rotation * m_rotateX;
+    m_rotate = m_rotateX * m_rotateY;
+}
+
+void BaseEngineObject::rotateY(const QQuaternion &rotation)
+{
+    m_rotateY = rotation * m_rotateY;
+    m_rotate = m_rotateX * m_rotateY;
+}
+
 void BaseEngineObject::scale(const float &scale)
 {
     m_scale += scale;

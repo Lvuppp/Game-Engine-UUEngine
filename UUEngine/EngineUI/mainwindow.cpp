@@ -8,11 +8,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    m_viewModel = new MainWindowViewModel(ui->openGLWidget);
-    m_viewModel->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
+    m_viewModel = new MainWindowViewModel();
     m_projectWidget = new ProjectWidgetViewModel(ui->projectHierarchyFrame);
+    m_openGLWidget = new OpenGLWidgetViewModel(ui->openGLWidget);
 
-    connect(m_viewModel, &MainWindowViewModel::setProjectLayout, this, &MainWindow::loadProjectStructure);
+    m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
+
+    auto projectActions = this->menuBar()->actions()[0]->menu()->actions();
+
+    foreach (auto action, projectActions) {
+        connect(action,&QAction::triggered ,m_viewModel ,&MainWindowViewModel::processProject);
+    }
+
+    //connect(m_viewModel, &MainWindowViewModel::setProjectLayout, this, &MainWindow::loadProjectStructure);
 
     ui->moveButton->setIcon(QIcon(":/UIImages/translate.png"));
     ui->rotateButton->setIcon(QIcon(":/UIImages/rotate.png"));
@@ -21,17 +29,20 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete m_viewModel;
+    delete m_projectWidget;
+    delete m_openGLWidget;
+}
+
+void MainWindow::loadProjectStructure(QLayout *layout)
+{
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
-    m_viewModel->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
+    m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 }
 
-void MainWindow::loadProjectStructure(QLayout *layout)
-{
-    ui->projectHierarchyFrame->setLayout(layout);
 
-}
+

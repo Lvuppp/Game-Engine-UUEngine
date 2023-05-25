@@ -16,6 +16,7 @@ public:
 
     void addModel( const QString & objectName, const QString &modelsName);
     QVector<QString> models(const QString &name);
+    void clearFolder();
 
     static ModelFolder *getInstance();
 

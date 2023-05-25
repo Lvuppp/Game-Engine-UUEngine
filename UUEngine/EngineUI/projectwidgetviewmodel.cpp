@@ -3,16 +3,16 @@
 ProjectWidgetViewModel::ProjectWidgetViewModel(QWidget *parent) : QWidget(parent)
 {
     m_engine = EngineCore::getInstance();
-    m_engine->initProjectProcessor();
-    connect(m_engine, EngineCore::projectLoaded, this, ProjectWidgetViewModel::setProjectLayout);
+
+    QVBoxLayout layout;
+    this->setLayout(&layout);
+    m_engine->initProjectProcessor(layout);
+
+    connect(m_engine, &EngineCore::projectLoaded, this, &ProjectWidgetViewModel::updateProjectInfo);
 }
 
-void ProjectWidgetViewModel::loadProject(const QString &path)
-{
 
-}
-
-void ProjectWidgetViewModel::presentProjectStructure()
+void ProjectWidgetViewModel::updateProjectInfo()
 {
     update();
 }

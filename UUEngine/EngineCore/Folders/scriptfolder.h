@@ -12,6 +12,7 @@ class ScriptFolder
 public:
     void addScript( const QString & objectName, const QString &scriptName);
     QVector<QString> scripts(const QString &name);
+    void clearFolder();
 
     static ScriptFolder *getInstance();
 

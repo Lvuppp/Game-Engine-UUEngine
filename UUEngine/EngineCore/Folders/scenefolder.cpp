@@ -1,4 +1,5 @@
 #include "scenefolder.h"
+SceneFolder* SceneFolder::m_instance = nullptr;
 
 SceneFolder::SceneFolder(): m_currentScene(nullptr)
 {
@@ -41,4 +42,17 @@ Scene *SceneFolder::currentScene()
 QHash<QString, Scene *> SceneFolder::scenes() const
 {
     return m_scenes;
+}
+
+void SceneFolder::clearFolder()
+{
+    m_scenes.clear();
+}
+
+SceneFolder *SceneFolder::getInstance()
+{
+    if(m_instance == nullptr){
+        m_instance = new SceneFolder();
+    }
+    return m_instance;
 }

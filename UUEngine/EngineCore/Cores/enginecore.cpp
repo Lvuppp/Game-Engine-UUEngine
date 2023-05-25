@@ -5,7 +5,7 @@ EngineCore* EngineCore::m_instance = nullptr;
 EngineCore::EngineCore()
 {
     m_modelLoader.setStrategy(new OBJModelLoadStraregy());
-    m_sceneFolder = new SceneFolder();
+    m_sceneFolder = SceneFolder::getInstance();
 
     m_projectProcessor = ProjectProcessor::getInstance();
     m_graphicsEngine = GraphicsEngine::getInstance();
@@ -37,8 +37,8 @@ void EngineCore::initGraphicsEngine()
 {
     m_graphicsEngine->initGraphics();
     createSimpleScene();
-    m_projectProcessor->saveProject("", m_sceneFolder->scenes(), "project");
-    m_projectProcessor->loadProject("project.uupj");
+    //m_projectProcessor->saveProject("", m_sceneFolder->scenes(), "project");
+    //m_projectProcessor->loadProject("project.uupj");
     //m_scriptEngine->loadScript(m_sceneFolder->object("Golem"));
 }
 
@@ -54,7 +54,7 @@ void EngineCore::getEvent(QEvent *event)
     if(event->type() == QEvent::MouseMove){
         m_inputEngine->mouseEvent(event);
 
-        m_graphicsEngine->rotateModelViewMatrix(m_inputEngine->getRotate());
+        m_graphicsEngine->rotateModelViewMatrix(m_inputEngine->getRotateX(), m_inputEngine->getRotateY());
 
         emit updateGraphics();
     }
@@ -70,7 +70,7 @@ void EngineCore::getEvent(QEvent *event)
 
 void EngineCore::initProjectProcessor(QVBoxLayout &layout)
 {
-    m_projectProcessor.
+    m_projectProcessor->setLayout(layout);
 }
 
 void EngineCore::createSimpleScene()
@@ -87,14 +87,30 @@ void EngineCore::createSimpleScene()
 
 }
 
-void EngineCore::loadProject(const QString &path)
+void EngineCore::createProject(const QString &path, const QString &name)
 {
-
+    m_projectProcessor->createProject(path, name);
 }
 
-void EngineCore::saveProject(const QString &path)
-{
 
+void EngineCore::loadProject(const QString &path)
+{
+    m_projectProcessor->loadProject(path);
+}
+
+void EngineCore::saveProject(const QString &path, const QString &projectName)
+{
+    if(path == "" && ProjectInfo::projectPath() != "" && m_sceneFolder->scenes().size() > 0){
+        m_projectProcessor->saveProject(m_sceneFolder->scenes());
+    }
+    else{
+        m_projectProcessor->saveProject(m_sceneFolder->scenes(),path, projectName);
+    }
+}
+
+void EngineCore::closeProject()
+{
+    m_sceneFolder->scenes().clear();
 }
 
 void EngineCore::loadModel(const QString &path)
@@ -111,3 +127,25 @@ void EngineCore::loadScript(const QString &path)
 {
 
 }
+
+void EngineCore::createCustomObjectInScene()
+{
+    m_sceneFolder->currentScene()->addGameObject("Cube",ModelBuilder::createCube(2.0f, 2.0f, 2.0f));
+    m_sceneFolder->currentScene()->gameObject("Cube")->translate(m_inputEngine->getTranslate());
+}
+
+void EngineCore::createSimpleObjectInScene()
+{
+
+}
+
+void EngineCore::createCameraInScene()
+{
+
+}
+
+void EngineCore::createLightingInScene()
+{
+
+}
+

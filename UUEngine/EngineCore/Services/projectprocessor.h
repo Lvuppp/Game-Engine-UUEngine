@@ -24,8 +24,9 @@ class ProjectProcessor
 public:
     ~ProjectProcessor();
 
-    void saveProject(const QString &path, QHash<QString, Scene *> scenes, const QString &projectName="");
+    void saveProject(QHash<QString, Scene *> scenes, const QString &path = "", const QString &projectName="");
     QHash<QString, Scene *> loadProject(const QString & path);
+    void createProject(const QString &path, const QString &projectName="");
 
     void setLayout(QBoxLayout &layout);
     static ProjectProcessor *getInstance();

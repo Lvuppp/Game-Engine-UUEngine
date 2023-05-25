@@ -28,6 +28,8 @@ public:
     //изменение относительно текущих
     void translate(const QVector3D &coordinates);
     void rotate(const QQuaternion &rotation);
+    void rotateX(const QQuaternion &rotation);
+    void rotateY(const QQuaternion &rotation);
     void scale(const float &scale);
 
     virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) = 0;
@@ -36,6 +38,8 @@ private:
     QMatrix4x4 m_modelMatrix;
     QVector3D m_coordinates;
     QQuaternion m_rotate;
+    QQuaternion m_rotateX;
+    QQuaternion m_rotateY;
     float m_scale;
     bool m_lock;
 };

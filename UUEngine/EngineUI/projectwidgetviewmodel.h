@@ -12,7 +12,6 @@ public:
     ProjectWidgetViewModel(QWidget *parent = nullptr);
 
 public slots:
-    void loadProject(const QString& path);
     void updateProjectInfo();
 
 private:

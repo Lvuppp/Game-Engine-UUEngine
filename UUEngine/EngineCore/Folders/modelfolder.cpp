@@ -19,6 +19,11 @@ QVector<QString> ModelFolder::models(const QString &name)
     return tmp;
 }
 
+void ModelFolder::clearFolder()
+{
+    m_models.clear();
+}
+
 ModelFolder *ModelFolder::getInstance()
 {
     if(m_instance == nullptr){

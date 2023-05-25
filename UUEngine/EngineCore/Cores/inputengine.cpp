@@ -17,24 +17,19 @@ void InputEngine::mouseEvent(QEvent* event)
 {
     auto mouseEvent = (QMouseEvent*)event;
 
-    if(event->type() == QEvent::Type::MouseMove){
-        QVector2D diffpos = QVector2D(mouseEvent->localPos()) - m_mouseCoordinates;
-        m_mouseCoordinates = QVector2D(mouseEvent->localPos());
+    if(mouseEvent->type() == QMouseEvent::MouseMove){
+        QVector2D diffpos = QVector2D(mouseEvent->position()) - m_mouseCoordinates;
+        m_mouseCoordinates = QVector2D(mouseEvent->position());
 
-//        float angleX = diffpos.x() / 2.0f;
-//        float angleY = diffpos.y() / 2.0f;
+        float angleX = diffpos.y() / 2.0f;
+        float angleY = diffpos.x() / 2.0f;
 
-//        m_rotateXDelta = QQuaternion(angleX, 1.0f ,0.0f ,0.0f);
-//        m_rotateYDelta = QQuaternion(angleY, 0.0f ,1.0f ,0.0f);
-
-        float angle = diffpos.length() / 2.0f;
-        QVector3D axis = QVector3D(diffpos.y(), diffpos.x(), 0.0f);
-
-        m_rotateDelta = QQuaternion::fromAxisAndAngle(axis, angle);
+        m_rotateXDelta = QQuaternion::fromAxisAndAngle(1.0f ,0.0f ,0.0f, angleX);
+        m_rotateYDelta = QQuaternion::fromAxisAndAngle(0.0f ,1.0f ,0.0f, angleY);
 
     }
-    if(event->type() == QEvent::Type::MouseButtonPress){
-        m_mouseCoordinates = QVector2D(mouseEvent->localPos());
+    else if(mouseEvent->type() == QMouseEvent::MouseButtonPress){
+        m_mouseCoordinates = QVector2D(mouseEvent->position());
     }
     mouseEvent->accept();
 }
@@ -52,9 +47,19 @@ void InputEngine::wheelEvent(QEvent *event)
     wheelEvent->accept();
 }
 
-QVector<QQuaternion> InputEngine::getRotate()
+QQuaternion InputEngine::getRotateX()
 {
-    return {m_rotateDelta/*m_rotateXDelta, m_rotateYDelta*/};
+    return m_rotateXDelta;
+}
+
+QQuaternion InputEngine::getRotateY()
+{
+    return m_rotateYDelta;
+}
+
+QVector3D InputEngine::getWorldCoordinates()
+{
+//    QVector4D tmp(m_mouseCoordinates.x() / width());
 }
 
 QVector3D InputEngine::getTranslate()
