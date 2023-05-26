@@ -22,7 +22,7 @@ public:
     void initGraphicsEngine();
     void initPhysicsEngine();
     void initScriptEngine();
-    void initInputEngine();
+    void initInputEngine(const int &width, const int &height);
     void initProjectProcessor(QVBoxLayout &layout);
 
     static EngineCore *getInstance();
@@ -57,6 +57,8 @@ public slots:
     void createCameraInScene();
     void createLightingInScene();
 
+    void selectCurrentScene(QString sceneName);
+
 //project processor part
 signals:
     void projectLoaded();
@@ -69,9 +71,9 @@ public slots:
 
 //folders part
 public slots:
-    void loadModel(const QString & path);
-    void loadTexture(const QString & path);
-    void loadScript(const QString & path);
+    void loadModel(const QString &objectName, const QString &path);
+    void loadTexture(const QString &objectName, const QString &path);
+    void loadScript(const QString &objectName, const QString &path);
 
 
 private:
@@ -86,6 +88,9 @@ private:
     ModelBuilder m_modelBuilder;
 
     SceneFolder *m_sceneFolder;
+    ModelFolder *m_modelFolder;
+    ScriptFolder *m_scriptFolder;
+    TextureFolder *m_textureFolder;
 
     EngineCore();
 

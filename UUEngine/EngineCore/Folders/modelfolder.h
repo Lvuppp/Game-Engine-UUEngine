@@ -13,19 +13,22 @@
 class ModelFolder
 {
 public:
+    void addModel(const QString &objectName, const QString &modelName);
+    void deleteModel(const QString &objectName);
 
-    void addModel( const QString & objectName, const QString &modelsName);
+    const QVector<QString> allModels();
     QVector<QString> models(const QString &name);
     void clearFolder();
 
+public:
     static ModelFolder *getInstance();
 
 private:
-    QHash<QString, QString>  m_models;
+    QHash<QString, QString>  m_modelsFolder;
 
 private:
-
     ModelFolder();
+    ~ModelFolder();
 
     ModelFolder(const ModelFolder&) = delete;
     ModelFolder& operator=(const ModelFolder&) = delete;

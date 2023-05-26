@@ -8,7 +8,6 @@
 class SceneFolder
 {
 public:
-    ~SceneFolder();
 
     bool createScene(const QString &sceneName);
     Scene *setCurrentScene(const QString &sceneName);
@@ -24,9 +23,9 @@ private:
     Scene *m_currentScene;
     QHash<QString, Scene *> m_scenes;
 
-
 private:
     SceneFolder();
+    ~SceneFolder();
 
     SceneFolder(const SceneFolder&) = delete;
     SceneFolder& operator=(const SceneFolder&) = delete;

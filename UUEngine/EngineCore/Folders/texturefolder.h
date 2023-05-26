@@ -8,21 +8,24 @@
 class TextureFolder
 {
 public:
-    ~TextureFolder();
-
-    void addTexture( const QString & objectName, const QString &textureName);
+    void addTexture(const QString &objectName, const QString &textureName);
     QVector<QString> texture(const QString &objectName);
     void clearFolder();
 
+public:
     static TextureFolder *getInstance();
 
 private:
+    QHash<QString,QString> m_textures;
+
+private:
     TextureFolder();
+    ~TextureFolder();
+
 
     TextureFolder(const TextureFolder&) = delete;
     TextureFolder& operator=(const TextureFolder&) = delete;
 
-    QHash<QString,QString> m_textures;
     static TextureFolder* m_instance;
 };
 

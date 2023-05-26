@@ -2,8 +2,10 @@
 #define MODELLOADER_H
 
 #include "Folders/materiallib.h"
+#include "Folders/modelfolder.h"
 
 #include "projectinfo.h"
+
 class CustomModel;
 
 
@@ -48,6 +50,7 @@ public:
 
 private:
     ModelLoadStraregy *m_strategy;
+    ModelFolder *m_modelFolder;
 };
 
 #endif // OBJECTABSTRACTFACTORY_H

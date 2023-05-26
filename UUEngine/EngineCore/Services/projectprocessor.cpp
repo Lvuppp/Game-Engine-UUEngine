@@ -1,5 +1,7 @@
 #include "projectprocessor.h"
 #include "Folders/materiallib.h"
+#include "Models/custommodel.h"
+#include "Models/simplemodel.h"
 
 ProjectProcessor *ProjectProcessor::m_instance = nullptr;
 
@@ -15,8 +17,6 @@ ProjectProcessor::~ProjectProcessor()
     delete m_projectLayout;
 }
 
-
-//
 ///////////// FILE FORMAT
 // #SCENE_NAME|SCRIPT_PATH
 // +SKYBOX
@@ -29,42 +29,63 @@ ProjectProcessor::~ProjectProcessor()
 // OBJECT_NAME|MODEL_MATRIX|(CUSTOM_MODEL|MODEL_NAME)|(CUBE|PYRAMID|MATERIAL_PARAMS)|SCRIPT_PATH ...
 // #SCENE_NAME ...
 
+
+
 //CREATE PROJECT FOLDER
 
-void ProjectProcessor::createProject(const QString &path, const QString &projectName)
+void ProjectProcessor::createProject(const QString &path, const QString &name)
 {
 
     QDir dir(path);
     m_projectInfo.m_projectPath = path;
 
-    dir.mkdir(projectName);
-    dir.cd(projectName);
+    dir.mkdir(name);
+    dir.cd(name);
     dir.mkdir("Models");
     dir.mkdir("Textures");
     dir.mkdir("Scripts");
 
-    m_projectInfo.m_projectName = projectName;
-    m_projectInfo.m_projectPath = path + '/' + projectName;
+    m_projectInfo.m_projectPath = path + '/' + name + "/" + name + ".uupj";
+    m_projectInfo.m_projectName = name;
+    m_projectInfo.m_projectFolder = path + '/' + name;
 
-    QFile file(m_projectInfo.m_projectPath + "/" + m_projectInfo.m_projectName + ".uupj");
+    QFile file(m_projectInfo.m_projectPath);
     file.open(QIODevice::WriteOnly);
     file.close();
+}
+
+void ProjectProcessor::closeProject(QHash<QString, Scene *> scenes)
+{
+    try {
+        saveProject(scenes);
+
+        m_projectInfo.m_projectName = "";
+        m_projectInfo.m_projectPath = "";
+        m_projectInfo.m_projectFolder = "";
+
+    }
+    catch (const std::exception& e) {
+        qDebug() << "Close file error";
+    }
 }
 
 
 //SAVE FILE
 
-void ProjectProcessor::saveProject( QHash<QString, Scene *> scenes,const QString & path,const QString &projectName)
+void ProjectProcessor::saveProject(QHash<QString, Scene *> scenes,const QString & path)
 {
     try{
 
-        if(projectName != "" && path != ""){
-            m_projectInfo.m_projectName = projectName;
+        if(path != ""){
+            auto pathSplit = path.split('/');
+
             m_projectInfo.m_projectPath = path;
+            m_projectInfo.m_projectFolder = pathSplit.mid(0, pathSplit.size() - 2).join('/');
+            m_projectInfo.m_projectName = pathSplit[pathSplit.size() - 1].split('.')[0];
         }
 
 
-        QFile file(m_projectInfo.m_projectPath + '/' + m_projectInfo.m_projectName + ".uupj");
+        QFile file(m_projectInfo.m_projectPath);
 
         if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
             QTextStream stream(&file);
@@ -76,11 +97,14 @@ void ProjectProcessor::saveProject( QHash<QString, Scene *> scenes,const QString
 
         }
         else{
-            throw std::runtime_error("Save project file error");
+            qDebug() << "Can`t open project";
+            return;
+
         }
+
     }
-    catch(...){
-        throw std::runtime_error("Save project file error");
+    catch(const std::exception& e){
+        qDebug() << "Save project file error: " << e.what();
     }
 
 }
@@ -95,8 +119,8 @@ QString ProjectProcessor::saveScene(const QString & sceneName, Scene *scene)
         savedObjects += saveCameras(scene->camerasHash());
         savedObjects += saveLightins(scene->lighingsHash());
         savedObjects += saveGameObjects(scene->gameObjectsHash()) + '\n';
-    } catch (...) {
-        throw std::runtime_error(("Save scene " + sceneName + " error").toStdString());
+    } catch (const std::exception& e) {
+        qDebug() << "Save scene " + sceneName + " error:" + e.what();
     }
 
     return savedObjects;
@@ -209,10 +233,12 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
     QHash<QString, Scene *> scenes;
 
     try {
-        QFile file(path);
-        auto pathList = path.split('/');
         m_projectInfo.m_projectPath = path;
-        m_projectInfo.m_projectName = pathList[pathList.size() - 1];
+
+        auto pathSplit = path.split('/');
+        m_projectInfo.m_projectName = pathSplit[pathSplit.size() - 1].split('.')[0];
+
+        QFile file(path);
 
         if(file.open(QIODevice::ReadOnly)){
             QTextStream stream(&file);
@@ -234,20 +260,26 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
 
                 }
 
-            } catch (...) {
-                throw std::runtime_error("Reading project file error");
+            } catch (const std::exception& e) {
+                qDebug() << "Reading project file error" << e.what();
             }
 
             file.close();
         }
         else{
-            throw std::runtime_error("Open project file error");
+            qDebug() << "Open project file error";
         }
-    } catch (...) {
-        throw std::runtime_error("Loading project file error");
+    } catch (const std::exception& e) {
+        qDebug() << "Loading project file error" << e.what();
     }
 
     return scenes;
+}
+
+
+QHash<QString, Scene *> ProjectProcessor::loadScene(const QString sceneName, Scene *scene)
+{
+
 }
 
 

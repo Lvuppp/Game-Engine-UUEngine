@@ -30,10 +30,26 @@ public:
     QQuaternion getRotateX();
     QQuaternion getRotateY();
 
-    QVector3D getWorldCoordinates();
+    QVector3D getWorldCoordinates(QMatrix4x4 projectionMatrix, QMatrix4x4 viewMatrix, const float &objectY = 0);
 
     QVector3D getTranslate();
+public:
+    void setScreenCoords(const int &width, const int &height);
+
+public:
     static InputEngine *getInstance();
+
+private:
+
+    QVector2D m_mouseCoordinates;
+
+    QQuaternion m_rotateXDelta;
+    QQuaternion m_rotateYDelta;
+    QQuaternion m_rotateDelta;
+    QVector3D m_translateDelta;
+
+    int m_screenWidth;
+    int m_screenHeight;
 
 private:
     InputEngine();
@@ -42,13 +58,6 @@ private:
     InputEngine& operator=(const InputEngine&) = delete;
 
     static InputEngine* m_instance;
-
-    QVector2D m_mouseCoordinates;
-
-    QQuaternion m_rotateXDelta;
-    QQuaternion m_rotateYDelta;
-    QQuaternion m_rotateDelta;
-    QVector3D m_translateDelta;
 
 };
 

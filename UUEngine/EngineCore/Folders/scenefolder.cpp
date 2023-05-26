@@ -46,6 +46,10 @@ QHash<QString, Scene *> SceneFolder::scenes() const
 
 void SceneFolder::clearFolder()
 {
+    foreach (auto scene, m_scenes){
+        delete scene;
+    }
+
     m_scenes.clear();
 }
 

@@ -6,21 +6,27 @@ GraphicsEngine* GraphicsEngine::m_instance = nullptr;
 
 GraphicsEngine::GraphicsEngine()
 {
+//    m_engineScene = new Scene;
+//    m_engineScene->addCamera("EngineCamera");
+//    m_engineScene->setCurrentCamera("EngineCamera");
+//    m_engineScene->addLighting("EngineLighting");
+
 }
+
 
 GraphicsEngine::~GraphicsEngine()
 {
     delete m_frameBuffer;
-    delete m_functions;
+    delete this->currentContext()->functions();
 }
 
 void GraphicsEngine::initGraphics()
 {
-    m_functions->initializeOpenGLFunctions();
-    m_functions->glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    this->currentContext()->functions()->initializeOpenGLFunctions();
+    this->currentContext()->functions()->glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
-    m_functions->glEnable(GL_DEPTH_TEST);
-    m_functions->glEnable(GL_CULL_FACE);
+    this->currentContext()->functions()->glEnable(GL_DEPTH_TEST);
+    this->currentContext()->functions()->glEnable(GL_CULL_FACE);
 
     initShaders();
 
@@ -47,18 +53,18 @@ void GraphicsEngine::initGraphics()
 
 void GraphicsEngine::paintScene()
 {
-    /////
+
     m_frameBuffer->bind();
 
-    m_functions->glViewport(0, 0, m_frameBufferWidth, m_frameBufferWidth);
-    m_functions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    this->currentContext()->functions()->glViewport(0, 0, m_frameBufferWidth, m_frameBufferWidth);
+    this->currentContext()->functions()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_depthShaderProgram.bind();
     m_depthShaderProgram.setUniformValue("u_projectionLightMatrix", m_projectionLightMatrix);
     m_depthShaderProgram.setUniformValue("u_shadowLightMatrix", m_shadowLightMatrix);
 
     for (auto object : m_currentScene->gameObjects()) {
-        object->draw(&m_depthShaderProgram,m_functions);
+        object->draw(&m_depthShaderProgram,this->currentContext()->functions());
     }
 
     m_depthShaderProgram.release();
@@ -66,18 +72,18 @@ void GraphicsEngine::paintScene()
 
     GLuint texture = m_frameBuffer->texture();
 
-    m_functions->glActiveTexture(GL_TEXTURE4);
-    m_functions->glBindTexture(GL_TEXTURE_2D, texture);
+    this->currentContext()->functions()->glActiveTexture(GL_TEXTURE4);
+    this->currentContext()->functions()->glBindTexture(GL_TEXTURE_2D, texture);
 
-    m_functions->glViewport(0, 0, m_windowWidth, m_windowHeight);
-    m_functions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    this->currentContext()->functions()->glViewport(0, 0, m_windowWidth, m_windowHeight);
+    this->currentContext()->functions()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_skyBoxShaderProgram.bind();
 
     m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
-    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,m_functions);\
+    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
 
-    m_currentScene->skybox()->draw(&m_skyBoxShaderProgram,m_functions);
+    m_currentScene->skybox()->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
 
     m_skyBoxShaderProgram.release();
 
@@ -95,10 +101,10 @@ void GraphicsEngine::paintScene()
     m_sceneShaderProgram.setUniformValue("u_lightPower", 1.0f); // сила свечения
 
 
-    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,m_functions);
+    m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
 
     for (auto object : m_currentScene->gameObjects()) {
-        object->draw(&m_sceneShaderProgram,m_functions);
+        object->draw(&m_sceneShaderProgram,this->currentContext()->functions());
     }
 
     m_sceneShaderProgram.release();
@@ -151,14 +157,21 @@ void GraphicsEngine::initShaders()
     qDebug() << "End initialize shaders";
 }
 
+QMatrix4x4 GraphicsEngine::projectionMatrix() const
+{
+    return m_projectionMatrix;
+}
+
 void GraphicsEngine::rotateModelViewMatrix(const QQuaternion &rotationX,const QQuaternion &rotationY)
 {
+    if(m_currentScene == nullptr) return;
     m_currentScene->currentCamera()->rotateX(rotationX);
     m_currentScene->currentCamera()->rotateY(rotationY);
 }
 
 void GraphicsEngine::translateModelViewMatrix(QVector3D translation)
 {
+    if(m_currentScene == nullptr) return;
     m_currentScene->currentCamera()->translate(translation);
 }
 

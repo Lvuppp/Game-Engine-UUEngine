@@ -2,8 +2,6 @@
 #define PROJECTPROCESSOR_H
 
 #include "scene.h"
-#include "Models/custommodel.h"
-#include "Models/simplemodel.h"
 #include "modelloader.h"
 #include "modelbuilder.h"
 #include "projectinfo.h"
@@ -24,9 +22,10 @@ class ProjectProcessor
 public:
     ~ProjectProcessor();
 
-    void saveProject(QHash<QString, Scene *> scenes, const QString &path = "", const QString &projectName="");
-    QHash<QString, Scene *> loadProject(const QString & path);
-    void createProject(const QString &path, const QString &projectName="");
+    void saveProject(QHash<QString, Scene *> scenes, const QString &path = "");
+    QHash<QString, Scene*> loadProject(const QString & path);
+    void createProject(const QString &path, const QString &name);
+    void closeProject(QHash<QString, Scene *> scenes);
 
     void setLayout(QBoxLayout &layout);
     static ProjectProcessor *getInstance();
@@ -41,7 +40,6 @@ private:
     QString saveModel(const QString &objectName, Base3DGameObject *gameObject);
     QString saveMaterial(Material *material);
     QString saveScripts(QVector<QString> scripts);
-
 
     QHash<QString, Scene *> loadScene(const QString sceneName, Scene *scene);
     QHash<QString, Camera *> loadCameras(const QVector<QString> &cameras);

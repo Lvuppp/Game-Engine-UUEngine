@@ -2,20 +2,20 @@
 
 ScriptFolder* ScriptFolder::m_instance = nullptr;
 
-ScriptFolder::ScriptFolder() : m_scripts(QHash<QString,QString>())
+ScriptFolder::ScriptFolder() : m_scriptsFolder(QHash<QString,QString>())
 {
 
 }
 
 void ScriptFolder::addScript( const QString & objectName, const QString &scriptName)
 {
-    m_scripts.insert(objectName, scriptName);
+    m_scriptsFolder.insert(objectName, scriptName);
 }
 
 QVector<QString> ScriptFolder::scripts(const QString &name)
 {
     QVector<QString> tmp;
-    auto scriptsIters =  m_scripts.equal_range(name);
+    auto scriptsIters =  m_scriptsFolder.equal_range(name);
 
     for (auto it = scriptsIters.first; it != scriptsIters.second; ++it) {
         tmp.append(*it);
@@ -26,7 +26,7 @@ QVector<QString> ScriptFolder::scripts(const QString &name)
 
 void ScriptFolder::clearFolder()
 {
-    m_scripts.clear();
+    m_scriptsFolder.clear();
 }
 
 ScriptFolder *ScriptFolder::getInstance()

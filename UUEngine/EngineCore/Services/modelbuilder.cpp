@@ -2,7 +2,6 @@
 
 ModelBuilder::ModelBuilder()
 {
-
 }
 
 SimpleModel *ModelBuilder::createCube(const float &width, const float &height, const float &depth)
@@ -54,6 +53,7 @@ SimpleModel *ModelBuilder::createCube(const float &width, const float &height, c
 
     Material *material = new Material();
     material->setDiffuseColor(QVector3D(0.5, 0.5, 0.5));
+
 
     return new SimpleModel(new ModelParticle(vertexes,indexes, material));
 }

@@ -69,7 +69,7 @@ CustomModel* OBJModelLoadStraregy::createModel(const QString &filePath)
         }
         else if(split[0] == "mtllib"){
             auto mtlPath = QFileInfo(filePath);
-            library.loadMaterialsFromFile(QString("%1/%2").arg(mtlPath.absolutePath()).arg(split[1]));
+            library.loadMaterialsFromFile(QString("%1/%2").arg(mtlPath.absolutePath(), split[1]));
         }
         else if(split[0] == "usemtl"){
             if(vertexes.size() == 0 || indexes.size() == 0){
@@ -86,9 +86,6 @@ CustomModel* OBJModelLoadStraregy::createModel(const QString &filePath)
     }
 
     objFile.close();
-
-    //ProjectInfo projectInfo;
-
     models.append(new ModelParticle(vertexes,indexes,material));
 
     return new CustomModel(models);
@@ -111,7 +108,7 @@ CustomModel* FBXModelLoadStraregy::createModel(const QString &filePath)
 
 ModelLoader::ModelLoader(ModelLoadStraregy *strategy) : m_strategy(strategy)
 {
-
+    m_modelFolder = ModelFolder::getInstance();
 }
 
 void ModelLoader::setStrategy(ModelLoadStraregy *strategy)

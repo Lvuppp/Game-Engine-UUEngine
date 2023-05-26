@@ -2,6 +2,10 @@
 
 Scene::Scene()
 {
+    m_gameObjects = QHash<QString, Base3DGameObject *>();
+    m_cameras = QHash<QString, Camera*>();
+    m_lightings = QHash<QString, Lighting*>();
+    m_currentCamera = nullptr;
 
 }
 

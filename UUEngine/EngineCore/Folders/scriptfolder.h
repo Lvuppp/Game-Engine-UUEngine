@@ -10,17 +10,19 @@
 class ScriptFolder
 {
 public:
-    void addScript( const QString & objectName, const QString &scriptName);
+    void addScript(const QString &objectName, const QString &scriptName);
     QVector<QString> scripts(const QString &name);
     void clearFolder();
 
+public:
     static ScriptFolder *getInstance();
 
 private:
-    QHash<QString,QString> m_scripts;
+    QHash<QString,QString> m_scriptsFolder;
 
 private:
     ScriptFolder();
+    ~ScriptFolder();
 
     ScriptFolder(const ScriptFolder&) = delete;
     ScriptFolder& operator=(const ScriptFolder&) = delete;

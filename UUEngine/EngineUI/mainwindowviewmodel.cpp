@@ -11,24 +11,21 @@ void MainWindowViewModel::processProject()
 
     if(action->text() == "Create"){
         ProjectCreator *projectCreator = new ProjectCreator();
+
         connect(projectCreator, &ProjectCreator::getFolderPath, this, [this](QString path){
             m_engine->createProject(path.split(' ')[0], path.split(' ')[1]);
         });
+
         projectCreator->exec();
 
         delete projectCreator;
 
     }
     else if(action->text() == "Open"){
-        auto projectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.uupj*)").split('/');
+        auto projectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.uupj*)");
 
         if(projectPath.size()){
-            QString path;
-            for (int i = 0; i < projectPath.size() - 1; ++i) {
-                path += projectPath[i] + '/';
-            }
-
-            m_engine->loadProject(path);
+            m_engine->loadProject(projectPath);
         }
 
     }
@@ -51,6 +48,5 @@ void MainWindowViewModel::processProject()
     }
     else if(action->text() == "Close"){
         m_engine->closeProject();
-
     }
 }

@@ -11,7 +11,7 @@
 
 
 //сделать классы поддвижков singltone
-class GraphicsEngine
+class GraphicsEngine : QOpenGLContext
 {
 public:
     ~GraphicsEngine();
@@ -30,6 +30,8 @@ public:
 
     static GraphicsEngine *getInstance();
 
+    QMatrix4x4 projectionMatrix() const;
+
 private:
     GraphicsEngine();
 
@@ -37,7 +39,8 @@ private:
     GraphicsEngine& operator=(const GraphicsEngine&) = delete;
 
     //openGL поля
-    QOpenGLFunctions *m_functions;
+    //QOpenGLContext *m_context;
+    //QOpenGLFunctions *m_functions;
     QOpenGLShaderProgram m_sceneShaderProgram;
     QOpenGLShaderProgram m_skyBoxShaderProgram;
     QOpenGLShaderProgram m_depthShaderProgram;
@@ -52,14 +55,15 @@ private:
     QMatrix4x4 m_lightMatrix;
     QMatrix4x4 m_shadowLightMatrix;
     //поле сцены
-    Scene* m_currentScene;
+    Scene *m_currentScene;
 
-
+    Camera *m_engineCamera;
+    Lighting *m_engineLighting;
 
     int m_windowWidth;
     int m_windowHeight;
 
-    bool sceneStart;
+    bool m_sceneStart = false;
     static GraphicsEngine* m_instance;
 };
 
