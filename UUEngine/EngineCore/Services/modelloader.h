@@ -4,37 +4,34 @@
 #include "Folders/materiallib.h"
 #include "Folders/modelfolder.h"
 
-#include "projectinfo.h"
-
 class CustomModel;
 
-
-class ModelLoadStraregy
+class ModelLoadStrategy
 {
 public:
-    ModelLoadStraregy();
-    virtual ~ModelLoadStraregy();
+    ModelLoadStrategy();
+    virtual ~ModelLoadStrategy();
 
     virtual CustomModel* createModel(const QString& filePath) = 0;
 
 };
 
-class OBJModelLoadStraregy : public ModelLoadStraregy
+class OBJModelLoadStrategy : public ModelLoadStrategy
 {
 public:
-    OBJModelLoadStraregy();
-    ~OBJModelLoadStraregy();
+    OBJModelLoadStrategy();
+    ~OBJModelLoadStrategy();
     CustomModel*  createModel(const QString& filePath) override;
 
 private:
     MaterialLibrary library;
 };
 
-class FBXModelLoadStraregy : public ModelLoadStraregy
+class FBXModelLoadStrategy : public ModelLoadStrategy
 {
 public:
-    FBXModelLoadStraregy();
-    ~FBXModelLoadStraregy();
+    FBXModelLoadStrategy();
+    ~FBXModelLoadStrategy();
     CustomModel*  createModel(const QString& filePath) override;
 
 private:
@@ -43,13 +40,13 @@ private:
 
 class ModelLoader{
 public:
-    explicit ModelLoader(ModelLoadStraregy* strategy = nullptr);
+    explicit ModelLoader(ModelLoadStrategy* strategy = nullptr);
 
-    void setStrategy(ModelLoadStraregy *strategy);
+    void setStrategy(ModelLoadStrategy *strategy);
     CustomModel* createModel(const QString& filePath);
 
 private:
-    ModelLoadStraregy *m_strategy;
+    ModelLoadStrategy *m_strategy;
     ModelFolder *m_modelFolder;
 };
 

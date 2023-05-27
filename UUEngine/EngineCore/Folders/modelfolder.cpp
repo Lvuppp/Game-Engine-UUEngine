@@ -7,21 +7,25 @@ ModelFolder::ModelFolder()
 
 }
 
-void ModelFolder::addModel(const QString &objectName, const QString &modelName)
+void ModelFolder::append(const QString &objectName, const QString &modelName)
 {
     m_modelsFolder.insert(objectName, modelName);
 }
 
-void ModelFolder::deleteModel(const QString &objectName)
+void ModelFolder::remove(const QString &objectName)
 {
     m_modelsFolder.remove(objectName);
+}
+
+void ModelFolder::replace(const QString &objectName, const QString &modelName)
+{
+    m_modelsFolder[objectName] = modelName;
 }
 
 const QVector<QString> ModelFolder::allModels()
 {
     return m_modelsFolder.values();
 }
-
 
 QVector<QString> ModelFolder::models(const QString &name)
 {

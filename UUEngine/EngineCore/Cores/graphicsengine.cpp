@@ -82,8 +82,10 @@ void GraphicsEngine::paintScene()
 
     m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
     m_currentScene->currentCamera()->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
+    if(m_currentScene->skybox()){
+        m_currentScene->skybox()->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
 
-    m_currentScene->skybox()->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
+    }
 
     m_skyBoxShaderProgram.release();
 

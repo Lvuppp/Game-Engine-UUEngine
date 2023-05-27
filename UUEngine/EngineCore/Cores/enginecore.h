@@ -29,17 +29,25 @@ public:
 
 //graphics engine part
 public:
-
     void paintScene();
     void resizeScene(int w, int h);
+
+public:
+    void translateObject(const QString &objectName,const QVector3D &translation);
+    void rotateObject(const QString &objectName,const QQuaternion &rotation);
+    void scaleObject(const QString &objectName,const float &scale);
+
+    void setNormalTexture(const QString &objectName, const QString &path);
+    void setDiffuseTexture(const QString &objectName, const QString &path);
 
 signals:
     void updateGraphics();
 
-//input engine part
+//input engine part;
 public slots:
-    void getEvent(QEvent* event);
-
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void wheelEvent(QWheelEvent* event);
 //physics engine part
 public:
 
@@ -48,16 +56,16 @@ public:
 
 //scene project part
 public:
-    void setCurrentScene();
+    void setCurrentScene(const QString &sceneName);
     void createSimpleScene();
 
-public slots:
-    void createCustomObjectInScene();
-    void createSimpleObjectInScene();
-    void createCameraInScene();
-    void createLightingInScene();
+public:
+    void createScene(const QString &sceneName);
+    void createCameraInScene(const QString &cameraName);
+    void createLightingInScene(const QString &lightingName);
+    void setSkyBox(const float &size, const QString &path);
 
-    void selectCurrentScene(QString sceneName);
+    void selectCurrentScene(const QString &sceneName);
 
 //project processor part
 signals:
@@ -70,11 +78,24 @@ public slots:
     void closeProject();
 
 //folders part
-public slots:
+public:
     void loadModel(const QString &objectName, const QString &path);
     void loadTexture(const QString &objectName, const QString &path);
     void loadScript(const QString &objectName, const QString &path);
 
+//model loader part
+public:
+    void createOBJModel(const QString &objectName, const QString &modelPath);
+    void createFBXModel(const QString &objectName, const QString &modelPath);
+
+//model builder
+public:
+    void createCube(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
+    void createPyramide(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f);
+    void createSphere(const QString &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
+    void createPrism(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const float &angle = 1.0f);
+    void createCone(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
+    void createCylinder(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
 
 private:
 
@@ -92,6 +113,7 @@ private:
     ScriptFolder *m_scriptFolder;
     TextureFolder *m_textureFolder;
 
+private:
     EngineCore();
 
     EngineCore(const GraphicsEngine&) = delete;

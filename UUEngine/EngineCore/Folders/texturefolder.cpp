@@ -7,9 +7,19 @@ TextureFolder::~TextureFolder()
 
 }
 
-void TextureFolder::addTexture(const QString &objectName, const QString &textureName)
+void TextureFolder::append(const QString &objectName, const QString &textureName)
 {
     m_textures.insert(objectName, textureName);
+}
+
+void TextureFolder::remove(const QString &objectName)
+{
+    m_textures.remove(objectName);
+}
+
+void TextureFolder::replace(const QString &objectName, const QString &modelName)
+{
+    m_textures[objectName] = modelName;
 }
 
 QVector<QString> TextureFolder::texture(const QString &objectName)

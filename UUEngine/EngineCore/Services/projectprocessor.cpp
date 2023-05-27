@@ -346,7 +346,7 @@ QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVect
 Model *ProjectProcessor::loadModel(const QString &objectType, const QString &modelParams)
 {
     if(objectType == "CUSTOM_MODEL"){
-        m_modelLoader.setStrategy(new OBJModelLoadStraregy());
+        m_modelLoader.setStrategy(new OBJModelLoadStrategy());
         return m_modelLoader.createModel(modelParams);
 
     }

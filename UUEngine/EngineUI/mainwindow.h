@@ -20,10 +20,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    void loadProjectStructure(QLayout *layout);
-    void resizeEvent(QResizeEvent *event) override;
 
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     Ui::MainWindow *ui;

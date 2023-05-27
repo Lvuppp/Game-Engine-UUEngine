@@ -60,6 +60,21 @@ bool Scene::addCamera(const QString &name)
     return true;
 }
 
+bool Scene::deleteGameObject(const QString &name)
+{
+    return m_gameObjects.remove(name);
+}
+
+bool Scene::deleteLighting(const QString &name)
+{
+    return m_cameras.remove(name);
+}
+
+bool Scene::deleteCamera(const QString &name)
+{
+    return m_lightings.remove(name);
+}
+
 bool Scene::setSkybox(SimpleModel *model)
 {
     m_skybox = new SkyBox(model);

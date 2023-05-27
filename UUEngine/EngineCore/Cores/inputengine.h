@@ -24,9 +24,6 @@ class InputEngine
 public:
     ~InputEngine();
 
-    void mouseEvent(QEvent* event);
-    void wheelEvent(QEvent* event);
-
     QQuaternion getRotateX();
     QQuaternion getRotateY();
 
@@ -35,6 +32,11 @@ public:
     QVector3D getTranslate();
 public:
     void setScreenCoords(const int &width, const int &height);
+
+public:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void wheelEvent(QWheelEvent* event);
 
 public:
     static InputEngine *getInstance();

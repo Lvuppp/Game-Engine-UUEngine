@@ -20,6 +20,10 @@ public:
     bool addLighting(const QString &name);
     bool addCamera(const QString &name);
 
+    bool deleteGameObject(const QString &name);
+    bool deleteLighting(const QString &name);
+    bool deleteCamera(const QString &name);
+
     bool setSkybox(SimpleModel *model);
     void setCurrentCamera(const QString &name);
     //void addPhysicsObject();
@@ -55,5 +59,6 @@ private:
 
     Camera *m_currentCamera;
 };
+
 
 #endif // SCENE_H

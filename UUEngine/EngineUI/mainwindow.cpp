@@ -33,10 +33,6 @@ MainWindow::~MainWindow()
     delete m_openGLWidget;
 }
 
-void MainWindow::loadProjectStructure(QLayout *layout)
-{
-
-}
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {

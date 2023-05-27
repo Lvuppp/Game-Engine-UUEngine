@@ -13,8 +13,9 @@
 class ModelFolder
 {
 public:
-    void addModel(const QString &objectName, const QString &modelName);
-    void deleteModel(const QString &objectName);
+    void append(const QString &objectName, const QString &modelName);
+    void remove(const QString &objectName);
+    void replace(const QString &objectName, const QString &modelName);
 
     const QVector<QString> allModels();
     QVector<QString> models(const QString &name);

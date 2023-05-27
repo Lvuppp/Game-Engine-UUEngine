@@ -9,6 +9,7 @@
 #include <QWheelEvent>
 #include <QMenu>
 #include <QAction>
+#include <QFileDialog>
 
 class OpenGLWidgetViewModel : public QOpenGLWidget
 {
@@ -19,25 +20,36 @@ public:
     void createContextMenu();
     void linkWithEngine();
 
+public:
+    void updateGraphics();
+
 signals:
-    void createObjects();
-    void mouseEvent(QEvent* event);
+    void mousePress(QMouseEvent* event);
+    void mouseMove(QMouseEvent* event);
+    void wheelMove(QWheelEvent* event);
 
 public slots:
+    void createCamera();
+    void createLighting();
+    void createCube();
+    void createPyramid();
+    void createSphere();
+    void createPrism();
+    void createCylinder();
+    void createCone();
+    void createCustomObject();
+
+protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
     void contextMenuEvent(QContextMenuEvent *event) override;
-    void createObject();
-public:
-    void updateGraphics();
 
 private:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
-
 
     QMenu *m_contextMenu;
     EngineCore *m_engine;

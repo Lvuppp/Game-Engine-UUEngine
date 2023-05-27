@@ -9,8 +9,6 @@
 #include "Folders/modelfolder.h"
 #include "Folders/texturefolder.h"
 
-
-
 #include <QString>
 #include <QFile>
 #include <QTextStream>

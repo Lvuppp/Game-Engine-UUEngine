@@ -8,7 +8,11 @@
 class TextureFolder
 {
 public:
-    void addTexture(const QString &objectName, const QString &textureName);
+    void append(const QString &objectName, const QString &textureName);
+    void remove(const QString &objectName);
+    void replace(const QString &objectName, const QString &modelName);
+
+    const QVector<QString> allModels();
     QVector<QString> texture(const QString &objectName);
     void clearFolder();
 
