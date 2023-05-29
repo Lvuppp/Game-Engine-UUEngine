@@ -33,130 +33,11 @@ void EngineCore::resizeScene(int w, int h)
     m_inputEngine->setScreenCoords(w,h);
 }
 
-void EngineCore::createScene(const QString &sceneName)
-{
-    m_sceneFolder->createScene(sceneName);
-    m_graphicsEngine->setCurrentScene(m_sceneFolder->currentScene());
-}
-
-void EngineCore::translateObject(const QString &objectName, const QVector3D &translation)
-{
-    m_sceneFolder->currentScene()->gameObject(objectName)->
-        translate(QVector3D( m_sceneFolder->currentScene()->gameObject(objectName)->coordinates() - translation));
-}
-
-void EngineCore::rotateObject(const QString &objectName, const QQuaternion &rotation)
-{
-    m_sceneFolder->currentScene()->gameObject(objectName)->
-        rotate(QQuaternion(m_sceneFolder->currentScene()->gameObject(objectName)->rotation() - rotation));
-}
-
-void EngineCore::scaleObject(const QString &objectName, const float &scale)
-{
-    m_sceneFolder->currentScene()->gameObject(objectName)->
-        scale(m_sceneFolder->currentScene()->gameObject(objectName)->scale() - scale);
-}
-
-void EngineCore::setNormalTexture(const QString &objectName, const QString &path)
-{
-    auto model = dynamic_cast<SimpleModel *>(m_sceneFolder->currentScene()->gameObject(objectName)->model());
-    model->modelParticle()->setNormalMap(path);
-}
-
-void EngineCore::setDiffuseTexture(const QString &objectName, const QString &path)
-{
-    auto model = dynamic_cast<SimpleModel *>(m_sceneFolder->currentScene()->gameObject(objectName)->model());
-    model->modelParticle()->setDiffuseMap(path);
-}
-
-void EngineCore::createOBJModel(const QString &objectName, const QString &path)
-{
-    m_modelLoader.setStrategy(new OBJModelLoadStrategy);
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelLoader.createModel(path));
-    m_modelFolder->append(objectName, path.split('/').constLast());
-    emit updateGraphics();
-}
-
-void EngineCore::selectCurrentScene(const QString &sceneName)
-{
-    m_graphicsEngine->setCurrentScene(m_sceneFolder->setCurrentScene(sceneName));
-    emit updateGraphics();
-}
-
-void EngineCore::createFBXModel(const QString &objectName, const QString &path)
-{
-    m_modelLoader.setStrategy(new FBXModelLoadStrategy);
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelLoader.createModel(path));
-    m_modelFolder->append(objectName, path.split('/').constLast());
-    emit updateGraphics();
-}
-
-void EngineCore::createCameraInScene(const QString &objectName)
-{
-    m_sceneFolder->currentScene()->addCamera(objectName);
-    emit updateGraphics();
-}
-
-void EngineCore::createLightingInScene(const QString &objectName)
-{
-    m_sceneFolder->currentScene()->addLighting(objectName);
-    emit updateGraphics();
-}
-
-void EngineCore::setSkyBox(const float &size, const QString &path)
-{
-    m_sceneFolder->currentScene()->setSkybox(m_modelBuilder.createSkybox(size, path));
-    m_textureFolder->append("Skybox", path.split('/').constLast());
-    emit updateGraphics();
-}
-
-void EngineCore::createCube(const QString &objectName, const float &width, const float &height, const float &depth)
-{
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelBuilder.createCube(width, height, depth));
-    m_modelFolder->replace(objectName, QString("CUBE(%1 %2 %3)").arg(width, height, depth));
-    emit updateGraphics();
-}
-
-void EngineCore::createPyramide(const QString &objectName, const float &width, const float &height)
-{
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelBuilder.createPyramide(width, height));
-    m_modelFolder->replace(objectName, QString("PYRAMID(%1 %2)").arg(width, height));
-    emit updateGraphics();
-}
-
-void EngineCore::createSphere(const QString &objectName, const float &radius, const int &rings, const int &sectors)
-{
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelBuilder.createSphere(radius,rings, sectors));
-    m_modelFolder->replace(objectName, QString("SPHERE(%1 %2 %3)").arg(radius).arg(rings, sectors));
-    emit updateGraphics();
-}
-
-void EngineCore::createPrism(const QString &objectName, const float &width, const float &height, const float &depth, const float &angle)
-{
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelBuilder.createPrism(width,height, depth, angle));
-    m_modelFolder->replace(objectName, QString("PRISM(%1 %2 %3 %4)").arg(width,height, depth, angle));
-    emit updateGraphics();
-}
-
-void EngineCore::createCone(const QString &objectName, const float &width, const float &height, const int &sectors)
-{
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelBuilder.createCone(width, height, sectors));
-    m_modelFolder->replace(objectName, QString("CONE(%1 %2 %3)").arg(width, height).arg(sectors));
-    emit updateGraphics();
-}
-
-void EngineCore::createCylinder(const QString &objectName, const float &width, const float &height, const int &sectors)
-{
-    m_sceneFolder->currentScene()->addGameObject(objectName, m_modelBuilder.createCylinder(width, height, sectors));
-    m_modelFolder->replace(objectName, QString("CYLINDER(%1 %2 %3)").arg(width, height).arg(sectors));
-    emit updateGraphics();
-}
-
 void EngineCore::paintScene()
 {
     //clock_t start = clock();
 
-    if(m_sceneFolder->currentScene() == nullptr) return;
+    if(getCurrentScene() == nullptr) return;
 
     m_graphicsEngine->paintScene();
     //clock_t end = clock();
@@ -166,12 +47,158 @@ void EngineCore::paintScene()
 void EngineCore::initGraphicsEngine()
 {
     m_graphicsEngine->initGraphics();
-
-    createSimpleScene();
     //m_projectProcessor->saveProject("", m_sceneFolder->scenes(), "project");
     //m_projectProcessor->loadProject("project.uupj");
     //m_scriptEngine->loadScript(m_sceneFolder->object("Golem"));
 }
+
+//scene work
+void EngineCore::createScene(const QString &sceneName)
+{
+    m_sceneFolder->createScene(sceneName);
+    m_graphicsEngine->setCurrentScene(getCurrentScene());
+}
+
+void EngineCore::translateObject(const QString &objectName, const QVector3D &translation)
+{
+    getCurrentScene()->gameObject(objectName)->
+        translate(QVector3D( getCurrentScene()->gameObject(objectName)->coordinates() - translation));
+}
+
+void EngineCore::rotateObject(const QString &objectName, const QQuaternion &rotation)
+{
+    getCurrentScene()->gameObject(objectName)->
+        rotate(QQuaternion(getCurrentScene()->gameObject(objectName)->rotation() - rotation));
+}
+
+void EngineCore::scaleObject(const QString &objectName, const float &scale)
+{
+    getCurrentScene()->gameObject(objectName)->
+        scale(getCurrentScene()->gameObject(objectName)->scale() - scale);
+}
+
+void EngineCore::setNormalTexture(const QString &objectName, const QString &path)
+{
+    auto model = dynamic_cast<SimpleModel *>(getCurrentScene()->gameObject(objectName)->model());
+    model->modelParticle()->setNormalMap(path);
+    ProjectInfo::copyToTextures(path);
+}
+
+void EngineCore::setDiffuseTexture(const QString &objectName, const QString &path)
+{
+    auto model = dynamic_cast<SimpleModel *>(getCurrentScene()->gameObject(objectName)->model());
+    model->modelParticle()->setDiffuseMap(path);
+    ProjectInfo::copyToTextures(path);
+}
+
+
+bool EngineCore::createOBJModel(const QString &objectName, const QString &path)
+{
+    m_modelLoader.setStrategy(new OBJModelLoadStrategy);
+    if(!getCurrentScene()->addGameObject(objectName, m_modelLoader.createModel(path)))
+        return false;
+
+    m_modelFolder->append(objectName, path.split('/').constLast());
+    translateObject(objectName);
+    return true;
+}
+
+void EngineCore::selectCurrentScene(const QString &sceneName)
+{
+    m_graphicsEngine->setCurrentScene(m_sceneFolder->setCurrentScene(sceneName));
+    emit updateGraphics();
+}
+
+Scene *EngineCore::getCurrentScene()
+{
+    return m_sceneFolder->currentScene();
+}
+
+
+bool EngineCore::createFBXModel(const QString &objectName, const QString &path)
+{
+    m_modelLoader.setStrategy(new FBXModelLoadStrategy);
+    if(!getCurrentScene()->addGameObject(objectName, m_modelLoader.createModel(path)))
+        return false;
+
+    m_modelFolder->append(objectName, path.split('/').constLast());
+    translateObject(objectName);
+    return true;
+}
+
+void EngineCore::createCameraInScene(const QString &objectName)
+{
+    getCurrentScene()->addCamera(objectName);
+    getCurrentScene()->camera(objectName)->
+        setCoordinates(m_inputEngine->getWorldCoordinates(m_graphicsEngine->projectionMatrix(),
+                                                          m_graphicsEngine->cameraViewMatrix()));
+    emit updateGraphics();
+}
+
+void EngineCore::createLightingInScene(const QString &objectName)
+{
+    getCurrentScene()->addLighting(objectName);
+    getCurrentScene()->lighting(objectName)->
+        setCoordinates(m_inputEngine->getWorldCoordinates(m_graphicsEngine->projectionMatrix(),
+                                                          m_graphicsEngine->cameraViewMatrix()));
+    emit updateGraphics();
+}
+
+void EngineCore::setSkyBox(const float &size, const QString &path)
+{
+    getCurrentScene()->setSkybox(m_modelBuilder.createSkybox(size, path));
+    m_textureFolder->append("Skybox", path.split('/').constLast());
+    emit updateGraphics();
+}
+
+bool EngineCore::createCube(const QString &objectName, const float &width, const float &height, const float &depth)
+{
+    if(!getCurrentScene()->addGameObject(objectName, m_modelBuilder.createCube(width, height, depth)))
+        return false;
+
+    m_modelFolder->replace(objectName, QString("CUBE(%1 %2 %3)").arg(width).arg(height).arg(depth));
+    translateObject(objectName);
+    return true;
+}
+
+void EngineCore::createPyramide(const QString &objectName, const float &width, const float &height)
+{
+    getCurrentScene()->addGameObject(objectName, m_modelBuilder.createPyramide(width, height));
+    m_modelFolder->replace(objectName, QString("PYRAMID(%1 %2)").arg(width).arg(height));
+    translateObject(objectName);
+}
+
+bool EngineCore::createSphere(const QString &objectName, const float &radius, const int &stacks, const int &sectors)
+{
+    if(!getCurrentScene()->addGameObject(objectName, m_modelBuilder.createSphere(radius,stacks, sectors)))
+        return false;
+
+    m_modelFolder->replace(objectName, QString("SPHERE(%1 %2 %3)").arg(radius).arg(stacks).arg(sectors));
+    translateObject(objectName);
+    return true;
+}
+
+void EngineCore::createPrism(const QString &objectName, const float &width, const float &height, const float &depth, const float &angle)
+{
+    getCurrentScene()->addGameObject(objectName, m_modelBuilder.createPrism(width,height, depth, angle));
+    m_modelFolder->replace(objectName, QString("PRISM(%1 %2 %3 %4)").arg(width).arg(height).arg(depth).arg(angle));
+    translateObject(objectName);
+}
+
+void EngineCore::createCone(const QString &objectName, const float &width, const float &height, const int &sectors)
+{
+    getCurrentScene()->addGameObject(objectName, m_modelBuilder.createCone(width, height, sectors));
+    m_modelFolder->replace(objectName, QString("CONE(%1 %2 %3)").arg(width).arg(height).arg(sectors));
+    translateObject(objectName);
+}
+
+void EngineCore::createCylinder(const QString &objectName, const float &width, const float &height, const int &sectors)
+{
+    getCurrentScene()->addGameObject(objectName, m_modelBuilder.createCylinder(width, height, sectors));
+    m_modelFolder->replace(objectName, QString("CYLINDER(%1 %2 %3)").arg(width).arg(height).arg(sectors));
+    translateObject(objectName);
+}
+
 
 ////////////////////////////////////////////////////Input Engine
 
@@ -200,6 +227,14 @@ void EngineCore::wheelEvent(QWheelEvent *event)
     emit updateGraphics();
 }
 
+void EngineCore::translateObject(const QString &objectName)
+{
+    getCurrentScene()->gameObject(objectName)->
+        setCoordinates(m_inputEngine->getWorldCoordinates(m_graphicsEngine->projectionMatrix(),
+                                                          m_graphicsEngine->cameraViewMatrix()));
+    emit updateGraphics();
+}
+
 ////////////////////////////////////////////////////////////Project Processor
 
 void EngineCore::initProjectProcessor(QVBoxLayout &layout)
@@ -209,12 +244,14 @@ void EngineCore::initProjectProcessor(QVBoxLayout &layout)
 
 void EngineCore::createSimpleScene()
 {
-    createScene("SimpleScene");
-    createOBJModel("Giant", ":/Models/TestModel/Stone.obj");
-    createCube("Platform", 20.0f, 1.0f, 20.0f);
-    createCube("Cube", 2.0f, 1.0f, 2.0f);
-    translateObject("Cube", QVector3D(5.0f,0.0f,0.0f));
-    translateObject("Platform",QVector3D(0.0f,2.0f,0.0f));
+//    createaCube("Cube", 1.0f, 1.0f, 1.0f);
+//    createaCube("Cube2", 1.0f, 1.0f, 1.0f);
+//    createaCube("Cube3", 1.0f, 1.0f, 1.0f);
+//    createaCube("Cube4", 1.0f, 1.0f, 1.0f);
+//    translateObject("Cube", QVector3D(10.0f,0.0f,10.0f));
+//    translateObject("Cube2", QVector3D(10.0f,0.0f,-10.0f));
+//    translateObject("Cube3", QVector3D(-10.0f,0.0f,10.0f));
+//    translateObject("Cube4", QVector3D(-10.0f,0.0f,-10.0f));
 }
 
 
@@ -222,16 +259,20 @@ void EngineCore::createProject(const QString &path, const QString &name)
 {
     m_projectProcessor->createProject(path, name);
     m_sceneFolder->createScene(name);
-    m_graphicsEngine->setCurrentScene(m_sceneFolder->currentScene());
+    m_graphicsEngine->setCurrentScene(getCurrentScene());
     emit updateGraphics();
+    emit setDisableState(false);
+    createSimpleScene();
 }
 
 
 void EngineCore::loadProject(const QString &path)
 {
-    //m_projectProcessor->loadProject(path);
-    createSimpleScene();
+    m_sceneFolder->setScenes(m_projectProcessor->loadProject(path));
+    m_graphicsEngine->setCurrentScene(getCurrentScene());
     emit updateGraphics();
+    emit setDisableState(false);
+
 }
 
 void EngineCore::saveProject(const QString &path, const QString &projectName)
@@ -249,6 +290,7 @@ void EngineCore::closeProject()
     m_projectProcessor->closeProject(m_sceneFolder->scenes());
     m_sceneFolder->clearFolder();
     emit updateGraphics();
+    emit setDisableState(true);
 }
 
 void EngineCore::loadModel(const QString &objectName, const QString &path)

@@ -48,6 +48,8 @@ public slots:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent* event);
     void wheelEvent(QWheelEvent* event);
+
+    void translateObject(const QString &objectName);
 //physics engine part
 public:
 
@@ -66,7 +68,7 @@ public:
     void setSkyBox(const float &size, const QString &path);
 
     void selectCurrentScene(const QString &sceneName);
-
+    Scene *getCurrentScene();
 //project processor part
 signals:
     void projectLoaded();
@@ -85,14 +87,14 @@ public:
 
 //model loader part
 public:
-    void createOBJModel(const QString &objectName, const QString &modelPath);
-    void createFBXModel(const QString &objectName, const QString &modelPath);
+    bool createOBJModel(const QString &objectName, const QString &modelPath);
+    bool createFBXModel(const QString &objectName, const QString &modelPath);
 
 //model builder
 public:
-    void createCube(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
+    bool createCube(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
     void createPyramide(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f);
-    void createSphere(const QString &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
+    bool createSphere(const QString &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
     void createPrism(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const float &angle = 1.0f);
     void createCone(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
     void createCylinder(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
@@ -119,8 +121,9 @@ private:
     EngineCore(const GraphicsEngine&) = delete;
     EngineCore& operator=(const GraphicsEngine&) = delete;
 
-
     static EngineCore* m_instance;
+signals:
+    void setDisableState(bool state);
 };
 
 #endif // ENGINECORE_H

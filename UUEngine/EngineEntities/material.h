@@ -40,8 +40,8 @@ public:
 
 private:
     QString m_mtlName;
-    QString m_diffuseMapPath;
-    QString m_normalMapPath;
+    QString m_diffuseMapPath = "null";
+    QString m_normalMapPath = "null";
 
     QVector3D m_diffuseColor = QVector3D(0.7f,0.7f,0.7f);
     QVector3D m_ambienceColor = QVector3D(1.0f,1.0f,1.0f);

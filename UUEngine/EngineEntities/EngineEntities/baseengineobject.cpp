@@ -27,14 +27,19 @@ QVector3D BaseEngineObject::coordinates() const
     return m_coordinates;
 }
 
+QQuaternion BaseEngineObject::rotationX() const
+{
+    return m_rotateY;
+}
+
+QQuaternion BaseEngineObject::rotationY() const
+{
+    return m_rotateY;
+}
+
 QQuaternion BaseEngineObject::rotation() const
 {
     return m_rotate;
-}
-
-void BaseEngineObject::setModelMatrix(const QMatrix4x4 &modelMatrix)
-{
-    m_modelMatrix = modelMatrix;
 }
 
 void BaseEngineObject::translate(const QVector3D &translation)
@@ -84,4 +89,14 @@ QMatrix4x4 BaseEngineObject::modelMatrix()
     modelMatrix.scale(m_scale);
 
     return modelMatrix;
+}
+
+void BaseEngineObject::setCoordinates(const QVector3D &coordinates)
+{
+    m_coordinates = coordinates;
+}
+
+void BaseEngineObject::setScale(const float &scale)
+{
+    m_scale = scale;
 }

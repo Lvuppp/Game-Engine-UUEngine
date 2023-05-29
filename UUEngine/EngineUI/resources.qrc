@@ -29,5 +29,7 @@
         <file>Models/TestModel/normal.png</file>
         <file>Models/TestModel/ICE.blend</file>
         <file>Models/TestModel/diffuso.tif</file>
+        <file>Shaders/fselectshader.fsh</file>
+        <file>Shaders/vselectshader.vsh</file>
     </qresource>
 </RCC>

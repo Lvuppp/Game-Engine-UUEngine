@@ -15,9 +15,9 @@ SimpleModel::~SimpleModel()
     delete m_modelParticle;
 }
 
-void SimpleModel::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
+void SimpleModel::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions)
 {
-    m_modelParticle->drawModelParticle(modelMatrix, shaderProgram, functions);
+    m_modelParticle->drawModelParticle(modelMatrix, shaderProgram, isUsingTexture, functions);
 }
 
 void SimpleModel::setModel(ModelParticle * modelParticles)

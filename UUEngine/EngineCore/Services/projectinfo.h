@@ -2,6 +2,8 @@
 #define PROJECTINFO_H
 
 #include <QString>
+#include <QFile>
+#include <QSaveFile>
 
 class ProjectProcessor;
 
@@ -14,8 +16,14 @@ public:
     static QString projectPath();
     static QString projectFolder();
 
+    static void copyToModels(const QString& sourceFilePath);
+    static void copyToTextures(const QString& sourceFilePath);
+    static void copyToScripts(const QString& sourceFilePath);
+
     friend class ProjectProcessor;
 private:
+
+    static void copyFile(const QString& sourceFilePath, const QString &targetFilePath);
 
     static QString m_projectName;
     static QString m_projectPath;

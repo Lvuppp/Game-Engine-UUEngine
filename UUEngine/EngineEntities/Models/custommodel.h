@@ -15,7 +15,7 @@ public:
     CustomModel(QVector<ModelParticle *> modelParticles);
     ~CustomModel();
 
-    void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
+    void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions) override;
 
     void setModel(QVector<ModelParticle *> modelParticles);
     ModelParticle *modelParticle(const int &index);

@@ -80,7 +80,7 @@ void ProjectProcessor::saveProject(QHash<QString, Scene *> scenes,const QString 
             auto pathSplit = path.split('/');
 
             m_projectInfo.m_projectPath = path;
-            m_projectInfo.m_projectFolder = pathSplit.mid(0, pathSplit.size() - 2).join('/');
+            m_projectInfo.m_projectFolder = pathSplit.mid(0, pathSplit.size() - 1).join('/');
             m_projectInfo.m_projectName = pathSplit[pathSplit.size() - 1].split('.')[0];
         }
 
@@ -89,8 +89,12 @@ void ProjectProcessor::saveProject(QHash<QString, Scene *> scenes,const QString 
 
         if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
             QTextStream stream(&file);
-            foreach (auto key, scenes.keys()) {
-                stream << saveScene(key, scenes[key]);
+            auto keys = scenes.keys();
+            for (int i = 0; i < keys.size(); i++) {
+                stream << saveScene (keys[i], scenes[keys[i]]);
+
+                if(i != keys.size() - 1)
+                    stream << '\n';
             }
 
             file.close();
@@ -118,7 +122,7 @@ QString ProjectProcessor::saveScene(const QString & sceneName, Scene *scene)
         savedObjects += saveSkybox(scene->skybox());
         savedObjects += saveCameras(scene->camerasHash());
         savedObjects += saveLightins(scene->lighingsHash());
-        savedObjects += saveGameObjects(scene->gameObjectsHash()) + '\n';
+        savedObjects += saveGameObjects(scene->gameObjectsHash());
     } catch (const std::exception& e) {
         qDebug() << "Save scene " + sceneName + " error:" + e.what();
     }
@@ -128,11 +132,16 @@ QString ProjectProcessor::saveScene(const QString & sceneName, Scene *scene)
 
 QString ProjectProcessor::saveSkybox(SkyBox *skybox)
 {
-    QString savedObject = " SKYBOX ";
+    QString savedObject = " SKYBOX";
 
-    auto objectModel = dynamic_cast<SimpleModel *>(skybox->model());
-    savedObject += objectModel->modelParticle()->material()->diffuseMapPath();
-    savedObject += saveScripts(m_scriptFolder->scripts("Skybox"));
+    if(skybox){
+        auto objectModel = dynamic_cast<SimpleModel *>(skybox->model());
+        savedObject += objectModel->modelParticle()->material()->diffuseMapPath();
+        savedObject += saveScripts(m_scriptFolder->scripts("Skybox"));
+    }
+    else{
+        savedObject += "null";
+    }
 
     return savedObject;
 }
@@ -140,7 +149,7 @@ QString ProjectProcessor::saveSkybox(SkyBox *skybox)
 QString ProjectProcessor::saveCameras(QHash<QString, Camera *> cameras)
 {
 
-    QString savedObjects = " CAMERAS ";
+    QString savedObjects = " CAMERAS";
 
     foreach (auto cameraName, cameras.keys()) {
 
@@ -155,7 +164,7 @@ QString ProjectProcessor::saveCameras(QHash<QString, Camera *> cameras)
 /// КОГДА ПОМЕНЯЮ СВЕТ НАДО БУДЕТ И СОХРАНЕНИЕ ПОМЕНЯТЬ
 QString ProjectProcessor::saveLightins(QHash<QString, Lighting *> lightings)
 {
-    QString savedObjects = " LIGHTINGS ";
+    QString savedObjects = " LIGHTINGS";
 
     foreach (auto lightingName, lightings.keys()) {
         savedObjects += '+' + lightingName + '|';
@@ -167,7 +176,7 @@ QString ProjectProcessor::saveLightins(QHash<QString, Lighting *> lightings)
 
 QString ProjectProcessor::saveGameObjects(QHash<QString, Base3DGameObject *> gameObjects)
 {
-    QString savedObjects =  " BASE3DGAMEOBJECT ";
+    QString savedObjects =  " BASE3DGAMEOBJECT";
 
     foreach (auto gameObjectName, gameObjects.keys()) {
         auto gameObject = gameObjects[gameObjectName];
@@ -185,12 +194,18 @@ QString ProjectProcessor::saveGameObjects(QHash<QString, Base3DGameObject *> gam
 
 QString ProjectProcessor::saveBaseParams(BaseEngineObject *object)
 {
-        return QString("%1 %2 %3 %4 ").arg(object->modelMatrix().row(0)[0]).arg(object->modelMatrix().row(0)[1]).arg(object->modelMatrix().row(0)[2]).arg(object->modelMatrix().row(0)[3]) +
-               QString("%1 %2 %3 %4 ").arg(object->modelMatrix().row(1)[0]).arg(object->modelMatrix().row(1)[1]).arg(object->modelMatrix().row(1)[2]).arg(object->modelMatrix().row(1)[3]) +
-            QString("%1 %2 %3 %4 ").arg(object->modelMatrix().row(2)[0]).arg(object->modelMatrix().row(2)[1]).arg(object->modelMatrix().row(2)[2]).arg(object->modelMatrix().row(2)[3]) +
-            QString("%1 %2 %3 %4|").arg(object->modelMatrix().row(3)[0]).arg(object->modelMatrix().row(3)[1]).arg(object->modelMatrix().row(3)[2]).arg(object->modelMatrix().row(3)[3]);
-    //я не знаю как это сделать красиво и эффективно:(
-    //(просто выгрузка модельной матрицы)
+    auto vectorConverter = [](QVector3D vec) -> QString{
+        return QString("%1 %2 %3 ").arg(vec.x()).arg(vec.y()).arg(vec.z());
+    };
+
+    float angleX, angleY;
+    QVector3D vectorX, vectorY;
+    object->rotationX().getAxisAndAngle(&vectorX ,&angleX);
+    object->rotationY().getAxisAndAngle(&vectorY ,&angleY);
+
+    return vectorConverter(object->coordinates()) + QString::number(angleX) + ' ' +vectorConverter(vectorX)
+           + QString::number(angleY) + ' ' + vectorConverter(vectorY) + QString::number(object->scale()) + '|';
+
 }
 
 QString ProjectProcessor::saveModel(const QString &objectName, Base3DGameObject *gameObject)
@@ -216,7 +231,7 @@ QString ProjectProcessor::saveMaterial(Material *material)
 
     return vectorConverter(material->ambienceColor())+
         vectorConverter(material->diffuseColor()) + vectorConverter(material->specularColor()) +
-        material->diffuseMapPath()+ ' ' + material->normalMapPath() + ' ' + QString::number(material->shinnes()) + '|';
+        material->diffuseMapPath()+ ' ' + material->normalMapPath() + ' ' + QString::number(material->shinnes());
 
 }
 
@@ -237,6 +252,7 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
 
         auto pathSplit = path.split('/');
         m_projectInfo.m_projectName = pathSplit[pathSplit.size() - 1].split('.')[0];
+        m_projectInfo.m_projectFolder = pathSplit.mid(0, pathSplit.size() - 1).join('/');
 
         QFile file(path);
 
@@ -246,13 +262,20 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
                 QString fileInfo = stream.readAll();
                 QVector<QString> sceneInfo = fileInfo.split('\n');
 
-                QRegularExpression regex("#(.*) SKYBOX(.+) CAMERAS(.+) LIGHTINGS (.+) BASE3DGAMEOBJECT(.+)");
+                QRegularExpression regex("#(.+) SKYBOX(.+) CAMERAS(.+) LIGHTINGS(.+) BASE3DGAMEOBJECT(.+)");
 
                 foreach (auto scene, sceneInfo) {
                     QRegularExpressionMatchIterator matchIterator = regex.globalMatch(scene);
 
                     QRegularExpressionMatch matchObject = matchIterator.next();
-                    scenes.insert(matchObject.captured(0), new Scene(loadGameObjects(matchObject.captured(5).split('+')),
+                    qDebug() << matchObject.captured(0);
+                    qDebug() << matchObject.captured(1);
+                    qDebug() << matchObject.captured(2);
+                    qDebug() << matchObject.captured(3);
+                    qDebug() << matchObject.captured(4);
+                    qDebug() << matchObject.captured(5);
+
+                    scenes.insert(matchObject.captured(1), new Scene(loadGameObjects(matchObject.captured(5).split('+')),
                                                                         loadLightins(matchObject.captured(4).split('+')),
                                                                         loadCameras(matchObject.captured(3).split('+')),
                                                                      loadSkybox(matchObject.captured(2))));
@@ -285,6 +308,7 @@ QHash<QString, Scene *> ProjectProcessor::loadScene(const QString sceneName, Sce
 
 SkyBox *ProjectProcessor::loadSkybox(const QString &skybox)
 {
+    if(skybox == "null") return nullptr;
     return new SkyBox(m_modelBuilder.createSkybox(100.0f,skybox));
 }
 
@@ -297,7 +321,7 @@ QHash<QString, Camera *> ProjectProcessor::loadCameras(const QVector<QString> &c
         auto params = cameraObjects[i].split('|');
         auto camera = new Camera();
 
-        camera->setModelMatrix(loadBaseParams(params[1]));
+        loadBaseParams(params[1],camera);
         cameras.insert(params[0], camera);
 
         loadScripts(params[0],params[2]);
@@ -315,7 +339,7 @@ QHash<QString, Lighting *> ProjectProcessor::loadLightins(const QVector<QString>
         auto params = lightingObjects[i].split('|');
         auto lighting = new Lighting();
 
-        lighting->setModelMatrix(loadBaseParams(params[1]));
+        loadBaseParams(params[1],lighting);
         lightings.insert(params[0], lighting);
 
         loadScripts(params[0],params[2]);
@@ -332,8 +356,8 @@ QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVect
 
         auto params = gameObjectParams[i].split('|');
 
-        auto object = new Base3DGameObject(loadModel(params[2],params[3]));
-        object->setModelMatrix(loadBaseParams(params[1]));
+        auto object = new Base3DGameObject(loadModel(params[0], params[2],params[3]));
+        loadBaseParams(params[1], object);
 
         gameObjects.insert(params[0], object);
         m_scriptFolder->addScript(params[0], params[4]);
@@ -343,12 +367,13 @@ QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVect
 }
 
 
-Model *ProjectProcessor::loadModel(const QString &objectType, const QString &modelParams)
+Model *ProjectProcessor::loadModel(const QString &objectName, const QString &objectType, const QString &modelParams)
 {
     if(objectType == "CUSTOM_MODEL"){
         m_modelLoader.setStrategy(new OBJModelLoadStrategy());
-        return m_modelLoader.createModel(modelParams);
+        m_modelFolder->append(objectName, modelParams);
 
+        return m_modelLoader.createModel(m_projectInfo.projectFolder() + "/Models/" + modelParams);
     }
 
     SimpleModel *model;
@@ -357,25 +382,43 @@ Model *ProjectProcessor::loadModel(const QString &objectType, const QString &mod
     QRegularExpressionMatchIterator matchIterator = paramsRegex.globalMatch(modelParams);
     QRegularExpressionMatch matchObject = matchIterator.next();
 
-    if(matchObject.captured(0) == "CUBE") {
-        QVector<QString> modelParams = matchObject.captured(1).split(' ');
+    m_modelFolder->append(objectName, matchObject.captured(0));
+
+    if(matchObject.captured(1) == "CUBE") {
+        QVector<QString> modelParams = matchObject.captured(2).split(' ');
         model = m_modelBuilder.createCube(modelParams[0].toFloat(),modelParams[1].toFloat(),modelParams[2].toFloat());
     }
-    else if(matchObject.captured(0) == "PYRAMID"){
-        QVector<QString> modelParams = matchObject.captured(1).split(' ');
+    else if(matchObject.captured(1) == "PYRAMID"){
+        QVector<QString> modelParams = matchObject.captured(2).split(' ');
         model = m_modelBuilder.createPyramide(modelParams[0].toFloat(),modelParams[1].toFloat());
+    }
+    else if(matchObject.captured(1) == "SPHERE"){
+        QVector<QString> modelParams = matchObject.captured(2).split(' ');
+        model = m_modelBuilder.createSphere(modelParams[0].toFloat(),modelParams[1].toInt(),modelParams[2].toInt());
+    }
+    else if(matchObject.captured(1) == "PRISM"){
+        QVector<QString> modelParams = matchObject.captured(2).split(' ');
+        model = m_modelBuilder.createPrism(modelParams[0].toFloat(),modelParams[1].toFloat(),modelParams[2].toFloat(),modelParams[3].toFloat());
+    }
+    else if(matchObject.captured(1) == "CONE"){
+        QVector<QString> modelParams = matchObject.captured(2).split(' ');
+        model = m_modelBuilder.createCone(modelParams[0].toFloat(),modelParams[1].toFloat(), modelParams[2].toInt());
+    }
+    else if(matchObject.captured(1) == "CYLINDER"){
+        QVector<QString> modelParams = matchObject.captured(2).split(' ');
+        model = m_modelBuilder.createCylinder(modelParams[0].toFloat(),modelParams[1].toFloat(), modelParams[2].toInt());
     }
     else{
        model = new SimpleModel();
     }
 
     matchObject = matchIterator.next();
-    model->modelParticle()->setMaterial(loadMaterial(matchObject.captured(1)));
+    model->modelParticle()->setMaterial(loadMaterial(objectName, matchObject.captured(2)));
 
     return model;
 }
 
-Material *ProjectProcessor::loadMaterial(const QString &material)
+Material *ProjectProcessor::loadMaterial(const QString &objectName, const QString &material)
 {
     auto params = material.split(' ');
 
@@ -384,25 +427,30 @@ Material *ProjectProcessor::loadMaterial(const QString &material)
     mat->setAmbienceColor(QVector3D(params[0].toFloat(),params[1].toFloat(),params[2].toFloat()));
     mat->setDiffuseColor(QVector3D(params[3].toFloat(),params[4].toFloat(),params[5].toFloat()));
     mat->setSpecularColor(QVector3D(params[6].toFloat(),params[7].toFloat(),params[8].toFloat()));
-    mat->setDiffuseMap(std::move(params[9]));
-    mat->setNormalMap(std::move(params[10]));
+
+    if(params[9] != "null"){
+       m_textureFolder->append(objectName, params[9]);
+       mat->setDiffuseMap(m_projectInfo.projectPath() + "/Textures/" + params[9]);
+    }
+
+    if(params[10] != "null"){
+       m_textureFolder->append(objectName, params[10]);
+       mat->setNormalMap(m_projectInfo.projectPath() + "/Textures/" +params[10]);
+    }
+
     mat->setShinnes(params[11].toFloat());
 
     return mat;
 }
 
 
-QMatrix4x4 ProjectProcessor::loadBaseParams(const QString &matrixParams)
+void ProjectProcessor::loadBaseParams(const QString &matrixParams, BaseEngineObject *object)
 {
     auto params = matrixParams.split(' ');
-
-    QMatrix4x4 mat;
-    mat.setRow(0, QVector4D(params[0].toFloat(),params[1].toFloat(),params[2].toFloat(),params[3].toFloat()));
-    mat.setRow(1, QVector4D(params[4].toFloat(),params[5].toFloat(),params[6].toFloat(),params[7].toFloat()));
-    mat.setRow(2, QVector4D(params[8].toFloat(),params[9].toFloat(),params[10].toFloat(),params[11].toFloat()));
-    mat.setRow(3, QVector4D(params[12].toFloat(),params[13].toFloat(),params[14].toFloat(),params[15].toFloat()));
-
-    return mat;
+    object->setCoordinates(QVector3D(params[0].toFloat(),params[1].toFloat(),params[2].toFloat()));
+    object->rotateX(QQuaternion::fromAxisAndAngle(QVector3D(params[3].toFloat(),params[4].toFloat(),params[5].toFloat()), params[6].toFloat()));
+    object->rotateY(QQuaternion::fromAxisAndAngle(QVector3D(params[7].toFloat(),params[8].toFloat(),params[9].toFloat()), params[10].toFloat()));
+    object->setScale(params[11].toFloat());
 }
 
 void ProjectProcessor::loadScripts(const QString &objectName, const QString &scripts)

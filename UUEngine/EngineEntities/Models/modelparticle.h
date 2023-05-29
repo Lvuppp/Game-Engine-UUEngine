@@ -15,7 +15,7 @@ public:
 
     void initModelParticle(QVector<VertexData> &vertexes,QVector<GLuint> &indexes,Material *material);
     void calculateTBN(QVector<VertexData> &vertexes);
-    void drawModelParticle(const QMatrix4x4 &ModelParticleMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0);
+    void drawModelParticle(const QMatrix4x4 &ModelParticleMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions = 0);
     QVector<VertexData> vertexesData();
 
     void setDiffuseMap(QString texture);

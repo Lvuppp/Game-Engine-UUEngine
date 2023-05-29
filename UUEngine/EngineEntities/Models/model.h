@@ -17,7 +17,7 @@ public:
     Model();
     virtual ~Model();
 
-    virtual void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) = 0;
+    virtual void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions) = 0;
 
     ModelType modelType();
 

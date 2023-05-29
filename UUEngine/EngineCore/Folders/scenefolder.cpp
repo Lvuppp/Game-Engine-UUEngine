@@ -39,6 +39,16 @@ Scene *SceneFolder::currentScene()
     return m_currentScene;
 }
 
+void SceneFolder::setScenes(QHash<QString, Scene *> scenes)
+{
+    clearFolder();
+    m_scenes = scenes;
+
+    if(!m_scenes.empty()){
+        m_currentScene = m_scenes.begin().value();
+    }
+}
+
 QHash<QString, Scene *> SceneFolder::scenes() const
 {
     return m_scenes;
@@ -46,11 +56,14 @@ QHash<QString, Scene *> SceneFolder::scenes() const
 
 void SceneFolder::clearFolder()
 {
-    foreach (auto scene, m_scenes){
-        delete scene;
-    }
+    if(!m_scenes.empty()){
+        foreach (auto scene, m_scenes){
+            delete scene;
+        }
 
-    m_scenes.clear();
+        m_scenes.clear();
+        m_currentScene = nullptr;
+    }
 }
 
 SceneFolder *SceneFolder::getInstance()

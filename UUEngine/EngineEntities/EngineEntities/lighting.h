@@ -9,7 +9,7 @@ public:
     Lighting();
     ~Lighting();
 
-    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0) override;
+    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0,  bool isUsingTexture = true) override;
 
 private:
     float m_lightPower;

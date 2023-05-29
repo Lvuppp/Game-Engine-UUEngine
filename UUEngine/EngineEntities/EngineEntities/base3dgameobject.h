@@ -20,7 +20,7 @@ public:
     Model *model() ;
     void setModel(Model* model);
 
-    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
+    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture = true) override;
 
 private:
     Model *m_model;

@@ -44,6 +44,7 @@ CustomModel* OBJModelLoadStrategy::createModel(const QString &filePath)
     QTextStream stream(&objFile);
 
     Material *material = 0;
+    ProjectInfo::copyToModels(filePath);
 
     while(!stream.atEnd()){
 
@@ -69,6 +70,7 @@ CustomModel* OBJModelLoadStrategy::createModel(const QString &filePath)
         }
         else if(split[0] == "mtllib"){
             auto mtlPath = QFileInfo(filePath);
+            ProjectInfo::copyToModels(QString("%1/%2").arg(mtlPath.absolutePath(), split[1]));
             library.loadMaterialsFromFile(QString("%1/%2").arg(mtlPath.absolutePath(), split[1]));
         }
         else if(split[0] == "usemtl"){
@@ -86,6 +88,7 @@ CustomModel* OBJModelLoadStrategy::createModel(const QString &filePath)
     }
 
     objFile.close();
+
     models.append(new ModelParticle(vertexes,indexes,material));
 
     return new CustomModel(models);

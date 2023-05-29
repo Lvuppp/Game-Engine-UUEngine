@@ -62,9 +62,11 @@ void MaterialLibrary::loadMaterialsFromFile(const QString &path)
         }
         else if (list[0] == "map_Kd"){
             newMtl->setDiffuseMap(std::move(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1]))));
+            ProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])));
         }
         else if (list[0] == "map_Bump"){
             newMtl->setNormalMap(std::move(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1]))));
+            ProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])));
         }
     }
 

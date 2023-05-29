@@ -2,6 +2,7 @@
 #define MATERIALLIB_H
 
 #include "material.h"
+#include "Services/projectinfo.h"
 
 #include <QVector>
 #include <QFile>

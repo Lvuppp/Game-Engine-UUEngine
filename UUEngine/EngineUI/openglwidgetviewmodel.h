@@ -39,6 +39,8 @@ public slots:
     void createCone();
     void createCustomObject();
 
+    void setDisableState(bool state);
+
 protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;

@@ -29,6 +29,7 @@ void MainWindowViewModel::processProject()
         }
 
     }
+
     else if(action->text() == "Save"){
         m_engine->saveProject();
 
@@ -38,7 +39,7 @@ void MainWindowViewModel::processProject()
 
         connect(projectCreator, &ProjectCreator::getFolderPath, this, [this](QString path){
             m_engine->createProject(path.split(' ')[0], path.split(' ')[1]);
-            m_engine->saveProject(path.split(' ')[0] + '/' + path.split(' ')[1]);
+            m_engine->saveProject(path.split(' ')[0] + '/' + path.split(' ')[1]  + '/' + path.split(' ')[1] + ".uupj");
         });
 
         projectCreator->exec();

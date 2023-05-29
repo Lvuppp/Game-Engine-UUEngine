@@ -21,7 +21,7 @@ void Base3DGameObject::setModel(Model * model)
     m_model = model;
 }
 
-void Base3DGameObject::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
+void Base3DGameObject::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions,bool isUsingTexture)
 {
     m_model->drawModel(this->modelMatrix(), shaderProgram, functions);
 }

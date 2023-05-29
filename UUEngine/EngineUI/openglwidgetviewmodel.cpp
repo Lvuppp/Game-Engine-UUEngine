@@ -2,6 +2,7 @@
 
 OpenGLWidgetViewModel::OpenGLWidgetViewModel(QWidget *parent)  : QOpenGLWidget(parent)
 {
+    this->setDisabled(true);
     m_engine = EngineCore::getInstance();
     createContextMenu();
     linkWithEngine();
@@ -32,11 +33,11 @@ void OpenGLWidgetViewModel::createContextMenu()
 
     m_objectContextMenu->addAction(addCustomObjectAction);
     m_objectContextMenu->addAction(addCubeAction);
-    m_objectContextMenu->addAction(addPyramidAction);
-    m_objectContextMenu->addAction(addPrismAction);
-    m_objectContextMenu->addAction(addCylinderAction);
+    //m_objectContextMenu->addAction(addPyramidAction);
+    //m_objectContextMenu->addAction(addPrismAction);
+    //m_objectContextMenu->addAction(addCylinderAction);
     m_objectContextMenu->addAction(addSphereAction);
-    m_objectContextMenu->addAction(addConeAction);
+    //m_objectContextMenu->addAction(addConeAction);
 
     connect(addCustomObjectAction, &QAction::triggered, this, &OpenGLWidgetViewModel::createCustomObject);
     connect(addCubeAction, &QAction::triggered, this, &OpenGLWidgetViewModel::createCube);
@@ -53,13 +54,20 @@ void OpenGLWidgetViewModel::linkWithEngine()
     connect(this, &OpenGLWidgetViewModel::mousePress,m_engine, &EngineCore::mousePressEvent);
     connect(this, &OpenGLWidgetViewModel::mouseMove,m_engine, &EngineCore::mouseMoveEvent);
     connect(this, &OpenGLWidgetViewModel::wheelMove,m_engine, &EngineCore::wheelEvent);
+    connect(m_engine, &EngineCore::setDisableState,this, &OpenGLWidgetViewModel::setDisableState);
     connect(m_engine, &EngineCore::updateGraphics, this, &OpenGLWidgetViewModel::updateGraphics);
 
 }
 
 void OpenGLWidgetViewModel::createCube()
 {
-    m_engine->createCube("Cube");
+    QString defaultName = "Cube1";
+
+    for (int var = 2; !m_engine->createCube(defaultName); ++var) {
+        defaultName.chop(1);
+        defaultName += QString::number(var);
+    }
+    update();
 }
 
 void OpenGLWidgetViewModel::createPyramid()
@@ -69,48 +77,67 @@ void OpenGLWidgetViewModel::createPyramid()
 
 void OpenGLWidgetViewModel::createSphere()
 {
-    m_engine->createCube("Sphere");
+    QString defaultName = "Sphere1";
+
+    for (int var = 2; !m_engine->createSphere(defaultName); ++var) {
+        defaultName.chop(1);
+        defaultName += QString::number(var);
+    }
+    update();
 }
 
 void OpenGLWidgetViewModel::createPrism()
 {
-    m_engine->createCube("Sphere");
+    m_engine->createPrism("Prism");
 }
 
 void OpenGLWidgetViewModel::createCylinder()
 {
-    m_engine->createCube("Sphere");
+    m_engine->createCylinder("Cylinder");
 }
 
 void OpenGLWidgetViewModel::createCone()
 {
-    m_engine->createCube("Sphere");
+    m_engine->createCone("Cone");
 }
 
 void OpenGLWidgetViewModel::createCustomObject()
 {
-    auto projectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.obj|.fbx*)");
+    auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.obj*)");
 
-    if(projectPath.split('/').last().split('.').constLast() == ".fbx"){
-        m_engine->createFBXModel("CustomModel", projectPath);
-    }else{
-        m_engine->createOBJModel("CustomModel", projectPath);
+    if(objectPath.split('/').last().split('.').constLast() == "obj"){
+        QString defaultName = "CustomModel1";
+
+        for (int var = 2; !m_engine->createOBJModel(defaultName, objectPath); ++var) {
+            defaultName.chop(1);
+            defaultName += QString::number(var);
+        }
     }
+    update();
+}
+
+void OpenGLWidgetViewModel::setDisableState(bool state)
+{
+    this->setDisabled(state);
+    update();
 }
 
 void OpenGLWidgetViewModel::mousePressEvent(QMouseEvent  *event)
 {
     m_engine->mousePressEvent(event);
+    update();
 }
 
 void OpenGLWidgetViewModel::mouseMoveEvent(QMouseEvent *event)
 {
     m_engine->mouseMoveEvent(event);
+    update();
 }
 
 void OpenGLWidgetViewModel::wheelEvent(QWheelEvent *event)
 {
     m_engine->wheelEvent(event);
+    update();
 }
 
 void OpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
@@ -126,11 +153,13 @@ void OpenGLWidgetViewModel::updateGraphics()
 void OpenGLWidgetViewModel::createCamera()
 {
     m_engine->createCameraInScene("Camera");
+    update();
 }
 
 void OpenGLWidgetViewModel::createLighting()
 {
     m_engine->createLightingInScene("Lighting");
+    update();
 }
 
 void OpenGLWidgetViewModel::initializeGL()

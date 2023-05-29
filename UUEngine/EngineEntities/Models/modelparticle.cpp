@@ -1,6 +1,6 @@
 #include "modelparticle.h"
 
-ModelParticle::ModelParticle(): m_diffuseMap(nullptr),m_normalMap(nullptr)
+ModelParticle::ModelParticle(): m_diffuseMap(0),m_normalMap(0)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 }
@@ -25,7 +25,7 @@ ModelParticle::~ModelParticle()
 
 }
 
-ModelParticle::ModelParticle(QVector<VertexData> &vertexes,QVector<GLuint> &indexes, Material *material)
+ModelParticle::ModelParticle(QVector<VertexData> &vertexes,QVector<GLuint> &indexes, Material *material): m_diffuseMap(0),m_normalMap(0)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     initModelParticle(vertexes,indexes, material);
@@ -74,17 +74,18 @@ void ModelParticle::initModelParticle(QVector<VertexData> &vertexes, QVector<GLu
     }
 }
 
-void ModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
+void ModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions)
 {
+    if(isUsingTexture){
+        if(m_material->isDiffuseMapSet()){
+            m_diffuseMap->bind(0);
+            shaderProgram->setUniformValue("u_model.diffuseMap", 0);
+        }
 
-    if(m_material->isDiffuseMapSet()){
-        m_diffuseMap->bind(0);
-        shaderProgram->setUniformValue("u_model.diffuseMap", 0);
-    }
-
-    if(m_material->isNormalMapSet()){
-        m_normalMap->bind(1);
-        shaderProgram->setUniformValue("u_model.normalMap", 1);
+        if(m_material->isNormalMapSet()){
+            m_normalMap->bind(1);
+            shaderProgram->setUniformValue("u_model.normalMap", 1);
+        }
     }
 
     shaderProgram->setUniformValue("u_modelMatrix", modelMatrix);
@@ -133,8 +134,14 @@ void ModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLShad
     m_vertexes.release();
     m_indexes.release();
 
-    if(m_material->isDiffuseMapSet()) m_diffuseMap->release();
-    if(m_material->isNormalMapSet()) m_normalMap->release();
+    if(isUsingTexture){
+        if(m_material->isDiffuseMapSet()) {
+            m_diffuseMap->release();
+        }
+        if(m_material->isNormalMapSet()) {
+            m_normalMap->release();
+        }
+    }
 }
 
 QVector<VertexData> ModelParticle::vertexesData()

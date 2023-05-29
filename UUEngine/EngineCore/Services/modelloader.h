@@ -3,6 +3,7 @@
 
 #include "Folders/materiallib.h"
 #include "Folders/modelfolder.h"
+#include "Services/projectinfo.h"
 
 class CustomModel;
 

@@ -45,9 +45,9 @@ private:
     QHash<QString, Base3DGameObject *> loadGameObjects(const QVector<QString> &gameObjects);
     SkyBox *loadSkybox(const QString &skybox);
 
-    Model *loadModel(const QString &objectType, const QString &gameObject);
-    Material* loadMaterial(const QString &material);
-    QMatrix4x4 loadBaseParams(const QString &objectMatrix);
+    void loadBaseParams(const QString &objectMatrix, BaseEngineObject *object);
+    Model *loadModel(const QString &objectName, const QString &objectType, const QString &gameObject);
+    Material* loadMaterial(const QString &objectName,const QString &material);
     void loadScripts(const QString &objectName,const QString &scripts);
 
 private:

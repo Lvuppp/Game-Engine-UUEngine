@@ -19,11 +19,15 @@ public:
     //получение текущих
     float scale() const;
     QVector3D coordinates() const;
+    QQuaternion rotationX() const;
+    QQuaternion rotationY() const;
     QQuaternion rotation() const;
     QMatrix4x4 modelMatrix();
 
-    //задание текущих5
-    void setModelMatrix(const QMatrix4x4 &modelMatrix);
+    void setCoordinates(const QVector3D &coordinates);
+    void setRotateX(const QQuaternion &rotation);
+    void setRotateY(const QQuaternion &rotation);
+    void setScale(const float &scale);
 
     //изменение относительно текущих
     void translate(const QVector3D &coordinates);
@@ -32,7 +36,7 @@ public:
     void rotateY(const QQuaternion &rotation);
     void scale(const float &scale);
 
-    virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) = 0;
+    virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture = true) = 0;
 
 private:
     QMatrix4x4 m_modelMatrix;

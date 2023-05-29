@@ -13,6 +13,7 @@ public:
     Scene *setCurrentScene(const QString &sceneName);
     Scene *currentScene();
 
+    void setScenes(QHash<QString, Scene *> scenes);
     QHash<QString, Scene *> scenes() const;
     void clearFolder();
 

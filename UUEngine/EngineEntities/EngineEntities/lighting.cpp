@@ -11,7 +11,7 @@ Lighting::~Lighting()
 
 }
 
-void Lighting::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
+void Lighting::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture)
 {
     shaderProgram->setUniformValue("u_isDrawDynamic", m_isLightingDynamic);// освещение динамическое или статическое
     shaderProgram->setUniformValue("u_eyePosition", QVector4D(coordinates(), 1.0f)); // позиция наблюдателя

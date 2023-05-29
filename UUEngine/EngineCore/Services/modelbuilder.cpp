@@ -112,47 +112,68 @@ SimpleModel *ModelBuilder::createSkybox(const float &size, const QString &textur
 
 SimpleModel *ModelBuilder::createPyramide(const float &width, const float &height)
 {
-    return nullptr;
+
 }
 
-SimpleModel *ModelBuilder::createSphere(const float &radius, const int &rings, const int &sectors)
+SimpleModel *ModelBuilder::createSphere(const float &radius, const int &stacks, const int &sectors)
 {
     QVector<VertexData> vertexes;
     QVector<GLuint> indexes;
-
+    float x, y, z, xy;                              // vertex position
+    float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
+    float s, t;
     float const PI = 3.1415926f;
-    float const PI_2 = PI * 2.0f;
 
-    float const R = 1.0f / (float)(rings - 1);
-    float const S = 1.0f / (float)(sectors - 1);
+    float sectorStep = 2 *  PI / sectors;
+    float stackStep = PI / stacks;
+    float sectorAngle, stackAngle;
 
-    for (int r = 0; r < rings; ++r) {
-        for (int s = 0; s < sectors; ++s) {
-            float const y = sin(-PI_2 + PI * r * R);
-            float const x = cos(PI_2 * s * S) * sin(PI * r * R);
-            float const z = sin(PI_2 * s * S) * sin(PI * r * R);
+    for(int i = 0; i <= stacks; ++i)
+    {
+        stackAngle =  PI / 2 - i * stackStep;
+        xy = radius * cosf(stackAngle);
+        z = radius * sinf(stackAngle);
 
-            QVector3D position(x * radius, y * radius, z * radius);
-            QVector2D texture(s * S, r * R);
-            QVector3D normal(x, y, z);
+        for(int j = 0; j <= sectors; ++j)
+        {
+            sectorAngle = j * sectorStep;
 
-            vertexes.emplace_back(position, texture, normal);
+            x = xy * cosf(sectorAngle);
+            y = xy * sinf(sectorAngle);
+
+            nx = x * lengthInv;
+            ny = y * lengthInv;
+            nz = z * lengthInv;
+
+            s = (float)j / sectors;
+            t = (float)i / stacks;
+
+            vertexes.emplace_back(QVector3D(x,y,z),QVector2D(s,t),QVector3D(nx,ny,nz));
         }
     }
 
+    int k1, k2;
+    for(int i = 0; i < stacks; ++i)
+    {
+        k1 = i * (sectors + 1);
+        k2 = k1 + sectors + 1;      // beginning of next stack
 
-    for (int r = 0; r < rings - 1; ++r) {
-        for (int s = 0; s < sectors - 1; ++s) {
-            int currentRow = r * sectors;
-            int nextRow = (r + 1) * sectors;
+        for(int j = 0; j < sectors; ++j, ++k1, ++k2)
+        {
+            if(i != 0)
+            {
+                indexes.append(k1);
+                indexes.append(k2);
+                indexes.append(k1 + 1);
+            }
 
-            indexes.append(currentRow + s);
-            indexes.append(nextRow + s);
-            indexes.append(nextRow + s + 1);
-
-            indexes.append(currentRow + s);
-            indexes.append(nextRow + s + 1);
-            indexes.append(currentRow + s + 1);
+            // k1+1 => k2 => k2+1
+            if(i != (stacks - 1))
+            {
+                indexes.append(k1 + 1);
+                indexes.append(k2);
+                indexes.append(k2 + 1);
+            }
         }
     }
 
@@ -161,7 +182,7 @@ SimpleModel *ModelBuilder::createSphere(const float &radius, const int &rings, c
     material->setDiffuseColor(QVector3D(0.5, 0.5, 0.5));
 
 
-    return new SimpleModel(new ModelParticle(vertexes,indexes, material));
+    return new SimpleModel(new ModelParticle(vertexes, indexes, material));
 }
 
 SimpleModel *ModelBuilder::createPrism(const float &width, const float &height, const float &depth, const float &angle)

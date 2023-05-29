@@ -21,16 +21,18 @@ public:
     void paintScene();
     void resizeScene(int w, int h);
 
-    void initCube(float width, float height, float depth);
+    BaseEngineObject *selectObject(const QPoint &mouseCoordinates);
 
     void rotateModelViewMatrix(const QQuaternion &rotationX,const QQuaternion &rotationY);
     void translateModelViewMatrix(QVector3D translation);
 
     void setCurrentScene(Scene* scene);
 
-    static GraphicsEngine *getInstance();
-
     QMatrix4x4 projectionMatrix() const;
+    QMatrix4x4 cameraViewMatrix() const;
+
+public:
+    static GraphicsEngine *getInstance();
 
 private:
     GraphicsEngine();
@@ -39,31 +41,30 @@ private:
     GraphicsEngine& operator=(const GraphicsEngine&) = delete;
 
     //openGL поля
-    //QOpenGLContext *m_context;
-    //QOpenGLFunctions *m_functions;
     QOpenGLShaderProgram m_sceneShaderProgram;
     QOpenGLShaderProgram m_skyBoxShaderProgram;
     QOpenGLShaderProgram m_depthShaderProgram;
+    QOpenGLShaderProgram m_selectShaderProgram;
 
     QMatrix4x4 m_projectionMatrix;
     //поля тени
     QOpenGLFramebufferObject *m_frameBuffer;
-
     int m_frameBufferHeight;
     int m_frameBufferWidth;
     QMatrix4x4 m_projectionLightMatrix;
     QMatrix4x4 m_lightMatrix;
     QMatrix4x4 m_shadowLightMatrix;
+
     //поле сцены
     Scene *m_currentScene;
-
+    //камера и освещениме движка
     Camera *m_engineCamera;
     Lighting *m_engineLighting;
 
     int m_windowWidth;
     int m_windowHeight;
 
-    bool m_sceneStart = false;
+    bool m_isSceneStart = false;
     static GraphicsEngine* m_instance;
 };
 
