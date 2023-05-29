@@ -147,7 +147,7 @@ BaseEngineObject *GraphicsEngine::selectObject(const QPoint &mouseCoordinates)
     for (qsizetype i = 0; i < m_currentScene->gameObjects().size(); ++i) {
 
         m_selectShaderProgram.setUniformValue("u_code", float(i + 1)); //i + 1 чтоб не совпадал с цветом фона (чёрный)
-        m_currentScene->gameObjects()[i]->draw(&m_selectShaderProgram, this->currentContext()->functions());
+        m_currentScene->gameObjects().at(i)->draw(&m_selectShaderProgram, this->currentContext()->functions(), false);
     }
 
     m_selectShaderProgram.release();
@@ -162,7 +162,8 @@ BaseEngineObject *GraphicsEngine::selectObject(const QPoint &mouseCoordinates)
 
     glDisable(GL_DEPTH_TEST);
 
-    return m_currentScene->gameObjects()[res[0]]; //красная компонента
+    if(res[0] - 1 == -1) return nullptr;
+    return m_currentScene->gameObjects()[res[0] - 1]; //красная компонента
 }
 
 
@@ -202,7 +203,7 @@ void GraphicsEngine::initShaders()
         m_selectShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vselectshader.vsh");
         m_selectShaderProgram.link();
     } catch (...) {
-        throw std::runtime_error("Broken skybox shaders!");
+        throw std::runtime_error("Broken select shaders!");
     }
 
     qDebug() << "End initialize shaders";

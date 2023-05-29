@@ -79,7 +79,7 @@ void BaseEngineObject::unlock()
     m_lock = false;
 }
 
-QMatrix4x4 BaseEngineObject::modelMatrix()
+QMatrix4x4 BaseEngineObject::modelMatrix() const
 {
     QMatrix4x4 modelMatrix;
     modelMatrix.setToIdentity();
@@ -89,6 +89,11 @@ QMatrix4x4 BaseEngineObject::modelMatrix()
     modelMatrix.scale(m_scale);
 
     return modelMatrix;
+}
+
+ObjectType BaseEngineObject::objectType() const
+{
+    return m_objectType;
 }
 
 void BaseEngineObject::setCoordinates(const QVector3D &coordinates)

@@ -16,17 +16,16 @@ class OpenGLWidgetViewModel : public QOpenGLWidget
     Q_OBJECT
 public:
     OpenGLWidgetViewModel(QWidget *parent = nullptr);
+    ~OpenGLWidgetViewModel();
 
     void createContextMenu();
     void linkWithEngine();
 
+signals:
+    void updateWindow();
+
 public:
     void updateGraphics();
-
-signals:
-    void mousePress(QMouseEvent* event);
-    void mouseMove(QMouseEvent* event);
-    void wheelMove(QWheelEvent* event);
 
 public slots:
     void createCamera();
@@ -45,6 +44,7 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
     void contextMenuEvent(QContextMenuEvent *event) override;
 

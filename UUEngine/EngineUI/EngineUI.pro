@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mainwindowviewmodel.cpp \
+    objectinfo.cpp \
     openglwidgetviewmodel.cpp \
     projectcreator.cpp \
     projectwidgetviewmodel.cpp
@@ -21,12 +22,14 @@ SOURCES += \
 HEADERS += \
     mainwindow.h \
     mainwindowviewmodel.h \
+    objectinfo.h \
     openglwidgetviewmodel.h \
     projectcreator.h \
     projectwidgetviewmodel.h
 
 FORMS += \
     mainwindow.ui \
+    objectinfo.ui \
     projectcreator.ui
 
 win32: LIBS += -lopengl32 #подключение на windows

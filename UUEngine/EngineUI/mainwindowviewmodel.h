@@ -8,8 +8,12 @@
 
 class MainWindowViewModel : public QWidget
 {
+    Q_OBJECT
 public:
     MainWindowViewModel(QWidget *parent = nullptr);
+
+signals:
+    void updateWindow();
 
 public slots:
     void processProject();

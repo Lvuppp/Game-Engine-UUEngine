@@ -48,6 +48,7 @@ public slots:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent* event);
     void wheelEvent(QWheelEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 
     void translateObject(const QString &objectName);
 //physics engine part
@@ -122,8 +123,10 @@ private:
     EngineCore& operator=(const GraphicsEngine&) = delete;
 
     static EngineCore* m_instance;
+
 signals:
     void setDisableState(bool state);
+    void emitObject(BaseEngineObject *object);
 };
 
 #endif // ENGINECORE_H

@@ -11,7 +11,7 @@ public:
     SimpleModel(ModelParticle *modelParticle);
     ~SimpleModel();
 
-    void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions) override;
+    void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions) override;
     void setModel(ModelParticle *modelParticle);
     ModelParticle *modelParticle();
 

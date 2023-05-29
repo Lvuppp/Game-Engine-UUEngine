@@ -50,4 +50,7 @@ void MainWindowViewModel::processProject()
     else if(action->text() == "Close"){
         m_engine->closeProject();
     }
+
+    emit updateWindow();
+
 }

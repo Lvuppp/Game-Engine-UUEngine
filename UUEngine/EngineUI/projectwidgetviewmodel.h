@@ -8,8 +8,12 @@
 
 class ProjectWidgetViewModel : public QWidget
 {
+    Q_OBJECT
 public:
     ProjectWidgetViewModel(QWidget *parent = nullptr);
+
+signals:
+    void updateWindow();
 
 public slots:
     void updateProjectInfo();

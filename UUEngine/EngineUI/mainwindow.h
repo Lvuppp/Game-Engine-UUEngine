@@ -4,6 +4,7 @@
 #include "openglwidgetviewmodel.h"
 #include "projectwidgetviewmodel.h"
 #include "mainwindowviewmodel.h"
+#include "objectinfo.h"
 
 #include <QMainWindow>
 #include <QResizeEvent>
@@ -20,6 +21,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void linkConnections();
+
+public slots:
+    void updateWindow();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -30,6 +35,7 @@ private:
     MainWindowViewModel *m_viewModel;
     OpenGLWidgetViewModel *m_openGLWidget;
     ProjectWidgetViewModel *m_projectWidget;
+    ObjectInfo *m_objectInfo;
 
 };
 #endif // MAINWINDOW_H

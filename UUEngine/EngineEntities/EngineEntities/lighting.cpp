@@ -3,7 +3,7 @@
 
 Lighting::Lighting() : BaseEngineObject() , m_lightPower(5.0f), m_isLightingDynamic(false)
 {
-
+    m_objectType = ObjectType::Lighting;
 }
 
 Lighting::~Lighting()

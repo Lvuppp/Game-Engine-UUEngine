@@ -22,7 +22,7 @@ CustomModel::~CustomModel()
 }
 
 
-void CustomModel::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions)
+void CustomModel::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions)
 {
     foreach(auto model, m_modelParticles){
         model->drawModelParticle(modelMatrix, shaderProgram, isUsingTexture, functions);

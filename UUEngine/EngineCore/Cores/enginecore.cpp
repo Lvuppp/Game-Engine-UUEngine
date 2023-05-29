@@ -211,6 +211,7 @@ void EngineCore::initInputEngine(const int &width, const int &height)
 void EngineCore::mousePressEvent(QMouseEvent *event)
 {
     m_inputEngine->mousePressEvent(event);
+    emit updateGraphics();
 }
 
 void EngineCore::mouseMoveEvent(QMouseEvent *event)
@@ -225,6 +226,11 @@ void EngineCore::wheelEvent(QWheelEvent *event)
     m_inputEngine->wheelEvent(event);
     m_graphicsEngine->translateModelViewMatrix(m_inputEngine->getTranslate());
     emit updateGraphics();
+}
+
+void EngineCore::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    emit emitObject(m_graphicsEngine->selectObject(event->pos()));
 }
 
 void EngineCore::translateObject(const QString &objectName)
@@ -242,18 +248,6 @@ void EngineCore::initProjectProcessor(QVBoxLayout &layout)
     m_projectProcessor->setLayout(layout);
 }
 
-void EngineCore::createSimpleScene()
-{
-//    createaCube("Cube", 1.0f, 1.0f, 1.0f);
-//    createaCube("Cube2", 1.0f, 1.0f, 1.0f);
-//    createaCube("Cube3", 1.0f, 1.0f, 1.0f);
-//    createaCube("Cube4", 1.0f, 1.0f, 1.0f);
-//    translateObject("Cube", QVector3D(10.0f,0.0f,10.0f));
-//    translateObject("Cube2", QVector3D(10.0f,0.0f,-10.0f));
-//    translateObject("Cube3", QVector3D(-10.0f,0.0f,10.0f));
-//    translateObject("Cube4", QVector3D(-10.0f,0.0f,-10.0f));
-}
-
 
 void EngineCore::createProject(const QString &path, const QString &name)
 {
@@ -262,7 +256,6 @@ void EngineCore::createProject(const QString &path, const QString &name)
     m_graphicsEngine->setCurrentScene(getCurrentScene());
     emit updateGraphics();
     emit setDisableState(false);
-    createSimpleScene();
 }
 
 

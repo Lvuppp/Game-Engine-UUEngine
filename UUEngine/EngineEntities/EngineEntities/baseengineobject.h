@@ -6,6 +6,12 @@
 #include <QQuaternion>
 #include <QtOpenGL>
 
+enum class ObjectType{
+    GameObject,
+    Camera,
+    Lighting
+};
+
 class BaseEngineObject
 {
 public:
@@ -16,13 +22,15 @@ public:
     void lock();
     void unlock();
 
+
     //получение текущих
     float scale() const;
     QVector3D coordinates() const;
     QQuaternion rotationX() const;
     QQuaternion rotationY() const;
     QQuaternion rotation() const;
-    QMatrix4x4 modelMatrix();
+    QMatrix4x4 modelMatrix() const;
+    ObjectType objectType() const;
 
     void setCoordinates(const QVector3D &coordinates);
     void setRotateX(const QQuaternion &rotation);
@@ -37,6 +45,9 @@ public:
     void scale(const float &scale);
 
     virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture = true) = 0;
+
+protected:
+    ObjectType m_objectType;
 
 private:
     QMatrix4x4 m_modelMatrix;

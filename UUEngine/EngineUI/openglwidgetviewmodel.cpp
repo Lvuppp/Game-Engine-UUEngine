@@ -4,8 +4,14 @@ OpenGLWidgetViewModel::OpenGLWidgetViewModel(QWidget *parent)  : QOpenGLWidget(p
 {
     this->setDisabled(true);
     m_engine = EngineCore::getInstance();
+
     createContextMenu();
     linkWithEngine();
+}
+
+OpenGLWidgetViewModel::~OpenGLWidgetViewModel()
+{
+    delete m_engine;
 }
 
 void OpenGLWidgetViewModel::createContextMenu()
@@ -17,8 +23,8 @@ void OpenGLWidgetViewModel::createContextMenu()
     QAction *addLightingAction = new QAction("Add lighting", this);
 
     m_contextMenu->addMenu(m_objectContextMenu);
-    m_contextMenu->addAction(addCameraAction);
-    m_contextMenu->addAction(addLightingAction);
+    //m_contextMenu->addAction(addCameraAction);
+    //m_contextMenu->addAction(addLightingAction);
 
     connect(addCameraAction, &QAction::triggered, this, &OpenGLWidgetViewModel::createCamera);
     connect(addLightingAction, &QAction::triggered, this, &OpenGLWidgetViewModel::createLighting);
@@ -51,9 +57,6 @@ void OpenGLWidgetViewModel::createContextMenu()
 
 void OpenGLWidgetViewModel::linkWithEngine()
 {
-    connect(this, &OpenGLWidgetViewModel::mousePress,m_engine, &EngineCore::mousePressEvent);
-    connect(this, &OpenGLWidgetViewModel::mouseMove,m_engine, &EngineCore::mouseMoveEvent);
-    connect(this, &OpenGLWidgetViewModel::wheelMove,m_engine, &EngineCore::wheelEvent);
     connect(m_engine, &EngineCore::setDisableState,this, &OpenGLWidgetViewModel::setDisableState);
     connect(m_engine, &EngineCore::updateGraphics, this, &OpenGLWidgetViewModel::updateGraphics);
 
@@ -67,7 +70,6 @@ void OpenGLWidgetViewModel::createCube()
         defaultName.chop(1);
         defaultName += QString::number(var);
     }
-    update();
 }
 
 void OpenGLWidgetViewModel::createPyramid()
@@ -83,7 +85,6 @@ void OpenGLWidgetViewModel::createSphere()
         defaultName.chop(1);
         defaultName += QString::number(var);
     }
-    update();
 }
 
 void OpenGLWidgetViewModel::createPrism()
@@ -113,31 +114,35 @@ void OpenGLWidgetViewModel::createCustomObject()
             defaultName += QString::number(var);
         }
     }
-    update();
 }
 
 void OpenGLWidgetViewModel::setDisableState(bool state)
 {
     this->setDisabled(state);
-    update();
 }
 
 void OpenGLWidgetViewModel::mousePressEvent(QMouseEvent  *event)
 {
     m_engine->mousePressEvent(event);
-    update();
+    emit updateWindow();
 }
 
 void OpenGLWidgetViewModel::mouseMoveEvent(QMouseEvent *event)
 {
     m_engine->mouseMoveEvent(event);
-    update();
+    emit updateWindow();
 }
 
 void OpenGLWidgetViewModel::wheelEvent(QWheelEvent *event)
 {
     m_engine->wheelEvent(event);
-    update();
+    emit updateWindow();
+}
+
+void OpenGLWidgetViewModel::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    m_engine->mouseDoubleClickEvent(event);
+    emit updateWindow();
 }
 
 void OpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
@@ -147,34 +152,35 @@ void OpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
 
 void OpenGLWidgetViewModel::updateGraphics()
 {
-    update();
+    emit updateWindow();
 }
 
 void OpenGLWidgetViewModel::createCamera()
 {
     m_engine->createCameraInScene("Camera");
-    update();
 }
 
 void OpenGLWidgetViewModel::createLighting()
 {
     m_engine->createLightingInScene("Lighting");
-    update();
 }
 
 void OpenGLWidgetViewModel::initializeGL()
 {
     m_engine->initGraphicsEngine();
+    this->update();
 }
 
 void OpenGLWidgetViewModel::resizeGL(int w, int h)
 {
     m_engine->resizeScene(w, h);
+    this->update();
 }
 
 void OpenGLWidgetViewModel::paintGL()
 {
     m_engine->paintScene();
+    this->update();
 }
 
 

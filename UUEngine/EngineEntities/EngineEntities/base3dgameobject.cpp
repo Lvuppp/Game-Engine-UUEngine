@@ -4,6 +4,8 @@
 Base3DGameObject::Base3DGameObject(Model *model) : BaseEngineObject()
 {
     m_model = model;
+    m_objectType = ObjectType::GameObject;
+
 }
 
 Base3DGameObject::~Base3DGameObject()
@@ -23,5 +25,5 @@ void Base3DGameObject::setModel(Model * model)
 
 void Base3DGameObject::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions,bool isUsingTexture)
 {
-    m_model->drawModel(this->modelMatrix(), shaderProgram, functions);
+    m_model->drawModel(this->modelMatrix(), shaderProgram, isUsingTexture,functions);
 }

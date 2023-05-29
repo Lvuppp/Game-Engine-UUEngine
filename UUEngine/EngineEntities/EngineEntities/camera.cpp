@@ -3,7 +3,7 @@
 Camera::Camera() :
     BaseEngineObject()
 {
-
+    m_objectType = ObjectType::Camera;
 }
 
 Camera::~Camera()
