@@ -7,32 +7,32 @@
 
 class CustomModel;
 
-class ModelLoadStrategy
+class ModelAbstractFactory
 {
 public:
-    ModelLoadStrategy();
-    virtual ~ModelLoadStrategy();
+    ModelAbstractFactory();
+    virtual ~ModelAbstractFactory();
 
     virtual CustomModel* createModel(const QString& filePath) = 0;
 
 };
 
-class OBJModelLoadStrategy : public ModelLoadStrategy
+class OBJModelFactory : public ModelAbstractFactory
 {
 public:
-    OBJModelLoadStrategy();
-    ~OBJModelLoadStrategy();
+    OBJModelFactory();
+    ~OBJModelFactory();
     CustomModel*  createModel(const QString& filePath) override;
 
 private:
     MaterialLibrary library;
 };
 
-class FBXModelLoadStrategy : public ModelLoadStrategy
+class FBXModelFactory : public ModelAbstractFactory
 {
 public:
-    FBXModelLoadStrategy();
-    ~FBXModelLoadStrategy();
+    FBXModelFactory();
+    ~FBXModelFactory();
     CustomModel*  createModel(const QString& filePath) override;
 
 private:
@@ -41,13 +41,13 @@ private:
 
 class ModelLoader{
 public:
-    explicit ModelLoader(ModelLoadStrategy* strategy = nullptr);
+    explicit ModelLoader(ModelAbstractFactory* strategy = nullptr);
 
-    void setStrategy(ModelLoadStrategy *strategy);
+    void setFactory(ModelAbstractFactory *strategy);
     CustomModel* createModel(const QString& filePath);
 
 private:
-    ModelLoadStrategy *m_strategy;
+    ModelAbstractFactory *m_factory;
     ModelFolder *m_modelFolder;
 };
 

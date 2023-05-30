@@ -1,5 +1,6 @@
 #include "mainwindowviewmodel.h"
 
+#include <QFileDialog>
 MainWindowViewModel::MainWindowViewModel(QWidget *parent) : QWidget(parent)
 {
     m_engine = EngineCore::getInstance();

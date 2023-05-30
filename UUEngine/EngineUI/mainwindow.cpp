@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->frame_3->hide();
     ui->moveButton->setIcon(QIcon(":/UIImages/translate.png"));
     ui->rotateButton->setIcon(QIcon(":/UIImages/rotate.png"));
+    QMainWindow::repaint();
+
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +48,7 @@ void MainWindow::linkConnections()
 
 void MainWindow::updateWindow()
 {
-    update();
+    QMainWindow::repaint();
 }
 
 

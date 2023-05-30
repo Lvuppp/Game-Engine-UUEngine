@@ -8,7 +8,7 @@ EngineCore::EngineCore()
     m_scriptFolder = ScriptFolder::getInstance();
     m_textureFolder = TextureFolder::getInstance();
 
-    m_modelLoader.setStrategy(new OBJModelLoadStrategy());
+    m_modelLoader.setFactory(new OBJModelFactory());
     m_sceneFolder = SceneFolder::getInstance();
 
     m_projectProcessor = ProjectProcessor::getInstance();
@@ -53,22 +53,34 @@ void EngineCore::initGraphicsEngine()
 }
 
 //scene work
+
 void EngineCore::createScene(const QString &sceneName)
 {
     m_sceneFolder->createScene(sceneName);
     m_graphicsEngine->setCurrentScene(getCurrentScene());
 }
 
+void EngineCore::selectCurrentScene(const QString &sceneName)
+{
+    m_graphicsEngine->setCurrentScene(m_sceneFolder->setCurrentScene(sceneName));
+    emit updateGraphics();
+}
+
+Scene *EngineCore::getCurrentScene()
+{
+    return m_sceneFolder->currentScene();
+}
+
 void EngineCore::translateObject(const QString &objectName, const QVector3D &translation)
 {
     getCurrentScene()->gameObject(objectName)->
-        translate(QVector3D( getCurrentScene()->gameObject(objectName)->coordinates() - translation));
+        translate(translation - QVector3D(getCurrentScene()->gameObject(objectName)->coordinates()));
 }
 
 void EngineCore::rotateObject(const QString &objectName, const QQuaternion &rotation)
 {
     getCurrentScene()->gameObject(objectName)->
-        rotate(QQuaternion(getCurrentScene()->gameObject(objectName)->rotation() - rotation));
+        rotate(rotation - QQuaternion(getCurrentScene()->gameObject(objectName)->rotation()));
 }
 
 void EngineCore::scaleObject(const QString &objectName, const float &scale)
@@ -94,7 +106,7 @@ void EngineCore::setDiffuseTexture(const QString &objectName, const QString &pat
 
 bool EngineCore::createOBJModel(const QString &objectName, const QString &path)
 {
-    m_modelLoader.setStrategy(new OBJModelLoadStrategy);
+    m_modelLoader.setFactory(new OBJModelFactory);
     if(!getCurrentScene()->addGameObject(objectName, m_modelLoader.createModel(path)))
         return false;
 
@@ -103,21 +115,9 @@ bool EngineCore::createOBJModel(const QString &objectName, const QString &path)
     return true;
 }
 
-void EngineCore::selectCurrentScene(const QString &sceneName)
-{
-    m_graphicsEngine->setCurrentScene(m_sceneFolder->setCurrentScene(sceneName));
-    emit updateGraphics();
-}
-
-Scene *EngineCore::getCurrentScene()
-{
-    return m_sceneFolder->currentScene();
-}
-
-
 bool EngineCore::createFBXModel(const QString &objectName, const QString &path)
 {
-    m_modelLoader.setStrategy(new FBXModelLoadStrategy);
+    m_modelLoader.setFactory(new FBXModelFactory);
     if(!getCurrentScene()->addGameObject(objectName, m_modelLoader.createModel(path)))
         return false;
 
@@ -230,7 +230,9 @@ void EngineCore::wheelEvent(QWheelEvent *event)
 
 void EngineCore::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    emit emitObject(m_graphicsEngine->selectObject(event->pos()));
+    auto objectName = getCurrentScene()->gameObjectsHash().key(dynamic_cast<Base3DGameObject*>(m_graphicsEngine->selectObject(event->pos())));
+    auto object = dynamic_cast<Base3DGameObject*>(m_graphicsEngine->selectObject(event->pos()));
+    emit emitObject(objectName, &object);
 }
 
 void EngineCore::translateObject(const QString &objectName)
@@ -239,6 +241,11 @@ void EngineCore::translateObject(const QString &objectName)
         setCoordinates(m_inputEngine->getWorldCoordinates(m_graphicsEngine->projectionMatrix(),
                                                           m_graphicsEngine->cameraViewMatrix()));
     emit updateGraphics();
+}
+
+void EngineCore::setScriptToObject(const QString &objectName,const QString &scriptName)
+{
+    m_scriptFolder->addScript(objectName,scriptName);
 }
 
 ////////////////////////////////////////////////////////////Project Processor

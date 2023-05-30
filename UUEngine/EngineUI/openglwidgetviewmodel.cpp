@@ -152,7 +152,7 @@ void OpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
 
 void OpenGLWidgetViewModel::updateGraphics()
 {
-    emit updateWindow();
+    repaint();
 }
 
 void OpenGLWidgetViewModel::createCamera()
@@ -168,19 +168,19 @@ void OpenGLWidgetViewModel::createLighting()
 void OpenGLWidgetViewModel::initializeGL()
 {
     m_engine->initGraphicsEngine();
-    this->update();
+    emit updateWindow();
 }
 
 void OpenGLWidgetViewModel::resizeGL(int w, int h)
 {
     m_engine->resizeScene(w, h);
-    this->update();
+    emit updateWindow();
 }
 
 void OpenGLWidgetViewModel::paintGL()
 {
     m_engine->paintScene();
-    this->update();
+    emit updateWindow();
 }
 
 

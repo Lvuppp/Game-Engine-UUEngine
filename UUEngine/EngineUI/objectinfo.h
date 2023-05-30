@@ -22,13 +22,17 @@ signals:
     void updateWindow();
 
 public slots:
-    void setObject(BaseEngineObject *object);
+    void setObject(const QString &objectName, Base3DGameObject **object);
+
+private slots:
+    void on_yCoordLineEdit_editingFinished();
 
 private:
     Ui::ObjectInfo *ui;
 
     EngineCore *m_engine;
     BaseEngineObject *m_currentObject;
+    QString m_objectName;
 };
 
 #endif // OBJECTINFO_H

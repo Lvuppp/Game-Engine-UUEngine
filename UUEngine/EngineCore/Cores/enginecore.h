@@ -56,6 +56,7 @@ public:
 
 //script engine part
 public:
+    void setScriptToObject(const QString &objectName, const QString &scriptName);
 
 //scene project part
 public:
@@ -70,6 +71,7 @@ public:
 
     void selectCurrentScene(const QString &sceneName);
     Scene *getCurrentScene();
+
 //project processor part
 signals:
     void projectLoaded();
@@ -126,7 +128,7 @@ private:
 
 signals:
     void setDisableState(bool state);
-    void emitObject(BaseEngineObject *object);
+    void emitObject(const QString &objectName, Base3DGameObject **object);
 };
 
 #endif // ENGINECORE_H

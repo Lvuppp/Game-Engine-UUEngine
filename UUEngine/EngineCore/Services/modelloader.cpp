@@ -3,27 +3,27 @@
 #include "Models/modelparticle.h"
 #include "Models/custommodel.h"
 
-ModelLoadStrategy::ModelLoadStrategy()
+ModelAbstractFactory::ModelAbstractFactory()
 {
 
 }
 
-ModelLoadStrategy::~ModelLoadStrategy()
+ModelAbstractFactory::~ModelAbstractFactory()
 {
 
 }
 
-OBJModelLoadStrategy::OBJModelLoadStrategy() : ModelLoadStrategy()
+OBJModelFactory::OBJModelFactory() : ModelAbstractFactory()
 {
 
 }
 
-OBJModelLoadStrategy::~OBJModelLoadStrategy()
+OBJModelFactory::~OBJModelFactory()
 {
 
 }
 
-CustomModel* OBJModelLoadStrategy::createModel(const QString &filePath)
+CustomModel* OBJModelFactory::createModel(const QString &filePath)
 {
     QFile objFile(filePath);
 
@@ -94,37 +94,37 @@ CustomModel* OBJModelLoadStrategy::createModel(const QString &filePath)
     return new CustomModel(models);
 }
 
-FBXModelLoadStrategy::FBXModelLoadStrategy() : ModelLoadStrategy()
+FBXModelFactory::FBXModelFactory() : ModelAbstractFactory()
 {
 
 }
 
-FBXModelLoadStrategy::~FBXModelLoadStrategy()
+FBXModelFactory::~FBXModelFactory()
 {
 
 }
 
-CustomModel* FBXModelLoadStrategy::createModel(const QString &filePath)
+CustomModel* FBXModelFactory::createModel(const QString &filePath)
 {
     return new CustomModel();
 }
 
-ModelLoader::ModelLoader(ModelLoadStrategy *strategy) : m_strategy(strategy)
+ModelLoader::ModelLoader(ModelAbstractFactory *strategy) : m_factory(strategy)
 {
     m_modelFolder = ModelFolder::getInstance();
 }
 
-void ModelLoader::setStrategy(ModelLoadStrategy *strategy)
+void ModelLoader::setFactory(ModelAbstractFactory *strategy)
 {
-    if(m_strategy != nullptr){
-        delete m_strategy;
+    if(m_factory != nullptr){
+        delete m_factory;
     }
-    m_strategy = strategy;
+    m_factory = strategy;
 }
 
 CustomModel* ModelLoader::createModel(const QString &filePath)
 {
-    return m_strategy->createModel(filePath);
+    return m_factory->createModel(filePath);
 }
 
 

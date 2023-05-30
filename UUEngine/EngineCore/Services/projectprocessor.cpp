@@ -370,7 +370,7 @@ QHash<QString, Base3DGameObject *> ProjectProcessor::loadGameObjects(const QVect
 Model *ProjectProcessor::loadModel(const QString &objectName, const QString &objectType, const QString &modelParams)
 {
     if(objectType == "CUSTOM_MODEL"){
-        m_modelLoader.setStrategy(new OBJModelLoadStrategy());
+        m_modelLoader.setFactory(new OBJModelFactory());
         m_modelFolder->append(objectName, modelParams);
 
         return m_modelLoader.createModel(m_projectInfo.projectFolder() + "/Models/" + modelParams);
