@@ -16,6 +16,8 @@ EngineCore::EngineCore()
     m_graphicsEngine = GraphicsEngine::getInstance();
     m_inputEngine = InputEngine::getInstance();
     m_scriptEngine = ScriptEngine::getInstance();
+
+    connect(m_scriptEngine, &ScriptEngine::updateGraphics, this, &EngineCore::updateGraphics);
 }
 
 EngineCore *EngineCore::getInstance()
@@ -99,12 +101,20 @@ void EngineCore::scaleObject(const QString &objectName, const float &scale)
 void EngineCore::setNormalTexture(const QString &objectName, const QString &path)
 {
     auto model = dynamic_cast<SimpleModel *>(getCurrentScene()->gameObject(objectName)->model());
+
+    if(model->modelType() == ModelType::CustomModel) return;
+
     model->modelParticle()->setNormalMap(path);
+    loadTexture(objectName, path);
 }
 
 void EngineCore::setDiffuseTexture(const QString &objectName, const QString &path)
 {
+
     auto model = dynamic_cast<SimpleModel *>(getCurrentScene()->gameObject(objectName)->model());
+
+    if(model->modelType() == ModelType::CustomModel) return;
+
     model->modelParticle()->setDiffuseMap(path);
     loadTexture(objectName, path);
 }
@@ -250,7 +260,10 @@ void EngineCore::wheelEvent(QWheelEvent *event)
 
 void EngineCore::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    auto objectName = getCurrentScene()->gameObjectsHash().key(dynamic_cast<Base3DGameObject*>(m_graphicsEngine->selectObject(event->pos())));
+    auto tmpObject = m_graphicsEngine->selectObject(event->pos());
+    if(tmpObject == nullptr) return;
+
+    auto objectName = getCurrentScene()->gameObjectsHash().key(dynamic_cast<Base3DGameObject*>(tmpObject));
     auto object = dynamic_cast<Base3DGameObject*>(m_graphicsEngine->selectObject(event->pos()));
     emit emitObject(objectName, &object);
     emit updateGraphics();
@@ -265,7 +278,21 @@ void EngineCore::placeObjectOnMousePosition(const QString &objectName)
 
 void EngineCore::changeGameStatus()
 {
-    m_scriptEngine->changeGameStatus();
+    m_gameStatus = !m_gameStatus;
+
+    if(m_gameStatus){
+        m_projectProcessor->saveProject(m_sceneFolder->scenes());
+        m_scriptEngine->startScene(m_sceneFolder->currentScene());
+    }
+    else{
+        m_scriptEngine->stopScene();
+        m_projectProcessor->loadProject(ProjectInfo::projectPath());
+    }
+}
+
+void EngineCore::updateScene()
+{
+    emit updateGraphics();
 }
 
 
@@ -314,12 +341,12 @@ void EngineCore::closeProject()
 
 void EngineCore::loadModel(const QString &objectName, const QString &path)
 {
-    m_modelFolder->append(objectName, path);
+    m_modelFolder->replace(objectName, path);
 }
 
 void EngineCore::loadTexture(const QString &objectName, const QString &path)
 {
-    m_textureFolder->append(objectName, path.split('/').constLast());
+    m_textureFolder->replace(objectName, ProjectInfo::projectFolder() + "/Textures/" + path.split('/').constLast());
     ProjectInfo::copyToTextures(path);
 }
 

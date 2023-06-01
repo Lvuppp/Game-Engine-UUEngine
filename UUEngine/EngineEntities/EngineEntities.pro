@@ -15,7 +15,6 @@ SOURCES += \
         EngineEntities/base3dphysicsgameobject.cpp \
         EngineEntities/baseengineobject.cpp \
         EngineEntities/camera.cpp \
-        EngineEntities/sceneprocessor.cpp \
         Models/custommodel.cpp \
         EngineEntities/lighting.cpp \
         material.cpp \
@@ -25,14 +24,14 @@ SOURCES += \
         Models/simplemodel.cpp \
         EngineEntities/skybox.cpp \
         script.cpp \
-        vertexdata.cpp
+        vertexdata.cpp\
+        scenefolder.cpp
 
 HEADERS += \
     EngineEntities/base3dgameobject.h \
     EngineEntities/base3dphysicsgameobject.h \
     EngineEntities/baseengineobject.h \
     EngineEntities/camera.h \
-    EngineEntities/sceneprocessor.h \
     Models/custommodel.h \
     EngineEntities/lighting.h \
     material.h \
@@ -42,10 +41,12 @@ HEADERS += \
     Models/simplemodel.h \
     EngineEntities/skybox.h \
     script.h \
-    vertexdata.h
+    vertexdata.h\
+    scenefolder.h
 
 
 unix: LIBS += -L/usr/lib64 -lGL
+LIBS += -lncurses
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

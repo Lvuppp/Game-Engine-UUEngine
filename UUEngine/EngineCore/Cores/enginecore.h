@@ -5,7 +5,7 @@
 #include "physicsengine.h"
 #include "scriptengine.h"
 #include "inputengine.h"
-#include "Folders/scenefolder.h"
+#include "scenefolder.h"
 #include "Services/modelloader.h"
 #include "Services/modelbuilder.h"
 #include "Services/projectprocessor.h"
@@ -58,6 +58,9 @@ public:
 //script engine part
 public:
     void changeGameStatus();
+
+public slots:
+    void updateScene();
 
 //scene project part
 public:
@@ -128,6 +131,8 @@ private:
     EngineCore& operator=(const GraphicsEngine&) = delete;
 
     static EngineCore* m_instance;
+
+    bool m_gameStatus = false;
 
 signals:
     void setDisableState(bool state);

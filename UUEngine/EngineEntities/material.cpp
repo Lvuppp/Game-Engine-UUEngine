@@ -86,6 +86,7 @@ const QImage &Material::normalMap() const
 
 bool Material::isNormalMapSet() const
 {
+
     return m_isUsingNormalMap;
 }
 

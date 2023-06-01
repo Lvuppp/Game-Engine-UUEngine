@@ -58,6 +58,7 @@ void ScriptEngine::loadObjectScripts(const QString &objectName, BaseEngineObject
             Script *script = new Script(object, lib->resolve("update"));
             m_threadPool.append(script);
             connect(this, &ScriptEngine::stopScripts, script, &Script::requestInterruption);
+            connect(script, &Script::updateScene, this, &ScriptEngine::updateScene);
             script->start();
             m_scripts.append(lib);
         }
@@ -74,16 +75,9 @@ ScriptEngine *ScriptEngine::getInstance()
     return m_instance;
 }
 
-void ScriptEngine::changeGameStatus()
+void ScriptEngine::updateScene()
 {
-    m_gameStatus = !m_gameStatus;
-
-    if(m_gameStatus){
-        startScene(m_sceneFolder->currentScene());
-    }
-    else{
-        stopScene();
-    }
+    emit updateGraphics();
 }
 
 ScriptEngine::ScriptEngine() : m_gameStatus(false)

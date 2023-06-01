@@ -214,4 +214,12 @@ Material *ModelParticle::material() const
 void ModelParticle::setMaterial(Material *newMaterial)
 {
     m_material = newMaterial;
+
+    if(m_material->isDiffuseMapSet()){
+        setDiffuseMap(m_material->diffuseMapPath());
+    }
+
+    if(m_material->isNormalMapSet()){
+        setNormalMap(m_material->normalMapPath());
+    }
 }

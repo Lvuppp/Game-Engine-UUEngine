@@ -21,25 +21,15 @@ public:
     void createContextMenu();
     void linkWithEngine();
 
-
 public slots:
-    void createCamera();
-    void createLighting();
-    void createCube();
-    void createPyramid();
-    void createSphere();
-    void createPrism();
-    void createCylinder();
-    void createCone();
-    void createCustomObject();
-
-    void setDisableState(bool state);
+    void createObject();
 
 signals:
     void updateWindow();
 
 public slots:
     void updateGraphics();
+    void setDisableState(bool state);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

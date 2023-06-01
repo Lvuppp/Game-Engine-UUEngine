@@ -22,7 +22,6 @@ SOURCES += \
         Services/modelloader.cpp \
         Cores/physicsengine.cpp \
         Services/projectprocessor.cpp \
-        Folders/scenefolder.cpp \
         Cores/scriptengine.cpp \
         Folders/scriptfolder.cpp \
         Folders/texturefolder.cpp \
@@ -39,7 +38,6 @@ HEADERS += \
     Services/modelloader.h \
     Cores/physicsengine.h \
     Services/projectprocessor.h \
-    Folders/scenefolder.h \
     Cores/scriptengine.h \
     Folders/scriptfolder.h \
     Folders/texturefolder.h \

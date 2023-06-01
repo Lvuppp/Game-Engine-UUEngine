@@ -27,7 +27,6 @@ void InputEngine::wheelEvent(QWheelEvent *event)
     else if (wheelEvent->angleDelta().y() < 0)
         m_translateDelta = QVector3D(0.0f, 0.0f, -0.2f);
 
-    wheelEvent->accept();
 }
 
 QQuaternion InputEngine::getRotateX()
@@ -69,7 +68,6 @@ void InputEngine::setScreenCoords(const int &width, const int &height)
 void InputEngine::mousePressEvent(QMouseEvent *event)
 {
     m_mouseCoordinates = QVector2D(event->position());
-    event->accept();
 }
 
 void InputEngine::mouseMoveEvent(QMouseEvent *event)
@@ -84,6 +82,7 @@ void InputEngine::mouseMoveEvent(QMouseEvent *event)
 
     m_rotateXDelta = QQuaternion::fromAxisAndAngle(1.0f ,0.0f ,0.0f, angleX);
     m_rotateYDelta = QQuaternion::fromAxisAndAngle(0.0f ,1.0f ,0.0f, angleY);
+
 }
 
 InputEngine *InputEngine::getInstance()

@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_viewModel = new MainWindowViewModel();
     m_projectWidget = new ProjectWidgetViewModel(ui->projectHierarchyFrame);
     m_openGLWidget = new OpenGLWidgetViewModel(ui->openGLWidget);
-    m_objectInfo = new ObjectInfo(ui->objectParamsFrame);
+    m_objectInfo = new ObjectInfo(ui->objectParamsWidget);
 
     m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 
@@ -46,6 +46,7 @@ void MainWindow::linkConnections()
     connect(m_objectInfo, &ObjectInfo::updateWindow, this, &MainWindow::updateWindow);
     connect(m_viewModel, &MainWindowViewModel::updateWindow, this, &MainWindow::updateWindow);
     connect(m_openGLWidget, &OpenGLWidgetViewModel::updateWindow, this, &MainWindow::updateWindow);
+    //connect(m_objectInfo, &ObjectInfo::updateWindow, m_openGLWidget, &OpenGLWidgetViewModel::updateGraphics );
     connect(ui->gameStatusButton, &QPushButton::clicked, m_viewModel, &MainWindowViewModel::changeGameStatus);
 
     auto projectActions = this->menuBar()->actions()[0]->menu()->actions();
@@ -58,7 +59,7 @@ void MainWindow::linkConnections()
 void MainWindow::updateWindow()
 {
     ui->openGLWidget->update();
-    ui->objectParamsFrame->update();
+    ui->objectParamsWidget->update();
 }
 
 

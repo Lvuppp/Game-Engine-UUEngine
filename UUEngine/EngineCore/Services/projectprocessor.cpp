@@ -226,12 +226,12 @@ QString ProjectProcessor::saveModel(const QString &objectName, Base3DGameObject 
 QString ProjectProcessor::saveMaterial(Material *material)
 {
     auto vectorConverter = [](QVector3D vec) -> QString{
-        return QString("%1 %2 %3 ").arg(vec.x()).arg(vec.y()).arg(vec.z());
+        return QString("%1$%2$%3$").arg(vec.x()).arg(vec.y()).arg(vec.z());
     };
 
     return vectorConverter(material->ambienceColor())+
         vectorConverter(material->diffuseColor()) + vectorConverter(material->specularColor()) +
-        material->diffuseMapPath()+ ' ' + material->normalMapPath() + ' ' + QString::number(material->shinnes());
+        material->diffuseMapPath()+ '$' + material->normalMapPath() + '$' + QString::number(material->shinnes());
 
 }
 
@@ -265,6 +265,9 @@ QHash<QString, Scene *>  ProjectProcessor::loadProject(const QString & path)
                 QRegularExpression regex("#(.+) SKYBOX(.+) CAMERAS(.+) LIGHTINGS(.+) BASE3DGAMEOBJECT(.+)");
 
                 foreach (auto scene, sceneInfo) {
+                    if(scene == "")
+                        return scenes;
+
                     QRegularExpressionMatchIterator matchIterator = regex.globalMatch(scene);
 
                     QRegularExpressionMatch matchObject = matchIterator.next();
@@ -420,7 +423,7 @@ Model *ProjectProcessor::loadModel(const QString &objectName, const QString &obj
 
 Material *ProjectProcessor::loadMaterial(const QString &objectName, const QString &material)
 {
-    auto params = material.split(' ');
+    auto params = material.split('$');
 
     Material *mat = new Material();
 
@@ -430,12 +433,12 @@ Material *ProjectProcessor::loadMaterial(const QString &objectName, const QStrin
 
     if(params[9] != "null"){
        m_textureFolder->append(objectName, params[9]);
-       mat->setDiffuseMap(m_projectInfo.projectPath() + "/Textures/" + params[9]);
+       mat->setDiffuseMap(std::move(params[9]));
     }
 
     if(params[10] != "null"){
        m_textureFolder->append(objectName, params[10]);
-       mat->setNormalMap(m_projectInfo.projectPath() + "/Textures/" +params[10]);
+       mat->setNormalMap(std::move(params[10]));
     }
 
     mat->setShinnes(params[11].toFloat());

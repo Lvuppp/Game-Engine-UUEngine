@@ -34,15 +34,10 @@ private slots:
     void on_xCoordLineEdit_editingFinished();
     void on_scaleLineEdit_editingFinished();
     void on_xCoordLineEdit_cursorPositionChanged(int arg1, int arg2);
-
-
     void on_yRotate_sliderMoved(int position);
     void on_xRotate_sliderMoved(int position);
-
     void on_xRotate_valueChanged(int value);
-
     void on_yRotate_valueChanged(int value);
-
     void on_zCoordLineEdit_editingFinished();
 
 private:

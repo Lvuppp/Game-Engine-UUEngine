@@ -38,8 +38,5 @@ private:
     ProjectWidgetViewModel *m_projectWidget;
     ObjectInfo *m_objectInfo;
 
-    QThread *m_objectInfoThread;
-    QThread *m_openGLThread;
-
 };
 #endif // MAINWINDOW_H

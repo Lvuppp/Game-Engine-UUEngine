@@ -3,7 +3,7 @@
 
 #include "scene.h"
 #include "Folders/scriptfolder.h"
-#include "Folders/scenefolder.h"
+#include "scenefolder.h"
 #include "script.h"
 
 #include <QDir>
@@ -24,14 +24,15 @@ public:
     void unloadScripts();
 
     void loadObjectScripts(const QString &objectName, BaseEngineObject *object);
-    void changeGameStatus();
 
 public:
     static ScriptEngine *getInstance();
 
-signals:
+public slots:
     void updateScene();
+
 signals:
+    void updateGraphics();
     void stopScripts();
 
 private:
@@ -40,6 +41,9 @@ private:
 
     QVector<QLibrary *> m_scripts;
     QVector<QThread *> m_threadPool;
+
+    Scene *m_currentSceneCopy;
+    QHash<QString, Scene *> m_scenesCopy;
 
     bool m_gameStatus;
 private:
