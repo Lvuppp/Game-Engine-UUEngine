@@ -1,5 +1,7 @@
 #include "scriptengine.h"
 #include "EngineEntities/base3dgameobject.h"
+#include "Services/projectinfo.h"
+
 
 ScriptEngine *ScriptEngine::m_instance = nullptr;
 
@@ -8,53 +10,59 @@ ScriptEngine::~ScriptEngine()
 
 }
 
-void ScriptEngine::startCameraScript(QHash<QString, Camera *> camera)
+void ScriptEngine::startScene(Scene *scene)
 {
-
+    loadScripts(scene);
 }
 
-void ScriptEngine::startLightingScript(QHash<QString, Lighting *> camera)
+void ScriptEngine::stopScene()
 {
+    emit stopScripts();
 
+    for (auto thread : m_threadPool) {
+        thread->wait();
+    }
+
+    for (auto it = m_scripts.begin(); it != m_scripts.end(); ++it) {
+        (*it)->unload();
+        delete *it;
+    }
+
+    m_scripts.clear();
 }
 
-void ScriptEngine::startGameObjectScript(QHash<QString, Base3DGameObject *> object)
+void ScriptEngine::loadScripts(Scene *scene)
 {
-//    typedef void (*my_function_t)(Base3DGameObject *);
+    foreach(auto objectName, scene->gameObjectsHash().keys()){
+        loadObjectScripts(objectName, scene->gameObjectsHash().value(objectName));
+    }
 
-//    void* my_library = dlopen("./" + , RTLD_NOW | RTLD_GLOBAL);
-
-//    if (my_library == NULL)
-//    {
-//        qCritical() << "Error loading library: " << dlerror() ;
-//        return;
-//    }
-
-//    my_function_t my_function = (my_function_t) dlsym(my_library, "update");
-
-//    // Проверяем, успешно ли получили указатель на функцию
-//    if (my_function == NULL)
-//    {
-//        qCritical() << "Error getting symbol: " << dlerror() ;
-//        dlclose(my_library);
-//        return;
-//    }
-
-
-//    // Вызываем экспортированную функцию
-//    my_function(object);
-
-//    qDebug() << "Coordinates changes: " << object->coordinates();
-
-//    // Выгружаем библиотеку
-//    dlclose(my_library);
+    foreach (auto cameraName, scene->camerasHash().keys()) {
+        loadObjectScripts(cameraName, scene->camerasHash().value(cameraName));
+    }
 }
 
-void ScriptEngine::startSkyBox(SkyBox *skybox)
+
+void ScriptEngine::loadObjectScripts(const QString &objectName, BaseEngineObject *object)
 {
+    auto scripts = m_scriptsFolder->scripts(objectName);
 
+    if(scripts.size() != 0 && scripts[0] != ""){
+        for (int i = 0; i < scripts.size(); ++i) {
+            QLibrary *lib = new QLibrary(ProjectInfo::projectFolder() + "/Scripts/" + scripts[i]);
+
+            if(!lib->load()){
+                throw std::runtime_error("BROKEN SCRIPT!");
+            }
+
+            Script *script = new Script(object, lib->resolve("update"));
+            m_threadPool.append(script);
+            connect(this, &ScriptEngine::stopScripts, script, &Script::requestInterruption);
+            script->start();
+            m_scripts.append(lib);
+        }
+    }
 }
-
 
 
 ScriptEngine *ScriptEngine::getInstance()
@@ -66,8 +74,21 @@ ScriptEngine *ScriptEngine::getInstance()
     return m_instance;
 }
 
-ScriptEngine::ScriptEngine()
+void ScriptEngine::changeGameStatus()
+{
+    m_gameStatus = !m_gameStatus;
+
+    if(m_gameStatus){
+        startScene(m_sceneFolder->currentScene());
+    }
+    else{
+        stopScene();
+    }
+}
+
+ScriptEngine::ScriptEngine() : m_gameStatus(false)
 {
     m_scriptsFolder = ScriptFolder::getInstance();
+    m_sceneFolder = SceneFolder::getInstance();
 }
 

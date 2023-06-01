@@ -213,11 +213,11 @@ QString ProjectProcessor::saveModel(const QString &objectName, Base3DGameObject 
     QString savedObject;
 
     if(gameObject->model()->modelType() == ModelType::CustomModel){
-        return "CUSTOM_MODEL|" + m_modelFolder->models(objectName).join(' ') + "|";
+        return "CUSTOM_MODEL|" + m_modelFolder->model(objectName) + "|";
     }
     else{
         auto simpleModel = dynamic_cast<SimpleModel *>(gameObject->model());
-        return "SIMPLE_MODEL|" + m_modelFolder->models(objectName).join(' ') + ",MATERIAL(" +
+        return "SIMPLE_MODEL|" + m_modelFolder->model(objectName) + ",MATERIAL(" +
                saveMaterial(simpleModel->modelParticle()->material()) + ")|";
     }
     return savedObject;

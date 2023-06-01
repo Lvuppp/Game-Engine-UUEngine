@@ -27,7 +27,6 @@ void ProjectCreator::accept()
         QDialog::accept();
     }
     else{
-
         ui->errorLabel->setText("Can`t create project! Try again!");
     }
 }
@@ -35,7 +34,6 @@ void ProjectCreator::accept()
 
 void ProjectCreator::on_findFolderButton_clicked()
 {
-
     auto path = QFileDialog::getExistingDirectory(nullptr, "Выберите папку", "", QFileDialog::ShowDirsOnly);
     ui->folderPathLine->setText(path);
 }

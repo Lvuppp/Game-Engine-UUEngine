@@ -22,21 +22,9 @@ void ModelFolder::replace(const QString &objectName, const QString &modelName)
     m_modelsFolder[objectName] = modelName;
 }
 
-const QVector<QString> ModelFolder::allModels()
+QString ModelFolder::model(const QString &name)
 {
-    return m_modelsFolder.values();
-}
-
-QVector<QString> ModelFolder::models(const QString &name)
-{
-    QVector<QString> tmp;
-    auto modelsIters =  m_modelsFolder.equal_range(name);
-
-    for (auto it = modelsIters.first; it != modelsIters.second; ++it) {
-        tmp.append(*it);
-    }
-
-    return tmp;
+    return m_modelsFolder[name];
 }
 
 void ModelFolder::clearFolder()

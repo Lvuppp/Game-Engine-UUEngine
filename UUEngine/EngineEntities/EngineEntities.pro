@@ -15,6 +15,7 @@ SOURCES += \
         EngineEntities/base3dphysicsgameobject.cpp \
         EngineEntities/baseengineobject.cpp \
         EngineEntities/camera.cpp \
+        EngineEntities/sceneprocessor.cpp \
         Models/custommodel.cpp \
         EngineEntities/lighting.cpp \
         material.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
         scene.cpp \
         Models/simplemodel.cpp \
         EngineEntities/skybox.cpp \
+        script.cpp \
         vertexdata.cpp
 
 HEADERS += \
@@ -30,6 +32,7 @@ HEADERS += \
     EngineEntities/base3dphysicsgameobject.h \
     EngineEntities/baseengineobject.h \
     EngineEntities/camera.h \
+    EngineEntities/sceneprocessor.h \
     Models/custommodel.h \
     EngineEntities/lighting.h \
     material.h \
@@ -38,6 +41,7 @@ HEADERS += \
     scene.h \
     Models/simplemodel.h \
     EngineEntities/skybox.h \
+    script.h \
     vertexdata.h
 
 

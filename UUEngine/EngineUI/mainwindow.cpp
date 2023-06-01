@@ -17,10 +17,18 @@ MainWindow::MainWindow(QWidget *parent)
 
     linkConnections();
 
+    //m_objectInfoThread = new QThread(this);
+    //m_openGLThread = new QThread(this);
+
+    //objectInfo->moveToThread(m_objectInfoThread);
+    //m_objectInfoThread->start();
+
+    //m_openGLWidget->moveToThread(m_openGLThread);
+    //m_openGLThread->start();
+
     ui->frame_3->hide();
     ui->moveButton->setIcon(QIcon(":/UIImages/translate.png"));
     ui->rotateButton->setIcon(QIcon(":/UIImages/rotate.png"));
-    QMainWindow::repaint();
 
 }
 
@@ -35,9 +43,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::linkConnections()
 {
+    connect(m_objectInfo, &ObjectInfo::updateWindow, this, &MainWindow::updateWindow);
     connect(m_viewModel, &MainWindowViewModel::updateWindow, this, &MainWindow::updateWindow);
     connect(m_openGLWidget, &OpenGLWidgetViewModel::updateWindow, this, &MainWindow::updateWindow);
-    connect(m_objectInfo, &ObjectInfo::updateWindow, this, &MainWindow::updateWindow);
+    connect(ui->gameStatusButton, &QPushButton::clicked, m_viewModel, &MainWindowViewModel::changeGameStatus);
 
     auto projectActions = this->menuBar()->actions()[0]->menu()->actions();
 
@@ -48,8 +57,10 @@ void MainWindow::linkConnections()
 
 void MainWindow::updateWindow()
 {
-    QMainWindow::repaint();
+    ui->openGLWidget->update();
+    ui->objectParamsFrame->update();
 }
+
 
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -57,6 +68,4 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     QMainWindow::resizeEvent(event);
     m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 }
-
-
 

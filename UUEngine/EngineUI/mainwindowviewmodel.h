@@ -17,6 +17,7 @@ signals:
 
 public slots:
     void processProject();
+    void changeGameStatus();
 
 private:
     EngineCore *m_engine;

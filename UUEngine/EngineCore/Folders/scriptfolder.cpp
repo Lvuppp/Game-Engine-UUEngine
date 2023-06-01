@@ -14,8 +14,14 @@ void ScriptFolder::addScript( const QString & objectName, const QString &scriptN
 
 QVector<QString> ScriptFolder::scripts(const QString &name)
 {
-    QVector<QString> tmp;
+    QVector<QString> tmp(0);
+
+    if(!m_scriptsFolder.contains(name)){
+        return tmp;
+    }
+
     auto scriptsIters =  m_scriptsFolder.equal_range(name);
+
 
     for (auto it = scriptsIters.first; it != scriptsIters.second; ++it) {
         tmp.append(*it);

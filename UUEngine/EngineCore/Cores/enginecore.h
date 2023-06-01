@@ -34,7 +34,8 @@ public:
 
 public:
     void translateObject(const QString &objectName,const QVector3D &translation);
-    void rotateObject(const QString &objectName,const QQuaternion &rotation);
+    void rotateXObject(const QString &objectName,const QQuaternion &rotation);
+    void rotateYObject(const QString &objectName,const QQuaternion &rotation);
     void scaleObject(const QString &objectName,const float &scale);
 
     void setNormalTexture(const QString &objectName, const QString &path);
@@ -50,13 +51,13 @@ public slots:
     void wheelEvent(QWheelEvent* event);
     void mouseDoubleClickEvent(QMouseEvent *event);
 
-    void translateObject(const QString &objectName);
+    void placeObjectOnMousePosition(const QString &objectName);
 //physics engine part
 public:
 
 //script engine part
 public:
-    void setScriptToObject(const QString &objectName, const QString &scriptName);
+    void changeGameStatus();
 
 //scene project part
 public:
@@ -73,9 +74,6 @@ public:
     Scene *getCurrentScene();
 
 //project processor part
-signals:
-    void projectLoaded();
-
 public slots:
     void createProject(const QString &path, const QString &name);
     void loadProject(const QString & path);
@@ -87,6 +85,9 @@ public:
     void loadModel(const QString &objectName, const QString &path);
     void loadTexture(const QString &objectName, const QString &path);
     void loadScript(const QString &objectName, const QString &path);
+
+    QString getModel(const QString &objectName);
+    QVector<QString> getScripts(const QString &objectName);
 
 //model loader part
 public:
@@ -102,6 +103,8 @@ public:
     void createCone(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
     void createCylinder(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
 
+    void changeCube(const QString &objectName, const float &width, const float &height, const float &depth);
+    void changeSphere(const QString &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
 private:
 
     GraphicsEngine *m_graphicsEngine;
@@ -130,5 +133,6 @@ signals:
     void setDisableState(bool state);
     void emitObject(const QString &objectName, Base3DGameObject **object);
 };
+
 
 #endif // ENGINECORE_H

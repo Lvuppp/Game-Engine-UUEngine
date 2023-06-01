@@ -4,7 +4,7 @@
 
 GraphicsEngine* GraphicsEngine::m_instance = nullptr;
 
-GraphicsEngine::GraphicsEngine()
+GraphicsEngine::GraphicsEngine() : m_gameStatus(false)
 {
 //    m_engineScene = new Scene;
 //    m_engineScene->addCamera("EngineCamera");
@@ -57,7 +57,7 @@ void GraphicsEngine::paintScene()
 {
     Camera *currentCamera = m_engineCamera;
 
-    if(m_isSceneStart){
+    if(m_gameStatus){
         currentCamera = m_currentScene->currentCamera();
     }
 
@@ -134,7 +134,7 @@ void GraphicsEngine::resizeScene(int w,int h)
 
 BaseEngineObject *GraphicsEngine::selectObject(const QPoint &mouseCoordinates)
 {
-    if(m_isSceneStart) return nullptr;
+    if(m_gameStatus) return nullptr;
 
     glViewport(0, 0, m_windowWidth, m_windowHeight);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -217,6 +217,11 @@ QMatrix4x4 GraphicsEngine::projectionMatrix() const
 QMatrix4x4 GraphicsEngine::cameraViewMatrix() const
 {
     return m_engineCamera->modelMatrix();
+}
+
+void GraphicsEngine::changeGameStatus()
+{
+    m_gameStatus = !m_gameStatus;
 }
 
 void GraphicsEngine::rotateModelViewMatrix(const QQuaternion &rotationX,const QQuaternion &rotationY)

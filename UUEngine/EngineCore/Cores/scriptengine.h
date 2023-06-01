@@ -1,11 +1,10 @@
 #ifndef SCRIPTENGINE_H
 #define SCRIPTENGINE_H
 
-#include "EngineEntities/base3dgameobject.h"
-#include "EngineEntities/camera.h"
-#include "EngineEntities/lighting.h"
-#include "EngineEntities/skybox.h"
+#include "scene.h"
 #include "Folders/scriptfolder.h"
+#include "Folders/scenefolder.h"
+#include "script.h"
 
 #include <QDir>
 #include <dlfcn.h>
@@ -14,25 +13,37 @@
 
 class ScriptEngine : public QThread
 {
+    Q_OBJECT
 public:
     ~ScriptEngine();
+    void startScene(Scene *scene);
+    void stopScene();
 
-    void startCameraScript(QHash<QString, Camera*> camera);
-    void startLightingScript(QHash<QString, Lighting*> lighting);
-    void startGameObjectScript(QHash<QString, Base3DGameObject*> gameObject);
-    void startSkyBox(SkyBox *skybox);
+public:
+    void loadScripts(Scene *scene);
+    void unloadScripts();
+
+    void loadObjectScripts(const QString &objectName, BaseEngineObject *object);
+    void changeGameStatus();
 
 public:
     static ScriptEngine *getInstance();
 
 signals:
     void updateScene();
+signals:
+    void stopScripts();
 
 private:
-    QDir currentDirectory;
     ScriptFolder *m_scriptsFolder;
+    SceneFolder *m_sceneFolder;
 
+    QVector<QLibrary *> m_scripts;
+    QVector<QThread *> m_threadPool;
+
+    bool m_gameStatus;
 private:
+
     ScriptEngine();
 
     ScriptEngine(const ScriptEngine&) = delete;
@@ -40,5 +51,6 @@ private:
 
     static ScriptEngine *m_instance;
 };
+
 
 #endif // SCRIPTENGINE_H

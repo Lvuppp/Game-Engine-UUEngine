@@ -31,6 +31,8 @@ public:
     QMatrix4x4 projectionMatrix() const;
     QMatrix4x4 cameraViewMatrix() const;
 
+    void changeGameStatus();
+
 public:
     static GraphicsEngine *getInstance();
 
@@ -64,7 +66,7 @@ private:
     int m_windowWidth;
     int m_windowHeight;
 
-    bool m_isSceneStart = false;
+    bool m_gameStatus;
     static GraphicsEngine* m_instance;
 };
 

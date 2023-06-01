@@ -29,6 +29,7 @@ public slots:
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
+
 private:
     Ui::MainWindow *ui;
 
@@ -36,6 +37,9 @@ private:
     OpenGLWidgetViewModel *m_openGLWidget;
     ProjectWidgetViewModel *m_projectWidget;
     ObjectInfo *m_objectInfo;
+
+    QThread *m_objectInfoThread;
+    QThread *m_openGLThread;
 
 };
 #endif // MAINWINDOW_H

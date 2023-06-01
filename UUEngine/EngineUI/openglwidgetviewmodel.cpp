@@ -58,8 +58,7 @@ void OpenGLWidgetViewModel::createContextMenu()
 void OpenGLWidgetViewModel::linkWithEngine()
 {
     connect(m_engine, &EngineCore::setDisableState,this, &OpenGLWidgetViewModel::setDisableState);
-    connect(m_engine, &EngineCore::updateGraphics, this, &OpenGLWidgetViewModel::updateGraphics);
-
+    connect(m_engine, &EngineCore::updateGraphics,this, &OpenGLWidgetViewModel::updateGraphics);
 }
 
 void OpenGLWidgetViewModel::createCube()
@@ -116,9 +115,25 @@ void OpenGLWidgetViewModel::createCustomObject()
     }
 }
 
+void OpenGLWidgetViewModel::createCamera()
+{
+    m_engine->createCameraInScene("Camera");
+}
+
+void OpenGLWidgetViewModel::createLighting()
+{
+    m_engine->createLightingInScene("Lighting");
+}
+
 void OpenGLWidgetViewModel::setDisableState(bool state)
 {
     this->setDisabled(state);
+}
+
+void OpenGLWidgetViewModel::updateGraphics()
+{
+    update();
+    emit updateWindow();
 }
 
 void OpenGLWidgetViewModel::mousePressEvent(QMouseEvent  *event)
@@ -150,20 +165,6 @@ void OpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
     m_contextMenu->exec(event->globalPos());
 }
 
-void OpenGLWidgetViewModel::updateGraphics()
-{
-    repaint();
-}
-
-void OpenGLWidgetViewModel::createCamera()
-{
-    m_engine->createCameraInScene("Camera");
-}
-
-void OpenGLWidgetViewModel::createLighting()
-{
-    m_engine->createLightingInScene("Lighting");
-}
 
 void OpenGLWidgetViewModel::initializeGL()
 {

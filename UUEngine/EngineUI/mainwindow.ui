@@ -175,7 +175,7 @@
      </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="gameStatusButton">
       <property name="text">
        <string>Start game</string>
       </property>
@@ -202,13 +202,7 @@
     <addaction name="actionSave_as"/>
     <addaction name="actionClose"/>
    </widget>
-   <widget class="QMenu" name="menuGoofy">
-    <property name="title">
-     <string>Goofy sounds</string>
-    </property>
-   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuGoofy"/>
   </widget>
   <action name="actionOpen">
    <property name="checkable">

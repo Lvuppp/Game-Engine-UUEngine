@@ -17,8 +17,7 @@ public:
     void remove(const QString &objectName);
     void replace(const QString &objectName, const QString &modelName);
 
-    const QVector<QString> allModels();
-    QVector<QString> models(const QString &name);
+    QString model(const QString &name);
     void clearFolder();
 
 public:

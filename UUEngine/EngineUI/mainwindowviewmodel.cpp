@@ -55,3 +55,8 @@ void MainWindowViewModel::processProject()
     emit updateWindow();
 
 }
+
+void MainWindowViewModel::changeGameStatus()
+{
+    m_engine->changeGameStatus();
+}

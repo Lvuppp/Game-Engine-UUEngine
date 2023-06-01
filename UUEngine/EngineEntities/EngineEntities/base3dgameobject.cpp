@@ -10,7 +10,8 @@ Base3DGameObject::Base3DGameObject(Model *model) : BaseEngineObject()
 
 Base3DGameObject::~Base3DGameObject()
 {
-    delete m_model;
+    if(m_model != nullptr)
+        delete m_model;
 }
 
 Model *Base3DGameObject::model()
@@ -20,6 +21,9 @@ Model *Base3DGameObject::model()
 
 void Base3DGameObject::setModel(Model * model)
 {
+    if(m_model != nullptr)
+        delete m_model;
+
     m_model = model;
 }
 

@@ -21,11 +21,6 @@ public:
     void createContextMenu();
     void linkWithEngine();
 
-signals:
-    void updateWindow();
-
-public:
-    void updateGraphics();
 
 public slots:
     void createCamera();
@@ -40,6 +35,12 @@ public slots:
 
     void setDisableState(bool state);
 
+signals:
+    void updateWindow();
+
+public slots:
+    void updateGraphics();
+
 protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
@@ -47,7 +48,6 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
 
     void contextMenuEvent(QContextMenuEvent *event) override;
-
 private:
     void initializeGL() override;
     void resizeGL(int w, int h) override;

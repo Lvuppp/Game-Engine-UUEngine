@@ -8,7 +8,6 @@ ProjectWidgetViewModel::ProjectWidgetViewModel(QWidget *parent) : QWidget(parent
     this->setLayout(&layout);
     m_engine->initProjectProcessor(layout);
 
-    connect(m_engine, &EngineCore::projectLoaded, this, &ProjectWidgetViewModel::updateProjectInfo);
 }
 
 
