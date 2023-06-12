@@ -13,9 +13,9 @@ CustomModel::CustomModel(QVector<ModelParticle *> modelParticles) : Model()
 
 CustomModel::~CustomModel()
 {
-    for(auto it = m_modelParticles.begin(), end = m_modelParticles.end(); it != end; it++ ){
-        delete it;
-    }
+//    for(auto it = m_modelParticles.begin(), end = m_modelParticles.end(); it != end; it++ ){
+//        delete it;
+//    }
 
     m_modelParticles.clear();
 

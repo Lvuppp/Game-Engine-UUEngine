@@ -6,10 +6,6 @@ GraphicsEngine* GraphicsEngine::m_instance = nullptr;
 
 GraphicsEngine::GraphicsEngine() : m_gameStatus(false)
 {
-//    m_engineScene = new Scene;
-//    m_engineScene->addCamera("EngineCamera");
-//    m_engineScene->setCurrentCamera("EngineCamera");
-//    m_engineScene->addLighting("EngineLighting");
     m_engineCamera = new Camera();
     m_engineLighting = new Lighting();
 }

@@ -95,7 +95,13 @@ void EngineCore::rotateYObject(const QString &objectName, const QQuaternion &rot
 void EngineCore::scaleObject(const QString &objectName, const float &scale)
 {
     getCurrentScene()->gameObject(objectName)->
-        scale(getCurrentScene()->gameObject(objectName)->scale() - scale);
+        setScale(getCurrentScene()->gameObject(objectName)->scale() - scale);
+}
+
+void EngineCore::deleteObject(const QString &objectName)
+{
+    getCurrentScene()->deleteGameObject(objectName);
+    emit updateGraphics();
 }
 
 void EngineCore::setNormalTexture(const QString &objectName, const QString &path)
@@ -163,7 +169,8 @@ void EngineCore::createLightingInScene(const QString &objectName)
 void EngineCore::setSkyBox(const float &size, const QString &path)
 {
     getCurrentScene()->setSkybox(m_modelBuilder.createSkybox(size, path));
-    m_textureFolder->append("Skybox", path.split('/').constLast());
+    loadTexture("Skybox", path);
+
     emit updateGraphics();
 }
 
@@ -286,7 +293,8 @@ void EngineCore::changeGameStatus()
     }
     else{
         m_scriptEngine->stopScene();
-        m_projectProcessor->loadProject(ProjectInfo::projectPath());
+        m_sceneFolder->setScenes(m_projectProcessor->loadProject(ProjectInfo::projectPath()));
+        m_graphicsEngine->setCurrentScene(getCurrentScene());
     }
 }
 

@@ -19,13 +19,16 @@ void OpenGLWidgetViewModel::createContextMenu()
     m_contextMenu = new QMenu(this);
 
     QMenu *m_objectContextMenu = new QMenu("Add game object",this);
+    QAction *setSkybox = new QAction("Set skybox");
     QAction *addCameraAction = new QAction("Add camera", this);
     QAction *addLightingAction = new QAction("Add lighting", this);
 
     m_contextMenu->addMenu(m_objectContextMenu);
+    m_contextMenu->addAction(setSkybox);
     //m_contextMenu->addAction(addCameraAction);
     //m_contextMenu->addAction(addLightingAction);
 
+    connect(setSkybox, &QAction::triggered, this, &OpenGLWidgetViewModel::setSkybox);
     //connect(addCameraAction, &QAction::triggered, this, &OpenGLWidgetViewModel::createCamera);
     //connect(addLightingAction, &QAction::triggered, this, &OpenGLWidgetViewModel::createLighting);
 
@@ -39,7 +42,6 @@ void OpenGLWidgetViewModel::createContextMenu()
 
     m_objectContextMenu->addAction(addCustomObjectAction);
     m_objectContextMenu->addAction(addCubeAction);
-    //m_objectContextMenu->addAction(addPyramidAction);
     //m_objectContextMenu->addAction(addPrismAction);
     //m_objectContextMenu->addAction(addCylinderAction);
     m_objectContextMenu->addAction(addSphereAction);
@@ -91,6 +93,13 @@ void OpenGLWidgetViewModel::createObject()
         objectName += QString::number(var);
     }
     emit updateGraphics();
+}
+
+void OpenGLWidgetViewModel::setSkybox()
+{
+    auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
+
+    m_engine->setSkyBox(100.0f,objectPath);
 }
 
 void OpenGLWidgetViewModel::updateGraphics()

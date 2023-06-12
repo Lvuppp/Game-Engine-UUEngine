@@ -37,6 +37,7 @@ public:
     void rotateXObject(const QString &objectName,const QQuaternion &rotation);
     void rotateYObject(const QString &objectName,const QQuaternion &rotation);
     void scaleObject(const QString &objectName,const float &scale);
+    void deleteObject(const QString& objectName);
 
     void setNormalTexture(const QString &objectName, const QString &path);
     void setDiffuseTexture(const QString &objectName, const QString &path);

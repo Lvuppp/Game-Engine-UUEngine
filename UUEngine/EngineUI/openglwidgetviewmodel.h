@@ -23,6 +23,7 @@ public:
 
 public slots:
     void createObject();
+    void setSkybox();
 
 signals:
     void updateWindow();

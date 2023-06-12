@@ -10,11 +10,6 @@ ObjectInfo::ObjectInfo(QWidget *parent) :
 
     connect(m_engine, &EngineCore::emitObject, this , &ObjectInfo::setObject);
 
-    ui->xRotate->setMinimum(0);
-    ui->xRotate->setMaximum(360);
-
-    ui->yRotate->setMinimum(0);
-    ui->yRotate->setMaximum(360);
 }
 
 ObjectInfo::~ObjectInfo()
@@ -38,18 +33,9 @@ void ObjectInfo::setObject(const QString &objectName, Base3DGameObject **object)
     ui->objectLabel->setText(objectName);
 
     auto coords = m_currentObject->coordinates();
-    float angleX, angleY;
-    QVector3D axisX, axisY;
-
-    m_currentObject->rotationX().getAxisAndAngle(&axisX,&angleX);
-    m_currentObject->rotationY().getAxisAndAngle(&axisY,&angleY);
-
     ui->xCoordLineEdit->setText(QString::number(coords.x()));
     ui->yCoordLineEdit->setText(QString::number(coords.y()));
     ui->zCoordLineEdit->setText(QString::number(coords.z()));
-
-    ui->xRotate->setValue(angleX);
-    ui->xRotate->setValue(angleY);
 
     ui->scaleLineEdit->setText(QString::number(m_currentObject->scale()));
 
@@ -59,6 +45,7 @@ void ObjectInfo::setObject(const QString &objectName, Base3DGameObject **object)
         (*object)->model()->modelType() == ModelType::SimpleModel){
         loadSpecificParams();
     }
+
 
     emit updateWindow();
 }
@@ -227,34 +214,8 @@ void ObjectInfo::on_xCoordLineEdit_cursorPositionChanged(int arg1, int arg2)
 }
 
 
-void ObjectInfo::on_yRotate_sliderMoved(int position)
-{
-    ui->yRotate->setValue(position);
-    emit updateWindow();
-}
 
 
-void ObjectInfo::on_xRotate_sliderMoved(int position)
-{
-    ui->xRotate->setValue(position);
-    emit updateWindow();
-}
-
-
-void ObjectInfo::on_xRotate_valueChanged(int value)
-{
-    m_engine->rotateXObject(m_objectName, QQuaternion::fromAxisAndAngle(QVector3D(1.0f,0.0f,0.0f),value));
-
-    emit updateWindow();
-}
-
-
-void ObjectInfo::on_yRotate_valueChanged(int value)
-{
-    m_engine->rotateYObject(m_objectName, QQuaternion::fromAxisAndAngle(QVector3D(0.0f,1.0f,0.0f),value));
-
-    emit updateWindow();
-}
 
 
 void ObjectInfo::on_zCoordLineEdit_editingFinished()
@@ -265,5 +226,11 @@ void ObjectInfo::on_zCoordLineEdit_editingFinished()
         m_engine->translateObject(m_objectName, QVector3D(0.0f, 0.0f, zCoord));
     }
     emit updateWindow();
+}
+
+
+void ObjectInfo::on_pushButton_clicked()
+{
+    m_engine->deleteObject(m_objectName);
 }
 
