@@ -48,9 +48,6 @@ public:
     SkyBox *skybox() const;
 
 private:
-    QHash<QString, QString> m_objectsScriptsPath;
-
-private:
     //QVector<Base3DPhysicsObject *> m_physicsObject;
     SkyBox *m_skybox;
     QHash<QString, Camera *> m_cameras;

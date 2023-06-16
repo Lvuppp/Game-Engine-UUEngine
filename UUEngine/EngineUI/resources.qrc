@@ -31,5 +31,7 @@
         <file>Models/TestModel/diffuso.tif</file>
         <file>Shaders/fselectshader.fsh</file>
         <file>Shaders/vselectshader.vsh</file>
+        <file>UIImages/addIcon.png</file>
+        <file>UIImages/deleteIcon.png</file>
     </qresource>
 </RCC>

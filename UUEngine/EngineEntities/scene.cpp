@@ -5,13 +5,14 @@ Scene::Scene()
     m_gameObjects = QHash<QString, Base3DGameObject *>();
     m_cameras = QHash<QString, Camera*>();
     m_lightings = QHash<QString, Lighting*>();
+    m_skybox = nullptr;
     m_currentCamera = nullptr;
 
 }
 
 Scene::Scene(QHash<QString, Base3DGameObject *> gameObjects, QHash<QString, Lighting *> lighting ,
-             QHash<QString, Camera *> cameras, SkyBox *skybox) : m_skybox(skybox), m_cameras(cameras), m_lightings(lighting),m_gameObjects(gameObjects)
-
+             QHash<QString, Camera *> cameras, SkyBox *skybox) : m_skybox(skybox), m_cameras(cameras),
+            m_lightings(lighting),m_gameObjects(gameObjects)
 {
 
 }

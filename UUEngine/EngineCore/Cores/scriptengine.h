@@ -7,7 +7,7 @@
 #include "script.h"
 
 #include <QDir>
-#include <dlfcn.h>
+//#include <dlfcn.h>
 
 // В данный момент он довольно таки примитивный, но он старается :)
 

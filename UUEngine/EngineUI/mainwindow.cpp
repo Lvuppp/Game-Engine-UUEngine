@@ -16,16 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
     m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 
     linkConnections();
-
-    //m_objectInfoThread = new QThread(this);
-    //m_openGLThread = new QThread(this);
-
-    //objectInfo->moveToThread(m_objectInfoThread);
-    //m_objectInfoThread->start();
-
-    //m_openGLWidget->moveToThread(m_openGLThread);
-    //m_openGLThread->start();
-
     ui->frame_3->hide();
     ui->moveButton->setIcon(QIcon(":/UIImages/translate.png"));
     ui->rotateButton->setIcon(QIcon(":/UIImages/rotate.png"));
@@ -46,10 +36,9 @@ void MainWindow::linkConnections()
     connect(m_objectInfo, &ObjectInfo::updateWindow, this, &MainWindow::updateWindow);
     connect(m_viewModel, &MainWindowViewModel::updateWindow, this, &MainWindow::updateWindow);
     connect(m_openGLWidget, &OpenGLWidgetViewModel::updateWindow, this, &MainWindow::updateWindow);
-    //connect(m_objectInfo, &ObjectInfo::updateWindow, m_openGLWidget, &OpenGLWidgetViewModel::updateGraphics );
     connect(ui->gameStatusButton, &QPushButton::clicked, m_viewModel, &MainWindowViewModel::changeGameStatus);
 
-    auto projectActions = this->menuBar()->actions()[0]->menu()->actions();
+    auto projectActions = this->menuBar()->actions().at(0)->menu()->actions();
 
     foreach (auto action, projectActions) {
         connect(action,&QAction::triggered ,m_viewModel ,&MainWindowViewModel::processProject);

@@ -132,9 +132,9 @@ BaseEngineObject *GraphicsEngine::selectObject(const QPoint &mouseCoordinates)
 {
     if(m_gameStatus) return nullptr;
 
-    glViewport(0, 0, m_windowWidth, m_windowHeight);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST); //для корректной работы оси z: дальние объекты не должны перекрывать ближние
+    this->currentContext()->functions()->glViewport(0, 0, m_windowWidth, m_windowHeight);
+    this->currentContext()->functions()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    this->currentContext()->functions()->glEnable(GL_DEPTH_TEST); //для корректной работы оси z: дальние объекты не должны перекрывать ближние
 
     m_selectShaderProgram.bind();
     m_selectShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);;
@@ -149,14 +149,14 @@ BaseEngineObject *GraphicsEngine::selectObject(const QPoint &mouseCoordinates)
     m_selectShaderProgram.release();
 
     GLint viewport[4]; //x, y, w, h
-    glGetIntegerv(GL_VIEWPORT, viewport);
+    this->currentContext()->functions()->glGetIntegerv(GL_VIEWPORT, viewport);
 
     unsigned char res[4]; //4 компоненты RGBA, каждый по байту, [0-255], поэтому такой тип данных
 
     //1, 1 - ширина и высота пикселя который нужно считать под указателем мыши
-    glReadPixels(mouseCoordinates.x(), viewport[3] - mouseCoordinates.y(), 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &res);
+    this->currentContext()->functions()->glReadPixels(mouseCoordinates.x(), viewport[3] - mouseCoordinates.y(), 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &res);
 
-    glDisable(GL_DEPTH_TEST);
+    this->currentContext()->functions()->glDisable(GL_DEPTH_TEST);
 
     if(res[0] - 1 == -1) return nullptr;
     return m_currentScene->gameObjects()[res[0] - 1]; //красная компонента
