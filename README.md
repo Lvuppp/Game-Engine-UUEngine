@@ -1,7 +1,3 @@
-# OOP Curswork 
-Student: Bagrovets Egor Sergeevich \
-Group number: 153504 
-
 This repository develops a software tool for creating 3D computer games, based on its own game engine. 
 
 # Software tool
