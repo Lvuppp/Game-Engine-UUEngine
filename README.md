@@ -31,6 +31,6 @@ Base functions that each *game object* should implement:
 * update - update own statement of the object on scene.
 
 # Data models:
-* .cpp files implement scripts of game objects
-* .obj, .fbx files consist implementation of 3d objects
+* .dll files implement scripts of game objects
+* .obj files consist implementation of 3d objects
 * .jpeg, .jpg, .png file implement texture of game objects
