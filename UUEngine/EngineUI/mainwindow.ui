@@ -169,7 +169,7 @@
      </widget>
     </item>
     <item row="1" column="2">
-     <widget class="QWidget" name="objectParamsWidget" native="true">
+     <widget class="QFrame" name="objectParamsFrame">
       <property name="styleSheet">
        <string notr="true">background-color : rgb(65, 65, 75);</string>
       </property>

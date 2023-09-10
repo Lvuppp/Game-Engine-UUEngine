@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_viewModel = new MainWindowViewModel();
     m_projectWidget = new ProjectWidgetViewModel(ui->projectHierarchyFrame);
     m_openGLWidget = new OpenGLWidgetViewModel(ui->openGLWidget);
-    m_objectInfo = new ObjectInfo(ui->objectParamsWidget);
+    m_objectInfo = new ObjectInfo(ui->objectParamsFrame);
 
     m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 
@@ -59,7 +59,7 @@ void MainWindow::linkConnections()
 void MainWindow::updateWindow()
 {
     ui->openGLWidget->update();
-    ui->objectParamsWidget->update();
+    ui->objectParamsFrame->update();
 }
 
 
