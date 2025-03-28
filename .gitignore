@@ -1,3 +1,7 @@
-build-UUEngine-Desktop_Qt_6_2_4_GCC_64bit-Debug
-build-UUEngine-Desktop_Qt_6_2_4_GCC_64bit-Release
+build
+_build_compile_commands
+.qt
 .qtc_clangd
+compile_commands.json
+CMakeFiles
+CMakeCache.txt
