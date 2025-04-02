@@ -1,7 +1,7 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
-#include "EngineEntities/BaseEngineObject.h"
+#include "BaseEntities/BaseEngineObject.h"
 #include <QRunnable>
 
 using UpdateFunction = void (*)(cBaseEngineObject *);

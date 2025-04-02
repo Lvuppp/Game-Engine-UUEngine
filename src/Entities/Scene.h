@@ -1,10 +1,10 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "EngineEntities/Base3DGameObject.h"
-#include "EngineEntities/Camera.h"
-#include "EngineEntities/Lighting.h"
-#include "EngineEntities/Skybox.h"
+#include "BaseEntities/Base3DGameObject.h"
+#include "BaseEntities/Camera.h"
+#include "BaseEntities/Lighting.h"
+#include "BaseEntities/Skybox.h"
 #include "Models/SimpleModel.h"
 
 class cScene

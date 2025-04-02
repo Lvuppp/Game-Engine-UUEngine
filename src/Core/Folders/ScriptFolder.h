@@ -1,7 +1,7 @@
 #ifndef SCRIPTFOLDER_H
 #define SCRIPTFOLDER_H
 
-#include "EngineEntities/BaseEngineObject.h"
+#include "BaseEntities/BaseEngineObject.h"
 
 #include <QPair>
 #include <QHash>

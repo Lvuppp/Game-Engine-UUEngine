@@ -1,7 +1,7 @@
 #ifndef OBJECTINFO_H
 #define OBJECTINFO_H
 
-#include "EngineEntities/BaseEngineObject.h"
+#include "BaseEntities/BaseEngineObject.h"
 #include "Cores/EngineCore.h"
 
 #include <QWidget>
