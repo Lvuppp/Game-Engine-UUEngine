@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/">
+        <file>UIImages/translate.png</file>
+        <file>UIImages/rotate.png</file>
+        <file>Shaders/vskybox.vsh</file>
+        <file>Shaders/vshader.vsh</file>
+        <file>Shaders/vdepth.vsh</file>
+        <file>Shaders/fskybox.fsh</file>
+        <file>Shaders/fshader.fsh</file>
+        <file>Shaders/fdepth.fsh</file>
+        <file>Textures/texture1.jpg</file>
+        <file>Textures/skyboxTexture.png</file>
+        <file>Textures/skybox4.png</file>
+        <file>Textures/skybox3.png</file>
+        <file>Textures/skybox2.jpg</file>
+        <file>Textures/skybox.jpg</file>
+        <file>Textures/rockTexture.jpeg</file>
+        <file>Textures/normal2.jpg</file>
+        <file>Textures/normal.jpeg</file>
+        <file>Textures/defaultTexture.png</file>
+        <file>Models/TestModel3/testModel.obj</file>
+        <file>Models/TestModel3/testModel.mtl</file>
+        <file>Models/TestModel3/rockTexture.jpeg</file>
+        <file>Models/TestModel2/boy.obj</file>
+        <file>Models/TestModel/Stonefbx.fbx</file>
+        <file>Models/TestModel/Stone.obj</file>
+        <file>Models/TestModel/Stone.mtl</file>
+        <file>Models/TestModel/rough.tif</file>
+        <file>Models/TestModel/normal.png</file>
+        <file>Models/TestModel/ICE.blend</file>
+        <file>Models/TestModel/diffuso.tif</file>
+        <file>Shaders/fselectshader.fsh</file>
+        <file>Shaders/vselectshader.vsh</file>
+        <file>UIImages/addIcon.png</file>
+        <file>UIImages/deleteIcon.png</file>
+    </qresource>
+</RCC>

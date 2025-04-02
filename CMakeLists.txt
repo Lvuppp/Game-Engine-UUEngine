@@ -26,7 +26,7 @@ file(GLOB_RECURSE UI_SOURCES
 )
 
 add_executable(${PROJECT_NAME}
-    src/UI/main.cpp
+    src/main.cpp
     ${UI_SOURCES}
     ${UI_HEADERS}
     ${RESOURCE_SOURCES}

@@ -130,341 +130,393 @@ Core/fast:
 	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/build
 .PHONY : Core/fast
 
-Cores/enginecore.o: Cores/enginecore.cpp.o
-.PHONY : Cores/enginecore.o
+# Convenience name for target.
+src/Core/CMakeFiles/Core_autogen_timestamp_deps.dir/rule:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/Core/CMakeFiles/Core_autogen_timestamp_deps.dir/rule
+.PHONY : src/Core/CMakeFiles/Core_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+Core_autogen_timestamp_deps: src/Core/CMakeFiles/Core_autogen_timestamp_deps.dir/rule
+.PHONY : Core_autogen_timestamp_deps
+
+# fast build rule for target.
+Core_autogen_timestamp_deps/fast:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core_autogen_timestamp_deps.dir/build.make src/Core/CMakeFiles/Core_autogen_timestamp_deps.dir/build
+.PHONY : Core_autogen_timestamp_deps/fast
+
+# Convenience name for target.
+src/Core/CMakeFiles/Core_autogen.dir/rule:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/Core/CMakeFiles/Core_autogen.dir/rule
+.PHONY : src/Core/CMakeFiles/Core_autogen.dir/rule
+
+# Convenience name for target.
+Core_autogen: src/Core/CMakeFiles/Core_autogen.dir/rule
+.PHONY : Core_autogen
+
+# fast build rule for target.
+Core_autogen/fast:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core_autogen.dir/build.make src/Core/CMakeFiles/Core_autogen.dir/build
+.PHONY : Core_autogen/fast
+
+Core_autogen/mocs_compilation.o: Core_autogen/mocs_compilation.cpp.o
+.PHONY : Core_autogen/mocs_compilation.o
 
 # target to build an object file
-Cores/enginecore.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/enginecore.cpp.o
-.PHONY : Cores/enginecore.cpp.o
+Core_autogen/mocs_compilation.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Core_autogen/mocs_compilation.cpp.o
+.PHONY : Core_autogen/mocs_compilation.cpp.o
 
-Cores/enginecore.i: Cores/enginecore.cpp.i
-.PHONY : Cores/enginecore.i
+Core_autogen/mocs_compilation.i: Core_autogen/mocs_compilation.cpp.i
+.PHONY : Core_autogen/mocs_compilation.i
 
 # target to preprocess a source file
-Cores/enginecore.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/enginecore.cpp.i
-.PHONY : Cores/enginecore.cpp.i
+Core_autogen/mocs_compilation.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Core_autogen/mocs_compilation.cpp.i
+.PHONY : Core_autogen/mocs_compilation.cpp.i
 
-Cores/enginecore.s: Cores/enginecore.cpp.s
-.PHONY : Cores/enginecore.s
+Core_autogen/mocs_compilation.s: Core_autogen/mocs_compilation.cpp.s
+.PHONY : Core_autogen/mocs_compilation.s
 
 # target to generate assembly for a file
-Cores/enginecore.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/enginecore.cpp.s
-.PHONY : Cores/enginecore.cpp.s
+Core_autogen/mocs_compilation.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Core_autogen/mocs_compilation.cpp.s
+.PHONY : Core_autogen/mocs_compilation.cpp.s
 
-Cores/graphicsengine.o: Cores/graphicsengine.cpp.o
-.PHONY : Cores/graphicsengine.o
+Cores/EngineCore.o: Cores/EngineCore.cpp.o
+.PHONY : Cores/EngineCore.o
 
 # target to build an object file
-Cores/graphicsengine.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/graphicsengine.cpp.o
-.PHONY : Cores/graphicsengine.cpp.o
+Cores/EngineCore.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/EngineCore.cpp.o
+.PHONY : Cores/EngineCore.cpp.o
 
-Cores/graphicsengine.i: Cores/graphicsengine.cpp.i
-.PHONY : Cores/graphicsengine.i
+Cores/EngineCore.i: Cores/EngineCore.cpp.i
+.PHONY : Cores/EngineCore.i
 
 # target to preprocess a source file
-Cores/graphicsengine.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/graphicsengine.cpp.i
-.PHONY : Cores/graphicsengine.cpp.i
+Cores/EngineCore.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/EngineCore.cpp.i
+.PHONY : Cores/EngineCore.cpp.i
 
-Cores/graphicsengine.s: Cores/graphicsengine.cpp.s
-.PHONY : Cores/graphicsengine.s
+Cores/EngineCore.s: Cores/EngineCore.cpp.s
+.PHONY : Cores/EngineCore.s
 
 # target to generate assembly for a file
-Cores/graphicsengine.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/graphicsengine.cpp.s
-.PHONY : Cores/graphicsengine.cpp.s
+Cores/EngineCore.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/EngineCore.cpp.s
+.PHONY : Cores/EngineCore.cpp.s
 
-Cores/inputengine.o: Cores/inputengine.cpp.o
-.PHONY : Cores/inputengine.o
+Cores/GraphicsEngine.o: Cores/GraphicsEngine.cpp.o
+.PHONY : Cores/GraphicsEngine.o
 
 # target to build an object file
-Cores/inputengine.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/inputengine.cpp.o
-.PHONY : Cores/inputengine.cpp.o
+Cores/GraphicsEngine.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/GraphicsEngine.cpp.o
+.PHONY : Cores/GraphicsEngine.cpp.o
 
-Cores/inputengine.i: Cores/inputengine.cpp.i
-.PHONY : Cores/inputengine.i
+Cores/GraphicsEngine.i: Cores/GraphicsEngine.cpp.i
+.PHONY : Cores/GraphicsEngine.i
 
 # target to preprocess a source file
-Cores/inputengine.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/inputengine.cpp.i
-.PHONY : Cores/inputengine.cpp.i
+Cores/GraphicsEngine.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/GraphicsEngine.cpp.i
+.PHONY : Cores/GraphicsEngine.cpp.i
 
-Cores/inputengine.s: Cores/inputengine.cpp.s
-.PHONY : Cores/inputengine.s
+Cores/GraphicsEngine.s: Cores/GraphicsEngine.cpp.s
+.PHONY : Cores/GraphicsEngine.s
 
 # target to generate assembly for a file
-Cores/inputengine.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/inputengine.cpp.s
-.PHONY : Cores/inputengine.cpp.s
+Cores/GraphicsEngine.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/GraphicsEngine.cpp.s
+.PHONY : Cores/GraphicsEngine.cpp.s
 
-Cores/physicsengine.o: Cores/physicsengine.cpp.o
-.PHONY : Cores/physicsengine.o
+Cores/InputEngine.o: Cores/InputEngine.cpp.o
+.PHONY : Cores/InputEngine.o
 
 # target to build an object file
-Cores/physicsengine.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/physicsengine.cpp.o
-.PHONY : Cores/physicsengine.cpp.o
+Cores/InputEngine.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/InputEngine.cpp.o
+.PHONY : Cores/InputEngine.cpp.o
 
-Cores/physicsengine.i: Cores/physicsengine.cpp.i
-.PHONY : Cores/physicsengine.i
+Cores/InputEngine.i: Cores/InputEngine.cpp.i
+.PHONY : Cores/InputEngine.i
 
 # target to preprocess a source file
-Cores/physicsengine.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/physicsengine.cpp.i
-.PHONY : Cores/physicsengine.cpp.i
+Cores/InputEngine.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/InputEngine.cpp.i
+.PHONY : Cores/InputEngine.cpp.i
 
-Cores/physicsengine.s: Cores/physicsengine.cpp.s
-.PHONY : Cores/physicsengine.s
+Cores/InputEngine.s: Cores/InputEngine.cpp.s
+.PHONY : Cores/InputEngine.s
 
 # target to generate assembly for a file
-Cores/physicsengine.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/physicsengine.cpp.s
-.PHONY : Cores/physicsengine.cpp.s
+Cores/InputEngine.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/InputEngine.cpp.s
+.PHONY : Cores/InputEngine.cpp.s
 
-Cores/scriptengine.o: Cores/scriptengine.cpp.o
-.PHONY : Cores/scriptengine.o
+Cores/PhysicsEngine.o: Cores/PhysicsEngine.cpp.o
+.PHONY : Cores/PhysicsEngine.o
 
 # target to build an object file
-Cores/scriptengine.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/scriptengine.cpp.o
-.PHONY : Cores/scriptengine.cpp.o
+Cores/PhysicsEngine.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/PhysicsEngine.cpp.o
+.PHONY : Cores/PhysicsEngine.cpp.o
 
-Cores/scriptengine.i: Cores/scriptengine.cpp.i
-.PHONY : Cores/scriptengine.i
+Cores/PhysicsEngine.i: Cores/PhysicsEngine.cpp.i
+.PHONY : Cores/PhysicsEngine.i
 
 # target to preprocess a source file
-Cores/scriptengine.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/scriptengine.cpp.i
-.PHONY : Cores/scriptengine.cpp.i
+Cores/PhysicsEngine.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/PhysicsEngine.cpp.i
+.PHONY : Cores/PhysicsEngine.cpp.i
 
-Cores/scriptengine.s: Cores/scriptengine.cpp.s
-.PHONY : Cores/scriptengine.s
+Cores/PhysicsEngine.s: Cores/PhysicsEngine.cpp.s
+.PHONY : Cores/PhysicsEngine.s
 
 # target to generate assembly for a file
-Cores/scriptengine.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/scriptengine.cpp.s
-.PHONY : Cores/scriptengine.cpp.s
+Cores/PhysicsEngine.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/PhysicsEngine.cpp.s
+.PHONY : Cores/PhysicsEngine.cpp.s
 
-Folders/materiallib.o: Folders/materiallib.cpp.o
-.PHONY : Folders/materiallib.o
+Cores/ScriptEngine.o: Cores/ScriptEngine.cpp.o
+.PHONY : Cores/ScriptEngine.o
 
 # target to build an object file
-Folders/materiallib.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/materiallib.cpp.o
-.PHONY : Folders/materiallib.cpp.o
+Cores/ScriptEngine.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/ScriptEngine.cpp.o
+.PHONY : Cores/ScriptEngine.cpp.o
 
-Folders/materiallib.i: Folders/materiallib.cpp.i
-.PHONY : Folders/materiallib.i
+Cores/ScriptEngine.i: Cores/ScriptEngine.cpp.i
+.PHONY : Cores/ScriptEngine.i
 
 # target to preprocess a source file
-Folders/materiallib.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/materiallib.cpp.i
-.PHONY : Folders/materiallib.cpp.i
+Cores/ScriptEngine.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/ScriptEngine.cpp.i
+.PHONY : Cores/ScriptEngine.cpp.i
 
-Folders/materiallib.s: Folders/materiallib.cpp.s
-.PHONY : Folders/materiallib.s
+Cores/ScriptEngine.s: Cores/ScriptEngine.cpp.s
+.PHONY : Cores/ScriptEngine.s
 
 # target to generate assembly for a file
-Folders/materiallib.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/materiallib.cpp.s
-.PHONY : Folders/materiallib.cpp.s
+Cores/ScriptEngine.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Cores/ScriptEngine.cpp.s
+.PHONY : Cores/ScriptEngine.cpp.s
 
-Folders/modelfolder.o: Folders/modelfolder.cpp.o
-.PHONY : Folders/modelfolder.o
+Folders/MaterialLib.o: Folders/MaterialLib.cpp.o
+.PHONY : Folders/MaterialLib.o
 
 # target to build an object file
-Folders/modelfolder.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/modelfolder.cpp.o
-.PHONY : Folders/modelfolder.cpp.o
+Folders/MaterialLib.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/MaterialLib.cpp.o
+.PHONY : Folders/MaterialLib.cpp.o
 
-Folders/modelfolder.i: Folders/modelfolder.cpp.i
-.PHONY : Folders/modelfolder.i
+Folders/MaterialLib.i: Folders/MaterialLib.cpp.i
+.PHONY : Folders/MaterialLib.i
 
 # target to preprocess a source file
-Folders/modelfolder.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/modelfolder.cpp.i
-.PHONY : Folders/modelfolder.cpp.i
+Folders/MaterialLib.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/MaterialLib.cpp.i
+.PHONY : Folders/MaterialLib.cpp.i
 
-Folders/modelfolder.s: Folders/modelfolder.cpp.s
-.PHONY : Folders/modelfolder.s
+Folders/MaterialLib.s: Folders/MaterialLib.cpp.s
+.PHONY : Folders/MaterialLib.s
 
 # target to generate assembly for a file
-Folders/modelfolder.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/modelfolder.cpp.s
-.PHONY : Folders/modelfolder.cpp.s
+Folders/MaterialLib.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/MaterialLib.cpp.s
+.PHONY : Folders/MaterialLib.cpp.s
 
-Folders/scriptfolder.o: Folders/scriptfolder.cpp.o
-.PHONY : Folders/scriptfolder.o
+Folders/ModelFolder.o: Folders/ModelFolder.cpp.o
+.PHONY : Folders/ModelFolder.o
 
 # target to build an object file
-Folders/scriptfolder.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/scriptfolder.cpp.o
-.PHONY : Folders/scriptfolder.cpp.o
+Folders/ModelFolder.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/ModelFolder.cpp.o
+.PHONY : Folders/ModelFolder.cpp.o
 
-Folders/scriptfolder.i: Folders/scriptfolder.cpp.i
-.PHONY : Folders/scriptfolder.i
+Folders/ModelFolder.i: Folders/ModelFolder.cpp.i
+.PHONY : Folders/ModelFolder.i
 
 # target to preprocess a source file
-Folders/scriptfolder.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/scriptfolder.cpp.i
-.PHONY : Folders/scriptfolder.cpp.i
+Folders/ModelFolder.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/ModelFolder.cpp.i
+.PHONY : Folders/ModelFolder.cpp.i
 
-Folders/scriptfolder.s: Folders/scriptfolder.cpp.s
-.PHONY : Folders/scriptfolder.s
+Folders/ModelFolder.s: Folders/ModelFolder.cpp.s
+.PHONY : Folders/ModelFolder.s
 
 # target to generate assembly for a file
-Folders/scriptfolder.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/scriptfolder.cpp.s
-.PHONY : Folders/scriptfolder.cpp.s
+Folders/ModelFolder.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/ModelFolder.cpp.s
+.PHONY : Folders/ModelFolder.cpp.s
 
-Folders/texturefolder.o: Folders/texturefolder.cpp.o
-.PHONY : Folders/texturefolder.o
+Folders/ScriptFolder.o: Folders/ScriptFolder.cpp.o
+.PHONY : Folders/ScriptFolder.o
 
 # target to build an object file
-Folders/texturefolder.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/texturefolder.cpp.o
-.PHONY : Folders/texturefolder.cpp.o
+Folders/ScriptFolder.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/ScriptFolder.cpp.o
+.PHONY : Folders/ScriptFolder.cpp.o
 
-Folders/texturefolder.i: Folders/texturefolder.cpp.i
-.PHONY : Folders/texturefolder.i
+Folders/ScriptFolder.i: Folders/ScriptFolder.cpp.i
+.PHONY : Folders/ScriptFolder.i
 
 # target to preprocess a source file
-Folders/texturefolder.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/texturefolder.cpp.i
-.PHONY : Folders/texturefolder.cpp.i
+Folders/ScriptFolder.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/ScriptFolder.cpp.i
+.PHONY : Folders/ScriptFolder.cpp.i
 
-Folders/texturefolder.s: Folders/texturefolder.cpp.s
-.PHONY : Folders/texturefolder.s
+Folders/ScriptFolder.s: Folders/ScriptFolder.cpp.s
+.PHONY : Folders/ScriptFolder.s
 
 # target to generate assembly for a file
-Folders/texturefolder.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/texturefolder.cpp.s
-.PHONY : Folders/texturefolder.cpp.s
+Folders/ScriptFolder.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/ScriptFolder.cpp.s
+.PHONY : Folders/ScriptFolder.cpp.s
 
-Services/eventhandler.o: Services/eventhandler.cpp.o
-.PHONY : Services/eventhandler.o
+Folders/TextureFolder.o: Folders/TextureFolder.cpp.o
+.PHONY : Folders/TextureFolder.o
 
 # target to build an object file
-Services/eventhandler.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/eventhandler.cpp.o
-.PHONY : Services/eventhandler.cpp.o
+Folders/TextureFolder.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/TextureFolder.cpp.o
+.PHONY : Folders/TextureFolder.cpp.o
 
-Services/eventhandler.i: Services/eventhandler.cpp.i
-.PHONY : Services/eventhandler.i
+Folders/TextureFolder.i: Folders/TextureFolder.cpp.i
+.PHONY : Folders/TextureFolder.i
 
 # target to preprocess a source file
-Services/eventhandler.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/eventhandler.cpp.i
-.PHONY : Services/eventhandler.cpp.i
+Folders/TextureFolder.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/TextureFolder.cpp.i
+.PHONY : Folders/TextureFolder.cpp.i
 
-Services/eventhandler.s: Services/eventhandler.cpp.s
-.PHONY : Services/eventhandler.s
+Folders/TextureFolder.s: Folders/TextureFolder.cpp.s
+.PHONY : Folders/TextureFolder.s
 
 # target to generate assembly for a file
-Services/eventhandler.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/eventhandler.cpp.s
-.PHONY : Services/eventhandler.cpp.s
+Folders/TextureFolder.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Folders/TextureFolder.cpp.s
+.PHONY : Folders/TextureFolder.cpp.s
 
-Services/modelbuilder.o: Services/modelbuilder.cpp.o
-.PHONY : Services/modelbuilder.o
+Services/Eventhandler.o: Services/Eventhandler.cpp.o
+.PHONY : Services/Eventhandler.o
 
 # target to build an object file
-Services/modelbuilder.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/modelbuilder.cpp.o
-.PHONY : Services/modelbuilder.cpp.o
+Services/Eventhandler.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/Eventhandler.cpp.o
+.PHONY : Services/Eventhandler.cpp.o
 
-Services/modelbuilder.i: Services/modelbuilder.cpp.i
-.PHONY : Services/modelbuilder.i
+Services/Eventhandler.i: Services/Eventhandler.cpp.i
+.PHONY : Services/Eventhandler.i
 
 # target to preprocess a source file
-Services/modelbuilder.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/modelbuilder.cpp.i
-.PHONY : Services/modelbuilder.cpp.i
+Services/Eventhandler.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/Eventhandler.cpp.i
+.PHONY : Services/Eventhandler.cpp.i
 
-Services/modelbuilder.s: Services/modelbuilder.cpp.s
-.PHONY : Services/modelbuilder.s
+Services/Eventhandler.s: Services/Eventhandler.cpp.s
+.PHONY : Services/Eventhandler.s
 
 # target to generate assembly for a file
-Services/modelbuilder.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/modelbuilder.cpp.s
-.PHONY : Services/modelbuilder.cpp.s
+Services/Eventhandler.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/Eventhandler.cpp.s
+.PHONY : Services/Eventhandler.cpp.s
 
-Services/modelloader.o: Services/modelloader.cpp.o
-.PHONY : Services/modelloader.o
+Services/ModelBuilder.o: Services/ModelBuilder.cpp.o
+.PHONY : Services/ModelBuilder.o
 
 # target to build an object file
-Services/modelloader.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/modelloader.cpp.o
-.PHONY : Services/modelloader.cpp.o
+Services/ModelBuilder.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ModelBuilder.cpp.o
+.PHONY : Services/ModelBuilder.cpp.o
 
-Services/modelloader.i: Services/modelloader.cpp.i
-.PHONY : Services/modelloader.i
+Services/ModelBuilder.i: Services/ModelBuilder.cpp.i
+.PHONY : Services/ModelBuilder.i
 
 # target to preprocess a source file
-Services/modelloader.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/modelloader.cpp.i
-.PHONY : Services/modelloader.cpp.i
+Services/ModelBuilder.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ModelBuilder.cpp.i
+.PHONY : Services/ModelBuilder.cpp.i
 
-Services/modelloader.s: Services/modelloader.cpp.s
-.PHONY : Services/modelloader.s
+Services/ModelBuilder.s: Services/ModelBuilder.cpp.s
+.PHONY : Services/ModelBuilder.s
 
 # target to generate assembly for a file
-Services/modelloader.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/modelloader.cpp.s
-.PHONY : Services/modelloader.cpp.s
+Services/ModelBuilder.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ModelBuilder.cpp.s
+.PHONY : Services/ModelBuilder.cpp.s
 
-Services/projectinfo.o: Services/projectinfo.cpp.o
-.PHONY : Services/projectinfo.o
+Services/ModelLoader.o: Services/ModelLoader.cpp.o
+.PHONY : Services/ModelLoader.o
 
 # target to build an object file
-Services/projectinfo.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/projectinfo.cpp.o
-.PHONY : Services/projectinfo.cpp.o
+Services/ModelLoader.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ModelLoader.cpp.o
+.PHONY : Services/ModelLoader.cpp.o
 
-Services/projectinfo.i: Services/projectinfo.cpp.i
-.PHONY : Services/projectinfo.i
+Services/ModelLoader.i: Services/ModelLoader.cpp.i
+.PHONY : Services/ModelLoader.i
 
 # target to preprocess a source file
-Services/projectinfo.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/projectinfo.cpp.i
-.PHONY : Services/projectinfo.cpp.i
+Services/ModelLoader.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ModelLoader.cpp.i
+.PHONY : Services/ModelLoader.cpp.i
 
-Services/projectinfo.s: Services/projectinfo.cpp.s
-.PHONY : Services/projectinfo.s
+Services/ModelLoader.s: Services/ModelLoader.cpp.s
+.PHONY : Services/ModelLoader.s
 
 # target to generate assembly for a file
-Services/projectinfo.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/projectinfo.cpp.s
-.PHONY : Services/projectinfo.cpp.s
+Services/ModelLoader.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ModelLoader.cpp.s
+.PHONY : Services/ModelLoader.cpp.s
 
-Services/projectprocessor.o: Services/projectprocessor.cpp.o
-.PHONY : Services/projectprocessor.o
+Services/ProjectProcessor.o: Services/ProjectProcessor.cpp.o
+.PHONY : Services/ProjectProcessor.o
 
 # target to build an object file
-Services/projectprocessor.cpp.o:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/projectprocessor.cpp.o
-.PHONY : Services/projectprocessor.cpp.o
+Services/ProjectProcessor.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ProjectProcessor.cpp.o
+.PHONY : Services/ProjectProcessor.cpp.o
 
-Services/projectprocessor.i: Services/projectprocessor.cpp.i
-.PHONY : Services/projectprocessor.i
+Services/ProjectProcessor.i: Services/ProjectProcessor.cpp.i
+.PHONY : Services/ProjectProcessor.i
 
 # target to preprocess a source file
-Services/projectprocessor.cpp.i:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/projectprocessor.cpp.i
-.PHONY : Services/projectprocessor.cpp.i
+Services/ProjectProcessor.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ProjectProcessor.cpp.i
+.PHONY : Services/ProjectProcessor.cpp.i
 
-Services/projectprocessor.s: Services/projectprocessor.cpp.s
-.PHONY : Services/projectprocessor.s
+Services/ProjectProcessor.s: Services/ProjectProcessor.cpp.s
+.PHONY : Services/ProjectProcessor.s
 
 # target to generate assembly for a file
-Services/projectprocessor.cpp.s:
-	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/projectprocessor.cpp.s
-.PHONY : Services/projectprocessor.cpp.s
+Services/ProjectProcessor.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/ProjectProcessor.cpp.s
+.PHONY : Services/ProjectProcessor.cpp.s
+
+Services/Projectinfo.o: Services/Projectinfo.cpp.o
+.PHONY : Services/Projectinfo.o
+
+# target to build an object file
+Services/Projectinfo.cpp.o:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/Projectinfo.cpp.o
+.PHONY : Services/Projectinfo.cpp.o
+
+Services/Projectinfo.i: Services/Projectinfo.cpp.i
+.PHONY : Services/Projectinfo.i
+
+# target to preprocess a source file
+Services/Projectinfo.cpp.i:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/Projectinfo.cpp.i
+.PHONY : Services/Projectinfo.cpp.i
+
+Services/Projectinfo.s: Services/Projectinfo.cpp.s
+.PHONY : Services/Projectinfo.s
+
+# target to generate assembly for a file
+Services/Projectinfo.cpp.s:
+	cd /home/egor/diploma/Game-Engine-UUEngine && $(MAKE) $(MAKESILENT) -f src/Core/CMakeFiles/Core.dir/build.make src/Core/CMakeFiles/Core.dir/Services/Projectinfo.cpp.s
+.PHONY : Services/Projectinfo.cpp.s
 
 # Help Target
 help:
@@ -474,49 +526,54 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... Core_autogen"
+	@echo "... Core_autogen_timestamp_deps"
 	@echo "... Core"
-	@echo "... Cores/enginecore.o"
-	@echo "... Cores/enginecore.i"
-	@echo "... Cores/enginecore.s"
-	@echo "... Cores/graphicsengine.o"
-	@echo "... Cores/graphicsengine.i"
-	@echo "... Cores/graphicsengine.s"
-	@echo "... Cores/inputengine.o"
-	@echo "... Cores/inputengine.i"
-	@echo "... Cores/inputengine.s"
-	@echo "... Cores/physicsengine.o"
-	@echo "... Cores/physicsengine.i"
-	@echo "... Cores/physicsengine.s"
-	@echo "... Cores/scriptengine.o"
-	@echo "... Cores/scriptengine.i"
-	@echo "... Cores/scriptengine.s"
-	@echo "... Folders/materiallib.o"
-	@echo "... Folders/materiallib.i"
-	@echo "... Folders/materiallib.s"
-	@echo "... Folders/modelfolder.o"
-	@echo "... Folders/modelfolder.i"
-	@echo "... Folders/modelfolder.s"
-	@echo "... Folders/scriptfolder.o"
-	@echo "... Folders/scriptfolder.i"
-	@echo "... Folders/scriptfolder.s"
-	@echo "... Folders/texturefolder.o"
-	@echo "... Folders/texturefolder.i"
-	@echo "... Folders/texturefolder.s"
-	@echo "... Services/eventhandler.o"
-	@echo "... Services/eventhandler.i"
-	@echo "... Services/eventhandler.s"
-	@echo "... Services/modelbuilder.o"
-	@echo "... Services/modelbuilder.i"
-	@echo "... Services/modelbuilder.s"
-	@echo "... Services/modelloader.o"
-	@echo "... Services/modelloader.i"
-	@echo "... Services/modelloader.s"
-	@echo "... Services/projectinfo.o"
-	@echo "... Services/projectinfo.i"
-	@echo "... Services/projectinfo.s"
-	@echo "... Services/projectprocessor.o"
-	@echo "... Services/projectprocessor.i"
-	@echo "... Services/projectprocessor.s"
+	@echo "... Core_autogen/mocs_compilation.o"
+	@echo "... Core_autogen/mocs_compilation.i"
+	@echo "... Core_autogen/mocs_compilation.s"
+	@echo "... Cores/EngineCore.o"
+	@echo "... Cores/EngineCore.i"
+	@echo "... Cores/EngineCore.s"
+	@echo "... Cores/GraphicsEngine.o"
+	@echo "... Cores/GraphicsEngine.i"
+	@echo "... Cores/GraphicsEngine.s"
+	@echo "... Cores/InputEngine.o"
+	@echo "... Cores/InputEngine.i"
+	@echo "... Cores/InputEngine.s"
+	@echo "... Cores/PhysicsEngine.o"
+	@echo "... Cores/PhysicsEngine.i"
+	@echo "... Cores/PhysicsEngine.s"
+	@echo "... Cores/ScriptEngine.o"
+	@echo "... Cores/ScriptEngine.i"
+	@echo "... Cores/ScriptEngine.s"
+	@echo "... Folders/MaterialLib.o"
+	@echo "... Folders/MaterialLib.i"
+	@echo "... Folders/MaterialLib.s"
+	@echo "... Folders/ModelFolder.o"
+	@echo "... Folders/ModelFolder.i"
+	@echo "... Folders/ModelFolder.s"
+	@echo "... Folders/ScriptFolder.o"
+	@echo "... Folders/ScriptFolder.i"
+	@echo "... Folders/ScriptFolder.s"
+	@echo "... Folders/TextureFolder.o"
+	@echo "... Folders/TextureFolder.i"
+	@echo "... Folders/TextureFolder.s"
+	@echo "... Services/Eventhandler.o"
+	@echo "... Services/Eventhandler.i"
+	@echo "... Services/Eventhandler.s"
+	@echo "... Services/ModelBuilder.o"
+	@echo "... Services/ModelBuilder.i"
+	@echo "... Services/ModelBuilder.s"
+	@echo "... Services/ModelLoader.o"
+	@echo "... Services/ModelLoader.i"
+	@echo "... Services/ModelLoader.s"
+	@echo "... Services/ProjectProcessor.o"
+	@echo "... Services/ProjectProcessor.i"
+	@echo "... Services/ProjectProcessor.s"
+	@echo "... Services/Projectinfo.o"
+	@echo "... Services/Projectinfo.i"
+	@echo "... Services/Projectinfo.s"
 .PHONY : help
 
 
