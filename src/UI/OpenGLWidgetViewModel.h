@@ -1,7 +1,7 @@
 #ifndef OPENGLWIDGETVIEWMODEL_H
 #define OPENGLWIDGETVIEWMODEL_H
 
-#include "Cores/EngineCore.h"
+#include "Core/Cores/EngineCore.h"
 
 #include <QOpenGLWidget>
 #include <QVBoxLayout>
@@ -16,7 +16,6 @@ class cOpenGLWidgetViewModel : public QOpenGLWidget
     Q_OBJECT
 public:
     cOpenGLWidgetViewModel(QWidget *parent = nullptr);
-    ~cOpenGLWidgetViewModel();
 
     void createContextMenu();
     void linkWithEngine();
@@ -24,12 +23,6 @@ public:
 public slots:
     void createObject();
     void setSkybox();
-
-signals:
-    void updateWindow();
-
-public slots:
-    void updateGraphics();
     void setDisableState(bool state);
 
 protected:

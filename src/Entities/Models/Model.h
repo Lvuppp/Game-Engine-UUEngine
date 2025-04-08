@@ -4,29 +4,37 @@
 class QOpenGLFunctions;
 class QOpenGLShaderProgram;
 
+#include "ModelParticle.h"
+
 #include <QMatrix4x4>
 
 class cModel
 {
 public:
-    enum class ModelType
-    {
-        SimpleModel,
-        CustomModel,
+    cModel() = default;
+    virtual ~cModel() = default;
 
-        Unknown
-    };
+    using ModelParticle = std::shared_ptr<cModelParticle>;
+    using ModelParticles = std::vector<ModelParticle>;
+    cModel(ModelParticle modelParticles);
+    cModel(ModelParticles modelParticles);
 
-    cModel(ModelType type);
+    void setModel(ModelParticles& modelParticles);
 
-    ModelType modelType();
+    ModelParticle getModelParticle(size_t index) const;
+    ModelParticles getModelParticles() const;
+
+    void setNormalMap(std::string_view path);
+    void setDiffuseMap(std::string_view path);
+
+    inline void setNormalMap(std::string_view path, size_t index);
+    inline void setDiffuseMap(std::string_view path, size_t index);
 
 public:
-    virtual ~cModel() = default;
-    virtual void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram* shaderProgram, bool isUsingTexture, QOpenGLFunctions* functions) = 0;
+    virtual void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram* shaderProgram, bool isUsingTexture, QOpenGLFunctions* functions);
 
-protected:
-    ModelType p_modelType = ModelType::Unknown;
+private:
+    ModelParticles m_modelParticles;
 };
 
 #endif // MODEL_H

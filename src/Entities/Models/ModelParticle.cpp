@@ -1,51 +1,57 @@
 #include "ModelParticle.h"
 
-cModelParticle::cModelParticle(): m_diffuseMap(0),m_normalMap(0)
+#include "QOpenGLFunctions"
+#include "QOpenGLTexture"
+#include "QOpenGLShaderProgram"
+
+cModelParticle::cModelParticle()
+    : m_diffuseMap(nullptr)
+    , m_normalMap(nullptr)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 }
 
 cModelParticle::~cModelParticle()
 {
-    if(m_vertexes.isCreated())
+    if (m_vertexes.isCreated())
+    {
         m_vertexes.destroy();
+    }
 
-    if(m_indexes.isCreated())
+    if (m_indexes.isCreated())
+    {
         m_indexes.destroy();
-
-    if(m_diffuseMap != 0)
-        if(m_diffuseMap->isCreated())
-            delete m_diffuseMap;
-
-    if(m_normalMap != 0)
-        if(m_normalMap->isCreated())
-            delete m_normalMap;
-
-    delete m_material;
-
+    }
 }
 
-cModelParticle::cModelParticle(QVector<sVertexData> &vertexes,QVector<GLuint> &indexes, cMaterial *material): m_diffuseMap(0),m_normalMap(0)
+cModelParticle::cModelParticle(Vertexes& vertexes, Indexes& indexes, cMaterial* material)
+    : m_diffuseMap(nullptr)
+    , m_normalMap(nullptr)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     initModelParticle(vertexes,indexes, material);
+    setMaterial(material);
 }
 
-void cModelParticle::initModelParticle(QVector<sVertexData> &vertexes, QVector<GLuint> &indexes, cMaterial *material)
+void cModelParticle::initModelParticle(Vertexes& vertexes, Indexes& indexes, cMaterial* material)
 {
-    if(vertexes.size() == 0){
+    if (vertexes.size() == 0)
+    {
         return;
     }
 
-    if(indexes.size() == 0){
+    if (indexes.size() == 0)
+    {
         return;
     }
 
-    if(m_vertexes.isCreated()){
+    if (m_vertexes.isCreated())
+    {
         m_vertexes.destroy();
     }
 
-    if(m_indexes.isCreated()){
+    if (m_indexes.isCreated())
+    {
         m_indexes.destroy();
     }
 
@@ -54,35 +60,27 @@ void cModelParticle::initModelParticle(QVector<sVertexData> &vertexes, QVector<G
 
     m_vertexes.create();
     m_vertexes.bind();
-    m_vertexes.allocate(vertexes.constData(), vertexes.size() * sizeof(sVertexData));
+    m_vertexes.allocate(vertexes.data(), vertexes.size() * sizeof(sVertexData));
     m_vertexes.release();
 
     m_indexes.create();
     m_indexes.bind();
-    m_indexes.allocate(indexes.constData(), indexes.size() * sizeof(GLuint));
+    m_indexes.allocate(indexes.data(), indexes.size() * sizeof(GLuint));
     m_indexes.release();
-
-
-    m_material = material;
-
-    if(m_material->isDiffuseMapSet()){
-        setDiffuseMap(m_material->diffuseMapPath());
-    }
-
-    if(m_material->isNormalMapSet()){
-        setNormalMap(m_material->normalMapPath());
-    }
 }
 
 void cModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions)
 {
-    if(isUsingTexture){
-        if(m_material->isDiffuseMapSet()){
+    if (isUsingTexture)
+    {
+        if (m_material->isDiffuseMapSet())
+        {
             m_diffuseMap->bind(0);
             shaderProgram->setUniformValue("u_model.diffuseMap", 0);
         }
 
-        if(m_material->isNormalMapSet()){
+        if (m_material->isNormalMapSet())
+        {
             m_normalMap->bind(1);
             shaderProgram->setUniformValue("u_model.normalMap", 1);
         }
@@ -97,32 +95,32 @@ void cModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLSha
     shaderProgram->setUniformValue("u_model.shinnes", m_material->shinnes());
 
     m_vertexes.bind();
-    int offset = 0;
-    int vertLoc = shaderProgram->attributeLocation("a_position");
+    size_t offset = 0u;
+    size_t vertLoc = shaderProgram->attributeLocation("a_position");
 
     shaderProgram->enableAttributeArray(vertLoc);
     shaderProgram->setAttributeBuffer(vertLoc, GL_FLOAT, offset, 3, sizeof(sVertexData));
 
     offset += sizeof(QVector3D);
-    int textLoc = shaderProgram->attributeLocation("a_texcoord");
+    size_t textureCoordinations = shaderProgram->attributeLocation("a_texcoord");
 
-    shaderProgram->enableAttributeArray(textLoc);
-    shaderProgram->setAttributeBuffer(textLoc, GL_FLOAT, offset, 2, sizeof(sVertexData));
+    shaderProgram->enableAttributeArray(textureCoordinations);
+    shaderProgram->setAttributeBuffer(textureCoordinations, GL_FLOAT, offset, 2, sizeof(sVertexData));
 
     offset += sizeof(QVector2D);
-    int normLoc = shaderProgram->attributeLocation("a_normal");
+    size_t normLoc = shaderProgram->attributeLocation("a_normal");
 
     shaderProgram->enableAttributeArray(normLoc);
     shaderProgram->setAttributeBuffer(normLoc, GL_FLOAT, offset, 3, sizeof(sVertexData));
 
     offset += sizeof(QVector3D);
-    int tanLoc = shaderProgram->attributeLocation("a_tangent");
+    size_t tanLoc = shaderProgram->attributeLocation("a_tangent");
 
     shaderProgram->enableAttributeArray(tanLoc);
     shaderProgram->setAttributeBuffer(tanLoc, GL_FLOAT, offset, 3, sizeof(sVertexData));
 
     offset += sizeof(QVector3D);
-    int bitanLoc = shaderProgram->attributeLocation("a_bitangent");
+    size_t bitanLoc = shaderProgram->attributeLocation("a_bitangent");
 
     shaderProgram->enableAttributeArray(bitanLoc);
     shaderProgram->setAttributeBuffer(bitanLoc, GL_FLOAT, offset, 3, sizeof(sVertexData));
@@ -134,25 +132,29 @@ void cModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLSha
     m_vertexes.release();
     m_indexes.release();
 
-    if(isUsingTexture){
-        if(m_material->isDiffuseMapSet()) {
+    if(isUsingTexture)
+    {
+        if (m_material->isDiffuseMapSet())
+        {
             m_diffuseMap->release();
         }
-        if(m_material->isNormalMapSet()) {
+
+        if (m_material->isNormalMapSet())
+        {
             m_normalMap->release();
         }
     }
 }
 
-QVector<sVertexData> cModelParticle::vertexesData() const
+const cModelParticle::Vertexes& cModelParticle::vertexesData() const
 {
     return m_vertexesData;
 }
 
-void cModelParticle::calculateTBN(QVector<sVertexData> &vertexes)
+void cModelParticle::calculateTBN(Vertexes& vertexes)
 {
-
-    for (int i = 0; i < vertexes.size(); i += 3) {
+    for (auto i = 0u; i < vertexes.size(); i += 3u)
+    {
         QVector3D &v1 = vertexes[i].position;
         QVector3D &v2 = vertexes[i + 1].position;
         QVector3D &v3 = vertexes[i + 2].position;
@@ -183,20 +185,20 @@ void cModelParticle::calculateTBN(QVector<sVertexData> &vertexes)
 
 }
 
-void cModelParticle::setDiffuseMap(const QString &texture)
+void cModelParticle::setDiffuseMap(std::string_view texture)
 {
-    m_material->setDiffuseMap(texture);
-    m_diffuseMap = new QOpenGLTexture(m_material->diffuseMap().mirrored());
+    m_material->setDiffuseMap(texture.data());
+    m_diffuseMap.reset(new QOpenGLTexture(m_material->diffuseMap().mirrored()));
 
     m_diffuseMap->setMinificationFilter(QOpenGLTexture::Nearest);
     m_diffuseMap->setMinificationFilter(QOpenGLTexture::Linear);
     m_diffuseMap->setWrapMode(QOpenGLTexture::Repeat);
 }
 
-void cModelParticle::setNormalMap(const QString &texture)
+void cModelParticle::setNormalMap(std::string_view texture)
 {
-    m_material->setNormalMap(texture);
-    m_normalMap = new QOpenGLTexture(m_material->normalMap().mirrored());
+    m_material->setNormalMap(texture.data());
+    m_normalMap.reset(new QOpenGLTexture(m_material->normalMap().mirrored()));
 
     m_normalMap->setMinificationFilter(QOpenGLTexture::Nearest);
     m_normalMap->setMinificationFilter(QOpenGLTexture::Linear);
@@ -204,20 +206,22 @@ void cModelParticle::setNormalMap(const QString &texture)
 
 }
 
-cMaterial *cModelParticle::material() const
+cMaterial *cModelParticle::getMaterial() const
 {
-    return m_material;
+    return m_material.get();
 }
 
-void cModelParticle::setMaterial(cMaterial *newMaterial)
+void cModelParticle::setMaterial(cMaterial* material)
 {
-    m_material = newMaterial;
+    m_material.reset(material);
 
-    if(m_material->isDiffuseMapSet()){
+    if (m_material->isDiffuseMapSet())
+    {
         setDiffuseMap(m_material->diffuseMapPath());
     }
 
-    if(m_material->isNormalMapSet()){
+    if (m_material->isNormalMapSet())
+    {
         setNormalMap(m_material->normalMapPath());
     }
 }

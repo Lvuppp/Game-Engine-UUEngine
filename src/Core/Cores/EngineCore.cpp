@@ -28,6 +28,14 @@ cEngineCore *cEngineCore::getInstance()
     return m_instance;
 }
 
+void cEngineCore::update(float dt)
+{
+}
+
+void cEngineCore::render()
+{
+}
+
 ////////////////////////////////////////////////////Graphics Engine
 void cEngineCore::resizeScene(int w, int h)
 {
@@ -106,22 +114,17 @@ void cEngineCore::deleteObject(const QString &objectName)
 
 void cEngineCore::setNormalTexture(const QString &objectName, const QString &path)
 {
-    auto model = dynamic_cast<cSimpleModel *>(getCurrentScene()->gameObject(objectName)->model());
+    auto model = getCurrentScene()->gameObject(objectName)->model();
 
-    if(model->modelType() == cModel::ModelType::CustomModel) return;
-
-    model->modelParticle()->setNormalMap(path);
+    model->setNormalMap(path.toStdString());
     loadTexture(objectName, path);
 }
 
 void cEngineCore::setDiffuseTexture(const QString &objectName, const QString &path)
 {
 
-    auto model = dynamic_cast<cSimpleModel *>(getCurrentScene()->gameObject(objectName)->model());
-
-    if(model->modelType() == cModel::ModelType::CustomModel) return;
-
-    model->modelParticle()->setDiffuseMap(path);
+    auto model = getCurrentScene()->gameObject(objectName)->model();
+    model->setDiffuseMap(path.toStdString());
     loadTexture(objectName, path);
 }
 

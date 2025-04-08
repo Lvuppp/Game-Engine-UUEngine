@@ -1,7 +1,7 @@
 #ifndef GRAPHICSENGINE_H
 #define GRAPHICSENGINE_H
 
-#include "Scene.h"
+#include "Entities/Scene.h"
 
 #include <QtOpenGL>
 #include <GL/gl.h>
@@ -69,5 +69,4 @@ private:
     bool m_gameStatus;
     static cGraphicsEngine* m_instance;
 };
-
 #endif // GRAPHICSENGINE_H

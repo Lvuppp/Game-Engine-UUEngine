@@ -1,6 +1,7 @@
 #include "ScriptEngine.h"
-#include "Services/Projectinfo.h"
+#include "Core/Services/Projectinfo.h"
 
+#include <QLibrary>
 
 cScriptEngine *cScriptEngine::m_instance = nullptr;
 
@@ -84,4 +85,3 @@ cScriptEngine::cScriptEngine() : m_gameStatus(false)
     m_scriptsFolder = cScriptFolder::getInstance();
     m_sceneFolder = cSceneFolder::getInstance();
 }
-

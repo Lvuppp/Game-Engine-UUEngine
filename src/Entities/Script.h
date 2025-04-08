@@ -2,7 +2,10 @@
 #define SCRIPT_H
 
 #include "BaseEntities/BaseEngineObject.h"
+
+#include <QMutex>
 #include <QRunnable>
+#include <QThread>
 
 using UpdateFunction = void (*)(cBaseEngineObject *);
 

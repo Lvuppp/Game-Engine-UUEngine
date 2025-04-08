@@ -31,11 +31,13 @@ void cMainWindowViewModel::processProject()
 
     }
 
-    else if(action->text() == "Save"){
+    else if(action->text() == "Save")
+    {
         m_engine->saveProject();
 
     }
-    else if(action->text() == "Save as"){
+    else if(action->text() == "Save as")
+    {
         cProjectCreator *projectCreator = new cProjectCreator();
 
         connect(projectCreator, &cProjectCreator::getFolderPath, this, [this](QString path){
@@ -48,7 +50,8 @@ void cMainWindowViewModel::processProject()
         delete projectCreator;
 
     }
-    else if(action->text() == "Close"){
+    else if(action->text() == "Close")
+    {
         m_engine->closeProject();
     }
 

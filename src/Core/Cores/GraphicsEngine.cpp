@@ -2,6 +2,8 @@
 
 #include <QOpenGLFunctions>
 
+#include <iostream>
+
 cGraphicsEngine* cGraphicsEngine::m_instance = nullptr;
 
 cGraphicsEngine::cGraphicsEngine() : m_gameStatus(false)
@@ -67,7 +69,7 @@ void cGraphicsEngine::paintScene()
     m_depthShaderProgram.setUniformValue("u_shadowLightMatrix", m_shadowLightMatrix);
 
     for (auto object : m_currentScene->gameObjects()) {
-        object->draw(&m_depthShaderProgram,this->currentContext()->functions());
+        object->draw(&m_depthShaderProgram, currentContext()->functions(), false);
     }
 
     m_depthShaderProgram.release();
@@ -84,10 +86,11 @@ void cGraphicsEngine::paintScene()
     m_skyBoxShaderProgram.bind();
 
     m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
-    currentCamera->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
+    currentCamera->draw(&m_skyBoxShaderProgram, currentContext()->functions(), false);
 
-    if(m_currentScene->skybox()){
-        m_currentScene->skybox()->draw(&m_skyBoxShaderProgram,this->currentContext()->functions());
+    if (m_currentScene->skybox())
+    {
+        m_currentScene->skybox()->draw(&m_skyBoxShaderProgram, currentContext()->functions(), true);
     }
 
     m_skyBoxShaderProgram.release();
@@ -107,10 +110,10 @@ void cGraphicsEngine::paintScene()
     m_sceneShaderProgram.setUniformValue("u_lightPower", 1.0f); // сила свечения
 
 
-    currentCamera->draw(&m_sceneShaderProgram,this->currentContext()->functions());
+    currentCamera->draw(&m_sceneShaderProgram, currentContext()->functions(), false);
 
     for (auto object : m_currentScene->gameObjects()) {
-        object->draw(&m_sceneShaderProgram,this->currentContext()->functions());
+        object->draw(&m_sceneShaderProgram, currentContext()->functions(), true);
     }
 
     m_sceneShaderProgram.release();
@@ -138,12 +141,12 @@ cBaseEngineObject *cGraphicsEngine::selectObject(const QPoint &mouseCoordinates)
 
     m_selectShaderProgram.bind();
     m_selectShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);;
-    m_engineCamera->draw(&m_selectShaderProgram);
+    m_engineCamera->draw(&m_selectShaderProgram, nullptr, false);
 
     for (qsizetype i = 0; i < m_currentScene->gameObjects().size(); ++i) {
 
         m_selectShaderProgram.setUniformValue("u_code", float(i + 1)); //i + 1 чтоб не совпадал с цветом фона (чёрный)
-        m_currentScene->gameObjects().at(i)->draw(&m_selectShaderProgram, this->currentContext()->functions(), false);
+        m_currentScene->gameObjects().at(i)->draw(&m_selectShaderProgram, currentContext()->functions(), false);
     }
 
     m_selectShaderProgram.release();
@@ -165,7 +168,7 @@ cBaseEngineObject *cGraphicsEngine::selectObject(const QPoint &mouseCoordinates)
 
 void cGraphicsEngine::initShaders()
 {
-    qDebug() << "Start initialize shaders";
+    std::cout << "Start initialize shaders";
 
     try {
         m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vshader.vsh");

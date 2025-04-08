@@ -1,14 +1,14 @@
 #ifndef ENGINECORE_H
 #define ENGINECORE_H
 
-#include "GraphicsEngine.h"
-#include "PhysicsEngine.h"
-#include "ScriptEngine.h"
-#include "InputEngine.h"
-#include "SceneFolder.h"
-#include "Services/ModelLoader.h"
-#include "Services/ModelBuilder.h"
-#include "Services/ProjectProcessor.h"
+#include "Core/Cores/GraphicsEngine.h"
+#include "Core/Cores/PhysicsEngine.h"
+#include "Core/Cores/ScriptEngine.h"
+#include "Core/Cores/InputEngine.h"
+#include "Core/Services/ModelLoader.h"
+#include "Core/Services/ModelBuilder.h"
+#include "Core/Services/ProjectProcessor.h"
+#include "Entities/SceneFolder.h"
 
 #include <QVBoxLayout>
 //#include"camera.h"
@@ -27,6 +27,8 @@ public:
 
     static cEngineCore *getInstance();
 
+    void update(float dt);
+    void render();
 //graphics engine part
 public:
     void paintScene();

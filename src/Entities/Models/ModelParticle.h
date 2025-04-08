@@ -1,35 +1,43 @@
 #ifndef MODELPARTICLE_H
 #define MODELPARTICLE_H
 
-#include "Material.h"
-#include "VertexData.h"
+#include "Entities/Material.h"
+#include "Entities/VertexData.h"
+#include <QOpenGLBuffer>
+#include <QOpenGLTexture>
 
-#include <QtOpenGL>
+class QOpenGLFunctions;
+class QOpenGLShaderProgram;
 
 class cModelParticle
 {
 public:
     cModelParticle();
+
+    using Vertexes = std::vector<sVertexData>;
+    using Indexes = std::vector<GLuint>;
+    cModelParticle(Vertexes& vertexes, Indexes& indexes, cMaterial* material);
+
     ~cModelParticle();
-    cModelParticle(QVector<sVertexData> &vertexes, QVector<GLuint> &indexes, cMaterial *material);
 
-    void initModelParticle(QVector<sVertexData> &vertexes, QVector<GLuint> &indexes, cMaterial *material);
-    void calculateTBN(QVector<sVertexData> &vertexes);
-    void drawModelParticle(const QMatrix4x4 &modelParticleMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions = nullptr);
-    QVector<sVertexData> vertexesData() const;
+    void initModelParticle(Vertexes& vertexes, Indexes& indexes, cMaterial* material);
+    void calculateTBN(Vertexes& vertexes);
+    void drawModelParticle(const QMatrix4x4& modelMatrix, QOpenGLShaderProgram* shaderProgram, bool isUsingTexture, QOpenGLFunctions* functions);
 
-    void setDiffuseMap(const QString &texture);
-    void setNormalMap(const QString &texture);
-    cMaterial *material() const;
-    void setMaterial(cMaterial *newMaterial);
+    void setDiffuseMap(std::string_view texture);
+    void setNormalMap(std::string_view texture);
+    void setMaterial(cMaterial* material);
+
+    const Vertexes& vertexesData() const;
+    cMaterial* getMaterial() const;
 
 private:
-    QVector<sVertexData> m_vertexesData;
+    Vertexes m_vertexesData;
     QOpenGLBuffer m_vertexes;
     QOpenGLBuffer m_indexes;
-    QOpenGLTexture *m_diffuseMap;
-    QOpenGLTexture *m_normalMap;
-    cMaterial *m_material;
-};
 
+    std::unique_ptr<QOpenGLTexture> m_diffuseMap;
+    std::unique_ptr<QOpenGLTexture> m_normalMap;
+    std::unique_ptr<cMaterial> m_material;
+};
 #endif // MODELPARTICLE_H

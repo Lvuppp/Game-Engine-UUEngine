@@ -1,7 +1,7 @@
 #ifndef SCRIPTFOLDER_H
 #define SCRIPTFOLDER_H
 
-#include "BaseEntities/BaseEngineObject.h"
+#include "Entities/BaseEntities/BaseEngineObject.h"
 
 #include <QPair>
 #include <QHash>
@@ -27,5 +27,4 @@ private:
 
     static cScriptFolder *m_instance;
 };
-
 #endif // SCRIPTFOLDER_H

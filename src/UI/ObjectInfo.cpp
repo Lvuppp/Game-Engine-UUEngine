@@ -41,10 +41,10 @@ void cObjectInfo::setObject(const QString &objectName, cBase3DGameObject **objec
 
     ui->scriptsLabel->setText(m_engine->getScripts(m_objectName).join(' '));
 
-    if(m_currentObject->objectType() == ObjectType::GameObject &&
-        (*object)->model()->modelType() == cModel::ModelType::SimpleModel){
-        loadSpecificParams();
-    }
+    // if(m_currentObject->objectType() == ObjectType::GameObject &&
+    //     (*object)->model()->modelType() == cModel::ModelType::SimpleModel){
+    //     loadSpecificParams();
+    // }
 
 
     emit updateWindow();

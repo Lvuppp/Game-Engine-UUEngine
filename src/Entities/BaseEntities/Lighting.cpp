@@ -1,20 +1,23 @@
 #include "Lighting.h"
 
+#include "QOpenGLShaderProgram"
 
-cLighting::cLighting() : cBaseEngineObject() , m_lightPower(5.0f), m_isLightingDynamic(false)
+cLighting::cLighting()
+    : cBaseEngineObject()
+    , m_lightPower(5.0f)
+    , m_isLightingDynamic(false)
 {
-    m_objectType = ObjectType::Lighting;
 }
 
-cLighting::~cLighting()
+cBaseEngineObject::ObjectType cLighting::objectType() const
 {
-
+    return cBaseEngineObject::ObjectType::Lighting;
 }
 
-void cLighting::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture)
+void cLighting::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* /*functions*/, bool /*isUsingTexture*/)
 {
-    shaderProgram->setUniformValue("u_isDrawDynamic", m_isLightingDynamic);// освещение динамическое или статическое
-    shaderProgram->setUniformValue("u_eyePosition", QVector4D(coordinates(), 1.0f)); // позиция наблюдателя
-    shaderProgram->setUniformValue("u_lightPosition", QVector4D(0.0,0.0,0.0,1.0)); // позиция источника света
-    shaderProgram->setUniformValue("u_lightPower", m_lightPower); // сила свечения
+    shaderProgram->setUniformValue("u_isDrawDynamic", m_isLightingDynamic);
+    shaderProgram->setUniformValue("u_eyePosition", QVector4D(m_coordinates, 1.0f));
+    shaderProgram->setUniformValue("u_lightPosition", QVector4D(0.0f,0.0f,0.0f,1.0f));
+    shaderProgram->setUniformValue("u_lightPower", m_lightPower);
 }

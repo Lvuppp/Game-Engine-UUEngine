@@ -1,17 +1,13 @@
 #include "Camera.h"
 
-cCamera::cCamera() :
-    cBaseEngineObject()
+#include "QOpenGLShaderProgram"
+
+cBaseEngineObject::ObjectType cCamera::objectType() const
 {
-    m_objectType = ObjectType::Camera;
+    return cBaseEngineObject::ObjectType::Camera;
 }
 
-cCamera::~cCamera()
+void cCamera::draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* /*functions*/, bool /*isUsingTexture*/)
 {
-
-
-}
-void cCamera::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture)
-{
-    shaderProgram->setUniformValue("u_viewMatrix", this->modelMatrix());
+    shaderProgram->setUniformValue("u_viewMatrix", m_modelMatrix);
 }

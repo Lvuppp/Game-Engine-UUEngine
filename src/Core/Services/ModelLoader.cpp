@@ -1,31 +1,12 @@
 #include "ModelLoader.h"
 
-#include "Models/ModelParticle.h"
-#include "Models/CustomModel.h"
-#include "VertexData.h"
-#include "Services/Projectinfo.h"
+#include "Core/Folders/ModelFolder.h"
+#include "Entities/Models/ModelParticle.h"
+#include "Entities/VertexData.h"
+#include "Core/Services/Projectinfo.h"
 
-ModelAbstractFactory::ModelAbstractFactory()
-{
 
-}
-
-ModelAbstractFactory::~ModelAbstractFactory()
-{
-
-}
-
-OBJModelFactory::OBJModelFactory() : ModelAbstractFactory()
-{
-
-}
-
-OBJModelFactory::~OBJModelFactory()
-{
-
-}
-
-cCustomModel* OBJModelFactory::createModel(const QString &filePath)
+cModel* OBJModelFactory::createModel(const QString &filePath)
 {
     QFile objFile(filePath);
 
@@ -33,13 +14,13 @@ cCustomModel* OBJModelFactory::createModel(const QString &filePath)
     QVector<QVector2D> textureCoordinates;
     QVector<QVector3D> normals;
 
-    QVector<sVertexData> vertexes;
-    QVector<GLuint> indexes;
-    QVector<cModelParticle *> models;
+    cModelParticle::Vertexes vertexes;
+    cModelParticle::Indexes indexes;
+    std::vector<std::shared_ptr<cModelParticle>> models;
 
     if(!objFile.exists()){
         qDebug() << "cant read file";
-        return new cCustomModel(models);
+        return new cModel(models);
     }
 
     objFile.open(QIODevice::ReadOnly);
@@ -64,10 +45,10 @@ cCustomModel* OBJModelFactory::createModel(const QString &filePath)
         else if(split[0] == "f"){
             for (int i = 1; i < split.size(); i++) {
                 auto vertexData = split[i].split("/");
-                vertexes.append(sVertexData(coordinates[vertexData[0].toLong() - 1],
+                vertexes.emplace_back(sVertexData(coordinates[vertexData[0].toLong() - 1],
                                            textureCoordinates[vertexData[1].toLong() - 1],
                                            normals[vertexData[2].toLong() - 1]));
-                indexes.append(indexes.size());
+                indexes.emplace_back(indexes.size());
             }
         }
         else if(split[0] == "mtllib"){
@@ -81,7 +62,7 @@ cCustomModel* OBJModelFactory::createModel(const QString &filePath)
                 continue;
             }
 
-            models.append(new cModelParticle(vertexes,indexes,material));
+            models.emplace_back(std::make_shared<cModelParticle>(vertexes, indexes, material));
 
             material = library.material(split[1]);
             vertexes.clear();
@@ -91,24 +72,14 @@ cCustomModel* OBJModelFactory::createModel(const QString &filePath)
 
     objFile.close();
 
-    models.append(new cModelParticle(vertexes,indexes,material));
+    models.emplace_back(std::make_shared<cModelParticle>(vertexes, indexes, material));
 
-    return new cCustomModel(models);
+    return new cModel(models);
 }
 
-FBXModelFactory::FBXModelFactory() : ModelAbstractFactory()
+cModel* FBXModelFactory::createModel(const QString &filePath)
 {
-
-}
-
-FBXModelFactory::~FBXModelFactory()
-{
-
-}
-
-cCustomModel* FBXModelFactory::createModel(const QString &filePath)
-{
-    return new cCustomModel();
+    return new cModel();
 }
 
 cModelLoader::cModelLoader(ModelAbstractFactory *strategy) : m_factory(strategy)
@@ -124,10 +95,7 @@ void cModelLoader::setFactory(ModelAbstractFactory *strategy)
     m_factory = strategy;
 }
 
-cCustomModel* cModelLoader::createModel(const QString &filePath)
+cModel* cModelLoader::createModel(const QString &filePath)
 {
     return m_factory->createModel(filePath);
 }
-
-
-

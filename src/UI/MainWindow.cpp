@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+ #include "MainWindow.h"
 
 #include "ui_mainWindow.h"
 
@@ -34,22 +34,14 @@ cMainWindow::~cMainWindow()
 
 void cMainWindow::linkConnections()
 {
-    connect(m_objectInfo, &cObjectInfo::updateWindow, this, &cMainWindow::updateWindow);
-    connect(m_viewModel, &cMainWindowViewModel::updateWindow, this, &cMainWindow::updateWindow);
-    connect(m_openGLWidget, &cOpenGLWidgetViewModel::updateWindow, this, &cMainWindow::updateWindow);
     connect(ui->gameStatusButton, &QPushButton::clicked, m_viewModel, &cMainWindowViewModel::changeGameStatus);
 
     auto projectActions = this->menuBar()->actions().at(0)->menu()->actions();
 
-    foreach (auto action, projectActions) {
-        connect(action,&QAction::triggered ,m_viewModel ,&cMainWindowViewModel::processProject);
+    for (const auto& action : projectActions)
+    {
+        connect(action, &QAction::triggered, m_viewModel, &cMainWindowViewModel::processProject);
     }
-}
-
-void cMainWindow::updateWindow()
-{
-    ui->openGLWidget->update();
-    //ui->objectParamsWidget->update();
 }
 
 void cMainWindow::resizeEvent(QResizeEvent *event)

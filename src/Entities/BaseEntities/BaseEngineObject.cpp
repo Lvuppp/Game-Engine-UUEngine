@@ -1,15 +1,11 @@
 #include "BaseEngineObject.h"
 
 cBaseEngineObject::cBaseEngineObject()
+    : m_coordinates(0.0f, 0.0f, 0.0f)
+    , m_scale(1.0f)
+    , m_lock(false)
 {
-    m_coordinates = QVector3D(0.0f, 0.0f, 0.0f);
     m_rotate *= QQuaternion();
-    m_scale = 1.0f;
-    m_lock = false;
-}
-
-cBaseEngineObject::~cBaseEngineObject()
-{
 }
 
 bool cBaseEngineObject::isLocked() const
@@ -79,7 +75,7 @@ void cBaseEngineObject::unlock()
     m_lock = false;
 }
 
-QMatrix4x4 cBaseEngineObject::modelMatrix() const
+QMatrix4x4 cBaseEngineObject::modelMatrix()
 {
     QMatrix4x4 modelMatrix;
     modelMatrix.setToIdentity();
@@ -88,12 +84,9 @@ QMatrix4x4 cBaseEngineObject::modelMatrix() const
     modelMatrix.rotate(m_rotate);
     modelMatrix.scale(m_scale);
 
-    return modelMatrix;
-}
+    m_modelMatrix = modelMatrix;
 
-ObjectType cBaseEngineObject::objectType() const
-{
-    return m_objectType;
+    return modelMatrix;
 }
 
 void cBaseEngineObject::setCoordinates(const QVector3D &coordinates)
@@ -104,4 +97,21 @@ void cBaseEngineObject::setCoordinates(const QVector3D &coordinates)
 void cBaseEngineObject::setScale(float scale)
 {
     m_scale = scale;
+}
+
+void cBaseEngineObject::setRotateX(const QQuaternion &rotation)
+{
+    m_rotateX = rotation;
+    m_rotate = m_rotateX * m_rotateY;
+}
+
+void cBaseEngineObject::setRotateY(const QQuaternion &rotation)
+{
+    m_rotateY = rotation;
+    m_rotate = m_rotateX * m_rotateY;
+}
+
+cBaseEngineObject::ObjectType cBaseEngineObject::objectType() const
+{
+    return cBaseEngineObject::ObjectType::GameObject;
 }

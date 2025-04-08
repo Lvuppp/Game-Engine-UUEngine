@@ -1,8 +1,8 @@
 #ifndef MAINWINDOWVIEWMODEL_H
 #define MAINWINDOWVIEWMODEL_H
 
-#include"Cores/EngineCore.h"
-#include"ProjectCreator.h"
+#include "Core/Cores/EngineCore.h"
+#include "UI/ProjectCreator.h"
 
 #include <QFileDialog>
 

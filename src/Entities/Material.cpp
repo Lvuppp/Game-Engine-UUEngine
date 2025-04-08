@@ -4,19 +4,19 @@ cMaterial::cMaterial() : m_isUsingDiffuseMap(false), m_isUsingNormalMap(false)
 {
 }
 
-void cMaterial::setName(const QString &mtlName)
+void cMaterial::setName(std::string_view mtlName)
 {
     m_mtlName = mtlName;
 }
 
-const QString &cMaterial::mtlName() const
+std::string_view cMaterial::mtlName() const
 {
     return m_mtlName;
 }
 
-void cMaterial::setDiffuseColor(const QVector3D &_diffuseColor)
+void cMaterial::setDiffuseColor(const QVector3D& diffuseColor)
 {
-    m_diffuseColor = _diffuseColor;
+    m_diffuseColor = diffuseColor;
 }
 
 const QVector3D &cMaterial::diffuseColor() const
@@ -24,9 +24,9 @@ const QVector3D &cMaterial::diffuseColor() const
     return m_diffuseColor;
 }
 
-void cMaterial::setAmbienceColor(const QVector3D &_ambienceColor)
+void cMaterial::setAmbienceColor(const QVector3D& ambienceColor)
 {
-    m_ambienceColor = _ambienceColor;
+    m_ambienceColor = ambienceColor;
 }
 
 const QVector3D &cMaterial::ambienceColor() const
@@ -34,9 +34,9 @@ const QVector3D &cMaterial::ambienceColor() const
     return m_ambienceColor;
 }
 
-void cMaterial::setSpecularColor(const QVector3D &_specularColor)
+void cMaterial::setSpecularColor(const QVector3D &specularColor)
 {
-    m_specularColor = _specularColor;
+    m_specularColor = specularColor;
 }
 
 const QVector3D &cMaterial::specularColor() const
@@ -44,9 +44,9 @@ const QVector3D &cMaterial::specularColor() const
     return m_specularColor;
 }
 
-void cMaterial::setShinnes(qreal shinnes)
+void cMaterial::setShinnes(float shinnes)
 {
-    this->m_shinnes = shinnes;
+    m_shinnes = shinnes;
 }
 
 float cMaterial::shinnes() const
@@ -54,10 +54,10 @@ float cMaterial::shinnes() const
     return m_shinnes;
 }
 
-void cMaterial::setDiffuseMap(const QString &path)
+void cMaterial::setDiffuseMap(std::string_view path)
 {
     m_diffuseMapPath = path;
-    m_diffuseMap = QImage(path);
+    m_diffuseMap = QImage(path.data());
     m_isUsingDiffuseMap = true;
 }
 
@@ -71,9 +71,9 @@ bool cMaterial::isDiffuseMapSet() const
     return m_isUsingDiffuseMap;
 }
 
-void cMaterial::setNormalMap(const QString &path)
+void cMaterial::setNormalMap(std::string_view path)
 {
-    m_normalMap = QImage(path);
+    m_normalMap = QImage(path.data());
     m_normalMapPath = path;
     m_isUsingNormalMap = true;
 }
@@ -88,12 +88,12 @@ bool cMaterial::isNormalMapSet() const
     return m_isUsingNormalMap;
 }
 
-QString cMaterial::diffuseMapPath() const
+std::string_view cMaterial::diffuseMapPath() const
 {
     return m_diffuseMapPath;
 }
 
-QString cMaterial::normalMapPath() const
+std::string_view cMaterial::normalMapPath() const
 {
     return m_normalMapPath;
 }

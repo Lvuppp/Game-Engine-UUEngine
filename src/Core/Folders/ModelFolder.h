@@ -1,7 +1,7 @@
 #ifndef MODELFOLDER_H
 #define MODELFOLDER_H
 
-#include "Models/Model.h"
+#include "Entities/Models/Model.h"
 
 #include <QString>
 #include <QHash>
@@ -38,4 +38,3 @@ private:
 };
 
 #endif // MODELFOLDER_H
-

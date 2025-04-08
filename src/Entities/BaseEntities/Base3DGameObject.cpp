@@ -1,30 +1,20 @@
 #include "Base3DGameObject.h"
-#include "Models/Model.h"
+#include "Entities/Models/Model.h"
 
-cBase3DGameObject::cBase3DGameObject(cModel *model) : cBaseEngineObject()
+cBase3DGameObject::cBase3DGameObject(cModel* model)
+    : cBaseEngineObject()
+    , m_model(model)
 {
-    m_model = model;
-    m_objectType = ObjectType::GameObject;
-
 }
 
-cBase3DGameObject::~cBase3DGameObject()
+cModel* cBase3DGameObject::model()
 {
-    if(m_model != nullptr)
-        delete m_model;
+    return m_model.get();
 }
 
-cModel *cBase3DGameObject::model()
+void cBase3DGameObject::setModel(cModel* model)
 {
-    return m_model;
-}
-
-void cBase3DGameObject::setModel(cModel *model)
-{
-    if(m_model != nullptr)
-        delete m_model;
-
-    m_model = model;
+    m_model.reset(model);
 }
 
 void cBase3DGameObject::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture)

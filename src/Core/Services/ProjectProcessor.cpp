@@ -1,7 +1,8 @@
 #include "ProjectProcessor.h"
-#include "Folders/MaterialLib.h"
-#include "Models/CustomModel.h"
-#include "Models/SimpleModel.h"
+#include "Core/Folders/MaterialLib.h"
+
+#include <QDir>
+#include <QRegularExpression>
 
 cProjectProcessor *cProjectProcessor::m_instance = nullptr;
 
@@ -35,7 +36,6 @@ cProjectProcessor::~cProjectProcessor()
 
 void cProjectProcessor::createProject(const QString &path, const QString &name)
 {
-
     QDir dir(path);
     m_projectInfo.m_projectPath = path;
 
@@ -134,9 +134,10 @@ QString cProjectProcessor::saveSkybox(cSkyBox *skybox)
 {
     QString savedObject = " SKYBOX";
 
-    if(skybox){
-        auto objectModel = dynamic_cast<cSimpleModel *>(skybox->model());
-        savedObject += objectModel->modelParticle()->material()->diffuseMapPath();
+    if (skybox != nullptr)
+    {
+        auto objectModel = static_cast<cModel *>(skybox->model());
+        savedObject += objectModel->getModelParticle(0)->getMaterial()->diffuseMapPath();
         savedObject += saveScripts(m_scriptFolder->scripts("Skybox"));
     }
     else{
@@ -212,14 +213,14 @@ QString cProjectProcessor::saveModel(const QString &objectName, cBase3DGameObjec
 {
     QString savedObject;
 
-    if(gameObject->model()->modelType() == cModel::ModelType::CustomModel){
-        return "CUSTOM_MODEL|" + m_modelFolder->model(objectName) + "|";
-    }
-    else{
-        auto simpleModel = dynamic_cast<cSimpleModel *>(gameObject->model());
-        return "SIMPLE_MODEL|" + m_modelFolder->model(objectName) + ",MATERIAL(" +
-               saveMaterial(simpleModel->modelParticle()->material()) + ")|";
-    }
+    // if(gameObject->model()->modelType() == cModel::ModelType::CustomModel){
+    //     return "CUSTOM_MODEL|" + m_modelFolder->model(objectName) + "|";
+    // }
+    // else{
+    //     auto simpleModel = dynamic_cast<cSimpleModel *>(gameObject->model());
+    //     return "SIMPLE_MODEL|" + m_modelFolder->model(objectName) + ",MATERIAL(" +
+    //            saveMaterial(simpleModel->modelParticle()->material()) + ")|";
+    // }
     return savedObject;
 }
 
@@ -230,8 +231,7 @@ QString cProjectProcessor::saveMaterial(cMaterial *material)
     };
 
     return vectorConverter(material->ambienceColor())+
-        vectorConverter(material->diffuseColor()) + vectorConverter(material->specularColor()) +
-        material->diffuseMapPath()+ '$' + material->normalMapPath() + '$' + QString::number(material->shinnes());
+        vectorConverter(material->diffuseColor()) + vectorConverter(material->specularColor()) + material->diffuseMapPath().data() + '$' + material->normalMapPath().data() + '$' + QString::number(material->shinnes());
 
 }
 
@@ -379,7 +379,7 @@ cModel *cProjectProcessor::loadModel(const QString &objectName, const QString &o
         return m_modelLoader.createModel(m_projectInfo.projectFolder() + "/Models/" + modelParams);
     }
 
-    cSimpleModel *model;
+    cModel *model;
 
     QRegularExpression paramsRegex("(\\w*)\\((.*?)\\)");
     QRegularExpressionMatchIterator matchIterator = paramsRegex.globalMatch(modelParams);
@@ -412,11 +412,11 @@ cModel *cProjectProcessor::loadModel(const QString &objectName, const QString &o
         model = m_modelBuilder.createCylinder(modelParams[0].toFloat(),modelParams[1].toFloat(), modelParams[2].toInt());
     }
     else{
-       model = new cSimpleModel();   
+       model = new cModel();
     }
 
     matchObject = matchIterator.next();
-    model->modelParticle()->setMaterial(loadMaterial(objectName, matchObject.captured(2)));
+    model->getModelParticle(0)->setMaterial(loadMaterial(objectName, matchObject.captured(2)));
 
     return model;
 }
@@ -433,12 +433,12 @@ cMaterial *cProjectProcessor::loadMaterial(const QString &objectName, const QStr
 
     if(params[9] != "null"){
        m_textureFolder->append(objectName, params[9]);
-       mat->setDiffuseMap(std::move(params[9]));
+       mat->setDiffuseMap(params[9].toStdString());
     }
 
     if(params[10] != "null"){
        m_textureFolder->append(objectName, params[10]);
-       mat->setNormalMap(std::move(params[10]));
+       mat->setNormalMap(params[10].toStdString());
     }
 
     mat->setShinnes(params[11].toFloat());

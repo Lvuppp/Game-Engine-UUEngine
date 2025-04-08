@@ -1,13 +1,13 @@
 #ifndef PROJECTPROCESSOR_H
 #define PROJECTPROCESSOR_H
 
-#include "Scene.h"
-#include "ModelLoader.h"
-#include "ModelBuilder.h"
-#include "Projectinfo.h"
-#include "Folders/ScriptFolder.h"
-#include "Folders/ModelFolder.h"
-#include "Folders/TextureFolder.h"
+#include "Entities/Scene.h"
+#include "Core/Services/ModelLoader.h"
+#include "Core/Services/ModelBuilder.h"
+#include "Core/Services/Projectinfo.h"
+#include "Core/Folders/ScriptFolder.h"
+#include "Core/Folders/ModelFolder.h"
+#include "Core/Folders/TextureFolder.h"
 
 #include <QString>
 #include <QFile>
@@ -71,6 +71,5 @@ private:
     static cProjectProcessor *m_instance;
 
 };
-
 
 #endif // PROJECTPROCESSOR_H

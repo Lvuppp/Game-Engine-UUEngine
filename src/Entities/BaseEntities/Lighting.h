@@ -1,20 +1,21 @@
 #ifndef LIGHTING_H
 #define LIGHTING_H
 
-#include "BaseEngineObject.h"
+#include "Entities/BaseEntities/BaseEngineObject.h"
 
 class cLighting : public cBaseEngineObject
 {
 public:
     cLighting();
-    ~cLighting();
 
-    void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions = 0,  bool isUsingTexture = true) override;
+public:
+    ObjectType objectType() const override;
+
+    void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions, bool isUsingTexture) override;
 
 private:
-    float m_lightPower;
-    bool m_isLightingDynamic;
-
+    float m_lightPower = 1.0f;
+    bool m_isLightingDynamic = false;
 };
 
 #endif // LIGHTING_H

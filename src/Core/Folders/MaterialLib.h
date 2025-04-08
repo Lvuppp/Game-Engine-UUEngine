@@ -1,7 +1,7 @@
 #ifndef MATERIALLIB_H
 #define MATERIALLIB_H
 
-#include "Material.h"
+#include "Entities/Material.h"
 
 #include <QVector>
 #include <QFile>

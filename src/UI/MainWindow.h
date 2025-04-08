@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "OpenGLWidgetViewModel.h"
-#include "ProjectWidgetViewModel.h"
-#include "MainWindowViewModel.h"
-#include "ObjectInfo.h"
+#include "UI/OpenGLWidgetViewModel.h"
+#include "UI/ProjectWidgetViewModel.h"
+#include "UI/MainWindowViewModel.h"
+#include "UI/ObjectInfo.h"
 
 #include <QMainWindow>
 #include <QResizeEvent>
@@ -23,12 +23,8 @@ public:
 
     void linkConnections();
 
-public slots:
-    void updateWindow();
-
 protected:
     void resizeEvent(QResizeEvent *event) override;
-
 
 private:
     Ui::MainWindow *ui;

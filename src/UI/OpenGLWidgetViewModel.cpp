@@ -9,11 +9,6 @@ cOpenGLWidgetViewModel::cOpenGLWidgetViewModel(QWidget *parent)  : QOpenGLWidget
     linkWithEngine();
 }
 
-cOpenGLWidgetViewModel::~cOpenGLWidgetViewModel()
-{
-    delete m_engine;
-}
-
 void cOpenGLWidgetViewModel::createContextMenu()
 {
     m_contextMenu = new QMenu(this);
@@ -49,18 +44,13 @@ void cOpenGLWidgetViewModel::createContextMenu()
 
     connect(addCustomObjectAction, &QAction::triggered, this, &cOpenGLWidgetViewModel::createObject);
     connect(addCubeAction, &QAction::triggered, this, &cOpenGLWidgetViewModel::createObject);
-    //connect(addPrismAction, &QAction::triggered, this, &cOpenGLWidgetViewModel::createPrism);
-    //connect(addPyramidAction, &QAction::triggered, this, &cOpenGLWidgetViewModel::createPyramid);
     connect(addSphereAction, &QAction::triggered, this, &cOpenGLWidgetViewModel::createObject);
-    //connect(addCylinderAction, &QAction::triggered, this, &cOpenGLWidgetViewModel::createCylinder);
-    //connect(addConeAction, &QAction::triggered, this, &cOpenGLWidgetViewModel::createCone);
 
 }
 
 void cOpenGLWidgetViewModel::linkWithEngine()
 {
     connect(m_engine, &cEngineCore::setDisableState,this, &cOpenGLWidgetViewModel::setDisableState);
-    connect(m_engine, &cEngineCore::updateGraphics,this, &cOpenGLWidgetViewModel::updateGraphics);
 }
 
 void cOpenGLWidgetViewModel::createObject()
@@ -69,13 +59,16 @@ void cOpenGLWidgetViewModel::createObject()
     QString objectName = action->text();
     std::function<bool(QString)> func;
 
-    if(objectName == "Cube"){
+    if(objectName == "Cube")
+    {
         func = [this](QString objectName) -> bool{ return m_engine->createCube(objectName);};
     }
-    else if(objectName == "Sphere"){
+    else if(objectName == "Sphere")
+    {
         func = [this](QString objectName) -> bool{ return m_engine->createSphere(objectName);};
     }
-    else if(objectName == "Custom object"){
+    else if(objectName == "Custom object")
+    {
         auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.obj*)");
 
         if(objectPath.split('/').last().split('.').constLast() == "obj"){
@@ -88,24 +81,18 @@ void cOpenGLWidgetViewModel::createObject()
 
     objectName += '1';
 
-    for (int var = 2; !func(objectName); ++var) {
+    for (int var = 2; !func(objectName); ++var)
+    {
         objectName.chop(1);
         objectName += QString::number(var);
     }
-    emit updateGraphics();
 }
 
 void cOpenGLWidgetViewModel::setSkybox()
 {
-    auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
+    const auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
 
     m_engine->setSkyBox(100.0f,objectPath);
-}
-
-void cOpenGLWidgetViewModel::updateGraphics()
-{
-    update();
-    emit updateWindow();
 }
 
 void cOpenGLWidgetViewModel::setDisableState(bool state)
@@ -117,28 +104,24 @@ void cOpenGLWidgetViewModel::mousePressEvent(QMouseEvent  *event)
 {
     m_engine->mousePressEvent(event);
     event->accept();
-    emit updateWindow();
 }
 
 void cOpenGLWidgetViewModel::mouseMoveEvent(QMouseEvent *event)
 {
     m_engine->mouseMoveEvent(event);
     event->accept();
-    emit updateWindow();
 }
 
 void cOpenGLWidgetViewModel::wheelEvent(QWheelEvent *event)
 {
     m_engine->wheelEvent(event);
     event->accept();
-    emit updateWindow();
 }
 
 void cOpenGLWidgetViewModel::mouseDoubleClickEvent(QMouseEvent *event)
 {
     m_engine->mouseDoubleClickEvent(event);
     event->accept();
-    emit updateWindow();
 }
 
 void cOpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
@@ -146,23 +129,17 @@ void cOpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
     m_contextMenu->exec(event->globalPos());
 }
 
-
 void cOpenGLWidgetViewModel::initializeGL()
 {
     m_engine->initGraphicsEngine();
-    emit updateWindow();
 }
 
 void cOpenGLWidgetViewModel::resizeGL(int w, int h)
 {
     m_engine->resizeScene(w, h);
-    emit updateWindow();
 }
 
 void cOpenGLWidgetViewModel::paintGL()
 {
     m_engine->paintScene();
-    emit updateWindow();
 }
-
-

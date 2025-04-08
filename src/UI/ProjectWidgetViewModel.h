@@ -1,7 +1,7 @@
 #ifndef PROJECTWIDGETVIEWMODEL_H
 #define PROJECTWIDGETVIEWMODEL_H
 
-#include "Cores/EngineCore.h"
+#include "Core/Cores/EngineCore.h"
 
 #include <QVBoxLayout>
 #include <QWidget>

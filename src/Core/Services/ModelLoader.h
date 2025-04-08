@@ -1,28 +1,24 @@
 #ifndef MODELLOADER_H
 #define MODELLOADER_H
 
-#include "Folders/MaterialLib.h"
-#include "Folders/ModelFolder.h"
-#include "Services/Projectinfo.h"
+#include "Core/Folders/MaterialLib.h"
 
-class cCustomModel;
+class cModel;
+class cModelFolder;
 
 class ModelAbstractFactory
 {
 public:
-    ModelAbstractFactory();
-    virtual ~ModelAbstractFactory();
+    virtual ~ModelAbstractFactory() = default;
 
-    virtual cCustomModel* createModel(const QString& filePath) = 0;
+    virtual cModel* createModel(const QString& filePath) = 0;
 
 };
 
 class OBJModelFactory : public ModelAbstractFactory
 {
 public:
-    OBJModelFactory();
-    ~OBJModelFactory();
-    cCustomModel*  createModel(const QString& filePath) override;
+    cModel* createModel(const QString& filePath) override;
 
 private:
     cMaterialLibrary library;
@@ -31,9 +27,7 @@ private:
 class FBXModelFactory : public ModelAbstractFactory
 {
 public:
-    FBXModelFactory();
-    ~FBXModelFactory();
-    cCustomModel*  createModel(const QString& filePath) override;
+    cModel* createModel(const QString& filePath) override;
 
 private:
     cMaterialLibrary library;
@@ -44,11 +38,10 @@ public:
     explicit cModelLoader(ModelAbstractFactory* strategy = nullptr);
 
     void setFactory(ModelAbstractFactory *strategy);
-    cCustomModel* createModel(const QString& filePath);
+    cModel* createModel(const QString& filePath);
 
 private:
     ModelAbstractFactory *m_factory;
     cModelFolder *m_modelFolder;
 };
-
 #endif // OBJECTABSTRACTFACTORY_H

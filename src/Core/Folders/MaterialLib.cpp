@@ -1,6 +1,6 @@
 #include "MaterialLib.h"
 
-#include "Services/Projectinfo.h"
+#include "Core/Services/Projectinfo.h"
 
 cMaterialLibrary::cMaterialLibrary()
 {
@@ -48,7 +48,7 @@ void cMaterialLibrary::loadMaterialsFromFile(const QString &path)
             addMaterial(newMtl);
 
             newMtl = new cMaterial;
-            newMtl->setName(std::move(list[1]));
+            newMtl->setName(list[1].toStdString());
         }
         else if (list[0] == "Ns"){
             newMtl->setShinnes(list[1].toFloat());
@@ -63,11 +63,11 @@ void cMaterialLibrary::loadMaterialsFromFile(const QString &path)
             newMtl->setSpecularColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
         }
         else if (list[0] == "map_Kd"){
-            newMtl->setDiffuseMap(std::move(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1]))));
+            newMtl->setDiffuseMap((QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])).toStdString()));
             cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])));
         }
         else if (list[0] == "map_Bump"){
-            newMtl->setNormalMap(std::move(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1]))));
+            newMtl->setNormalMap(((QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])))).toStdString());
             cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])));
         }
     }

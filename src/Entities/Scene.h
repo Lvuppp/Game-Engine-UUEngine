@@ -24,7 +24,7 @@ public:
     bool deleteLighting(const QString &name);
     bool deleteCamera(const QString &name);
 
-    bool setSkybox(cSimpleModel *model);
+    bool setSkybox(cModel *model);
     void setCurrentCamera(const QString &name);
     //void addPhysicsObject();
 

@@ -76,7 +76,7 @@ bool cScene::deleteCamera(const QString &name)
     return m_lightings.remove(name);
 }
 
-bool cScene::setSkybox(cSimpleModel *model)
+bool cScene::setSkybox(cModel *model)
 {
     m_skybox = new cSkyBox(model);
     return true;
@@ -142,4 +142,3 @@ void cScene::setCurrentCamera(const QString &name)
 {
     m_currentCamera = m_cameras.value(name);
 }
-

@@ -1,8 +1,8 @@
 #ifndef OBJECTINFO_H
 #define OBJECTINFO_H
 
-#include "BaseEntities/BaseEngineObject.h"
-#include "Cores/EngineCore.h"
+#include "Entities/BaseEntities/BaseEngineObject.h"
+#include "Core/Cores/EngineCore.h"
 
 #include <QWidget>
 #include <QFileDialog>

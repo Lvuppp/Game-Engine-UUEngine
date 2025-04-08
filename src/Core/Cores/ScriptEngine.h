@@ -1,10 +1,12 @@
 #ifndef SCRIPTENGINE_H
 #define SCRIPTENGINE_H
 
-#include "Scene.h"
-#include "Folders/ScriptFolder.h"
-#include "SceneFolder.h"
-#include "Script.h"
+#include "Entities/Scene.h"
+#include "Core/Folders/ScriptFolder.h"
+#include "Entities/SceneFolder.h"
+#include "Entities/Script.h"
+#include <QLibrary>
+
 
 #include <QDir>
 //#include <dlfcn.h>
