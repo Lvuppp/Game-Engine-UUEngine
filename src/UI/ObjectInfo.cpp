@@ -1,15 +1,19 @@
 #include "ObjectInfo.h"
 #include "ui_objectInfo.h"
 
+#include "Utils/TextUtils.h"
+
+#include <sstream>
+#include <iterator>
+
 cObjectInfo::cObjectInfo(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ObjectInfo)
 {
     ui->setupUi(this);
-    m_engine = cEngineCore::getInstance();
+    //m_engine = cEngineCore::getInstance();
 
     connect(m_engine, &cEngineCore::emitObject, this , &cObjectInfo::setObject);
-
 }
 
 cObjectInfo::~cObjectInfo()
@@ -17,7 +21,7 @@ cObjectInfo::~cObjectInfo()
     delete ui;
 }
 
-void cObjectInfo::setObject(const QString &objectName, cBase3DGameObject **object)
+void cObjectInfo::setObject(const std::string &objectName, cBase3DGameObject **object)
 {
     if(object == nullptr) return;
 
@@ -39,7 +43,7 @@ void cObjectInfo::setObject(const QString &objectName, cBase3DGameObject **objec
 
     ui->scaleLineEdit->setText(QString::number(m_currentObject->scale()));
 
-    ui->scriptsLabel->setText(m_engine->getScripts(m_objectName).join(' '));
+    setScriptsLabel();
 
     // if(m_currentObject->objectType() == ObjectType::GameObject &&
     //     (*object)->model()->modelType() == cModel::ModelType::SimpleModel){
@@ -50,12 +54,23 @@ void cObjectInfo::setObject(const QString &objectName, cBase3DGameObject **objec
     emit updateWindow();
 }
 
+void cObjectInfo::updateCoordinates(const QVector3D &coords)
+{
+    ui->xCoordLineEdit->setText(QString::number(coords.x()));
+    ui->yCoordLineEdit->setText(QString::number(coords.y()));
+    ui->zCoordLineEdit->setText(QString::number(coords.z()));
+}
+
+void cObjectInfo::setScriptsLabel() {
+    auto scripts = m_engine->getScripts(m_objectName);
+    ui->scriptsLabel->setText(QString::fromStdString(text_utils::join(scripts, ' ')));
+}
 
 void cObjectInfo::loadSpecificParams()
 {
     QLayout *layout = new QVBoxLayout();
 
-    auto model = m_engine->getModel(m_objectName);
+    auto model = QString::fromStdString(m_engine->getModel(m_objectName));
 
     QRegularExpression paramsRegex("(\\w*)\\((.*?)\\)");
     QRegularExpressionMatchIterator matchIterator = paramsRegex.globalMatch(model);
@@ -136,13 +151,13 @@ void cObjectInfo::loadSpecificParams()
     connect(diffuseTextureButton, &QPushButton::clicked, [this](){
         auto imagePath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
         if(imagePath == "") return;
-        m_engine->setDiffuseTexture(m_objectName, imagePath);
+        onDiffuseTextureSet(imagePath);
     });
 
     connect(normalTextureButton, &QPushButton::clicked, [this](){
         auto imagePath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
         if(imagePath == "") return;
-        m_engine->setNormalTexture(m_objectName, imagePath);
+        onNormalTextureSet(imagePath);
     });
 
     layout->addWidget(diffuseTextureButton);
@@ -152,6 +167,17 @@ void cObjectInfo::loadSpecificParams()
 
 }
 
+void cObjectInfo::onDiffuseTextureSet(const QString &imagePath) {
+    m_engine->setDiffuseTexture(m_objectName, imagePath.toStdString());
+}
+
+void cObjectInfo::onNormalTextureSet(const QString &imagePath) {
+    m_engine->setNormalTexture(m_objectName, imagePath.toStdString());
+}
+
+void cObjectInfo::onScriptLoad(const QString &path) {
+    m_engine->loadScript(m_objectName, path.toStdString());
+}
 
 void cObjectInfo::on_yCoordLineEdit_editingFinished()
 {
@@ -167,7 +193,7 @@ void cObjectInfo::on_yCoordLineEdit_editingFinished()
 void cObjectInfo::on_addScriptButton_clicked()
 {
     auto path = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.so*)");
-    m_engine->loadScript(m_objectName, path);
+    onScriptLoad(path);
 }
 
 

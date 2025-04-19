@@ -3,38 +3,29 @@
 
 #include "Entities/Models/Model.h"
 
-#include <QString>
+#include <string>
 #include <QHash>
 #include <QPair>
 
-
-// Хранит в себе либо параметры модели, либо название самой модели в папке проекта Models
-// по факту этот класс используется только для работы конекретно с проектом и его структурой
 class cModelFolder
 {
 public:
-    void append(const QString &objectName, const QString &modelName);
-    void remove(const QString &objectName);
-    void replace(const QString &objectName, const QString &modelName);
-
-    QString model(const QString &name) const;
-    void clearFolder();
-
-public:
-    static cModelFolder *getInstance();
-
-private:
-    QHash<QString, QString>  m_modelsFolder;
-
-private:
-    cModelFolder();
-    ~cModelFolder();
+    cModelFolder() = default;
+    ~cModelFolder() = default;
 
     cModelFolder(const cModelFolder&) = delete;
     cModelFolder& operator=(const cModelFolder&) = delete;
 
-    static cModelFolder *m_instance;
+    void append(const std::string &objectName, const std::string &modelName);
+    void remove(const std::string &objectName);
+    void replace(const std::string &objectName, const std::string &modelName);
 
+    std::string model(const std::string &name) const;
+
+    void clearFolder();
+
+private:
+    std::unordered_map<std::string, std::string>  m_modelsFolder;
 };
 
 #endif // MODELFOLDER_H

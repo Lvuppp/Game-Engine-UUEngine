@@ -3,35 +3,26 @@
 
 #include "Scene.h"
 
-#include "Models/CustomModel.h"
-
 class cSceneFolder
 {
 public:
-
-    bool createScene(const QString &sceneName);
-    cScene *setCurrentScene(const QString &sceneName);
-    cScene *currentScene();
-
-    void setScenes(QHash<QString, cScene *> scenes);
-    QHash<QString, cScene *> scenes() const;
-    void clearFolder();
-
-public:
-    static cSceneFolder *getInstance();
-
-private:
-    cScene *m_currentScene;
-    QHash<QString, cScene *> m_scenes;
-
-private:
     cSceneFolder();
     ~cSceneFolder();
 
     cSceneFolder(const cSceneFolder&) = delete;
     cSceneFolder& operator=(const cSceneFolder&) = delete;
 
-    static cSceneFolder* m_instance;
+    bool createScene(const std::string &sceneName);
+    cScene *setCurrentScene(const std::string &sceneName);
+    cScene *currentScene();
+
+    void setScenes(std::unordered_map<std::string, cScene *> scenes);
+    std::unordered_map<std::string, cScene *> scenes() const;
+    void clearFolder();
+
+private:
+    cScene *m_currentScene;
+    std::unordered_map<std::string, cScene *> m_scenes;
 };
 
 #endif // SCENEFOLDER_H

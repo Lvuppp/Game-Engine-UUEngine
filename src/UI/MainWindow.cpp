@@ -1,5 +1,6 @@
  #include "MainWindow.h"
 
+#include "Application/OpenGLWidget.h"
 #include "ui_mainWindow.h"
 
 
@@ -9,12 +10,12 @@ cMainWindow::cMainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    m_viewModel = new cMainWindowViewModel();
-    m_projectWidget = new cProjectWidgetViewModel(ui->projectHierarchyFrame);
-    m_openGLWidget = new cOpenGLWidgetViewModel(ui->openGLWidget);
+    m_viewModel.reset(new cMainWindowViewModel());
+    m_projectWidget.reset(new cProjectWidgetViewModel(ui->projectHierarchyFrame));
     //m_objectInfo = new cObjectInfo(ui->objectParamsWidget);
 
-    m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
+//    m_openGLWidget.reset(ui->openGLWidget);
+    ui->openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 
     linkConnections();
     ui->frame_3->hide();
@@ -26,26 +27,27 @@ cMainWindow::cMainWindow(QWidget *parent)
 cMainWindow::~cMainWindow()
 {
     delete ui;
-    delete m_projectWidget;
-    delete m_openGLWidget;
-    delete m_viewModel;
-    delete m_objectInfo;
 }
 
 void cMainWindow::linkConnections()
 {
-    connect(ui->gameStatusButton, &QPushButton::clicked, m_viewModel, &cMainWindowViewModel::changeGameStatus);
+    // connect(ui->gameStatusButton, &QPushButton::clicked, m_viewModel.get(), &cMainWindowViewModel::changeGameStatus);
 
-    auto projectActions = this->menuBar()->actions().at(0)->menu()->actions();
+    // auto projectActions = this->menuBar()->actions().at(0)->menu()->actions();
 
-    for (const auto& action : projectActions)
-    {
-        connect(action, &QAction::triggered, m_viewModel, &cMainWindowViewModel::processProject);
-    }
+    // for (const auto& action : projectActions)
+    // {
+    //     connect(action, &QAction::triggered, m_viewModel.get(), &cMainWindowViewModel::processProject);
+    // }
+}
+
+cOpenGLWidget* cMainWindow::getOpenGLWigdet() const
+{
+    return ui->openGLWidget;
 }
 
 void cMainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
-    m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
+    //m_openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 }

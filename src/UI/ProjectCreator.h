@@ -20,7 +20,7 @@ public:
     ~cProjectCreator();
 
 signals:
-    void getFolderPath(QString path);
+    void getFolderPath(std::string path);
 
 private slots:
     void accept() override;

@@ -1,25 +1,33 @@
 #pragma once
 
+#include "Application/OpenGLWidget.h"
+#include "Core/Cores/EngineCore.h"
+#include <UI/MainWindow.h>
+
+#include <QApplication>
 #include <QObject>
 
 #include <atomic>
 #include <cstdint>
-#include <memory>
-
-class cEngineCore;
-class QMainWindow;
 
 class cMainLoop : public QObject
 {
     Q_OBJECT
 
 public:
-    void startMainLoop();
-    void stopMainLoop();
+    cMainLoop(int &argc, char **argv);;
+
+    int startMainLoop();
 
     void update(float dt);
     void render();
     void processInput();
+
+public slots:
+    void stopMainLoop();
+
+private:
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
     uint32_t getMonitorRefreshRate() const;
@@ -28,10 +36,12 @@ private:
     std::atomic<bool> m_running = false;
     float m_msPerUpdate = 0.0f;
     float m_previousTime = 0.0f;
-    float m_lag = 0.0f;
     float m_currentTime = 0.0f;
     float m_elapsed = 0.0f;
+    float m_lag = 0.0f;
 
-    std::unique_ptr<cEngineCore> m_engine = nullptr;
-    std::unique_ptr<QMainWindow> m_window = nullptr;
+    QApplication m_app;
+    cMainWindow m_window;
+    cOpenGLWidget* m_glWidget = nullptr;
+    cEngineCore m_engine;
 };

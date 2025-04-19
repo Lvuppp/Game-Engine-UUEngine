@@ -1,75 +1,81 @@
 #include "GraphicsEngine.h"
 
-#include <QOpenGLFunctions>
+#include "Utils/Assert.h"
 
 #include <iostream>
 
-cGraphicsEngine* cGraphicsEngine::m_instance = nullptr;
+#include <QOpenGLContext>
+#include <QOpenGLFunctions>
 
-cGraphicsEngine::cGraphicsEngine() : m_gameStatus(false)
+cGraphicsEngine::cGraphicsEngine()
+    : m_gameStatus(false)
 {
     m_engineCamera = new cCamera();
     m_engineLighting = new cLighting();
 }
 
-
 cGraphicsEngine::~cGraphicsEngine()
 {
     delete m_frameBuffer;
-    delete this->currentContext()->functions();
+    delete m_engineCamera;
+    delete m_engineLighting;
 }
 
 void cGraphicsEngine::initGraphics()
 {
+    auto context = QOpenGLContext::currentContext();
+    ASSERT(context, "Context is null");
 
-    this->currentContext()->functions()->initializeOpenGLFunctions();
-    this->currentContext()->functions()->glClearColor(0.2, 0.2, 0.2, 1.0f);
-
-    this->currentContext()->functions()->glEnable(GL_DEPTH_TEST);
-    this->currentContext()->functions()->glEnable(GL_CULL_FACE);
+    m_glFunctions = context->functions();
+    ASSERT(m_glFunctions, "Failed to get OpenGL functions");
 
     initShaders();
 
-    /// создания буффера для отображениыя тени
     m_frameBufferHeight = 1024;
     m_frameBufferWidth = 1024;
 
-    m_frameBuffer = new QOpenGLFramebufferObject(m_frameBufferWidth, m_frameBufferHeight ,QOpenGLFramebufferObject::Depth);
+    m_frameBuffer = new QOpenGLFramebufferObject(m_frameBufferWidth, m_frameBufferHeight, QOpenGLFramebufferObject::Depth);
 
     m_projectionLightMatrix.setToIdentity();
-    m_projectionLightMatrix.ortho(-40.0f, 40.0f, -40.0f, 40.0f, -40.0f, 40.0f); // можно параметризировать
+    m_projectionLightMatrix.ortho(-40.0f, 40.0f, -40.0f, 40.0f, -40.0f, 40.0f);
 
-    float m_LightRotateY = 50;
-    float m_LightRotateX = 40;
+    float m_LightRotateY = 50.0f;
+    float m_LightRotateX = 40.0f;
 
     m_shadowLightMatrix.setToIdentity();
-    m_shadowLightMatrix.rotate(m_LightRotateX, 1.0f, 0.0f, 0.0f); // * Важен порядок
-    m_shadowLightMatrix.rotate(m_LightRotateY, 0.0f, 1.0f, 0.0f); // *
+    m_shadowLightMatrix.rotate(m_LightRotateX, 1.0f, 0.0f, 0.0f);
+    m_shadowLightMatrix.rotate(m_LightRotateY, 0.0f, 1.0f, 0.0f);
 
     m_lightMatrix.setToIdentity();
-    m_lightMatrix.rotate(-m_LightRotateY, 0.0f, 1.0f, 0.0f); // *
-    m_lightMatrix.rotate(-m_LightRotateX, 1.0f, 0.0f, 0.0f); // *
+    m_lightMatrix.rotate(-m_LightRotateY, 0.0f, 1.0f, 0.0f);
+    m_lightMatrix.rotate(-m_LightRotateX, 1.0f, 0.0f, 0.0f);
 }
 
-void cGraphicsEngine::paintScene()
+void cGraphicsEngine::render()
 {
+    m_glFunctions->glViewport(0, 0, m_frameBufferWidth, m_frameBufferWidth);
+    m_glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    if (m_currentScene == nullptr)
+    {
+        return;
+    }
+
     cCamera *currentCamera = m_engineCamera;
 
-    if(m_gameStatus){
+    if (m_gameStatus)
+    {
         currentCamera = m_currentScene->currentCamera();
     }
 
     m_frameBuffer->bind();
-
-    this->currentContext()->functions()->glViewport(0, 0, m_frameBufferWidth, m_frameBufferWidth);
-    this->currentContext()->functions()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     m_depthShaderProgram.bind();
     m_depthShaderProgram.setUniformValue("u_projectionLightMatrix", m_projectionLightMatrix);
     m_depthShaderProgram.setUniformValue("u_shadowLightMatrix", m_shadowLightMatrix);
 
-    for (auto object : m_currentScene->gameObjects()) {
-        object->draw(&m_depthShaderProgram, currentContext()->functions(), false);
+    for (auto object : m_currentScene->gameObjects())
+    {
+        object->draw(&m_depthShaderProgram, m_glFunctions, false);
     }
 
     m_depthShaderProgram.release();
@@ -77,20 +83,20 @@ void cGraphicsEngine::paintScene()
 
     GLuint texture = m_frameBuffer->texture();
 
-    this->currentContext()->functions()->glActiveTexture(GL_TEXTURE4);
-    this->currentContext()->functions()->glBindTexture(GL_TEXTURE_2D, texture);
+    m_glFunctions->glActiveTexture(GL_TEXTURE4);
+    m_glFunctions->glBindTexture(GL_TEXTURE_2D, texture);
 
-    this->currentContext()->functions()->glViewport(0, 0, m_windowWidth, m_windowHeight);
-    this->currentContext()->functions()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    m_glFunctions->glViewport(0, 0, m_windowWidth, m_windowHeight);
+    m_glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     m_skyBoxShaderProgram.bind();
 
     m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
-    currentCamera->draw(&m_skyBoxShaderProgram, currentContext()->functions(), false);
+    currentCamera->draw(&m_skyBoxShaderProgram, m_glFunctions, false);
 
     if (m_currentScene->skybox())
     {
-        m_currentScene->skybox()->draw(&m_skyBoxShaderProgram, currentContext()->functions(), true);
+        m_currentScene->skybox()->draw(&m_skyBoxShaderProgram, m_glFunctions, true);
     }
 
     m_skyBoxShaderProgram.release();
@@ -104,16 +110,16 @@ void cGraphicsEngine::paintScene()
     m_sceneShaderProgram.setUniformValue("u_projectionLightMatrix", m_projectionLightMatrix);
     m_sceneShaderProgram.setUniformValue("u_shadowLightMatrix", m_shadowLightMatrix);
     m_sceneShaderProgram.setUniformValue("u_lightMatrix", m_lightMatrix);
-    m_sceneShaderProgram.setUniformValue("u_isDrawDynamic", false);// освещение динамическое или статическое
-    m_sceneShaderProgram.setUniformValue("u_eyePosition", QVector4D(0.0f,0.0f,0.0f, 1.0f)); // позиция наблюдателя
+    m_sceneShaderProgram.setUniformValue("u_isDrawDynamic", false);
+    m_sceneShaderProgram.setUniformValue("u_eyePosition", QVector4D(0.0f,0.0f,0.0f, 1.0f));
     m_sceneShaderProgram.setUniformValue("u_lightDirection", QVector4D(0.0f,0.0f,-1.0f, 0.0f)); // позиция света
     m_sceneShaderProgram.setUniformValue("u_lightPower", 1.0f); // сила свечения
 
+    currentCamera->draw(&m_sceneShaderProgram, m_glFunctions, false);
 
-    currentCamera->draw(&m_sceneShaderProgram, currentContext()->functions(), false);
-
-    for (auto object : m_currentScene->gameObjects()) {
-        object->draw(&m_sceneShaderProgram, currentContext()->functions(), true);
+    for (auto object : m_currentScene->gameObjects())
+    {
+        object->draw(&m_sceneShaderProgram, m_glFunctions, true);
     }
 
     m_sceneShaderProgram.release();
@@ -124,7 +130,7 @@ void cGraphicsEngine::resizeScene(int w,int h)
     m_windowWidth = w;
     m_windowHeight = h;
 
-    float aspect = w / (float)h;
+    float aspect = w / static_cast<float>(h);
 
     m_projectionMatrix.setToIdentity();
     m_projectionMatrix.perspective(45, aspect, 0.01f, 1000.0f);
@@ -133,11 +139,14 @@ void cGraphicsEngine::resizeScene(int w,int h)
 
 cBaseEngineObject *cGraphicsEngine::selectObject(const QPoint &mouseCoordinates)
 {
-    if(m_gameStatus) return nullptr;
+    if(m_gameStatus)
+    {
+        return nullptr;
+    }
 
-    this->currentContext()->functions()->glViewport(0, 0, m_windowWidth, m_windowHeight);
-    this->currentContext()->functions()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    this->currentContext()->functions()->glEnable(GL_DEPTH_TEST); //для корректной работы оси z: дальние объекты не должны перекрывать ближние
+    m_glFunctions->glViewport(0, 0, m_windowWidth, m_windowHeight);
+    m_glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    m_glFunctions->glEnable(GL_DEPTH_TEST); //для корректной работы оси z: дальние объекты не должны перекрывать ближние
 
     m_selectShaderProgram.bind();
     m_selectShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);;
@@ -146,20 +155,20 @@ cBaseEngineObject *cGraphicsEngine::selectObject(const QPoint &mouseCoordinates)
     for (qsizetype i = 0; i < m_currentScene->gameObjects().size(); ++i) {
 
         m_selectShaderProgram.setUniformValue("u_code", float(i + 1)); //i + 1 чтоб не совпадал с цветом фона (чёрный)
-        m_currentScene->gameObjects().at(i)->draw(&m_selectShaderProgram, currentContext()->functions(), false);
+        m_currentScene->gameObjects().at(i)->draw(&m_selectShaderProgram, m_glFunctions, false);
     }
 
     m_selectShaderProgram.release();
 
     GLint viewport[4]; //x, y, w, h
-    this->currentContext()->functions()->glGetIntegerv(GL_VIEWPORT, viewport);
+    m_glFunctions->glGetIntegerv(GL_VIEWPORT, viewport);
 
     unsigned char res[4]; //4 компоненты RGBA, каждый по байту, [0-255], поэтому такой тип данных
 
     //1, 1 - ширина и высота пикселя который нужно считать под указателем мыши
-    this->currentContext()->functions()->glReadPixels(mouseCoordinates.x(), viewport[3] - mouseCoordinates.y(), 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &res);
+    m_glFunctions->glReadPixels(mouseCoordinates.x(), viewport[3] - mouseCoordinates.y(), 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &res);
 
-    this->currentContext()->functions()->glDisable(GL_DEPTH_TEST);
+    m_glFunctions->glDisable(GL_DEPTH_TEST);
 
     if(res[0] - 1 == -1) return nullptr;
     return m_currentScene->gameObjects()[res[0] - 1]; //красная компонента
@@ -168,44 +177,70 @@ cBaseEngineObject *cGraphicsEngine::selectObject(const QPoint &mouseCoordinates)
 
 void cGraphicsEngine::initShaders()
 {
-    std::cout << "Start initialize shaders";
+    std::cout << "Start initialize shaders" << std::endl;
 
-    try {
-        m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vshader.vsh");
-        m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fshader.fsh");
-        m_sceneShaderProgram.link();
-
-    } catch (...) {
-        throw std::runtime_error("Broken main engine shaders!");
+    if (m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vshader.vsh") == false)
+    {
+        std::cout << "Failed to load vertex shader: " + m_sceneShaderProgram.log().toStdString() << std::endl;
     }
 
-    try {
-
-        m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vdepth.vsh");
-        m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fdepth.fsh");
-        m_depthShaderProgram.link();
-
-    } catch (...) {
-        throw std::runtime_error("Broken depth shaders!");
+    if (m_sceneShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fshader.fsh") == false)
+    {
+        std::cout << "Failed to load fragment shader: " + m_sceneShaderProgram.log().toStdString() << std::endl;
     }
 
-    try {
-        m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fskybox.fsh");
-        m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vskybox.vsh");
-        m_skyBoxShaderProgram.link();
-    } catch (...) {
-        throw std::runtime_error("Broken skybox shaders!");
+    if (m_sceneShaderProgram.link() == false)
+    {
+        std::cout << "Failed to link shader program: " + m_sceneShaderProgram.log().toStdString() << std::endl;
     }
 
-    try {
-        m_selectShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fselectshader.fsh");
-        m_selectShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vselectshader.vsh");
-        m_selectShaderProgram.link();
-    } catch (...) {
-        throw std::runtime_error("Broken select shaders!");
+    if (m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vdepth.vsh") == false)
+    {
+        std::cout << "Failed to load depth vertex shader: " + m_depthShaderProgram.log().toStdString() << std::endl;
     }
 
-    qDebug() << "End initialize shaders";
+    if (m_depthShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fdepth.fsh") == false)
+    {
+        std::cout << "Failed to load depth fragment shader: " + m_depthShaderProgram.log().toStdString() << std::endl;
+    }
+
+    if (m_depthShaderProgram.link() == false)
+    {
+        std::cout << "Failed to link depth shader program: " + m_depthShaderProgram.log().toStdString() << std::endl;
+    }
+
+    if (m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fskybox.fsh") == false)
+    {
+        std::cout << "Failed to load skybox fragment shader: " + m_skyBoxShaderProgram.log().toStdString() << std::endl;
+    }
+
+    if (m_skyBoxShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vskybox.vsh") == false)
+    {
+        std::cout << "Failed to load skybox vertex shader: " + m_skyBoxShaderProgram.log().toStdString() << std::endl;
+    }
+
+    if (m_skyBoxShaderProgram.link() == false)
+    {
+        std::cout << "Failed to link skybox shader program: " + m_skyBoxShaderProgram.log().toStdString() << std::endl;
+    }
+
+
+    if (m_selectShaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fselectshader.fsh") == false)
+    {
+        std::cout << "Failed to load select fragment shader: " + m_selectShaderProgram.log().toStdString() << std::endl;
+    }
+
+    if (m_selectShaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vselectshader.vsh") == false)
+    {
+        std::cout << "Failed to load select vertex shader: " + m_selectShaderProgram.log().toStdString() << std::endl;
+    }
+
+    if (m_selectShaderProgram.link() == false)
+    {
+        std::cout << "Failed to link select shader program: " + m_selectShaderProgram.log().toStdString() << std::endl;
+    }
+
+    std::cout << "End initialize shaders" << std::endl;
 }
 
 QMatrix4x4 cGraphicsEngine::projectionMatrix() const
@@ -237,12 +272,4 @@ void cGraphicsEngine::translateModelViewMatrix(QVector3D translation)
 void cGraphicsEngine::setCurrentScene(cScene *scene)
 {
     m_currentScene = scene;
-}
-
-cGraphicsEngine *cGraphicsEngine::getInstance()
-{
-    if(m_instance == nullptr){
-        m_instance = new cGraphicsEngine();
-    }
-    return m_instance;
 }

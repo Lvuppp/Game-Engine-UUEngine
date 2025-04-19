@@ -1,7 +1,7 @@
 #ifndef MODELBUILDER_H
 #define MODELBUILDER_H
 
-#include <QString>
+#include <string>
 
 enum class SimpleModelType{
     Cube,
@@ -17,7 +17,7 @@ class cModel;
 class cModelBuilder
 {
 public:
-    cModel *createSkybox(const float &size, const QString &texture);
+    cModel *createSkybox(const float &size, const std::string &texture);
 
     cModel *createCube(const float &width, const float &height, const float &depth);
     cModel *createPyramide(const float &width, const float &height);

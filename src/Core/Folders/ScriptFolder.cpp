@@ -1,30 +1,30 @@
 #include "ScriptFolder.h"
 
-cScriptFolder* cScriptFolder::m_instance = nullptr;
-
-cScriptFolder::cScriptFolder() : m_scriptsFolder(QHash<QString,QString>())
+cScriptFolder::cScriptFolder()
+    : m_scriptsFolder(std::unordered_map<std::string,std::string>())
 {
 
 }
 
-void cScriptFolder::addScript( const QString & objectName, const QString &scriptName)
+void cScriptFolder::addScript( const std::string & objectName, const std::string &scriptName)
 {
-    m_scriptsFolder.insert(objectName, scriptName);
+    m_scriptsFolder.insert(std::make_pair<>(objectName, scriptName));
 }
 
-QVector<QString> cScriptFolder::scripts(const QString &name) const
+std::vector<std::string> cScriptFolder::scripts(const std::string &name) const
 {
-    QVector<QString> tmp(0);
+    std::vector<std::string> tmp;
 
-    if(!m_scriptsFolder.contains(name)){
+    if(m_scriptsFolder.find(name) != m_scriptsFolder.cend())
+    {
         return tmp;
     }
 
     auto scriptsIters =  m_scriptsFolder.equal_range(name);
 
-
-    for (auto it = scriptsIters.first; it != scriptsIters.second; ++it) {
-        tmp.append(*it);
+    for (auto it = scriptsIters.first; it != scriptsIters.second; it++)
+    {
+        tmp.push_back(it->first);
     }
 
     return tmp;
@@ -33,12 +33,4 @@ QVector<QString> cScriptFolder::scripts(const QString &name) const
 void cScriptFolder::clearFolder()
 {
     m_scriptsFolder.clear();
-}
-
-cScriptFolder *cScriptFolder::getInstance()
-{
-    if(m_instance == nullptr){
-        m_instance = new cScriptFolder();
-    }
-    return m_instance;
 }

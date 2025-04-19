@@ -2,12 +2,6 @@
     <qresource prefix="/">
         <file>UIImages/translate.png</file>
         <file>UIImages/rotate.png</file>
-        <file>Shaders/vskybox.vsh</file>
-        <file>Shaders/vshader.vsh</file>
-        <file>Shaders/vdepth.vsh</file>
-        <file>Shaders/fskybox.fsh</file>
-        <file>Shaders/fshader.fsh</file>
-        <file>Shaders/fdepth.fsh</file>
         <file>Textures/texture1.jpg</file>
         <file>Textures/skyboxTexture.png</file>
         <file>Textures/skybox4.png</file>
@@ -29,9 +23,15 @@
         <file>Models/TestModel/normal.png</file>
         <file>Models/TestModel/ICE.blend</file>
         <file>Models/TestModel/diffuso.tif</file>
-        <file>Shaders/fselectshader.fsh</file>
-        <file>Shaders/vselectshader.vsh</file>
         <file>UIImages/addIcon.png</file>
         <file>UIImages/deleteIcon.png</file>
+        <file>Shaders/fselectshader.fsh</file>
+        <file>Shaders/vdepth.vsh</file>
+        <file>Shaders/fskybox.fsh</file>
+        <file>Shaders/vskybox.vsh</file>
+        <file>Shaders/fdepth.fsh</file>
+        <file>Shaders/vselectshader.vsh</file>
+        <file>Shaders/vshader.vsh</file>
+        <file>Shaders/fshader.fsh</file>
     </qresource>
 </RCC>

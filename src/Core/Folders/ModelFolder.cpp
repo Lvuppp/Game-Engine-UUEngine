@@ -1,42 +1,26 @@
 #include "ModelFolder.h"
 
-cModelFolder *cModelFolder::m_instance = nullptr;
-
-cModelFolder::cModelFolder()
+void cModelFolder::append(const std::string &objectName, const std::string &modelName)
 {
-
+    m_modelsFolder.insert(std::make_pair<>(objectName, modelName));
 }
 
-void cModelFolder::append(const QString &objectName, const QString &modelName)
+void cModelFolder::remove(const std::string &objectName)
 {
-    m_modelsFolder.insert(objectName, modelName);
+    m_modelsFolder.erase(objectName);
 }
 
-void cModelFolder::remove(const QString &objectName)
-{
-    m_modelsFolder.remove(objectName);
-}
-
-void cModelFolder::replace(const QString &objectName, const QString &modelName)
+void cModelFolder::replace(const std::string &objectName, const std::string &modelName)
 {
     m_modelsFolder[objectName] = modelName;
 }
 
-QString cModelFolder::model(const QString &name) const
+std::string cModelFolder::model(const std::string &name) const
 {
-    return m_modelsFolder[name];
+    return m_modelsFolder.at(name);
 }
 
 void cModelFolder::clearFolder()
 {
     m_modelsFolder.clear();
-}
-
-cModelFolder *cModelFolder::getInstance()
-{
-    if(m_instance == nullptr){
-        m_instance = new cModelFolder();
-    }
-
-    return m_instance;
 }

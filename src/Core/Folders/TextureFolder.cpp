@@ -1,34 +1,34 @@
 #include "TextureFolder.h"
 
-cTextureFolder *cTextureFolder::m_instance = nullptr;
-
-cTextureFolder::~cTextureFolder()
+cTextureFolder::cTextureFolder()
+    : m_textures(std::unordered_map<std::string,std::string>())
 {
 
 }
 
-void cTextureFolder::append(const QString &objectName, const QString &textureName)
+void cTextureFolder::append(const std::string &objectName, const std::string &textureName)
 {
-    m_textures.insert(objectName, textureName);
+    m_textures.insert(std::make_pair<>(objectName, textureName));
 }
 
-void cTextureFolder::remove(const QString &objectName)
+void cTextureFolder::remove(const std::string &objectName)
 {
-    m_textures.remove(objectName);
+    m_textures.erase(objectName);
 }
 
-void cTextureFolder::replace(const QString &objectName, const QString &modelName)
+void cTextureFolder::replace(const std::string &objectName, const std::string &modelName)
 {
     m_textures[objectName] = modelName;
 }
 
-QVector<QString> cTextureFolder::texture(const QString &objectName)
+std::vector<std::string> cTextureFolder::texture(const std::string &objectName)
 {
-    QVector<QString> tmp;
+    std::vector<std::string> tmp;
     auto texturesIters =  m_textures.equal_range(objectName);
 
-    for (auto it = texturesIters.first; it != texturesIters.second; ++it) {
-        tmp.append(*it);
+    for (auto it = texturesIters.first; it != texturesIters.second; ++it)
+    {
+        tmp.push_back(it->second);
     }
 
     return tmp;
@@ -37,18 +37,4 @@ QVector<QString> cTextureFolder::texture(const QString &objectName)
 void cTextureFolder::clearFolder()
 {
     m_textures.clear();
-}
-
-cTextureFolder *cTextureFolder::getInstance()
-{
-    if(m_instance == nullptr){
-        m_instance = new cTextureFolder();
-    }
-
-    return m_instance;
-}
-
-cTextureFolder::cTextureFolder() : m_textures(QHash<QString,QString>())
-{
-
 }

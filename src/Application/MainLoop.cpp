@@ -1,14 +1,33 @@
 #include "MainLoop.h"
 
 #include "Core/Cores/EngineCore.h"
+#include "Core/Services/ProjectProcessor.h"
 #include "Utils/TimeFacade.h"
 
 #include <QApplication>
-#include <QMainWindow>
+#include <QOpenGLWidget>
 #include <QScreen>
 #include <qcoreevent.h>
 
-void cMainLoop::startMainLoop()
+#include <iostream>
+
+cMainLoop::cMainLoop(int &argc, char **argv)
+    : m_app(argc, argv)
+    , m_window()
+    , m_engine()
+{
+    QObject::connect(&m_app, &QApplication::aboutToQuit, this, &cMainLoop::stopMainLoop);
+
+    m_window.show();
+    m_glWidget = m_window.getOpenGLWigdet();
+
+    const auto window = m_glWidget->size();
+
+    m_engine.initGraphicsEngine();
+    m_engine.initInputEngine(sVec2(window));
+}
+
+int cMainLoop::startMainLoop()
 {
     m_running = true;
     m_msPerUpdate = 1000.0f / getMonitorRefreshRate();
@@ -35,6 +54,14 @@ void cMainLoop::startMainLoop()
 
         render();
     }
+
+    return 0;
+}
+
+
+bool cMainLoop::eventFilter(QObject* obj, QEvent* event)
+{
+    return QObject::eventFilter(obj, event);
 }
 
 void cMainLoop::stopMainLoop()
@@ -44,23 +71,25 @@ void cMainLoop::stopMainLoop()
 
 void cMainLoop::update(float dt)
 {
-    m_engine->update(dt);
-//    m_window->update();
+    m_engine.update(dt);
 }
 
 void cMainLoop::render()
 {
-    m_engine->render();
-//    m_window->render();
+    m_glWidget->makeCurrent();
+    m_engine.render();
+    m_glWidget->doneCurrent();
+   // m_glWidget->render(m_glWidget);
 }
 
 void cMainLoop::processInput()
 {
+    m_app.processEvents();
 }
 
 uint32_t cMainLoop::getMonitorRefreshRate() const
 {
-    auto *screen = QApplication::primaryScreen();
+    auto screen = m_app.primaryScreen();
     if (screen != nullptr)
     {
         return screen->refreshRate();

@@ -12,15 +12,8 @@ class cMainWindowViewModel : public QWidget
 public:
     cMainWindowViewModel(QWidget *parent = nullptr);
 
-signals:
-    void updateWindow();
-
-public slots:
+public:
     void processProject();
-    void changeGameStatus();
-
-private:
-    cEngineCore *m_engine;
 };
 
 #endif // MAINWINDOWVIEWMODEL_H

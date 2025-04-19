@@ -5,26 +5,22 @@
 
 #include <QPair>
 #include <QHash>
-#include <QString>
+#include <string>
 
 class cScriptFolder
 {
 public:
-    void addScript(const QString &objectName, const QString &scriptName);
-    QVector<QString> scripts(const QString &name) const;
-    void clearFolder();
-
-    static cScriptFolder *getInstance();
-
-private:
-    QHash<QString, QString> m_scriptsFolder;
-
     cScriptFolder();
-    ~cScriptFolder();
+    ~cScriptFolder() = default;
 
     cScriptFolder(const cScriptFolder&) = delete;
     cScriptFolder& operator=(const cScriptFolder&) = delete;
 
-    static cScriptFolder *m_instance;
+    void addScript(const std::string &objectName, const std::string &scriptName);
+    std::vector<std::string> scripts(const std::string &name) const;
+    void clearFolder();
+
+private:
+    std::unordered_map<std::string, std::string> m_scriptsFolder;
 };
 #endif // SCRIPTFOLDER_H

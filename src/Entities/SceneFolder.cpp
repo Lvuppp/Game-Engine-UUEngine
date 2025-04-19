@@ -1,24 +1,28 @@
 #include "SceneFolder.h"
-cSceneFolder* cSceneFolder::m_instance = nullptr;
 
-cSceneFolder::cSceneFolder(): m_currentScene(nullptr)
+cSceneFolder::cSceneFolder()
+    : m_currentScene(nullptr)
 {
-    m_scenes = QHash<QString, cScene*>();
+    m_scenes = std::unordered_map<std::string, cScene*>();
 }
 
 cSceneFolder::~cSceneFolder()
 {
-    foreach (auto scene, m_scenes){
+    for (auto& [name, scene] : m_scenes)
+    {
         delete scene;
     }
 }
 
-bool cSceneFolder::createScene(const QString &sceneName)
+bool cSceneFolder::createScene(const std::string &sceneName)
 {
-    if(m_scenes.contains(sceneName)) return false;
-
-    m_scenes.insert(sceneName, new cScene());
-    m_currentScene = m_scenes.value(sceneName);
+    if (m_scenes.find(sceneName) != m_scenes.end()) 
+    {
+        return false;
+    }
+    
+    m_scenes.insert(std::make_pair(sceneName, new cScene()));
+    m_currentScene = m_scenes[sceneName];
 
     m_currentScene->addCamera("DefaultCamera");
     m_currentScene->addLighting("DefaultLight");
@@ -28,9 +32,12 @@ bool cSceneFolder::createScene(const QString &sceneName)
     return true;
 }
 
-cScene *cSceneFolder::setCurrentScene(const QString &sceneName)
+cScene *cSceneFolder::setCurrentScene(const std::string &sceneName)
 {
-    m_currentScene = m_scenes.value(sceneName);
+    if (m_scenes.find(sceneName) != m_scenes.end())
+    {
+        m_currentScene = m_scenes[sceneName];
+    }
     return m_currentScene;
 }
 
@@ -39,37 +46,32 @@ cScene *cSceneFolder::currentScene()
     return m_currentScene;
 }
 
-void cSceneFolder::setScenes(QHash<QString, cScene *> scenes)
+void cSceneFolder::setScenes(std::unordered_map<std::string, cScene *> scenes)
 {
     clearFolder();
-    m_scenes = scenes;
+    m_scenes = std::move(scenes);
 
-    if(!m_scenes.empty()){
-        m_currentScene = m_scenes.begin().value();
+    if (!m_scenes.empty())
+    {
+        m_currentScene = m_scenes.begin()->second;
     }
 }
 
-QHash<QString, cScene *> cSceneFolder::scenes() const
+std::unordered_map<std::string, cScene *> cSceneFolder::scenes() const
 {
     return m_scenes;
 }
 
 void cSceneFolder::clearFolder()
 {
-    if(!m_scenes.empty()){
-        foreach (auto scene, m_scenes){
+    if (!m_scenes.empty())
+    {
+        for (auto& [name, scene] : m_scenes)
+        {
             delete scene;
         }
 
         m_scenes.clear();
         m_currentScene = nullptr;
     }
-}
-
-cSceneFolder *cSceneFolder::getInstance()
-{
-    if(m_instance == nullptr){
-        m_instance = new cSceneFolder();
-    }
-    return m_instance;
 }

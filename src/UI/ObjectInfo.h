@@ -24,7 +24,13 @@ signals:
     void updateFrame(QLayout* layout);
 
 public slots:
-    void setObject(const QString &objectName, cBase3DGameObject **object);
+    void setObject(const std::string &objectName, cBase3DGameObject **object);
+
+    void updateCoordinates(const QVector3D &coords);
+    void setScriptsLabel();
+    void onDiffuseTextureSet(const QString &imagePath);
+    void onNormalTextureSet(const QString &imagePath);
+    void onScriptLoad(const QString &path);
 
 private slots:
     void on_yCoordLineEdit_editingFinished();
@@ -46,7 +52,7 @@ private:
 
     cEngineCore *m_engine;
     cBaseEngineObject *m_currentObject;
-    QString m_objectName;
+    std::string m_objectName;
 };
 
 #endif // OBJECTINFO_H

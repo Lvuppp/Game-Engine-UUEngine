@@ -28,6 +28,7 @@ HEADERS += \
     projectwidgetviewmodel.h
 
 FORMS += \
+    mainWindow.ui \
     mainwindow.ui \
     objectinfo.ui \
     projectcreator.ui

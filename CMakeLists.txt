@@ -19,10 +19,10 @@ file(GLOB_RECURSE HEADERS
     "src/*.h"
 )
 
-file(GLOB UI_FILES "src/*.ui")
+file(GLOB UI_FILES src/*.ui)
 qt6_wrap_ui(UI_HEADERS ${UI_FILES})
 
-file(GLOB RESOURCE_FILES "src/*.qrc")
+file(GLOB RESOURCE_FILES src/UI/*.qrc)
 qt6_add_resources(RESOURCE_SOURCES ${RESOURCE_FILES})
 
 add_executable(${PROJECT_NAME}

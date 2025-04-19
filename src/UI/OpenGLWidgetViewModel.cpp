@@ -3,10 +3,12 @@
 cOpenGLWidgetViewModel::cOpenGLWidgetViewModel(QWidget *parent)  : QOpenGLWidget(parent)
 {
     this->setDisabled(true);
-    m_engine = cEngineCore::getInstance();
+    //m_engine = cEngineCore::getInstance();
 
     createContextMenu();
     linkWithEngine();
+
+    makeCurrent();
 }
 
 void cOpenGLWidgetViewModel::createContextMenu()
@@ -56,23 +58,26 @@ void cOpenGLWidgetViewModel::linkWithEngine()
 void cOpenGLWidgetViewModel::createObject()
 {
     QAction *action = dynamic_cast<QAction *>(sender());
-    QString objectName = action->text();
-    std::function<bool(QString)> func;
+    std::string objectName = action->text().toStdString();
+    std::function<bool(std::string)> func;
 
     if(objectName == "Cube")
     {
-        func = [this](QString objectName) -> bool{ return m_engine->createCube(objectName);};
+        func = [this](std::string objectName) -> bool{ return m_engine->createCube(objectName);};
     }
     else if(objectName == "Sphere")
     {
-        func = [this](QString objectName) -> bool{ return m_engine->createSphere(objectName);};
+        func = [this](std::string objectName) -> bool{ return m_engine->createSphere(objectName);};
     }
     else if(objectName == "Custom object")
     {
         auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (*.obj*)");
 
         if(objectPath.split('/').last().split('.').constLast() == "obj"){
-            func = [this,objectPath](QString objectName) -> bool{ return  m_engine->createOBJModel(objectName, objectPath);};
+            std::string objectPathStd = objectPath.toStdString();
+            func = [this, objectPathStd](std::string objectName) -> bool {
+                return m_engine->createOBJModel(objectName, objectPathStd);
+            };
         }
     }
     else{
@@ -83,8 +88,8 @@ void cOpenGLWidgetViewModel::createObject()
 
     for (int var = 2; !func(objectName); ++var)
     {
-        objectName.chop(1);
-        objectName += QString::number(var);
+        objectName.pop_back();
+        objectName += std::to_string(var);
     }
 }
 
@@ -92,7 +97,7 @@ void cOpenGLWidgetViewModel::setSkybox()
 {
     const auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
 
-    m_engine->setSkyBox(100.0f,objectPath);
+    m_engine->setSkyBox(100.0f, objectPath.toStdString());
 }
 
 void cOpenGLWidgetViewModel::setDisableState(bool state)
@@ -131,7 +136,6 @@ void cOpenGLWidgetViewModel::contextMenuEvent(QContextMenuEvent *event)
 
 void cOpenGLWidgetViewModel::initializeGL()
 {
-    m_engine->initGraphicsEngine();
 }
 
 void cOpenGLWidgetViewModel::resizeGL(int w, int h)
@@ -141,5 +145,4 @@ void cOpenGLWidgetViewModel::resizeGL(int w, int h)
 
 void cOpenGLWidgetViewModel::paintGL()
 {
-    m_engine->paintScene();
 }

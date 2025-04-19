@@ -14,27 +14,26 @@ cProjectCreator::~cProjectCreator()
     delete ui;
 }
 
-
 void cProjectCreator::accept()
 {
-    QString projectPath = ui->folderPathLine->text(), projectName = ui->projectNameLine->text();
-    QDir dir(projectPath);
+    std::string projectPath = ui->folderPathLine->text().toStdString();
+    std::string projectName = ui->projectNameLine->text().toStdString();
+    QDir dir(QString::fromStdString(projectPath));
 
-    if(projectPath != "" && projectName != "" &&dir.exists() &&
-        !dir.exists(projectName) && !projectName.contains(m_fileRegex)){
+    if (!projectPath.empty() && !projectName.empty() && dir.exists() &&
+        !dir.exists(QString::fromStdString(projectName)) &&
+        !m_fileRegex.match(QString::fromStdString(projectName)).hasMatch()) {
 
-        emit getFolderPath(QString("%1 %2").arg(projectPath, projectName));
+        emit getFolderPath(projectPath + " " + projectName);
         QDialog::accept();
-    }
-    else{
+    } else {
         ui->errorLabel->setText("Can`t create project! Try again!");
     }
 }
 
-
 void cProjectCreator::on_findFolderButton_clicked()
 {
-    auto path = QFileDialog::getExistingDirectory(nullptr, "Выберите папку", "", QFileDialog::ShowDirsOnly);
+    QString path = QFileDialog::getExistingDirectory(nullptr, "Выберите папку", "", QFileDialog::ShowDirsOnly);
     ui->folderPathLine->setText(path);
 }
 

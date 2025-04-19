@@ -4,32 +4,24 @@
 #include <QApplication>
 #include <QThread>
 #include <iostream>
+#include <QSurfaceFormat>
 
 int main(int argc, char *argv[])
 {
-    QSurfaceFormat format;
-    format.setSamples(32);
-    format.setDepthBufferSize(24);
-    QSurfaceFormat::setDefaultFormat(format);
 
-    QApplication a(argc, argv);
-    cMainWindow w;
-    w.show();
-    auto version = glGetString(GL_VERSION);
-    std::cout << "OpenGL Version: " << version << std::endl;
+    // QSurfaceFormat format;
+    // format.setVersion(3, 2);
+    // format.setProfile(QSurfaceFormat::CoreProfile);
+    // format.setDepthBufferSize(24);
+    // format.setStencilBufferSize(8);
+    // format.setSamples(4); // MSAA
+    // QSurfaceFormat::setDefaultFormat(format);
+    
+    // QApplication app(argc, argv);
+    // cMainWindow mainWindow;
+    // mainWindow.show();
+    // return app.exec();
 
-    cMainLoop mainLoop;
-    QThread gameThread;
-    mainLoop.moveToThread(&gameThread);
-
-    QObject::connect(&gameThread, &QThread::started, &mainLoop, &cMainLoop::startMainLoop);
-    QObject::connect(&a, &QApplication::aboutToQuit, [&]() {
-        mainLoop.stopMainLoop();
-        gameThread.quit();
-        gameThread.wait();
-    });
-
-    gameThread.start();
-
-    return a.exec();
+    cMainLoop mainLoop(argc, argv);
+    return mainLoop.startMainLoop();
 }

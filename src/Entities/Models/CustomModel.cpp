@@ -6,7 +6,7 @@
 
 // }
 
-// cCustomModel::cCustomModel(QVector<cModelParticle *> modelParticles) : cModel(ModelType::CustomModel)
+// cCustomModel::cCustomModel(std::vector<cModelParticle *> modelParticles) : cModel(ModelType::CustomModel)
 // {
 //     m_modelParticles.append(modelParticles);
 //     p_modelType = ModelType::CustomModel;

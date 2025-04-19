@@ -3,7 +3,7 @@
 
 #include "Entities/Material.h"
 
-#include <QVector>
+#include <vector>
 #include <QFile>
 #include <QTextStream>
 #include <QFileInfo>
@@ -13,19 +13,17 @@
 class cMaterialLibrary
 {
 public:
-
     cMaterialLibrary();
 
     void addMaterial(cMaterial* material);
-    void loadMaterialsFromFile(const QString &path);
+    void loadMaterialsFromFile(const std::string &path);
 
     cMaterial* material(quint32 index);
-    cMaterial* material(const QString &mtlName);
+    cMaterial* material(const std::string &mtlName);
     quint32 countMaterials();
 
-
 private:
-    QVector<cMaterial *> m_materials;
+    std::vector<cMaterial *> m_materials;
 };
 
 #endif // MATERIALLIB_H

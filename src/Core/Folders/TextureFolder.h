@@ -1,35 +1,29 @@
 #ifndef TEXTUREFOLDER_H
 #define TEXTUREFOLDER_H
 
-#include <QString>
-#include <QHash>
-#include <QPair>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 class cTextureFolder
 {
 public:
-    void append(const QString &objectName, const QString &textureName);
-    void remove(const QString &objectName);
-    void replace(const QString &objectName, const QString &modelName);
-
-    const QVector<QString> allModels();
-    QVector<QString> texture(const QString &objectName);
-    void clearFolder();
-
-public:
-    static cTextureFolder *getInstance();
-
-private:
-    QHash<QString,QString> m_textures;
-
-private:
     cTextureFolder();
-    ~cTextureFolder();
+    ~cTextureFolder() = default;
 
     cTextureFolder(const cTextureFolder&) = delete;
     cTextureFolder& operator=(const cTextureFolder&) = delete;
 
-    static cTextureFolder* m_instance;
+    void append(const std::string &objectName, const std::string &textureName);
+    void remove(const std::string &objectName);
+    void replace(const std::string &objectName, const std::string &modelName);
+
+    const std::vector<std::string> allModels();
+    std::vector<std::string> texture(const std::string &objectName);
+    void clearFolder();
+
+private:
+    std::unordered_map<std::string,std::string> m_textures;
 };
 
 #endif // TEXTUREFOLDER_H

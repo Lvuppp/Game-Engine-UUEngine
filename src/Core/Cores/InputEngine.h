@@ -1,7 +1,7 @@
 #ifndef INPUTENGINE_H
 #define INPUTENGINE_H
 
-#include<iostream>
+#include "Utils/Vectors.h"
 
 #include <QWidget>
 #include <QEvent>
@@ -19,30 +19,30 @@ enum class InputMode{
     Edit
 };
 
-class cInputEngine
+class cInputEngine : public QObject
 {
+    Q_OBJECT
+
 public:
-    ~cInputEngine();
+    cInputEngine();
+    ~cInputEngine() = default;
+
+    void setScreenCoords(const sVec2& size);
 
     QQuaternion getRotateX();
     QQuaternion getRotateY();
+    QVector3D getTranslate();
 
     QVector3D getWorldCoordinates(QMatrix4x4 projectionMatrix, QMatrix4x4 viewMatrix, const float &objectY = 0);
 
-    QVector3D getTranslate();
-public:
-    void setScreenCoords(const int &width, const int &height);
-
-public:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent* event);
-    void wheelEvent(QWheelEvent* event);
+    void wheelScrollEvent(QWheelEvent* event);
 
-public:
-    static cInputEngine *getInstance();
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 private:
-
     QVector2D m_mouseCoordinates;
 
     QQuaternion m_rotateXDelta;
@@ -52,15 +52,6 @@ private:
 
     int m_screenWidth;
     int m_screenHeight;
-
-private:
-    cInputEngine();
-
-    cInputEngine(const cInputEngine&) = delete;
-    cInputEngine& operator=(const cInputEngine&) = delete;
-
-    static cInputEngine* m_instance;
-
 };
 
 #endif // INPUTENGINE_H

@@ -2,11 +2,11 @@
 
 cProjectWidgetViewModel::cProjectWidgetViewModel(QWidget *parent) : QWidget(parent)
 {
-    m_engine = cEngineCore::getInstance();
+    //m_engine = cEngineCore::getInstance();
 
-    QVBoxLayout layout;
-    this->setLayout(&layout);
-    m_engine->initProjectProcessor(layout);
+    //QVBoxLayout layout;
+    //this->setLayout(&layout);
+    //m_engine->initProjectProcessor(layout);
 
 }
 

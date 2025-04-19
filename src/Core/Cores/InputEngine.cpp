@@ -1,32 +1,66 @@
 #include "InputEngine.h"
 
 #include <QMatrix4x4>
-
-cInputEngine* cInputEngine::m_instance = nullptr;
-
+#include <qevent.h>
 
 cInputEngine::cInputEngine()
 {
-
+    qApp->installEventFilter(this);
 }
 
-cInputEngine::~cInputEngine()
+bool cInputEngine::eventFilter(QObject* obj, QEvent* event)
 {
 
+    switch (event->type()) {
+        case QEvent::KeyPress: {
+            auto* keyEvent = static_cast<QKeyEvent*>(event);
+            break;
+        }
+
+        case QEvent::KeyRelease: {
+            auto* keyEvent = static_cast<QKeyEvent*>(event);
+            break;
+        }
+
+        case QEvent::MouseButtonPress: {
+            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+            mousePressEvent(mouseEvent);
+            break;
+        }
+
+        case QEvent::MouseButtonRelease: {
+            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+            break;
+        }
+
+        case QEvent::MouseMove: {
+            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+            mouseMoveEvent(mouseEvent);
+            break;
+        }
+
+        case QEvent::Wheel: {
+            auto* wheelEvent = static_cast<QWheelEvent*>(event);
+            wheelScrollEvent(wheelEvent);
+            break;
+        }
+        default:
+            break;
+    }
+
+    return QObject::eventFilter(obj, event); // передаём дальше, не блокируем
 }
 
-
-
-void cInputEngine::wheelEvent(QWheelEvent *event)
+void cInputEngine::wheelScrollEvent(QWheelEvent* wheelEvent)
 {
-    auto wheelEvent = (QWheelEvent*)event;
-
     if (wheelEvent->angleDelta().y() > 0)
+    {
         m_translateDelta = QVector3D(0.0f, 0.0f, 0.2f);
-
+    }
     else if (wheelEvent->angleDelta().y() < 0)
+    {
         m_translateDelta = QVector3D(0.0f, 0.0f, -0.2f);
-
+    }
 }
 
 QQuaternion cInputEngine::getRotateX()
@@ -59,10 +93,10 @@ QVector3D cInputEngine::getTranslate()
     return m_translateDelta;
 }
 
-void cInputEngine::setScreenCoords(const int &width, const int &height)
+void cInputEngine::setScreenCoords(const sVec2& size)
 {
-    m_screenWidth = width;
-    m_screenHeight = height;
+    m_screenWidth = size.x;
+    m_screenHeight = size.y;
 }
 
 void cInputEngine::mousePressEvent(QMouseEvent *event)
@@ -82,13 +116,4 @@ void cInputEngine::mouseMoveEvent(QMouseEvent *event)
 
     m_rotateXDelta = QQuaternion::fromAxisAndAngle(1.0f ,0.0f ,0.0f, angleX);
     m_rotateYDelta = QQuaternion::fromAxisAndAngle(0.0f ,1.0f ,0.0f, angleY);
-
-}
-
-cInputEngine *cInputEngine::getInstance()
-{
-    if(m_instance == nullptr){
-        m_instance = new cInputEngine();
-    }
-    return m_instance;
 }

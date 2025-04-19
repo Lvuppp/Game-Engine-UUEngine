@@ -11,39 +11,6 @@ CONFIG += staticlib
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += \
-        Cores/enginecore.cpp \
-        Services/eventhandler.cpp \
-        Cores/graphicsengine.cpp \
-        Cores/inputengine.cpp \
-        Folders/materiallib.cpp \
-        Services/modelbuilder.cpp \
-        Folders/modelfolder.cpp \
-        Services/modelloader.cpp \
-        Cores/physicsengine.cpp \
-        Services/projectprocessor.cpp \
-        Cores/scriptengine.cpp \
-        Folders/scriptfolder.cpp \
-        Folders/texturefolder.cpp \
-        Services/projectinfo.cpp
-
-HEADERS += \
-    Cores/enginecore.h \
-    Services/eventhandler.h \
-    Cores/graphicsengine.h \
-    Cores/inputengine.h \
-    Folders/materiallib.h \
-    Services/modelbuilder.h \
-    Folders/modelfolder.h \
-    Services/modelloader.h \
-    Cores/physicsengine.h \
-    Services/projectprocessor.h \
-    Cores/scriptengine.h \
-    Folders/scriptfolder.h \
-    Folders/texturefolder.h \
-    Services/projectinfo.h
-
-RESOURCES +=
 
 win32: LIBS += -lopengl32 #подключение на windows
 
@@ -58,3 +25,35 @@ else:unix:!macx: LIBS += -L$$OUT_PWD/../EngineEntities/ -lEngineEntities
 
 INCLUDEPATH += $$PWD/../Entities
 DEPENDPATH += $$PWD/../Entities
+
+HEADERS += \
+    Cores/EngineCore.h \
+    Cores/GraphicsEngine.h \
+    Cores/InputEngine.h \
+    Cores/PhysicsEngine.h \
+    Cores/ScriptEngine.h \
+    Folders/MaterialLib.h \
+    Folders/ModelFolder.h \
+    Folders/ScriptFolder.h \
+    Folders/TextureFolder.h \
+    Services/Eventhandler.h \
+    Services/ModelBuilder.h \
+    Services/ModelLoader.h \
+    Services/ProjectProcessor.h \
+    Services/Projectinfo.h
+
+SOURCES += \
+    Cores/EngineCore.cpp \
+    Cores/GraphicsEngine.cpp \
+    Cores/InputEngine.cpp \
+    Cores/PhysicsEngine.cpp \
+    Cores/ScriptEngine.cpp \
+    Folders/MaterialLib.cpp \
+    Folders/ModelFolder.cpp \
+    Folders/ScriptFolder.cpp \
+    Folders/TextureFolder.cpp \
+    Services/Eventhandler.cpp \
+    Services/ModelBuilder.cpp \
+    Services/ModelLoader.cpp \
+    Services/ProjectProcessor.cpp \
+    Services/Projectinfo.cpp

@@ -5,56 +5,48 @@
 #include "BaseEntities/Camera.h"
 #include "BaseEntities/Lighting.h"
 #include "BaseEntities/Skybox.h"
-#include "Models/SimpleModel.h"
 
 class cScene
 {
-
 public:
     cScene();
-    cScene(QHash<QString, cBase3DGameObject *> gameObjects, QHash<QString, cLighting *> lighting ,
-          QHash<QString, cCamera *> cameras, cSkyBox *skybox);
+    cScene(std::vector<cBase3DGameObject*>&& gameObjects, std::vector<cLighting*>&& lighting,
+          std::vector<cCamera*>&& cameras, cSkyBox* skybox);
     ~cScene();
 
-    bool addGameObject(const QString &name, cModel *model);
-    bool addLighting(const QString &name);
-    bool addCamera(const QString &name);
+    bool addGameObject(uint32_t name, cModel *model);
+    bool addLighting(uint32_t name);
+    bool addCamera(uint32_t name);
 
-    bool deleteGameObject(const QString &name);
-    bool deleteLighting(const QString &name);
-    bool deleteCamera(const QString &name);
+    bool deleteGameObject(uint32_t name);
+    bool deleteLighting(uint32_t name);
+    bool deleteCamera(uint32_t name);
 
     bool setSkybox(cModel *model);
-    void setCurrentCamera(const QString &name);
-    //void addPhysicsObject();
+    void setCurrentCamera(uint32_t name);
 
-// добавить добавление объектов камеры и света, а также добавить назначенеи текущей камеры.
 public:
+    cBase3DGameObject *gameObject(uint32_t objectName) const;
+    cCamera *camera(uint32_t cameraName) const;
+    cLighting *lighting(uint32_t lightName) const;
 
-    cBase3DGameObject *gameObject(const QString &objectName) const;
-    cCamera *camera(const QString &cameraName) const;
-    cLighting *lighting(const QString &lightName) const;
-
-    QVector<cLighting*> lighings() const;
-    QVector<cBase3DGameObject*> gameObjects() const;
-    QVector<cCamera*> cameras() const;
-
-    QHash<QString, cLighting *> lighingsHash() const;
-    QHash<QString, cBase3DGameObject *> gameObjectsHash() const;
-    QHash<QString, cCamera *> camerasHash() const;
-
+    std::vector<cLighting*> lighings() const;
+    std::vector<cBase3DGameObject*> gameObjects() const;
+    std::vector<cCamera*> cameras() const;
 
     cCamera *currentCamera() const;
     cSkyBox *skybox() const;
 
 private:
-    //QVector<Base3DPhysicsObject *> m_physicsObject;
-    cSkyBox *m_skybox;
-    QHash<QString, cCamera *> m_cameras;
-    QHash<QString, cLighting *> m_lightings;
-    QHash<QString, cBase3DGameObject *> m_gameObjects;
+    cCamera* m_currentCamera = nullptr;
+    cLighting* m_currentLighting = nullptr;
+    cSkyBox* m_skyBox = nullptr;
 
-    cCamera *m_currentCamera;
+    std::vector<cSkyBox*> m_skyBoxes;
+    std::vector<cCamera*> m_cameras;
+    std::vector<cLighting*> m_lightings;
+    std::vector<cBase3DGameObject*> m_gameObjects;
+    //std::vector<Base3DPhysicsObject *> m_physicsObject;
 };
 
 

@@ -59,7 +59,7 @@ cModel *cModelBuilder::createCube(const float &width, const float &height, const
     return new cModel(std::make_shared<cModelParticle>(vertexes, indexes, material));
 }
 
-cModel *cModelBuilder::createSkybox(const float &size, const QString &texture)
+cModel *cModelBuilder::createSkybox(const float &size, const std::string &texture)
 {
     std::vector<sVertexData> vertexes;
     std::vector<GLuint> indexes;
@@ -107,7 +107,7 @@ cModel *cModelBuilder::createSkybox(const float &size, const QString &texture)
     }
 
     cMaterial *material = new cMaterial();
-    material->setDiffuseMap(texture.toStdString());
+    material->setDiffuseMap(texture);
     return new cModel(std::make_shared<cModelParticle>(vertexes, indexes, material));
 }
 

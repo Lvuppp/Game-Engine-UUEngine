@@ -7,9 +7,8 @@
 #include "Entities/Script.h"
 #include <QLibrary>
 
-
 #include <QDir>
-//#include <dlfcn.h>
+#include <QThread>
 
 // В данный момент он довольно таки примитивный, но он старается :)
 
@@ -17,7 +16,12 @@ class cScriptEngine : public QThread
 {
     Q_OBJECT
 public:
-    ~cScriptEngine();
+    cScriptEngine();
+    ~cScriptEngine() = default;
+
+    cScriptEngine(const cScriptEngine&) = delete;
+    cScriptEngine& operator=(const cScriptEngine&) = delete;
+
     void startScene(cScene *scene);
     void stopScene();
 
@@ -25,37 +29,22 @@ public:
     void loadScripts(cScene *scene);
     void unloadScripts();
 
-    void loadObjectScripts(const QString &objectName, cBaseEngineObject *object);
-
-public:
-    static cScriptEngine *getInstance();
-
-public slots:
-    void updateScene();
+    void loadObjectScripts(const std::string &objectName, cBaseEngineObject *object);
 
 signals:
-    void updateGraphics();
     void stopScripts();
 
 private:
     cScriptFolder *m_scriptsFolder;
     cSceneFolder *m_sceneFolder;
 
-    QVector<QLibrary *> m_scripts;
-    QVector<QThread *> m_threadPool;
+    std::vector<QLibrary *> m_scripts;
+    std::vector<QThread *> m_threadPool;
 
     cScene *m_currentSceneCopy;
-    QHash<QString, cScene *> m_scenesCopy;
+    std::unordered_map<std::string, cScene *> m_scenesCopy;
 
     bool m_gameStatus;
-private:
-
-    cScriptEngine();
-
-    cScriptEngine(const cScriptEngine&) = delete;
-    cScriptEngine& operator=(const cScriptEngine&) = delete;
-
-    static cScriptEngine *m_instance;
 };
 
 

@@ -48,14 +48,26 @@ public:
 public:
     virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture = true) = 0;
 
+private:
+    bool checkFlag();
+
 protected:
+    uint32_t m_id = 0;
+
     QMatrix4x4 m_modelMatrix;
     QVector3D m_coordinates;
     QQuaternion m_rotate;
     QQuaternion m_rotateX;
     QQuaternion m_rotateY;
     float m_scale = 0.0f;
-    bool m_lock = false;
+
+    enum class Flags
+    {
+        Lock,
+        RenderEnable
+    };
+
+    uint32_t m_flags = 0u;
 };
 
 #endif // BASEENGINEOBJECT_H

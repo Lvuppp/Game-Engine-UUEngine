@@ -1,6 +1,6 @@
 #include "MaterialLib.h"
 
-#include "Core/Services/Projectinfo.h"
+#include "Core/Services/ProjectInfo.h"
 
 cMaterialLibrary::cMaterialLibrary()
 {
@@ -12,15 +12,15 @@ void cMaterialLibrary::addMaterial(cMaterial *material)
     if (!material)
         return;
 
-    if (m_materials.contains(material))
+    if (std::find(m_materials.begin(), m_materials.end(), material) != m_materials.end())
         return;
 
-    m_materials.append(material);
+    m_materials.push_back(material);
 }
 
-void cMaterialLibrary::loadMaterialsFromFile(const QString &path)
+void cMaterialLibrary::loadMaterialsFromFile(const std::string &path)
 {
-    QFile file(path);
+    QFile file(QString::fromStdString(path));
 
     QTextStream inputStream(&file);
 
@@ -29,7 +29,7 @@ void cMaterialLibrary::loadMaterialsFromFile(const QString &path)
         return;
     }
 
-    QFileInfo fileInfo(std::move(path));
+    QFileInfo fileInfo(QString::fromStdString(path));
 
     for (int i = 0; i < m_materials.size(); ++i)
         delete m_materials[i];
@@ -39,9 +39,9 @@ void cMaterialLibrary::loadMaterialsFromFile(const QString &path)
 
     while (!inputStream.atEnd()) {
 
-        QString str = inputStream.readLine();
+        std::string str = inputStream.readLine().toStdString();
 
-        QStringList list = str.split(" ");
+        QStringList list = QString::fromStdString(str).split(" ");
 
         if (list[0] == "newmtl") {
 
@@ -63,12 +63,12 @@ void cMaterialLibrary::loadMaterialsFromFile(const QString &path)
             newMtl->setSpecularColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
         }
         else if (list[0] == "map_Kd"){
-            newMtl->setDiffuseMap((QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])).toStdString()));
-            cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])));
+            newMtl->setDiffuseMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+            cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
         }
         else if (list[0] == "map_Bump"){
-            newMtl->setNormalMap(((QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])))).toStdString());
-            cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath()).arg(std::move(list[1])));
+            newMtl->setNormalMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+            cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
         }
     }
 
@@ -85,7 +85,7 @@ cMaterial *cMaterialLibrary::material(quint32 index)
         return nullptr;
 }
 
-cMaterial *cMaterialLibrary::material(const QString &mtlName)
+cMaterial *cMaterialLibrary::material(const std::string &mtlName)
 {
     for (int i = 0; i < m_materials.size(); ++i)
         if (m_materials[i]->mtlName() == mtlName)

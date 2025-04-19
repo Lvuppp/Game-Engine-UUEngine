@@ -10,12 +10,12 @@
 // {
 // public:
 //     cCustomModel();
-//     cCustomModel(QVector<cModelParticle *> modelParticles);
+//     cCustomModel(std::vector<cModelParticle *> modelParticles);
 //     ~cCustomModel();
 
 //     void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions) override;
 
-//     void setModel(QVector<cModelParticle *> modelParticles);
+//     void setModel(std::vector<cModelParticle *> modelParticles);
 //     cModelParticle *modelParticle(const int &index);
 //     const std::vector<std::unique_ptr<cModelParticle>>& getModelParticles() const;
 

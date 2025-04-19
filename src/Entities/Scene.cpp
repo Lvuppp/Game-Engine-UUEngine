@@ -1,79 +1,134 @@
 #include "Scene.h"
 
+#include "BaseEntities/Camera.h"
+#include "Core/Cores/GraphicsEngine.h"
+#include "Utils/Assert.h"
+
+#include <iterator>
+
 cScene::cScene()
 {
-    m_gameObjects = QHash<QString, cBase3DGameObject *>();
-    m_cameras = QHash<QString, cCamera*>();
-    m_lightings = QHash<QString, cLighting*>();
     m_skybox = nullptr;
     m_currentCamera = nullptr;
-
 }
 
-cScene::cScene(QHash<QString, cBase3DGameObject *> gameObjects, QHash<QString, cLighting *> lighting,
-             QHash<QString, cCamera *> cameras, cSkyBox *skybox) : m_skybox(skybox), m_cameras(cameras),
-            m_lightings(lighting), m_gameObjects(gameObjects)
+cScene::cScene(std::unordered_map<uint32_t, cBase3DGameObject*>&& gameObjects, std::unordered_map<uint32_t, cLighting*>&& lighting,
+             std::unordered_map<uint32_t, cCamera*>&& cameras, cSkyBox* skybox)
+    : m_skybox(skybox)
+    , m_cameras(std::move(cameras))
+    , m_lightings(std::move(lighting))
+    , m_gameObjects(std::move(gameObjects))
 {
 
 }
 
 cScene::~cScene()
 {
-    for (auto it = m_gameObjects.begin(); it != m_gameObjects.end(); ++it) {
-        delete it.value();
+    for (auto it = m_gameObjects.begin(); it != m_gameObjects.end(); it++)
+    {
+        delete it->second;
     }
-    m_gameObjects.clear();
 
-    // Удаление камер
-    for (auto it = m_cameras.begin(); it != m_cameras.end(); ++it) {
-        delete *it;
+    for (auto it = m_cameras.begin(); it != m_cameras.end(); ++it)
+    {
+        delete it->second;
     }
-    m_cameras.clear();
 
-    // Удаление освещения
-    for (auto it = m_lightings.begin(); it != m_lightings.end(); ++it) {
-        delete *it;
+    for (auto it = m_lightings.begin(); it != m_lightings.end(); ++it)
+    {
+        delete it->second;
     }
-    m_lightings.clear();
 }
 
-bool cScene::addGameObject(const QString &name, cModel *model)
+bool cScene::addGameObject(uint32_t name, cModel *model)
 {
-    if(m_gameObjects.contains(name)) return false;
+    auto it = std::find_if(m_gameObjects.cbegin(), m_gameObjects.cend(), [name](const auto& object) {
+        return object.first == name;
+    });
 
-    m_gameObjects.insert(name, new cBase3DGameObject(model));
+    if (it != m_gameObjects.cend())
+    {
+        return false;
+    }
+
+    m_gameObjects.insert(std::make_pair<>(name, new cBase3DGameObject(model)));
     return true;
 }
 
-bool cScene::addLighting(const QString &name)
+bool cScene::addLighting(uint32_t name)
 {
-    if(m_lightings.contains(name)) return false;
+    auto it = std::find_if(m_lightings.cbegin(), m_lightings.cend(), [name](const auto& object) {
+        return object.first == name;
+    });
 
-    m_lightings.insert(name, new cLighting());
+    if (it != m_lightings.cend())
+    {
+        return false;
+    }
+
+    m_lightings.insert(std::make_pair<>(name, new cLighting()));
     return true;
 }
 
-bool cScene::addCamera(const QString &name)
+bool cScene::addCamera(uint32_t name)
 {
-    if(m_cameras.contains(name)) return false;
+    auto it = std::find_if(m_cameras.cbegin(), m_cameras.cend(), [name](const auto& object) {
+        return object.first == name;
+    });
 
-    m_cameras.insert(name, new cCamera());
+    if (it != m_cameras.cend())
+    {
+        return false;
+    }
+
+    m_cameras.insert(std::make_pair<>(name, new cCamera()));
     return true;
 }
 
-bool cScene::deleteGameObject(const QString &name)
+bool cScene::deleteGameObject(uint32_t name)
 {
-    return m_gameObjects.remove(name);
+    auto it = std::find_if(m_gameObjects.cbegin(), m_gameObjects.cend(), [name](const auto& object) {
+        return object.first == name;
+    });
+
+    if (it != m_gameObjects.cend())
+    {
+        m_gameObjects.erase(m_gameObjects.cbegin(), it);
+        return true;
+    }
+
+    return false;
 }
 
-bool cScene::deleteLighting(const QString &name)
+bool cScene::deleteLighting(uint32_t name)
 {
-    return m_cameras.remove(name);
+    auto it = std::find_if(m_lightings.cbegin(), m_lightings.cend(), [name](const auto& object) {
+        return object.first == name;
+    });
+
+    if (it != m_lightings.cend())
+    {
+        m_lightings.erase(m_lightings.cbegin(), it);
+        return true;
+    }
+
+    return false;
 }
 
-bool cScene::deleteCamera(const QString &name)
+bool cScene::deleteCamera(uint32_t hash)
 {
-    return m_lightings.remove(name);
+    auto it = std::find_if(m_cameras.cbegin(), m_cameras.cend(), [name](const auto& object) {
+        return object.first == name;
+    });
+
+    ASSERT(it != m_cameras.cend(), "Camera doesn`t exist");
+    if (it != m_cameras.cend())
+    {
+        m_cameras.erase(m_cameras.cbegin(), it);
+        return true;
+    }
+
+    return false;
 }
 
 bool cScene::setSkybox(cModel *model)
@@ -82,50 +137,73 @@ bool cScene::setSkybox(cModel *model)
     return true;
 }
 
-
-QVector<cLighting*> cScene::lighings() const
+std::vector<cLighting*> cScene::lighings() const
 {
-    return m_lightings.values();
+    std::vector<cLighting*> lightings;
+    lightings.reserve(m_lightings.size());
+
+    for (auto [_, object] : m_lightings)
+    {
+        lightings.push_back(object);
+    }
+
+    return lightings;
 }
 
-QVector<cBase3DGameObject *> cScene::gameObjects() const
+std::vector<cBase3DGameObject*> cScene::gameObjects() const
 {
-    return m_gameObjects.values();
+    std::vector<cBase3DGameObject*> gameObjects;
+    gameObjects.reserve(m_gameObjects.size());
+
+    for (auto [_, object] : m_gameObjects)
+    {
+        gameObjects.push_back(object);
+    }
+
+    return gameObjects;
 }
 
-QVector<cCamera *> cScene::cameras() const
+std::vector<cCamera *> cScene::cameras() const
 {
-    return m_cameras.values();
+    std::vector<cCamera*> cameras;
+    cameras.reserve(m_cameras.size());
+
+    for (auto [_, object] : m_cameras)
+    {
+        cameras.push_back(object);
+    }
+
+    return cameras;
 }
 
-QHash<QString, cLighting *> cScene::lighingsHash() const
+const std::unordered_map<uint32_t, cLighting *>& cScene::lighingsHash() const
 {
     return m_lightings;
 }
 
-QHash<QString, cBase3DGameObject *> cScene::gameObjectsHash() const
+const std::unordered_map<uint32_t, cBase3DGameObject *>& cScene::gameObjectsHash() const
 {
     return m_gameObjects;
 }
 
-QHash<QString, cCamera *> cScene::camerasHash() const
+const std::unordered_map<uint32_t, cCamera *>& cScene::camerasHash() const
 {
     return m_cameras;
 }
 
-cBase3DGameObject *cScene::gameObject(const QString &objectName) const
+cBase3DGameObject *cScene::gameObject(uint32_t hash) const
 {
-    return m_gameObjects.value(objectName);
+    return m_gameObjects.find(object)->second;
 }
 
-cCamera *cScene::camera(const QString &cameraName) const
+cCamera *cScene::camera(uint32_t hash) const
 {
-    return m_cameras.value(cameraName);
+    return m_cameras.find(cameraName)->second;
 }
 
-cLighting *cScene::lighting(const QString &lightName) const
+cLighting *cScene::lighting(uint32_t hash) const
 {
-    return m_lightings.value(lightName);
+    return m_lightings.find(lightName)->second;
 }
 
 cCamera *cScene::currentCamera() const
@@ -138,7 +216,7 @@ cSkyBox *cScene::skybox() const
     return m_skybox;
 }
 
-void cScene::setCurrentCamera(const QString &name)
+void cScene::setCurrentCamera(uint32_t name)
 {
-    m_currentCamera = m_cameras.value(name);
+    m_currentCamera = m_cameras.find(name)->second;
 }

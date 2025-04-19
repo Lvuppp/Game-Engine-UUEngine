@@ -9,138 +9,121 @@
 #include "Core/Services/ModelBuilder.h"
 #include "Core/Services/ProjectProcessor.h"
 #include "Entities/SceneFolder.h"
+#include "Utils/Vectors.h"
 
 #include <QVBoxLayout>
-//#include"camera.h"
+
+class cGraphicsEngine;
+class cInputEngine;
+class cPhysicsEngine;
+class cProjectProcessor;
+class cScriptEngine;
 
 class cEngineCore : public QObject
 {
     Q_OBJECT
 
 public:
-// intitializing of all engine parts
-    void initGraphicsEngine();
-    void initPhysicsEngine();
-    void initScriptEngine();
-    void initInputEngine(const int &width, const int &height);
-    void initProjectProcessor(QVBoxLayout &layout);
+    cEngineCore();
+    ~cEngineCore() = default;
 
-    static cEngineCore *getInstance();
+    cEngineCore(const cEngineCore& core) = delete;
+    cEngineCore& operator=(const cEngineCore& core) = delete;
+
+public:
+    void initInputEngine(sVec2 size);
+    void initProjectProcessor(QVBoxLayout &layout);
+    void initGraphicsEngine();
 
     void update(float dt);
     void render();
-//graphics engine part
-public:
-    void paintScene();
     void resizeScene(int w, int h);
 
 public:
-    void translateObject(const QString &objectName,const QVector3D &translation);
-    void rotateXObject(const QString &objectName,const QQuaternion &rotation);
-    void rotateYObject(const QString &objectName,const QQuaternion &rotation);
-    void scaleObject(const QString &objectName,const float &scale);
-    void deleteObject(const QString& objectName);
+    void translateObject(const std::string &objectName, const QVector3D &translation);
+    void rotateXObject(const std::string &objectName, const QQuaternion &rotation);
+    void rotateYObject(const std::string &objectName, const QQuaternion &rotation);
+    void scaleObject(const std::string &objectName, const float &scale);
+    void deleteObject(const std::string& objectName);
 
-    void setNormalTexture(const QString &objectName, const QString &path);
-    void setDiffuseTexture(const QString &objectName, const QString &path);
+    void setNormalTexture(const std::string &objectName, const std::string &path);
+    void setDiffuseTexture(const std::string &objectName, const std::string &path);
 
-signals:
-    void updateGraphics();
-
-//input engine part;
 public slots:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent* event);
     void wheelEvent(QWheelEvent* event);
     void mouseDoubleClickEvent(QMouseEvent *event);
 
-    void placeObjectOnMousePosition(const QString &objectName);
-//physics engine part
-public:
+    void placeObjectOnMousePosition(const std::string &objectName);
 
-//script engine part
 public:
     void changeGameStatus();
 
-public slots:
-    void updateScene();
-
-//scene project part
 public:
-    void setCurrentScene(const QString &sceneName);
+    void setCurrentScene(const std::string &sceneName);
     void createSimpleScene();
 
 public:
-    void createScene(const QString &sceneName);
-    void createCameraInScene(const QString &cameraName);
-    void createLightingInScene(const QString &lightingName);
-    void setSkyBox(const float &size, const QString &path);
+    void createScene(const std::string &sceneName);
+    void createCameraInScene(const std::string &cameraName);
+    void createLightingInScene(const std::string &lightingName);
+    void setSkyBox(const float &size, const std::string &path);
 
-    void selectCurrentScene(const QString &sceneName);
+    void selectCurrentScene(const std::string &sceneName);
     cScene *getCurrentScene();
 
-//project processor part
 public slots:
-    void createProject(const QString &path, const QString &name);
-    void loadProject(const QString & path);
-    void saveProject(const QString &path = 0, const QString &projectName = 0);
+    void createProject(const std::string &path, const std::string &name);
+    void loadProject(const std::string & path);
+    void saveProject(const std::string &path = 0, const std::string &projectName = 0);
     void closeProject();
 
-//folders part
 public:
-    void loadModel(const QString &objectName, const QString &path);
-    void loadTexture(const QString &objectName, const QString &path);
-    void loadScript(const QString &objectName, const QString &path);
+    void loadModel(const std::string &objectName, const std::string &path);
+    void loadTexture(const std::string &objectName, const std::string &path);
+    void loadScript(const std::string &objectName, const std::string &path);
 
-    QString getModel(const QString &objectName);
-    QVector<QString> getScripts(const QString &objectName);
+    std::string getModel(const std::string &objectName);
+    std::vector<std::string> getScripts(const std::string &objectName);
 
-//model loader part
 public:
-    bool createOBJModel(const QString &objectName, const QString &modelPath);
-    bool createFBXModel(const QString &objectName, const QString &modelPath);
+    bool createOBJModel(const std::string &objectName, const std::string &modelPath);
+    bool createFBXModel(const std::string &objectName, const std::string &modelPath);
 
-//model builder
 public:
-    bool createCube(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
-    void createPyramide(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f);
-    bool createSphere(const QString &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
-    void createPrism(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const float &angle = 1.0f);
-    void createCone(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
-    void createCylinder(const QString &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
+    bool createCube(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
+    void createPyramide(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f);
+    bool createSphere(const std::string &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
+    void createPrism(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const float &angle = 1.0f);
+    void createCone(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
+    void createCylinder(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
 
-    void changeCube(const QString &objectName, const float &width, const float &height, const float &depth);
-    void changeSphere(const QString &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
-private:
-
-    cGraphicsEngine *m_graphicsEngine;
-    cPhysicsEngine *m_phyicsEngine;
-    cScriptEngine *m_scriptEngine;
-    cInputEngine *m_inputEngine;
-
-    cProjectProcessor *m_projectProcessor;
-    cModelLoader m_modelLoader;
-    cModelBuilder m_modelBuilder;
-
-    cSceneFolder *m_sceneFolder;
-    cModelFolder *m_modelFolder;
-    cScriptFolder *m_scriptFolder;
-    cTextureFolder *m_textureFolder;
+    void changeCube(const std::string &objectName, const float &width, const float &height, const float &depth);
+    void changeSphere(const std::string &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
 
 private:
-    cEngineCore();
-
-    cEngineCore(const cGraphicsEngine&) = delete;
-    cEngineCore& operator=(const cGraphicsEngine&) = delete;
-
-    static cEngineCore* m_instance;
-
     bool m_gameStatus = false;
 
 signals:
     void setDisableState(bool state);
-    void emitObject(const QString &objectName, cBase3DGameObject **object);
-};
+    void emitObject(const std::string &objectName, cBase3DGameObject **object);
 
+private:
+    std::unique_ptr<cGraphicsEngine> m_graphicsEngine = nullptr;
+    std::unique_ptr<cPhysicsEngine> m_phyicsEngine = nullptr;
+    std::unique_ptr<cScriptEngine> m_scriptEngine = nullptr;
+    std::unique_ptr<cInputEngine> m_inputEngine = nullptr;
+
+    std::unique_ptr<cProjectProcessor> m_projectProcessor = nullptr;
+
+    std::unique_ptr<cSceneFolder> m_sceneFolder = nullptr;
+    std::unique_ptr<cModelFolder> m_modelFolder = nullptr;
+    std::unique_ptr<cScriptFolder> m_scriptFolder = nullptr;
+    std::unique_ptr<cTextureFolder> m_textureFolder = nullptr;
+
+    cModelLoader m_modelLoader;
+    cModelBuilder m_modelBuilder;
+};
 
 #endif // ENGINECORE_H
