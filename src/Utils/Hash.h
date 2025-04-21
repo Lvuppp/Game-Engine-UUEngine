@@ -3,7 +3,7 @@
 #include <string_view>
 #include <cstdint>
 
-class Hash
+class cHash
 {
 public:
     static constexpr uint32_t hash(std::string_view str)
@@ -20,5 +20,5 @@ public:
 
 constexpr uint32_t operator"" _hash(const char* str, size_t len)
 {
-    return Hash::hash(std::string_view(str, len));
+    return cHash::hash(std::string_view(str, len));
 }

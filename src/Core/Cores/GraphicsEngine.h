@@ -7,13 +7,14 @@
 #include <GL/gl.h>
 #include <QMatrix4x4>
 #include <QOpenGLFramebufferObject>
-#include <vector>
+
+class cBaseEngineObject;
 
 //сделать классы поддвижков singltone
 class cGraphicsEngine
 {
 public:
-    cGraphicsEngine();
+    cGraphicsEngine() = default;
     ~cGraphicsEngine();
 
     cGraphicsEngine(const cGraphicsEngine&) = delete;
@@ -60,6 +61,6 @@ private:
     int m_windowWidth;
     int m_windowHeight;
 
-    bool m_gameStatus;
+    bool m_gameStatus = false;
 };
 #endif // GRAPHICSENGINE_H

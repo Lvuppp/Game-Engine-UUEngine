@@ -3,7 +3,7 @@
 
 #include "Entities/Scene.h"
 #include "Core/Folders/ScriptFolder.h"
-#include "Entities/SceneFolder.h"
+#include "Core/Folders/SceneManager.h"
 #include "Entities/Script.h"
 #include <QLibrary>
 
@@ -36,7 +36,7 @@ signals:
 
 private:
     cScriptFolder *m_scriptsFolder;
-    cSceneFolder *m_sceneFolder;
+    cSceneManager *m_sceneManager;
 
     std::vector<QLibrary *> m_scripts;
     std::vector<QThread *> m_threadPool;

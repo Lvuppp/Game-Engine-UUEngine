@@ -79,7 +79,6 @@ void cMainLoop::render()
     m_glWidget->makeCurrent();
     m_engine.render();
     m_glWidget->doneCurrent();
-   // m_glWidget->render(m_glWidget);
 }
 
 void cMainLoop::processInput()

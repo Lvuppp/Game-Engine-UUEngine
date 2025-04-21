@@ -1,5 +1,9 @@
 #include "GraphicsEngine.h"
 
+#include "Entities/BaseEntities/Base3DGameObject.h"
+#include "Entities/BaseEntities/Camera.h"
+#include "Entities/BaseEntities/Lighting.h"
+#include "Entities/BaseEntities/Skybox.h"
 #include "Utils/Assert.h"
 
 #include <iostream>
@@ -7,18 +11,9 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
-cGraphicsEngine::cGraphicsEngine()
-    : m_gameStatus(false)
-{
-    m_engineCamera = new cCamera();
-    m_engineLighting = new cLighting();
-}
-
 cGraphicsEngine::~cGraphicsEngine()
 {
     delete m_frameBuffer;
-    delete m_engineCamera;
-    delete m_engineLighting;
 }
 
 void cGraphicsEngine::initGraphics()

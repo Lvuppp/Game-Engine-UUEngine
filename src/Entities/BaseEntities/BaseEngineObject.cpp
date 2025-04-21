@@ -3,14 +3,18 @@
 cBaseEngineObject::cBaseEngineObject()
     : m_coordinates(0.0f, 0.0f, 0.0f)
     , m_scale(1.0f)
-    , m_lock(false)
 {
     m_rotate *= QQuaternion();
 }
 
+uint32_t cBaseEngineObject::getId() const
+{
+    return m_id;
+}
+
 bool cBaseEngineObject::isLocked() const
 {
-    return m_lock;
+    return m_flags & static_cast<uint32_t>(Flags::Lock);
 }
 
 float cBaseEngineObject::scale() const
@@ -67,12 +71,12 @@ void cBaseEngineObject::scale(float scale)
 
 void cBaseEngineObject::lock()
 {
-    m_lock = true;
+    m_flags |= static_cast<uint32_t>(Flags::Lock);
 }
 
 void cBaseEngineObject::unlock()
 {
-    m_lock = false;
+    m_flags |= ~static_cast<uint32_t>(Flags::Lock);
 }
 
 QMatrix4x4 cBaseEngineObject::modelMatrix()
@@ -114,4 +118,8 @@ void cBaseEngineObject::setRotateY(const QQuaternion &rotation)
 cBaseEngineObject::ObjectType cBaseEngineObject::objectType() const
 {
     return cBaseEngineObject::ObjectType::GameObject;
+}
+
+void cBaseEngineObject::draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture)
+{
 }

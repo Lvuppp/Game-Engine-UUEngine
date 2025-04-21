@@ -16,16 +16,16 @@ public:
     cModelFolder(const cModelFolder&) = delete;
     cModelFolder& operator=(const cModelFolder&) = delete;
 
-    void append(const std::string &objectName, const std::string &modelName);
-    void remove(const std::string &objectName);
-    void replace(const std::string &objectName, const std::string &modelName);
+    void append(uint32_t hash, const std::string &modelName);
+    void remove(uint32_t hash);
+    void replace(uint32_t hash, const std::string &modelName);
 
-    std::string model(const std::string &name) const;
+    const std::string& getModel(uint32_t hash);
 
     void clearFolder();
 
 private:
-    std::unordered_map<std::string, std::string>  m_modelsFolder;
+    std::unordered_map<uint32_t, std::string>  m_modelsFolder;
 };
 
 #endif // MODELFOLDER_H

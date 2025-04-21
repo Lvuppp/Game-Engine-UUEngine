@@ -1,11 +1,6 @@
 #include "UI/MainWindow.h"
 #include "Application/MainLoop.h"
 
-#include <QApplication>
-#include <QThread>
-#include <iostream>
-#include <QSurfaceFormat>
-
 int main(int argc, char *argv[])
 {
 

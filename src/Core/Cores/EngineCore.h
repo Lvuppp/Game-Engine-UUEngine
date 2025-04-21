@@ -8,7 +8,6 @@
 #include "Core/Services/ModelLoader.h"
 #include "Core/Services/ModelBuilder.h"
 #include "Core/Services/ProjectProcessor.h"
-#include "Entities/SceneFolder.h"
 #include "Utils/Vectors.h"
 
 #include <QVBoxLayout>
@@ -40,14 +39,14 @@ public:
     void resizeScene(int w, int h);
 
 public:
-    void translateObject(const std::string &objectName, const QVector3D &translation);
-    void rotateXObject(const std::string &objectName, const QQuaternion &rotation);
-    void rotateYObject(const std::string &objectName, const QQuaternion &rotation);
-    void scaleObject(const std::string &objectName, const float &scale);
-    void deleteObject(const std::string& objectName);
+    void translateObject(uint32_t hash, const QVector3D &translation);
+    void rotateXObject(uint32_t hash, const QQuaternion &rotation);
+    void rotateYObject(uint32_t hash, const QQuaternion &rotation);
+    void scaleObject(uint32_t hash, const float &scale);
+    void deleteObject(uint32_t hash);
 
-    void setNormalTexture(const std::string &objectName, const std::string &path);
-    void setDiffuseTexture(const std::string &objectName, const std::string &path);
+    void setNormalTexture(uint32_t hash, const std::string& path);
+    void setDiffuseTexture(uint32_t hash, const std::string& path);
 
 public slots:
     void mousePressEvent(QMouseEvent *event);
@@ -55,59 +54,59 @@ public slots:
     void wheelEvent(QWheelEvent* event);
     void mouseDoubleClickEvent(QMouseEvent *event);
 
-    void placeObjectOnMousePosition(const std::string &objectName);
+    void placeObjectOnMousePosition(uint32_t hash);
 
 public:
     void changeGameStatus();
 
 public:
-    void setCurrentScene(const std::string &sceneName);
+    void setCurrentScene(const std::string& sceneName);
     void createSimpleScene();
 
 public:
-    void createScene(const std::string &sceneName);
-    void createCameraInScene(const std::string &cameraName);
-    void createLightingInScene(const std::string &lightingName);
-    void setSkyBox(const float &size, const std::string &path);
+    void createScene(uint32_t hash);
+    void createCameraInScene(uint32_t hash);
+    void createLightingInScene(uint32_t hash);
+    void setSkyBox(const float &size, const std::string& path);
 
-    void selectCurrentScene(const std::string &sceneName);
+    void selectCurrentScene(const std::string& sceneName);
     cScene *getCurrentScene();
 
 public slots:
-    void createProject(const std::string &path, const std::string &name);
-    void loadProject(const std::string & path);
-    void saveProject(const std::string &path = 0, const std::string &projectName = 0);
+    void createProject(const std::string& path, const std::string &name);
+    void loadProject(const std::string& path);
+    void saveProject(const std::string& path = 0, const std::string& projectName = 0);
     void closeProject();
 
 public:
-    void loadModel(const std::string &objectName, const std::string &path);
-    void loadTexture(const std::string &objectName, const std::string &path);
-    void loadScript(const std::string &objectName, const std::string &path);
+    void loadModel(uint32_t hash, const std::string& path);
+    void loadTexture(uint32_t hash, const std::string& path);
+    void loadScript(uint32_t hash, const std::string& path);
 
-    std::string getModel(const std::string &objectName);
-    std::vector<std::string> getScripts(const std::string &objectName);
-
-public:
-    bool createOBJModel(const std::string &objectName, const std::string &modelPath);
-    bool createFBXModel(const std::string &objectName, const std::string &modelPath);
+    const std::string& getModel(uint32_t hash);
+    std::vector<std::string> getScripts(uint32_t hash);
 
 public:
-    bool createCube(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
-    void createPyramide(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f);
-    bool createSphere(const std::string &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
-    void createPrism(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const float &angle = 1.0f);
-    void createCone(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
-    void createCylinder(const std::string &objectName, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
+    bool createOBJModel(uint32_t hash, const std::string& modelPath);
+    bool createFBXModel(uint32_t hash, const std::string& modelPath);
 
-    void changeCube(const std::string &objectName, const float &width, const float &height, const float &depth);
-    void changeSphere(const std::string &objectName, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
+public:
+    bool createCube(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
+    void createPyramide(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f);
+    bool createSphere(uint32_t hash, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
+    void createPrism(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const float &angle = 1.0f);
+    void createCone(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
+    void createCylinder(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
+
+    void changeCube(uint32_t hash, const float &width, const float &height, const float &depth);
+    void changeSphere(uint32_t hash, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
 
 private:
     bool m_gameStatus = false;
 
 signals:
     void setDisableState(bool state);
-    void emitObject(const std::string &objectName, cBase3DGameObject **object);
+    void emitObject(uint32_t hash, cBase3DGameObject **object);
 
 private:
     std::unique_ptr<cGraphicsEngine> m_graphicsEngine = nullptr;
@@ -117,7 +116,7 @@ private:
 
     std::unique_ptr<cProjectProcessor> m_projectProcessor = nullptr;
 
-    std::unique_ptr<cSceneFolder> m_sceneFolder = nullptr;
+    std::unique_ptr<cSceneManager> m_sceneManager = nullptr;
     std::unique_ptr<cModelFolder> m_modelFolder = nullptr;
     std::unique_ptr<cScriptFolder> m_scriptFolder = nullptr;
     std::unique_ptr<cTextureFolder> m_textureFolder = nullptr;

@@ -1,6 +1,7 @@
 #include "ObjectInfo.h"
 #include "ui_objectInfo.h"
 
+#include "Utils/Hash.h"
 #include "Utils/TextUtils.h"
 
 #include <sstream>
@@ -13,7 +14,7 @@ cObjectInfo::cObjectInfo(QWidget *parent) :
     ui->setupUi(this);
     //m_engine = cEngineCore::getInstance();
 
-    connect(m_engine, &cEngineCore::emitObject, this , &cObjectInfo::setObject);
+    //connect(m_engine, &cEngineCore::emitObject, this , &cObjectInfo::setObject);
 }
 
 cObjectInfo::~cObjectInfo()
@@ -31,7 +32,7 @@ void cObjectInfo::setObject(const std::string &objectName, cBase3DGameObject **o
     // ui->specificalParams->update();
     repaint();
 
-    m_currentObject = *object;
+    //m_currentObject = *object;
     m_objectName = objectName;
 
     //ui->objectLabel->setText(objectName);
@@ -62,7 +63,7 @@ void cObjectInfo::updateCoordinates(const QVector3D &coords)
 }
 
 void cObjectInfo::setScriptsLabel() {
-    auto scripts = m_engine->getScripts(m_objectName);
+    auto scripts = m_engine->getScripts(cHash::hash(m_objectName));
     ui->scriptsLabel->setText(QString::fromStdString(text_utils::join(scripts, ' ')));
 }
 
@@ -70,7 +71,7 @@ void cObjectInfo::loadSpecificParams()
 {
     QLayout *layout = new QVBoxLayout();
 
-    auto model = QString::fromStdString(m_engine->getModel(m_objectName));
+    auto model = QString::fromStdString(m_engine->getModel(cHash::hash(m_objectName)));
 
     QRegularExpression paramsRegex("(\\w*)\\((.*?)\\)");
     QRegularExpressionMatchIterator matchIterator = paramsRegex.globalMatch(model);
@@ -101,7 +102,7 @@ void cObjectInfo::loadSpecificParams()
         layout->addWidget(depth);
 
         auto changeCube =[this, width, height, depth](){
-            m_engine->changeCube(m_objectName, width->text().toFloat(), height->text().toFloat(), depth->text().toFloat());
+            m_engine->changeCube(cHash::hash(m_objectName), width->text().toFloat(), height->text().toFloat(), depth->text().toFloat());
         };
 
         connect(width, &QLineEdit::editingFinished,changeCube);
@@ -133,7 +134,7 @@ void cObjectInfo::loadSpecificParams()
         layout->addWidget(sectors);
 
         auto changeSphere =[this, radius, rings, sectors](){
-            m_engine->changeSphere(m_objectName, radius->text().toFloat(), rings->text().toInt(), sectors->text().toInt());
+            m_engine->changeSphere(cHash::hash(m_objectName), radius->text().toFloat(), rings->text().toInt(), sectors->text().toInt());
         };
 
         connect(radius, &QLineEdit::editingFinished,changeSphere);
@@ -168,15 +169,15 @@ void cObjectInfo::loadSpecificParams()
 }
 
 void cObjectInfo::onDiffuseTextureSet(const QString &imagePath) {
-    m_engine->setDiffuseTexture(m_objectName, imagePath.toStdString());
+    m_engine->setDiffuseTexture(cHash::hash(m_objectName), imagePath.toStdString());
 }
 
 void cObjectInfo::onNormalTextureSet(const QString &imagePath) {
-    m_engine->setNormalTexture(m_objectName, imagePath.toStdString());
+    m_engine->setNormalTexture(cHash::hash(m_objectName), imagePath.toStdString());
 }
 
 void cObjectInfo::onScriptLoad(const QString &path) {
-    m_engine->loadScript(m_objectName, path.toStdString());
+    m_engine->loadScript(cHash::hash(m_objectName), path.toStdString());
 }
 
 void cObjectInfo::on_yCoordLineEdit_editingFinished()
@@ -184,7 +185,7 @@ void cObjectInfo::on_yCoordLineEdit_editingFinished()
     bool state;
     auto yCoord = ui->yCoordLineEdit->text().toFloat(&state);
     if(state){
-        m_engine->translateObject(m_objectName, QVector3D(0.0f, yCoord, 0.0f));
+        m_engine->translateObject(cHash::hash(m_objectName), QVector3D(0.0f, yCoord, 0.0f));
     }
     emit updateWindow();
 }
@@ -216,7 +217,7 @@ void cObjectInfo::on_xCoordLineEdit_editingFinished()
     bool state;
     auto xCoord = ui->xCoordLineEdit->text().toFloat(&state);
     if(state){
-        m_engine->translateObject(m_objectName, QVector3D(xCoord, 0.0f, 0.0f));
+        m_engine->translateObject(cHash::hash(m_objectName), QVector3D(xCoord, 0.0f, 0.0f));
     }
     emit updateWindow();
 }
@@ -226,7 +227,7 @@ void cObjectInfo::on_scaleLineEdit_editingFinished()
     bool state;
     auto scale = ui->scaleLineEdit->text().toFloat(&state);
     if(state){
-        m_engine->scaleObject(m_objectName, scale);
+        m_engine->scaleObject(cHash::hash(m_objectName), scale);
     }
 
     emit updateWindow();
@@ -249,7 +250,7 @@ void cObjectInfo::on_zCoordLineEdit_editingFinished()
     bool state;
     auto zCoord = ui->zCoordLineEdit->text().toFloat(&state);
     if(state){
-        m_engine->translateObject(m_objectName, QVector3D(0.0f, 0.0f, zCoord));
+        m_engine->translateObject(cHash::hash(m_objectName), QVector3D(0.0f, 0.0f, zCoord));
     }
     emit updateWindow();
 }
@@ -257,5 +258,5 @@ void cObjectInfo::on_zCoordLineEdit_editingFinished()
 
 void cObjectInfo::on_pushButton_clicked()
 {
-    m_engine->deleteObject(m_objectName);
+    m_engine->deleteObject(cHash::hash(m_objectName));
 }

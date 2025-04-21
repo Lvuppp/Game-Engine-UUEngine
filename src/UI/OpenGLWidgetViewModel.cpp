@@ -1,5 +1,7 @@
 #include "OpenGLWidgetViewModel.h"
 
+#include "Utils/Hash.h"
+
 cOpenGLWidgetViewModel::cOpenGLWidgetViewModel(QWidget *parent)  : QOpenGLWidget(parent)
 {
     this->setDisabled(true);
@@ -63,11 +65,11 @@ void cOpenGLWidgetViewModel::createObject()
 
     if(objectName == "Cube")
     {
-        func = [this](std::string objectName) -> bool{ return m_engine->createCube(objectName);};
+        func = [this](std::string objectName) -> bool{ return m_engine->createCube(cHash::hash(objectName));};
     }
     else if(objectName == "Sphere")
     {
-        func = [this](std::string objectName) -> bool{ return m_engine->createSphere(objectName);};
+        func = [this](std::string objectName) -> bool{ return m_engine->createSphere(cHash::hash(objectName));};
     }
     else if(objectName == "Custom object")
     {
@@ -76,7 +78,7 @@ void cOpenGLWidgetViewModel::createObject()
         if(objectPath.split('/').last().split('.').constLast() == "obj"){
             std::string objectPathStd = objectPath.toStdString();
             func = [this, objectPathStd](std::string objectName) -> bool {
-                return m_engine->createOBJModel(objectName, objectPathStd);
+                return m_engine->createOBJModel(cHash::hash(objectName), objectPathStd);
             };
         }
     }

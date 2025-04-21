@@ -1,30 +1,24 @@
 #include "TextureFolder.h"
 
-cTextureFolder::cTextureFolder()
-    : m_textures(std::unordered_map<std::string,std::string>())
+void cTextureFolder::append(uint32_t hash, const std::string &textureName)
 {
-
+    m_textures.insert(std::make_pair<>(hash, textureName));
 }
 
-void cTextureFolder::append(const std::string &objectName, const std::string &textureName)
+void cTextureFolder::remove(uint32_t hash)
 {
-    m_textures.insert(std::make_pair<>(objectName, textureName));
+    m_textures.erase(hash);
 }
 
-void cTextureFolder::remove(const std::string &objectName)
+void cTextureFolder::replace(uint32_t hash, const std::string &modelName)
 {
-    m_textures.erase(objectName);
+    m_textures[hash] = modelName;
 }
 
-void cTextureFolder::replace(const std::string &objectName, const std::string &modelName)
-{
-    m_textures[objectName] = modelName;
-}
-
-std::vector<std::string> cTextureFolder::texture(const std::string &objectName)
+std::vector<std::string> cTextureFolder::texture(uint32_t hash)
 {
     std::vector<std::string> tmp;
-    auto texturesIters =  m_textures.equal_range(objectName);
+    auto texturesIters =  m_textures.equal_range(hash);
 
     for (auto it = texturesIters.first; it != texturesIters.second; ++it)
     {

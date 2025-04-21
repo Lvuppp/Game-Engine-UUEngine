@@ -1,16 +1,16 @@
-#ifndef SCENEFOLDER_H
-#define SCENEFOLDER_H
+#ifndef sceneManager_H
+#define sceneManager_H
 
-#include "Scene.h"
+#include "Entities/Scene.h"
 
-class cSceneFolder
+class cSceneManager
 {
 public:
-    cSceneFolder();
-    ~cSceneFolder();
+    cSceneManager();
+    ~cSceneManager();
 
-    cSceneFolder(const cSceneFolder&) = delete;
-    cSceneFolder& operator=(const cSceneFolder&) = delete;
+    cSceneManager(const cSceneManager&) = delete;
+    cSceneManager& operator=(const cSceneManager&) = delete;
 
     bool createScene(const std::string &sceneName);
     cScene *setCurrentScene(const std::string &sceneName);
@@ -25,4 +25,4 @@ private:
     std::unordered_map<std::string, cScene *> m_scenes;
 };
 
-#endif // SCENEFOLDER_H
+#endif // sceneManager_H

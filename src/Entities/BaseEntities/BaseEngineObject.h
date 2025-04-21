@@ -14,6 +14,8 @@ public:
     cBaseEngineObject();
     virtual ~cBaseEngineObject() = default;
 
+    uint32_t getId() const;
+
     bool isLocked() const;
     void lock();
     void unlock();
@@ -44,9 +46,7 @@ public:
     };
 
     virtual ObjectType objectType() const;
-
-public:
-    virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture = true) = 0;
+    virtual void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions, bool isUsingTexture);
 
 private:
     bool checkFlag();

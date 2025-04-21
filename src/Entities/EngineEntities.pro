@@ -25,7 +25,7 @@ SOURCES += \
         EngineEntities/skybox.cpp \
         script.cpp \
         vertexdata.cpp\
-        scenefolder.cpp
+        SceneManager.cpp
 
 HEADERS += \
     EngineEntities/base3dgameobject.h \
@@ -42,7 +42,7 @@ HEADERS += \
     EngineEntities/skybox.h \
     script.h \
     vertexdata.h\
-    scenefolder.h
+    SceneManager.h
 
 
 unix: LIBS += -L/usr/lib64 -lGL

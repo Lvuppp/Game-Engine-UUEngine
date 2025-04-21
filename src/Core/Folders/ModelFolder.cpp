@@ -1,23 +1,23 @@
 #include "ModelFolder.h"
 
-void cModelFolder::append(const std::string &objectName, const std::string &modelName)
+void cModelFolder::append(uint32_t hash, const std::string &modelName)
 {
-    m_modelsFolder.insert(std::make_pair<>(objectName, modelName));
+    m_modelsFolder.insert(std::make_pair<>(hash, modelName));
 }
 
-void cModelFolder::remove(const std::string &objectName)
+void cModelFolder::remove(uint32_t hash)
 {
-    m_modelsFolder.erase(objectName);
+    m_modelsFolder.erase(hash);
 }
 
-void cModelFolder::replace(const std::string &objectName, const std::string &modelName)
+void cModelFolder::replace(uint32_t hash, const std::string &modelName)
 {
-    m_modelsFolder[objectName] = modelName;
+    m_modelsFolder[hash] = modelName;
 }
 
-std::string cModelFolder::model(const std::string &name) const
+const std::string& cModelFolder::getModel(uint32_t hash)
 {
-    return m_modelsFolder.at(name);
+    return m_modelsFolder[hash];
 }
 
 void cModelFolder::clearFolder()

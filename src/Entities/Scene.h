@@ -1,17 +1,21 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "BaseEntities/Base3DGameObject.h"
-#include "BaseEntities/Camera.h"
-#include "BaseEntities/Lighting.h"
-#include "BaseEntities/Skybox.h"
+#include <cstdint>
+#include <vector>
+
+class cBase3DGameObject;
+class cCamera;
+class cModel;
+class cLighting;
+class cSkyBox;
 
 class cScene
 {
 public:
     cScene();
     cScene(std::vector<cBase3DGameObject*>&& gameObjects, std::vector<cLighting*>&& lighting,
-          std::vector<cCamera*>&& cameras, cSkyBox* skybox);
+          std::vector<cCamera*>&& cameras, std::vector<cSkyBox*>&& skyBox);
     ~cScene();
 
     bool addGameObject(uint32_t name, cModel *model);
@@ -30,9 +34,9 @@ public:
     cCamera *camera(uint32_t cameraName) const;
     cLighting *lighting(uint32_t lightName) const;
 
-    std::vector<cLighting*> lighings() const;
-    std::vector<cBase3DGameObject*> gameObjects() const;
-    std::vector<cCamera*> cameras() const;
+    const std::vector<cLighting*>& lighings() const;
+    const std::vector<cBase3DGameObject*>& gameObjects() const;
+    const std::vector<cCamera*>& cameras() const;
 
     cCamera *currentCamera() const;
     cSkyBox *skybox() const;
