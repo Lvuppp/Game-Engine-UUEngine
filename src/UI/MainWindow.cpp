@@ -1,10 +1,12 @@
  #include "MainWindow.h"
 
-#include "Application/OpenGLWidget.h"
+#include "Core/Cores/EngineCore.h"
+#include "UI/EngineOpenGLWidget.h"
+
 #include "ui_mainWindow.h"
 
 
-cMainWindow::cMainWindow(QWidget *parent)
+cMainWindow::cMainWindow(cEngineContext* context, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
@@ -14,7 +16,7 @@ cMainWindow::cMainWindow(QWidget *parent)
     m_projectWidget.reset(new cProjectWidgetViewModel(ui->projectHierarchyFrame));
     //m_objectInfo = new cObjectInfo(ui->objectParamsWidget);
 
-//    m_openGLWidget.reset(ui->openGLWidget);
+    ui->openGLWidget->setEngineContext(context);
     ui->openGLWidget->resize(ui->openGLWidget->width(), ui->openGLWidget->height());
 
     linkConnections();
@@ -41,7 +43,7 @@ void cMainWindow::linkConnections()
     // }
 }
 
-cOpenGLWidget* cMainWindow::getOpenGLWigdet() const
+cEngineOpenGLWidget* cMainWindow::getOpenGLWigdet() const
 {
     return ui->openGLWidget;
 }

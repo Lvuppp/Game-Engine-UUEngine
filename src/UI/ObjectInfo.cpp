@@ -71,100 +71,101 @@ void cObjectInfo::loadSpecificParams()
 {
     QLayout *layout = new QVBoxLayout();
 
-    auto model = QString::fromStdString(m_engine->getModel(cHash::hash(m_objectName)));
+    auto objectModel = m_engine->getModel(cHash::hash(m_objectName));
+    auto model = QString::fromStdString(objectModel.data());
 
-    QRegularExpression paramsRegex("(\\w*)\\((.*?)\\)");
-    QRegularExpressionMatchIterator matchIterator = paramsRegex.globalMatch(model);
-    QRegularExpressionMatch matchObject = matchIterator.next();
+    // QRegularExpression paramsRegex("(\\w*)\\((.*?)\\)");
+    // QRegularExpressionMatchIterator matchIterator = paramsRegex.globalMatch(model);
+    // QRegularExpressionMatch matchObject = matchIterator.next();
 
-    if(matchObject.captured(1) == "CUBE"){
-        auto params = matchObject.captured(2).split(' ');
+    // if(matchObject.captured(1) == "CUBE"){
+    //     auto params = matchObject.captured(2).split(' ');
 
-        auto widthLabel = new QLabel("width:");
-        layout->addWidget(widthLabel);
+    //     auto widthLabel = new QLabel("width:");
+    //     layout->addWidget(widthLabel);
 
-        auto width = new QLineEdit();
-        width->setText(params[0]);
-        layout->addWidget(width);
+    //     auto width = new QLineEdit();
+    //     width->setText(params[0]);
+    //     layout->addWidget(width);
 
-        auto heightLabel = new QLabel("height:");
-        layout->addWidget(heightLabel);
+    //     auto heightLabel = new QLabel("height:");
+    //     layout->addWidget(heightLabel);
 
-        auto height = new QLineEdit();
-        height->setText(params[1]);
-        layout->addWidget(height);
+    //     auto height = new QLineEdit();
+    //     height->setText(params[1]);
+    //     layout->addWidget(height);
 
-        auto depthLabel = new QLabel("depth:");
-        layout->addWidget(depthLabel);
+    //     auto depthLabel = new QLabel("depth:");
+    //     layout->addWidget(depthLabel);
 
-        auto depth = new QLineEdit();
-        depth->setText(params[2]);
-        layout->addWidget(depth);
+    //     auto depth = new QLineEdit();
+    //     depth->setText(params[2]);
+    //     layout->addWidget(depth);
 
-        auto changeCube =[this, width, height, depth](){
-            m_engine->changeCube(cHash::hash(m_objectName), width->text().toFloat(), height->text().toFloat(), depth->text().toFloat());
-        };
+    //     auto changeCube =[this, width, height, depth](){
+    //         m_engine->changeCube(cHash::hash(m_objectName), width->text().toFloat(), height->text().toFloat(), depth->text().toFloat());
+    //     };
 
-        connect(width, &QLineEdit::editingFinished,changeCube);
-        connect(height, &QLineEdit::editingFinished,changeCube);
-        connect(depth, &QLineEdit::editingFinished, changeCube);
+    //     connect(width, &QLineEdit::editingFinished,changeCube);
+    //     connect(height, &QLineEdit::editingFinished,changeCube);
+    //     connect(depth, &QLineEdit::editingFinished, changeCube);
 
-    }
-    else if(matchObject.captured(1) == "SPHERE"){
-        auto params = matchObject.captured(2).split(' ');
-        auto radiusLabel = new QLabel("radius:");
-        layout->addWidget(radiusLabel);
+    // }
+    // else if(matchObject.captured(1) == "SPHERE"){
+    //     auto params = matchObject.captured(2).split(' ');
+    //     auto radiusLabel = new QLabel("radius:");
+    //     layout->addWidget(radiusLabel);
 
-        auto radius = new QLineEdit();
-        radius->setText(params[0]);
-        layout->addWidget(radius);
+    //     auto radius = new QLineEdit();
+    //     radius->setText(params[0]);
+    //     layout->addWidget(radius);
 
-        auto ringsLabel = new QLabel("rings:");
-        layout->addWidget(ringsLabel);
+    //     auto ringsLabel = new QLabel("rings:");
+    //     layout->addWidget(ringsLabel);
 
-        auto rings = new QLineEdit();
-        rings->setText(params[1]);
-        layout->addWidget(rings);
+    //     auto rings = new QLineEdit();
+    //     rings->setText(params[1]);
+    //     layout->addWidget(rings);
 
-        auto sectorsLabel = new QLabel("depth:");
-        layout->addWidget(sectorsLabel);
+    //     auto sectorsLabel = new QLabel("depth:");
+    //     layout->addWidget(sectorsLabel);
 
-        auto sectors = new QLineEdit();
-        sectors->setText(params[2]);
-        layout->addWidget(sectors);
+    //     auto sectors = new QLineEdit();
+    //     sectors->setText(params[2]);
+    //     layout->addWidget(sectors);
 
-        auto changeSphere =[this, radius, rings, sectors](){
-            m_engine->changeSphere(cHash::hash(m_objectName), radius->text().toFloat(), rings->text().toInt(), sectors->text().toInt());
-        };
+    //     auto changeSphere =[this, radius, rings, sectors](){
+    //         m_engine->changeSphere(cHash::hash(m_objectName), radius->text().toFloat(), rings->text().toInt(), sectors->text().toInt());
+    //     };
 
-        connect(radius, &QLineEdit::editingFinished,changeSphere);
-        connect(rings, &QLineEdit::editingFinished,changeSphere);
-        connect(sectors, &QLineEdit::editingFinished, changeSphere);
-    }
+    //     connect(radius, &QLineEdit::editingFinished,changeSphere);
+    //     connect(rings, &QLineEdit::editingFinished,changeSphere);
+    //     connect(sectors, &QLineEdit::editingFinished, changeSphere);
+    // }
 
 
-    auto diffuseTextureButton = new QPushButton();
-    auto normalTextureButton = new QPushButton();
+    // auto diffuseTextureButton = new QPushButton();
+    // auto normalTextureButton = new QPushButton();
 
-    diffuseTextureButton->setText("Set diffuse map");
-    normalTextureButton->setText("Set normal map");
+    // diffuseTextureButton->setText("Set diffuse map");
+    // normalTextureButton->setText("Set normal map");
 
-    connect(diffuseTextureButton, &QPushButton::clicked, [this](){
-        auto imagePath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
-        if(imagePath == "") return;
-        onDiffuseTextureSet(imagePath);
-    });
+    // connect(diffuseTextureButton, &QPushButton::clicked, [this](){
+    //     auto imagePath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
+    //     if(imagePath == "") return;
+    //     onDiffuseTextureSet(imagePath);
+    // });
 
-    connect(normalTextureButton, &QPushButton::clicked, [this](){
-        auto imagePath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
-        if(imagePath == "") return;
-        onNormalTextureSet(imagePath);
-    });
+    // connect(normalTextureButton, &QPushButton::clicked, [this](){
+    //     auto imagePath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
+    //     if(imagePath == "") return;
+    //     onNormalTextureSet(imagePath);
+    // });
 
-    layout->addWidget(diffuseTextureButton);
-    layout->addWidget(normalTextureButton);
+    // layout->addWidget(diffuseTextureButton);
+    // layout->addWidget(normalTextureButton);
 
-    //ui->specificalParams->setLayout(layout);
+    // //ui->specificalParams->setLayout(layout);
 
 }
 
