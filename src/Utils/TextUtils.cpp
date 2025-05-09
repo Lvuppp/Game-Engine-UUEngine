@@ -34,4 +34,22 @@ namespace text_utils
 
         return oss.str();
     }
+
+    std::string join(const std::vector<std::string_view>& elements, char separator)
+    {
+        if (elements.empty())
+        {
+            return "";
+        }
+
+        std::ostringstream oss;
+        oss << elements[0];
+
+        for (auto i = 1; i < elements.size(); ++i)
+        {
+            oss << separator << elements[i];
+        }
+
+        return oss.str();
+    }
 }

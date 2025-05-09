@@ -5,7 +5,7 @@
 struct sVec2
 {
     sVec2() = default;
-    explicit sVec2(const QSize& size)
+    sVec2(const QSize& size)
         : x(size.width())
         , y(size.height())
         {}
