@@ -13,18 +13,13 @@
 
 cMainLoop::cMainLoop(int &argc, char **argv)
     : m_app(argc, argv)
-    , m_window()
     , m_engine()
+    , m_window(&m_engine)
 {
     QObject::connect(&m_app, &QApplication::aboutToQuit, this, &cMainLoop::stopMainLoop);
 
     m_window.show();
     m_glWidget = m_window.getOpenGLWigdet();
-
-    const auto window = m_glWidget->size();
-
-    m_engine.initGraphicsEngine();
-    m_engine.initInputEngine(sVec2(window));
 }
 
 int cMainLoop::startMainLoop()
@@ -32,24 +27,22 @@ int cMainLoop::startMainLoop()
     m_running = true;
     m_msPerUpdate = 1000.0f / getMonitorRefreshRate();
 
-    m_previousTime = time_facade::getCurrentTime<float>();
-    m_lag = 0.0f;
-    m_currentTime = time_facade::getCurrentTime<float>();
-    m_elapsed = m_currentTime - m_previousTime;
+    m_previousTime = getCurrentTime();
 
     while (m_running)
     {
-        m_currentTime = time_facade::getCurrentTime<float>();
-        m_elapsed = m_currentTime - m_previousTime;
+        m_currentTime = getCurrentTime();
+        m_elapsed = (m_currentTime - m_previousTime) * 0.000001f;
         m_previousTime = m_currentTime;
         m_lag += m_elapsed;
 
         processInput();
 
+
         while (m_lag >= m_msPerUpdate)
         {
-            update(m_msPerUpdate);
             m_lag -= m_msPerUpdate;
+            update(m_msPerUpdate);
         }
 
         render();
@@ -76,9 +69,6 @@ void cMainLoop::update(float dt)
 
 void cMainLoop::render()
 {
-    m_glWidget->makeCurrent();
-    m_engine.render();
-    m_glWidget->doneCurrent();
 }
 
 void cMainLoop::processInput()
@@ -94,4 +84,10 @@ uint32_t cMainLoop::getMonitorRefreshRate() const
         return screen->refreshRate();
     }
     return 60u;
+}
+
+inline uint32_t
+cMainLoop::getCurrentTime() const
+{
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
 }

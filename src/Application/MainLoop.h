@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Application/OpenGLWidget.h"
 #include "Core/Cores/EngineCore.h"
-#include <UI/MainWindow.h>
+#include "UI/EngineOpenGLWidget.h"
+#include "UI/MainWindow.h"
 
 #include <QApplication>
 #include <QObject>
@@ -31,17 +31,18 @@ private:
 
 private:
     uint32_t getMonitorRefreshRate() const;
+    inline uint32_t getCurrentTime() const;
 
 private:
     std::atomic<bool> m_running = false;
+    uint32_t m_previousTime = 0.0f;
+    uint32_t m_currentTime = 0.0f;
     float m_msPerUpdate = 0.0f;
-    float m_previousTime = 0.0f;
-    float m_currentTime = 0.0f;
     float m_elapsed = 0.0f;
     float m_lag = 0.0f;
 
     QApplication m_app;
-    cMainWindow m_window;
-    cOpenGLWidget* m_glWidget = nullptr;
     cEngineCore m_engine;
+    cMainWindow m_window;
+    cEngineOpenGLWidget* m_glWidget = nullptr;
 };
