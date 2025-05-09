@@ -1,33 +1,65 @@
 #ifndef ENGINECORE_H
 #define ENGINECORE_H
 
-#include "Core/Cores/GraphicsEngine.h"
-#include "Core/Cores/PhysicsEngine.h"
-#include "Core/Cores/ScriptEngine.h"
-#include "Core/Cores/InputEngine.h"
-#include "Core/Services/ModelLoader.h"
+
+#include "Core/Folders/BaseFolder.h"
 #include "Core/Services/ModelBuilder.h"
-#include "Core/Services/ProjectProcessor.h"
+#include "Core/Services/ModelLoader.h"
+#include "Entities/BaseEntities/Base3DGameObject.h"
+#include "Entities/BaseEntities/Camera.h"
+#include "Entities/BaseEntities/Lighting.h"
 #include "Utils/Vectors.h"
+
+#include <memory>
 
 #include <QVBoxLayout>
 
+class cCamera;
 class cGraphicsEngine;
 class cInputEngine;
+class cLighting;
 class cPhysicsEngine;
 class cProjectProcessor;
+class cSceneManager;
+class cModelFolder;
+class cScene;
 class cScriptEngine;
+class cScriptFolder;
+class cTextureFolder;
 
-class cEngineCore : public QObject
+class QMouseEvent;
+class QWheelEvent;
+
+class cEngineContext
+{
+public:
+    ~cEngineContext();
+
+    std::unique_ptr<cGraphicsEngine> m_graphicsEngine;
+    std::unique_ptr<cPhysicsEngine> m_phyicsEngine;
+    std::unique_ptr<cScriptEngine> m_scriptEngine;
+    std::unique_ptr<cInputEngine> m_inputEngine;
+    std::unique_ptr<cProjectProcessor> m_projectProcessor;
+    std::unique_ptr<cSceneManager> m_sceneManager;
+    std::unique_ptr<cBaseFolder> m_modelFolder;
+    std::unique_ptr<cBaseFolder> m_scriptFolder;
+    std::unique_ptr<cBaseFolder> m_textureFolder;
+
+    cModelLoader m_modelLoader;
+    cModelBuilder m_modelBuilder;
+};
+
+class cEngineCore final : public QObject, public cEngineContext
 {
     Q_OBJECT
 
 public:
     cEngineCore();
-    ~cEngineCore() = default;
 
     cEngineCore(const cEngineCore& core) = delete;
     cEngineCore& operator=(const cEngineCore& core) = delete;
+
+    static std::shared_ptr<cEngineCore> getInstance();
 
 public:
     void initInputEngine(sVec2 size);
@@ -36,7 +68,10 @@ public:
 
     void update(float dt);
     void render();
-    void resizeScene(int w, int h);
+    void resizeScene(sVec2 size);
+
+    void updateEngineCamera();
+    void updateEngineLightning();
 
 public:
     void translateObject(uint32_t hash, const QVector3D &translation);
@@ -67,7 +102,7 @@ public:
     void createScene(uint32_t hash);
     void createCameraInScene(uint32_t hash);
     void createLightingInScene(uint32_t hash);
-    void setSkyBox(const float &size, const std::string& path);
+    void createSkyBox(const float &size, const std::string& path);
 
     void selectCurrentScene(const std::string& sceneName);
     cScene *getCurrentScene();
@@ -83,8 +118,8 @@ public:
     void loadTexture(uint32_t hash, const std::string& path);
     void loadScript(uint32_t hash, const std::string& path);
 
-    const std::string& getModel(uint32_t hash);
-    std::vector<std::string> getScripts(uint32_t hash);
+    std::string_view getModel(uint32_t hash);
+    std::vector<std::string_view> getScripts(uint32_t hash);
 
 public:
     bool createOBJModel(uint32_t hash, const std::string& modelPath);
@@ -109,20 +144,11 @@ signals:
     void emitObject(uint32_t hash, cBase3DGameObject **object);
 
 private:
-    std::unique_ptr<cGraphicsEngine> m_graphicsEngine = nullptr;
-    std::unique_ptr<cPhysicsEngine> m_phyicsEngine = nullptr;
-    std::unique_ptr<cScriptEngine> m_scriptEngine = nullptr;
-    std::unique_ptr<cInputEngine> m_inputEngine = nullptr;
+    std::unique_ptr<cCamera> m_engineCamera = nullptr;
+    std::unique_ptr<cLighting> m_engineLighting = nullptr;
 
-    std::unique_ptr<cProjectProcessor> m_projectProcessor = nullptr;
-
-    std::unique_ptr<cSceneManager> m_sceneManager = nullptr;
-    std::unique_ptr<cModelFolder> m_modelFolder = nullptr;
-    std::unique_ptr<cScriptFolder> m_scriptFolder = nullptr;
-    std::unique_ptr<cTextureFolder> m_textureFolder = nullptr;
-
-    cModelLoader m_modelLoader;
-    cModelBuilder m_modelBuilder;
+private:
+    static std::shared_ptr<cEngineCore> m_instance;
 };
 
 #endif // ENGINECORE_H

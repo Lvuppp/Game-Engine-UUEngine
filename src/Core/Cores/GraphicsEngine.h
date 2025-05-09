@@ -10,7 +10,6 @@
 
 class cBaseEngineObject;
 
-//сделать классы поддвижков singltone
 class cGraphicsEngine
 {
 public:

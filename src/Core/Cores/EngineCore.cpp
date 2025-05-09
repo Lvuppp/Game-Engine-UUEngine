@@ -1,46 +1,61 @@
 #include "EngineCore.h"
 
-#include "Entities/BaseEntities/Base3DGameObject.h"
-#include "Entities/BaseEntities/Camera.h"
-#include "Entities/BaseEntities/Lighting.h"
-#include "Entities/BaseEntities/Skybox.h"
+#include "Core/Cores/EngineContext.h"
+#include "Core/Cores/GraphicsEngine.h"
+#include "Core/Cores/InputEngine.h"
+#include "Core/Cores/PhysicsEngine.h"
+#include "Core/Cores/ScriptEngine.h"
+
+#include "Core/Services/ModelBuilder.h"
+#include "Core/Services/ModelLoader.h"
 #include "Core/Services/ProjectProcessor.h"
 #include "Core/Services/ProjectInfo.h"
+#include "Core/Folders/SceneManager.h"
 
-#include "Core/Folders/ScriptFolder.h"
 #include "Utils/Hash.h"
+#include <cmath>
+#include <memory>
 
+std::shared_ptr<cEngineCore> cEngineCore::m_instance = nullptr;
+
+cEngineContext::~cEngineContext()
+{
+}
 
 cEngineCore::cEngineCore()
 {
-    // TODO: make engine context
-    m_modelFolder.reset(new cModelFolder());
-    m_scriptFolder.reset(new cScriptFolder());
-    m_textureFolder.reset(new cTextureFolder());
+    m_graphicsEngine = std::make_unique<cGraphicsEngine>();
+    m_inputEngine = std::make_unique<cInputEngine>();
+    m_scriptEngine = std::make_unique<cScriptEngine>();
+
+    m_modelFolder = std::make_unique<cBaseFolder>();
+    m_scriptFolder = std::make_unique<cBaseFolder>();
+    m_textureFolder = std::make_unique<cBaseFolder>();
 
     m_modelLoader.setFactory(new OBJModelFactory());
-    m_sceneManager.reset(new cSceneManager());
+    m_sceneManager = std::make_unique<cSceneManager>();
 
-    m_projectProcessor.reset(new cProjectProcessor());
-
-    m_scriptEngine.reset(new cScriptEngine());
+    m_projectProcessor = std::make_unique<cProjectProcessor>();
 }
 
 void cEngineCore::initGraphicsEngine()
 {
-    m_graphicsEngine.reset(new cGraphicsEngine());
     m_graphicsEngine->initGraphics();
 }
 
-void cEngineCore::initInputEngine(sVec2 size)
+std::shared_ptr<cEngineCore> cEngineCore::getInstance()
 {
-    m_inputEngine.reset(new cInputEngine());
-    m_inputEngine->setScreenCoords(size);
+    if (m_instance == nullptr)
+    {
+        m_instance = std::make_shared<cEngineCore>();
+    }
+
+    return m_instance;
 }
 
 void cEngineCore::update(float dt)
 {
-
+    //updateEngineCamera();
 }
 
 void cEngineCore::render()
@@ -48,10 +63,19 @@ void cEngineCore::render()
     m_graphicsEngine->render();
 }
 
-void cEngineCore::resizeScene(int w, int h)
+void cEngineCore::updateEngineCamera()
 {
-    m_graphicsEngine->resizeScene(w, h);
-    m_inputEngine->setScreenCoords(sVec2(w, h ));
+    auto inputEngine = m_inputEngine.get();
+
+    m_engineCamera->setCoordinates(inputEngine->getTranslate());
+    m_engineCamera->setRotateX(inputEngine->getRotateX());
+    m_engineCamera->setRotateY(inputEngine->getRotateY());
+}
+
+void cEngineCore::resizeScene(sVec2 size)
+{
+    m_graphicsEngine->resizeScene(size.x, size.y);
+    m_inputEngine->setScreenCoords(size);
 }
 
 void cEngineCore::createScene(uint32_t hash)
@@ -62,12 +86,13 @@ void cEngineCore::createScene(uint32_t hash)
 
 void cEngineCore::selectCurrentScene(const std::string &sceneName)
 {
-    m_graphicsEngine->setCurrentScene(m_sceneManager->setCurrentScene(cHash::hash(sceneName)));
+    auto currentScene = m_sceneManager->setCurrentScene(cHash::hash(sceneName));
+    m_graphicsEngine->setCurrentScene(currentScene.get());
 }
 
 cScene *cEngineCore::getCurrentScene()
 {
-    return m_sceneManager->currentScene();
+    return m_sceneManager->currentScene().get();
 }
 
 void cEngineCore::translateObject(uint32_t hash, const QVector3D &translation)
@@ -154,7 +179,7 @@ void cEngineCore::createLightingInScene(uint32_t hash)
 
 }
 
-void cEngineCore::setSkyBox(const float &size, const std::string &path)
+void cEngineCore::createSkyBox(const float &size, const std::string &path)
 {
     getCurrentScene()->setSkybox(m_modelBuilder.createSkybox(size, path));
     loadTexture("Skybox"_hash, path);
@@ -258,7 +283,7 @@ void cEngineCore::changeGameStatus()
     if (m_gameStatus)
     {
         //m_projectProcessor->saveProject(m_sceneManager->scenes());
-        m_scriptEngine->startScene(m_sceneManager->currentScene());
+        m_scriptEngine->startScene(m_sceneManager->currentScene().get());
     }
     else
     {
@@ -324,16 +349,16 @@ void cEngineCore::loadTexture(uint32_t hash, const std::string &path)
 
 void cEngineCore::loadScript(uint32_t hash, const std::string &path)
 {
-    m_scriptFolder->addScript(hash, path.substr(path.find_last_of('/') + 1));
+    m_scriptFolder->append(hash, path.substr(path.find_last_of('/') + 1));
     cProjectInfo::copyToScripts(path);
 }
 
-const std::string& cEngineCore::getModel(uint32_t hash)
+std::string_view cEngineCore::getModel(uint32_t hash)
 {
-    return m_modelFolder->getModel(hash);
+    return m_modelFolder->getFile(hash);
 }
 
-std::vector<std::string> cEngineCore::getScripts(uint32_t hash)
+std::vector<std::string_view> cEngineCore::getScripts(uint32_t hash)
 {
-    return m_scriptFolder->scripts(hash);
+    return m_scriptFolder->getFiles();
 }

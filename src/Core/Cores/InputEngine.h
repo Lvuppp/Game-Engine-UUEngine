@@ -10,15 +10,6 @@
 #include <QWheelEvent>
 #include <QQuaternion>
 
-//применить паттерн стратегия
-enum class InputMode{
-    CameraMove,
-    Move,
-    Rotate,
-    Create,
-    Edit
-};
-
 class cInputEngine : public QObject
 {
     Q_OBJECT
@@ -33,7 +24,8 @@ public:
     QQuaternion getRotateY();
     QVector3D getTranslate();
 
-    QVector3D getWorldCoordinates(QMatrix4x4 projectionMatrix, QMatrix4x4 viewMatrix, const float &objectY = 0);
+    QVector3D getWorldCoordinates(QMatrix4x4 projectionMatrix, 
+        QMatrix4x4 viewMatrix, const float &objectY = 0);
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent* event);

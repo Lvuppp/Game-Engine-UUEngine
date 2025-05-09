@@ -10,7 +10,6 @@ cInputEngine::cInputEngine()
 
 bool cInputEngine::eventFilter(QObject* obj, QEvent* event)
 {
-
     switch (event->type()) {
         case QEvent::KeyPress: {
             auto* keyEvent = static_cast<QKeyEvent*>(event);
@@ -48,7 +47,7 @@ bool cInputEngine::eventFilter(QObject* obj, QEvent* event)
             break;
     }
 
-    return QObject::eventFilter(obj, event); // передаём дальше, не блокируем
+    return QObject::eventFilter(obj, event);
 }
 
 void cInputEngine::wheelScrollEvent(QWheelEvent* wheelEvent)
