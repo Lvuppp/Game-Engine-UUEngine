@@ -6,6 +6,9 @@
 class cCamera : public cBaseEngineObject
 {
 public:
+    cCamera() = default;
+    ~cCamera() = default; 
+    
     ObjectType objectType() const override;
     void draw(QOpenGLShaderProgram *shaderProgram, QOpenGLFunctions *functions,  bool isUsingTexture) override;
 };

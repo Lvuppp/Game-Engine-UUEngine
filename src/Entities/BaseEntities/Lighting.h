@@ -7,6 +7,7 @@ class cLighting : public cBaseEngineObject
 {
 public:
     cLighting();
+    ~cLighting() = default;
 
 public:
     ObjectType objectType() const override;

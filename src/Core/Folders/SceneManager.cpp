@@ -2,14 +2,6 @@
 
 #include "Utils/Hash.h"
 
-cSceneManager::~cSceneManager()
-{
-    for (auto& [name, scene] : m_scenes)
-    {
-        delete scene;
-    }
-}
-
 bool cSceneManager::createScene(uint32_t hash)
 {
     if (m_scenes.find(hash) != m_scenes.end())
@@ -28,7 +20,7 @@ bool cSceneManager::createScene(uint32_t hash)
     return true;
 }
 
-cScene *cSceneManager::setCurrentScene(uint32_t hash)
+std::shared_ptr<cScene> cSceneManager::setCurrentScene(uint32_t hash)
 {
     if (m_scenes.find(hash) != m_scenes.end())
     {
@@ -37,12 +29,12 @@ cScene *cSceneManager::setCurrentScene(uint32_t hash)
     return m_currentScene;
 }
 
-cScene *cSceneManager::currentScene()
+std::shared_ptr<cScene> cSceneManager::currentScene()
 {
     return m_currentScene;
 }
 
-void cSceneManager::setScenes(std::unordered_map<uint32_t, cScene *>&& scenes)
+void cSceneManager::setScenes(std::unordered_map<uint32_t, std::shared_ptr<cScene>>&& scenes)
 {
     clearFolder();
     m_scenes = std::move(scenes);
@@ -53,7 +45,7 @@ void cSceneManager::setScenes(std::unordered_map<uint32_t, cScene *>&& scenes)
     }
 }
 
-std::unordered_map<uint32_t, cScene *> cSceneManager::scenes() const
+std::unordered_map<uint32_t, std::shared_ptr<cScene>> cSceneManager::scenes() const
 {
     return m_scenes;
 }
@@ -62,11 +54,6 @@ void cSceneManager::clearFolder()
 {
     if (!m_scenes.empty())
     {
-        for (auto& [name, scene] : m_scenes)
-        {
-            delete scene;
-        }
-
         m_scenes.clear();
         m_currentScene = nullptr;
     }
