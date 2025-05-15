@@ -51,7 +51,7 @@ public:
 //     void loadScripts(const std::string &objectName,const std::string &scripts);
 
 private:
-    cTextureFolder *m_textureFolder;
+    //cTextureFolder *m_textureFolder;
     cModelFolder *m_modelFolder;
     cScriptFolder *m_scriptFolder;
     cProjectInfo m_projectInfo;

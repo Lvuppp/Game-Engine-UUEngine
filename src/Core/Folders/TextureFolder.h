@@ -1,30 +1,24 @@
 #ifndef TEXTUREFOLDER_H
 #define TEXTUREFOLDER_H
 
-#include <cstdint>
-#include <string>
-#include <unordered_map>
-#include <vector>
+#include "Core/Folders/BaseFolder.h"
 
-class cTextureFolder
+#include <map>
+
+class QOpenGLTexture;
+
+class cTextureManager : public cBaseFolder
 {
 public:
-    cTextureFolder() = default;
-    ~cTextureFolder() = default;
+    cTextureManager() = default;
+    ~cTextureManager() = default;
 
-    cTextureFolder(const cTextureFolder&) = delete;
-    cTextureFolder& operator=(const cTextureFolder&) = delete;
+    void clean();
 
-    void append(uint32_t hash, const std::string &textureName);
-    void remove(uint32_t hash);
-    void replace(uint32_t hash, const std::string &modelName);
-
-    const std::vector<std::string> allModels();
-    std::vector<std::string> texture(uint32_t hash);
-    void clearFolder();
+    QOpenGLTexture* loadTexture(std::string_view objectPath);
 
 private:
-    std::unordered_map<uint32_t,std::string> m_textures;
+    std::map<uint32_t, QOpenGLTexture*> m_textures;
 };
 
 #endif // TEXTUREFOLDER_H

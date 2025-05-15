@@ -1,34 +1,35 @@
 #include "TextureFolder.h"
 
-void cTextureFolder::append(uint32_t hash, const std::string &textureName)
-{
-    m_textures.insert(std::make_pair<>(hash, textureName));
-}
+#include "Utils/Hash.h"
+#include "Utils/TextUtils.h"
 
-void cTextureFolder::remove(uint32_t hash)
-{
-    m_textures.erase(hash);
-}
+#include <QImage>
+#include <QOpenGLTexture>
 
-void cTextureFolder::replace(uint32_t hash, const std::string &modelName)
-{
-    m_textures[hash] = modelName;
-}
+constexpr const char* cBaseFolder::FolderPath = "Texture";
 
-std::vector<std::string> cTextureFolder::texture(uint32_t hash)
+void cTextureManager::clean()
 {
-    std::vector<std::string> tmp;
-    auto texturesIters =  m_textures.equal_range(hash);
-
-    for (auto it = texturesIters.first; it != texturesIters.second; ++it)
+    for (auto [_, texture] : m_textures)
     {
-        tmp.push_back(it->second);
+        delete texture;
     }
 
-    return tmp;
+    m_textures.clear();
 }
 
-void cTextureFolder::clearFolder()
+QOpenGLTexture* cTextureManager::loadTexture(std::string_view objectPath)
 {
-    m_textures.clear();
+    auto [fileName, _, file] = text_utils::getFullFileName(objectPath);
+    copyFileToProject();
+    const QImage image(objectPath.data());
+    const auto texture = new QOpenGLTexture(image.mirrored());
+
+    texture->setMinificationFilter(QOpenGLTexture::Nearest);
+    texture->setMinificationFilter(QOpenGLTexture::Linear);
+    texture->setWrapMode(QOpenGLTexture::Repeat);
+
+    m_textures.insert(std::make_pair<>(cHash::hash(fileName), texture));
+
+    return texture;
 }

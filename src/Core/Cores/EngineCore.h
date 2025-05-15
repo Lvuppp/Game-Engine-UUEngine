@@ -43,7 +43,7 @@ public:
     std::unique_ptr<cSceneManager> m_sceneManager;
     std::unique_ptr<cBaseFolder> m_modelFolder;
     std::unique_ptr<cBaseFolder> m_scriptFolder;
-    std::unique_ptr<cBaseFolder> m_textureFolder;
+    std::unique_ptr<cTextureManager> m_textureManager;
 
     cModelLoader m_modelLoader;
     cModelBuilder m_modelBuilder;

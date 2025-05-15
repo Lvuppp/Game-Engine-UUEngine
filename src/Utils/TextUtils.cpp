@@ -3,6 +3,14 @@
 #include <sstream>
 namespace text_utils
 {
+    std::tuple<std::string, std::string, std::string> getFullFileName(std::string_view path)
+    {
+        const auto splitedPath = text_utils::split(path.data(), '/');
+        const auto fileNameWithFormat =  splitedPath.back();
+        const auto splitedFileName = text_utils::split(fileNameWithFormat, '.');
+        return { splitedFileName.front(), splitedFileName.back(), fileNameWithFormat };
+    }
+
     std::vector<std::string> split(const std::string& str, char separator)
     {
         std::vector<std::string> result;
