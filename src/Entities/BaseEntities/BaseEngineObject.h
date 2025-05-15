@@ -12,6 +12,7 @@ class cBaseEngineObject
 {
 public:
     cBaseEngineObject();
+    cBaseEngineObject(uint32_t hash);
     virtual ~cBaseEngineObject() = default;
 
     uint32_t getId() const;
@@ -42,7 +43,8 @@ public:
     enum class ObjectType{
         GameObject,
         Camera,
-        Lighting
+        Lighting,
+        SkyBox,
     };
 
     virtual ObjectType objectType() const;

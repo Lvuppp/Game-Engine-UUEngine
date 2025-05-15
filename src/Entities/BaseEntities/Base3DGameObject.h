@@ -10,7 +10,7 @@ class QOpenGLFunctions;
 class cBase3DGameObject : public cBaseEngineObject
 {
 public:
-    cBase3DGameObject(cModel* model);
+    cBase3DGameObject(uint32_t hash, cModel* model);
 
     cModel* model();
     void setModel(cModel* model);

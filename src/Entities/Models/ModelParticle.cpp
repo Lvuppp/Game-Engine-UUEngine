@@ -5,8 +5,6 @@
 #include "QOpenGLShaderProgram"
 
 cModelParticle::cModelParticle()
-    : m_diffuseMap(nullptr)
-    , m_normalMap(nullptr)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
 }
@@ -25,8 +23,6 @@ cModelParticle::~cModelParticle()
 }
 
 cModelParticle::cModelParticle(Vertexes& vertexes, Indexes& indexes, cMaterial* material)
-    : m_diffuseMap(nullptr)
-    , m_normalMap(nullptr)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     initModelParticle(vertexes,indexes, material);
@@ -71,24 +67,27 @@ void cModelParticle::initModelParticle(Vertexes& vertexes, Indexes& indexes, cMa
 
 void cModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shaderProgram, bool isUsingTexture, QOpenGLFunctions *functions)
 {
-    if (isUsingTexture)
-    {
-        if (m_material->isDiffuseMapSet())
-        {
-            m_diffuseMap->bind(0);
-            shaderProgram->setUniformValue("u_model.diffuseMap", 0);
-        }
+    const auto normalMap = m_material->getNormalMap();
+    const auto diffuseMap = m_material->getDiffuseMap();
 
-        if (m_material->isNormalMapSet())
-        {
-            m_normalMap->bind(1);
-            shaderProgram->setUniformValue("u_model.normalMap", 1);
-        }
+    const auto isNormalMapSet = normalMap != nullptr;
+    const auto isDiffuseMapSet = diffuseMap != nullptr;
+
+    if (isDiffuseMapSet)
+    {
+        diffuseMap->bind(0);
+        shaderProgram->setUniformValue("u_model.diffuseMap", 0);
+    }
+
+    if (isNormalMapSet)
+    {
+        normalMap->bind(1);
+        shaderProgram->setUniformValue("u_model.normalMap", 1);
     }
 
     shaderProgram->setUniformValue("u_modelMatrix", modelMatrix);
-    shaderProgram->setUniformValue("u_model.isDiffuseMapUsing", m_material->isDiffuseMapSet());
-    shaderProgram->setUniformValue("u_model.isNormalMapUsing", m_material->isNormalMapSet());
+    shaderProgram->setUniformValue("u_model.isDiffuseMapUsing", isNormalMapSet);
+    shaderProgram->setUniformValue("u_model.isNormalMapUsing", isNormalMapSet);
     shaderProgram->setUniformValue("u_model.diffuseColor", m_material->diffuseColor());
     shaderProgram->setUniformValue("u_model.specularColor", m_material->specularColor());
     shaderProgram->setUniformValue("u_model.ambienceColor", m_material->ambienceColor());
@@ -132,17 +131,14 @@ void cModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLSha
     m_vertexes.release();
     m_indexes.release();
 
-    if(isUsingTexture)
+    if (isDiffuseMapSet)
     {
-        if (m_material->isDiffuseMapSet())
-        {
-            m_diffuseMap->release();
-        }
+        diffuseMap->release();
+    }
 
-        if (m_material->isNormalMapSet())
-        {
-            m_normalMap->release();
-        }
+    if (isNormalMapSet)
+    {
+        normalMap->release();
     }
 }
 
@@ -185,25 +181,14 @@ void cModelParticle::calculateTBN(Vertexes& vertexes)
 
 }
 
-void cModelParticle::setDiffuseMap(std::string_view texture)
+void cModelParticle::setDiffuseMap(QOpenGLTexture* texture)
 {
-    m_material->setDiffuseMap(texture.data());
-    m_diffuseMap.reset(new QOpenGLTexture(m_material->diffuseMap().mirrored()));
-
-    m_diffuseMap->setMinificationFilter(QOpenGLTexture::Nearest);
-    m_diffuseMap->setMinificationFilter(QOpenGLTexture::Linear);
-    m_diffuseMap->setWrapMode(QOpenGLTexture::Repeat);
+    m_material->setDiffuseMap(texture);
 }
 
-void cModelParticle::setNormalMap(std::string_view texture)
+void cModelParticle::setNormalMap(QOpenGLTexture* texture)
 {
-    m_material->setNormalMap(texture.data());
-    m_normalMap.reset(new QOpenGLTexture(m_material->normalMap().mirrored()));
-
-    m_normalMap->setMinificationFilter(QOpenGLTexture::Nearest);
-    m_normalMap->setMinificationFilter(QOpenGLTexture::Linear);
-    m_normalMap->setWrapMode(QOpenGLTexture::Repeat);
-
+    m_material->setNormalMap(texture);
 }
 
 cMaterial *cModelParticle::getMaterial() const
@@ -214,14 +199,4 @@ cMaterial *cModelParticle::getMaterial() const
 void cModelParticle::setMaterial(cMaterial* material)
 {
     m_material.reset(material);
-
-    if (m_material->isDiffuseMapSet())
-    {
-        setDiffuseMap(m_material->diffuseMapPath());
-    }
-
-    if (m_material->isNormalMapSet())
-    {
-        setNormalMap(m_material->normalMapPath());
-    }
 }

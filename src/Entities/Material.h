@@ -3,11 +3,12 @@
 
 #include <QVector3D>
 #include <QImage>
+#include <qopengltexture.h>
 
 class cMaterial
 {
 public:
-    cMaterial();
+    cMaterial() = default;
 
     void setName(std::string_view mtlName);
     std::string_view mtlName() const;
@@ -24,15 +25,11 @@ public:
     void setShinnes(float shinnes);
     float shinnes() const;
 
-    void setDiffuseMap(std::string_view path);
-    const QImage &diffuseMap() const;
-    std::string_view diffuseMapPath() const;
-    bool isDiffuseMapSet() const;
+    void setDiffuseMap(QOpenGLTexture* texture);
+    QOpenGLTexture* getDiffuseMap() const;
 
-    void setNormalMap(std::string_view path);
-    const QImage &normalMap() const;
-    std::string_view normalMapPath() const;
-    bool isNormalMapSet() const;
+    void setNormalMap(QOpenGLTexture* texture);
+    QOpenGLTexture* getNormalMap() const;
 
 private:
     std::string_view m_mtlName;
@@ -45,11 +42,8 @@ private:
 
     float m_shinnes = 100.0f;
 
-    QImage m_diffuseMap;
-    QImage m_normalMap;
-
-    bool m_isUsingDiffuseMap = false;
-    bool m_isUsingNormalMap = false;
+    QOpenGLTexture* m_diffuseMap = nullptr;
+    QOpenGLTexture* m_normalMap = nullptr;
 };
 
 #endif // MATERIAL_H

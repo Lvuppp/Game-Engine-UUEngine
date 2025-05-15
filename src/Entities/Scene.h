@@ -18,18 +18,21 @@ public:
           std::vector<cCamera*>&& cameras, std::vector<cSkyBox*>&& skyBox);
     ~cScene();
 
-    bool addGameObject(uint32_t name, cModel *model);
+    cBase3DGameObject* addGameObject(uint32_t name, cModel *model);
     bool addLighting(uint32_t name);
     bool addCamera(uint32_t name);
+    bool addSkyBox(uint32_t name, cModel *model);
 
     bool deleteGameObject(uint32_t name);
     bool deleteLighting(uint32_t name);
     bool deleteCamera(uint32_t name);
 
-    bool setSkybox(cModel *model);
     void setCurrentCamera(uint32_t name);
+    cCamera* getCurrentCamera() const;
 
-public:
+    void setCurrentSkyBox(uint32_t name);
+    cSkyBox* getCurrentSkyBox() const;
+
     cBase3DGameObject *gameObject(uint32_t objectName) const;
     cCamera *camera(uint32_t cameraName) const;
     cLighting *lighting(uint32_t lightName) const;
@@ -38,13 +41,10 @@ public:
     const std::vector<cBase3DGameObject*>& gameObjects() const;
     const std::vector<cCamera*>& cameras() const;
 
-    cCamera *currentCamera() const;
-    cSkyBox *skybox() const;
-
 private:
     cCamera* m_currentCamera = nullptr;
     cLighting* m_currentLighting = nullptr;
-    cSkyBox* m_skyBox = nullptr;
+    cSkyBox* m_currentSkyBox = nullptr;
 
     std::vector<cSkyBox*> m_skyBoxes;
     std::vector<cCamera*> m_cameras;

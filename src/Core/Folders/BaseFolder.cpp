@@ -1,5 +1,6 @@
 #include "BaseFolder.h"
-#include <algorithm>
+
+constexpr const char* cBaseFolder::FolderPath = "";
 
 void cBaseFolder::append(uint32_t hash, const std::string &fileName)
 {
@@ -14,6 +15,11 @@ void cBaseFolder::remove(uint32_t hash)
 void cBaseFolder::replace(uint32_t hash, const std::string &fileName)
 {
     m_files[hash] = fileName;
+}
+
+void cBaseFolder::copyFileToProject()
+{
+
 }
 
 std::string_view cBaseFolder::getFile(uint32_t hash)

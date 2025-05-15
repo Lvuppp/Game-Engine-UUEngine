@@ -6,7 +6,10 @@
 class cSkyBox : public cBase3DGameObject
 {
 public:
-    cSkyBox(cModel* model);
+    cSkyBox(uint32_t hash, cModel* model);
+
+public:
+    ObjectType objectType() const override;
 };
 
 #endif // SKYBOX_H

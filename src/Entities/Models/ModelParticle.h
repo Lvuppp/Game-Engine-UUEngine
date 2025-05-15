@@ -24,8 +24,8 @@ public:
     void calculateTBN(Vertexes& vertexes);
     void drawModelParticle(const QMatrix4x4& modelMatrix, QOpenGLShaderProgram* shaderProgram, bool isUsingTexture, QOpenGLFunctions* functions);
 
-    void setDiffuseMap(std::string_view texture);
-    void setNormalMap(std::string_view texture);
+    void setDiffuseMap(QOpenGLTexture* texture);
+    void setNormalMap(QOpenGLTexture* texture);
     void setMaterial(cMaterial* material);
 
     const Vertexes& vertexesData() const;
@@ -36,8 +36,6 @@ private:
     QOpenGLBuffer m_vertexes;
     QOpenGLBuffer m_indexes;
 
-    std::unique_ptr<QOpenGLTexture> m_diffuseMap;
-    std::unique_ptr<QOpenGLTexture> m_normalMap;
     std::unique_ptr<cMaterial> m_material;
 };
 #endif // MODELPARTICLE_H

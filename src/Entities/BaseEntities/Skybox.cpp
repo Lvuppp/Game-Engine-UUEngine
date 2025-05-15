@@ -1,6 +1,13 @@
 #include "Skybox.h"
 
-cSkyBox::cSkyBox(cModel *model)
-    : cBase3DGameObject(model)
+#include "Entities/BaseEntities/BaseEngineObject.h"
+
+cSkyBox::cSkyBox(uint32_t hash,cModel *model)
+    : cBase3DGameObject(hash, model)
 {
+}
+
+cBaseEngineObject::ObjectType cSkyBox::objectType() const
+{
+    return cBaseEngineObject::ObjectType::SkyBox;
 }

@@ -1,9 +1,5 @@
 #include "Material.h"
 
-cMaterial::cMaterial() : m_isUsingDiffuseMap(false), m_isUsingNormalMap(false)
-{
-}
-
 void cMaterial::setName(std::string_view mtlName)
 {
     m_mtlName = mtlName;
@@ -54,46 +50,22 @@ float cMaterial::shinnes() const
     return m_shinnes;
 }
 
-void cMaterial::setDiffuseMap(std::string_view path)
+void cMaterial::setDiffuseMap(QOpenGLTexture* texture)
 {
-    m_diffuseMapPath = path;
-    m_diffuseMap = QImage(path.data());
-    m_isUsingDiffuseMap = true;
+    m_diffuseMap = texture;
 }
 
-const QImage &cMaterial::diffuseMap() const
+QOpenGLTexture* cMaterial::getDiffuseMap() const
 {
     return m_diffuseMap;
 }
 
-bool cMaterial::isDiffuseMapSet() const
+void cMaterial::setNormalMap(QOpenGLTexture* texture)
 {
-    return m_isUsingDiffuseMap;
+    m_normalMap = texture;
 }
 
-void cMaterial::setNormalMap(std::string_view path)
-{
-    m_normalMap = QImage(path.data());
-    m_normalMapPath = path;
-    m_isUsingNormalMap = true;
-}
-
-const QImage &cMaterial::normalMap() const
+QOpenGLTexture* cMaterial::getNormalMap() const
 {
     return m_normalMap;
-}
-
-bool cMaterial::isNormalMapSet() const
-{
-    return m_isUsingNormalMap;
-}
-
-std::string_view cMaterial::diffuseMapPath() const
-{
-    return m_diffuseMapPath;
-}
-
-std::string_view cMaterial::normalMapPath() const
-{
-    return m_normalMapPath;
 }

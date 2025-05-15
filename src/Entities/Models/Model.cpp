@@ -30,30 +30,30 @@ void cModel::drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram *shad
     }
 }
 
-void cModel::setNormalMap(std::string_view path)
+void cModel::setNormalMap(QOpenGLTexture* texture)
 {
     for (const auto& model : m_modelParticles)
     {
-        model->setNormalMap(path);
+        model->setNormalMap(texture);
     }
 }
 
-void cModel::setDiffuseMap(std::string_view path)
+void cModel::setDiffuseMap(QOpenGLTexture* texture)
 {
     for (const auto& model : m_modelParticles)
     {
-        model->setDiffuseMap(path);
+        model->setDiffuseMap(texture);
     }
 }
 
-void cModel::setNormalMap(std::string_view path, size_t index)
+void cModel::setNormalMap(QOpenGLTexture* texture, size_t index)
 {
     ASSERT(index < m_modelParticles.size(), "Index out of range");
-    m_modelParticles[index]->setNormalMap(path);
+    m_modelParticles[index]->setNormalMap(texture);
 }
 
-void cModel::setDiffuseMap(std::string_view path, size_t index)
+void cModel::setDiffuseMap(QOpenGLTexture* texture, size_t index)
 {
     ASSERT(index < m_modelParticles.size(), "Index out of range");
-    m_modelParticles[index]->setDiffuseMap(path);
+    m_modelParticles[index]->setDiffuseMap(texture);
 }

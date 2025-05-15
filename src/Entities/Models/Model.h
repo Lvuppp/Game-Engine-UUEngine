@@ -24,11 +24,11 @@ public:
     ModelParticle getModelParticle(size_t index) const;
     ModelParticles getModelParticles() const;
 
-    void setNormalMap(std::string_view path);
-    void setDiffuseMap(std::string_view path);
+    void setNormalMap(QOpenGLTexture* texture);
+    void setDiffuseMap(QOpenGLTexture* texture);
 
-    inline void setNormalMap(std::string_view path, size_t index);
-    inline void setDiffuseMap(std::string_view path, size_t index);
+    inline void setNormalMap(QOpenGLTexture* texture, size_t index);
+    inline void setDiffuseMap(QOpenGLTexture* texture, size_t index);
 
 public:
     virtual void drawModel(const QMatrix4x4 &modelMatrix, QOpenGLShaderProgram* shaderProgram, bool isUsingTexture, QOpenGLFunctions* functions);

@@ -63,12 +63,12 @@ void cMaterialLibrary::loadMaterialsFromFile(const std::string &path)
             newMtl->setSpecularColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
         }
         else if (list[0] == "map_Kd"){
-            newMtl->setDiffuseMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
-            cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+            //newMtl->setDiffuseMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+            //cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
         }
         else if (list[0] == "map_Bump"){
-            newMtl->setNormalMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
-            cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+            //newMtl->setNormalMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+            //cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
         }
     }
 

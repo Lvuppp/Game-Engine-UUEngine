@@ -7,6 +7,14 @@ cBaseEngineObject::cBaseEngineObject()
     m_rotate *= QQuaternion();
 }
 
+cBaseEngineObject::cBaseEngineObject(uint32_t hash)
+    : m_id(hash)
+    , m_coordinates(0.0f, 0.0f, 0.0f)
+    , m_scale(1.0f)
+{
+    m_rotate *= QQuaternion();
+}
+
 uint32_t cBaseEngineObject::getId() const
 {
     return m_id;

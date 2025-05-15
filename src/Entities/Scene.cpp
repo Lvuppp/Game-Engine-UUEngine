@@ -8,14 +8,16 @@
 
 cScene::cScene()
 {
-    m_skyBox = nullptr;
-    m_currentCamera = nullptr;
-    m_currentLighting = nullptr;
+    m_currentCamera = new cCamera();
+    m_currentLighting = new cLighting();
+
+    m_cameras.emplace_back(m_currentCamera);
+    m_lightings.emplace_back(m_currentLighting);
 }
 
 cScene::cScene(std::vector<cBase3DGameObject*>&& gameObjects, std::vector<cLighting*>&& lighting,
              std::vector<cCamera*>&& cameras, std::vector<cSkyBox*>&& skyBoxes)
-    : m_skyBoxes(skyBoxes)
+    : m_skyBoxes(std::move(skyBoxes))
     , m_cameras(std::move(cameras))
     , m_lightings(std::move(lighting))
     , m_gameObjects(std::move(gameObjects))
@@ -46,7 +48,7 @@ cScene::~cScene()
     }
 }
 
-bool cScene::addGameObject(uint32_t name, cModel *model)
+cBase3DGameObject* cScene::addGameObject(uint32_t name, cModel *model)
 {
     auto it = std::find_if(m_gameObjects.cbegin(), m_gameObjects.cend(), [name](const auto& object) {
         return object->getId() == name;
@@ -54,11 +56,11 @@ bool cScene::addGameObject(uint32_t name, cModel *model)
 
     if (it != m_gameObjects.cend())
     {
-        return false;
+        return nullptr;
     }
 
-    m_gameObjects.emplace_back(new cBase3DGameObject(model));
-    return true;
+    m_gameObjects.emplace_back(new cBase3DGameObject(name, model));
+    return m_gameObjects.back();
 }
 
 bool cScene::addLighting(uint32_t name)
@@ -137,9 +139,18 @@ bool cScene::deleteCamera(uint32_t hash)
     return false;
 }
 
-bool cScene::setSkybox(cModel *model)
+bool cScene::addSkyBox(uint32_t hash, cModel *model)
 {
-    m_skyBox = new cSkyBox(model);
+    auto it = std::find_if(m_skyBoxes.cbegin(), m_skyBoxes.cend(), [hash](const auto& object) {
+        return object->getId() == hash;
+    });
+
+    if (it != m_skyBoxes.cend())
+    {
+        return false;
+    }
+
+    m_skyBoxes.emplace_back(new cSkyBox(hash, model));
     return true;
 }
 
@@ -200,16 +211,6 @@ cLighting *cScene::lighting(uint32_t hash) const
     return m_lightings[0];
 }
 
-cCamera *cScene::currentCamera() const
-{
-    return m_currentCamera;
-}
-
-cSkyBox *cScene::skybox() const
-{
-    return m_skyBox;
-}
-
 void cScene::setCurrentCamera(uint32_t hash)
 {
     auto it = std::find_if(m_cameras.cbegin(), m_cameras.cend(), [hash](const auto& object) {
@@ -220,4 +221,26 @@ void cScene::setCurrentCamera(uint32_t hash)
     {
         m_currentCamera = *it;
     }
+}
+
+cCamera* cScene::getCurrentCamera() const
+{
+    return m_currentCamera;
+}
+
+void cScene::setCurrentSkyBox(uint32_t hash)
+{
+    auto it = std::find_if(m_skyBoxes.cbegin(), m_skyBoxes.cend(), [hash](const auto& object) {
+        return object->getId() == hash;
+    });
+
+    if (it != m_skyBoxes.cend())
+    {
+        m_currentSkyBox = *it;
+    }
+}
+
+cSkyBox* cScene::getCurrentSkyBox() const
+{
+    return m_currentSkyBox;
 }
