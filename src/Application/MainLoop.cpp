@@ -1,20 +1,16 @@
 #include "MainLoop.h"
 
 #include "Core/Cores/EngineCore.h"
-#include "Core/Services/ProjectProcessor.h"
-#include "Utils/TimeFacade.h"
 
 #include <QApplication>
 #include <QOpenGLWidget>
 #include <QScreen>
 #include <qcoreevent.h>
 
-#include <iostream>
-
 cMainLoop::cMainLoop(int &argc, char **argv)
     : m_app(argc, argv)
-    , m_engine()
-    , m_window(&m_engine)
+    , m_engine(cEngineCore::getInstance())
+    , m_window(m_engine.get())
 {
     QObject::connect(&m_app, &QApplication::aboutToQuit, this, &cMainLoop::stopMainLoop);
 
@@ -38,23 +34,17 @@ int cMainLoop::startMainLoop()
 
         processInput();
 
+        // while (m_lag >= m_msPerUpdate)
+        // {
+        //     m_lag -= m_msPerUpdate;
+        //     update(m_msPerUpdate);
+        // }
 
-        while (m_lag >= m_msPerUpdate)
-        {
-            m_lag -= m_msPerUpdate;
-            update(m_msPerUpdate);
-        }
-
+        update(m_elapsed);
         render();
     }
 
     return 0;
-}
-
-
-bool cMainLoop::eventFilter(QObject* obj, QEvent* event)
-{
-    return QObject::eventFilter(obj, event);
 }
 
 void cMainLoop::stopMainLoop()
@@ -64,7 +54,7 @@ void cMainLoop::stopMainLoop()
 
 void cMainLoop::update(float dt)
 {
-    m_engine.update(dt);
+    m_engine->update(dt);
 }
 
 void cMainLoop::render()

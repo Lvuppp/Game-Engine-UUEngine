@@ -15,7 +15,7 @@ class cInputEngine : public QObject
     Q_OBJECT
 
 public:
-    cInputEngine();
+    cInputEngine() = default;
     ~cInputEngine() = default;
 
     void setScreenCoords(const sVec2& size);
@@ -24,8 +24,7 @@ public:
     QQuaternion getRotateY();
     QVector3D getTranslate();
 
-    QVector3D getWorldCoordinates(QMatrix4x4 projectionMatrix, 
-        QMatrix4x4 viewMatrix, const float &objectY = 0);
+    QVector3D getWorldCoordinates(QMatrix4x4 projectionMatrix, QMatrix4x4 viewMatrix, float objectY);
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent* event);

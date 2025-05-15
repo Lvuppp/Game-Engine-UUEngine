@@ -27,9 +27,6 @@ public slots:
     void stopMainLoop();
 
 private:
-    bool eventFilter(QObject* obj, QEvent* event) override;
-
-private:
     uint32_t getMonitorRefreshRate() const;
     inline uint32_t getCurrentTime() const;
 
@@ -42,7 +39,7 @@ private:
     float m_lag = 0.0f;
 
     QApplication m_app;
-    cEngineCore m_engine;
+    std::shared_ptr<cEngineCore> m_engine;
     cMainWindow m_window;
     cEngineOpenGLWidget* m_glWidget = nullptr;
 };

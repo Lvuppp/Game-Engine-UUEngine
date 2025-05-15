@@ -3,45 +3,43 @@
 #include <QMatrix4x4>
 #include <qevent.h>
 
-cInputEngine::cInputEngine()
-{
-    qApp->installEventFilter(this);
-}
+#include <iostream>
 
 bool cInputEngine::eventFilter(QObject* obj, QEvent* event)
 {
     switch (event->type()) {
         case QEvent::KeyPress: {
-            auto* keyEvent = static_cast<QKeyEvent*>(event);
-            break;
+            auto keyEvent = static_cast<QKeyEvent*>(event);
+            return true;
         }
 
         case QEvent::KeyRelease: {
-            auto* keyEvent = static_cast<QKeyEvent*>(event);
-            break;
+            auto keyEvent = static_cast<QKeyEvent*>(event);
+            return true;
         }
 
         case QEvent::MouseButtonPress: {
-            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+            auto mouseEvent = static_cast<QMouseEvent*>(event);
             mousePressEvent(mouseEvent);
-            break;
+            return true;
         }
 
         case QEvent::MouseButtonRelease: {
-            auto* mouseEvent = static_cast<QMouseEvent*>(event);
-            break;
+            auto mouseEvent = static_cast<QMouseEvent*>(event);
+            return true;
         }
 
         case QEvent::MouseMove: {
-            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+            auto mouseEvent = static_cast<QMouseEvent*>(event);
             mouseMoveEvent(mouseEvent);
-            break;
+            event->accept();
+            return true;
         }
 
         case QEvent::Wheel: {
-            auto* wheelEvent = static_cast<QWheelEvent*>(event);
+            auto wheelEvent = static_cast<QWheelEvent*>(event);
             wheelScrollEvent(wheelEvent);
-            break;
+            return true;
         }
         default:
             break;
@@ -64,15 +62,19 @@ void cInputEngine::wheelScrollEvent(QWheelEvent* wheelEvent)
 
 QQuaternion cInputEngine::getRotateX()
 {
-    return m_rotateXDelta;
+    const auto delta = m_rotateXDelta;
+    m_rotateXDelta = QQuaternion();
+    return delta;
 }
 
 QQuaternion cInputEngine::getRotateY()
 {
-    return m_rotateYDelta;
+    const auto delta = m_rotateYDelta;
+    m_rotateYDelta = QQuaternion();
+    return delta;
 }
 
-QVector3D cInputEngine::getWorldCoordinates(QMatrix4x4 projectionMatrix, QMatrix4x4 viewMatrix, const float &objectY)
+QVector3D cInputEngine::getWorldCoordinates(QMatrix4x4 projectionMatrix, QMatrix4x4 viewMatrix, float objectY)
 {
     QVector4D tmp(2.0f * m_mouseCoordinates.x() / m_screenWidth - 1.0f,
                   -2.0f * m_mouseCoordinates.y() / m_screenHeight + 1.0f, -1.0f, 1.0f);
@@ -89,7 +91,13 @@ QVector3D cInputEngine::getWorldCoordinates(QMatrix4x4 projectionMatrix, QMatrix
 
 QVector3D cInputEngine::getTranslate()
 {
-    return m_translateDelta;
+    const auto delta = m_translateDelta;
+    m_translateDelta = QVector3D();
+    if (delta.x() != 0.0f || delta.y() != 0.0f || delta.z() != 0.0f)
+    {
+        std::cout << delta.x() << " " << delta.y() << " " << delta.z() << std::endl;
+    }
+    return delta;
 }
 
 void cInputEngine::setScreenCoords(const sVec2& size)
@@ -105,14 +113,23 @@ void cInputEngine::mousePressEvent(QMouseEvent *event)
 
 void cInputEngine::mouseMoveEvent(QMouseEvent *event)
 {
-    if(event->button() == Qt::RightButton) return;
+    if(event->button() == Qt::RightButton)
+    {
+        return;
+    }
 
-    QVector2D diffpos = QVector2D(event->position()) - m_mouseCoordinates;
-    m_mouseCoordinates = QVector2D(event->position());
+    const auto pos = QVector2D(event->position());
+    const auto diffpos = pos - m_mouseCoordinates;
+    m_mouseCoordinates = pos;
 
-    float angleX = diffpos.y() / 2.0f;
-    float angleY = diffpos.x() / 2.0f;
+    auto angleX = diffpos.y() / 2.0f;
+    auto angleY = diffpos.x() / 2.0f;
 
-    m_rotateXDelta = QQuaternion::fromAxisAndAngle(1.0f ,0.0f ,0.0f, angleX);
-    m_rotateYDelta = QQuaternion::fromAxisAndAngle(0.0f ,1.0f ,0.0f, angleY);
+    m_rotateXDelta = QQuaternion::fromAxisAndAngle(2.0f, 0.0f, 0.0f, angleX);
+    m_rotateYDelta = QQuaternion::fromAxisAndAngle(0.0f, 2.0f, 0.0f, angleY);
+
+    std::cout << m_rotateXDelta.x() << " " << m_rotateXDelta.y() << " " << m_rotateXDelta.z() << " " << m_rotateXDelta.scalar() << std::endl;
+    std::cout << m_rotateYDelta.x() << " " << m_rotateYDelta.y() << " " << m_rotateYDelta.z() << " " << m_rotateYDelta.scalar() << std::endl;
+
+    std::cout << std::endl;
 }
