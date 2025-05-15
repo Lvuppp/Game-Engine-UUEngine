@@ -1,6 +1,8 @@
 #ifndef GRAPHICSENGINE_H
 #define GRAPHICSENGINE_H
 
+#include "Core/Services/ModelBuilder.h"
+#include "Entities/BaseEntities/Base3DGameObject.h"
 #include "Entities/Scene.h"
 
 #include <QtOpenGL>
@@ -25,16 +27,13 @@ public:
     void resizeScene(int w, int h);
 
     cBaseEngineObject *selectObject(const QPoint &mouseCoordinates);
-
-    void rotateModelViewMatrix(const QQuaternion &rotationX,const QQuaternion &rotationY);
-    void translateModelViewMatrix(QVector3D translation);
-
     void setCurrentScene(cScene* scene);
 
-    QMatrix4x4 projectionMatrix() const;
-    QMatrix4x4 cameraViewMatrix() const;
+    const QMatrix4x4& getProjectionMatrix() const;
 
     void changeGameStatus();
+
+    void testShaders();
 
 private:
     QOpenGLFunctions* m_glFunctions = nullptr;
@@ -61,5 +60,15 @@ private:
     int m_windowHeight;
 
     bool m_gameStatus = false;
+
+    void testSceneShader();
+    void testSkyboxShader();
+    void testDepthShader();
+    void testSelectShader();
+
+    void renderTestCube(QOpenGLShaderProgram* shader);
+
+    std::unique_ptr<cBase3DGameObject> m_testCube;
+    cModelBuilder m_modelBuilder;
 };
 #endif // GRAPHICSENGINE_H
