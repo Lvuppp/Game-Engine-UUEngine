@@ -5,6 +5,7 @@
 #include "Core/Cores/EngineCore.h"
 #include "Core/Cores/GraphicsEngine.h"
 #include "Core/Cores/InputEngine.h"
+#include "Core/Services/ModelBuilder.h"
 
 #include "Utils/Hash.h"
 #include "Utils/Vectors.h"
@@ -52,7 +53,7 @@ void cEngineOpenGLWidget::createContextMenu()
     m_contextMenu->addMenu(m_objectContextMenu);
     m_contextMenu->addAction(setSkybox);
 
-    connect(setSkybox, &QAction::triggered, this, &cEngineOpenGLWidget::setSkybox);
+    connect(setSkybox, &QAction::triggered, this, &cEngineOpenGLWidget::createSkybox);
 
     QAction* addCustomObjectAction = new QAction("Custom object", this);
     QAction* addCubeAction = new QAction("Cube", this);
@@ -65,13 +66,43 @@ void cEngineOpenGLWidget::createContextMenu()
     m_objectContextMenu->addAction(addCustomObjectAction);
     m_objectContextMenu->addAction(addCubeAction);
     m_objectContextMenu->addAction(addSphereAction);
+    m_objectContextMenu->addAction(addConeAction);
+    m_objectContextMenu->addAction(addCylinderAction);
+    m_objectContextMenu->addAction(addPyramidAction);
+    m_objectContextMenu->addAction(addPrismAction);
+
+    connect(addCustomObjectAction, &QAction::triggered, this, &cEngineOpenGLWidget::createObject);
+    connect(addCubeAction, &QAction::triggered, this, [this]() {
+        createFigureObject("cube", cModelBuilder::Base3DFiguresType::Cube);
+    });
+    connect(addSphereAction, &QAction::triggered, this, [this]() {
+        createFigureObject("sphere", cModelBuilder::Base3DFiguresType::Sphere);
+    });
+    connect(addConeAction, &QAction::triggered, this, [this]() {
+        createFigureObject("cone", cModelBuilder::Base3DFiguresType::Cone);
+    });
+    connect(addCylinderAction, &QAction::triggered, this, [this]() {
+        createFigureObject("cylinder", cModelBuilder::Base3DFiguresType::Cylinder);
+    });
+    connect(addPyramidAction, &QAction::triggered, this, [this]() {
+        createFigureObject("pyramid", cModelBuilder::Base3DFiguresType::Pyramid);
+    });
+    connect(addPrismAction, &QAction::triggered, this, [this]() {
+        createFigureObject("prism", cModelBuilder::Base3DFiguresType::Prism);   
+    });
 }
 
 void cEngineOpenGLWidget::createObject()
 {
+    m_engine->createBase3DGameObject("obj"_hash);
 }
 
-void cEngineOpenGLWidget::setSkybox()
+void cEngineOpenGLWidget::createFigureObject(const std::string& name, cModelBuilder::Base3DFiguresType type)
+{
+    m_engine->createBaseFigureObject("cube"_hash, type);
+}
+
+void cEngineOpenGLWidget::createSkybox()
 {
     const auto objectPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
 

@@ -25,8 +25,9 @@ class cModelFolder;
 class cScene;
 class cScriptEngine;
 class cScriptFolder;
-class cTextureFolder;
+class cTextureManager;
 
+class QOpenGLWidget;
 class QMouseEvent;
 class QWheelEvent;
 
@@ -46,7 +47,6 @@ public:
     std::unique_ptr<cTextureManager> m_textureManager;
 
     cModelLoader m_modelLoader;
-    cModelBuilder m_modelBuilder;
 };
 
 class cEngineCore final : public QObject, public cEngineContext
@@ -64,7 +64,7 @@ public:
 public:
     void initInputEngine(sVec2 size);
     void initProjectProcessor(QVBoxLayout &layout);
-    void initGraphicsEngine();
+    void initGraphicsEngine(QOpenGLWidget* widget);
 
     void update(float dt);
     void render();
@@ -102,10 +102,10 @@ public:
     void createScene(uint32_t hash);
     void createCameraInScene(uint32_t hash);
     void createLightingInScene(uint32_t hash);
-    void createSkyBox(const float &size, const std::string& path);
+    void createSkyBox(uint32_t hash, const std::string &path, float size = 100.0f);
 
     void selectCurrentScene(const std::string& sceneName);
-    cScene *getCurrentScene();
+    inline cScene *getCurrentScene();
 
 public slots:
     void createProject(const std::string& path, const std::string &name);
@@ -126,16 +126,9 @@ public:
     bool createFBXModel(uint32_t hash, const std::string& modelPath);
 
 public:
-    bool createCube(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f);
-    void createPyramide(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f);
-    bool createSphere(uint32_t hash, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
-    void createPrism(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const float &depth = 1.0f, const float &angle = 1.0f);
-    void createCone(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
-    void createCylinder(uint32_t hash, const float &width = 1.0f, const float &height = 1.0f, const int &sectors = 20);
-
-    void changeCube(uint32_t hash, const float &width, const float &height, const float &depth);
-    void changeSphere(uint32_t hash, const float & radius = 1.0f, const int & rings = 20, const int & sectors = 20);
-
+    bool createBase3DGameObject(uint32_t hash);
+    bool createBaseFigureObject(uint32_t hash, cModelBuilder::Base3DFiguresType figureType);
+    
 private:
     bool m_gameStatus = false;
 
@@ -144,6 +137,8 @@ signals:
     void emitObject(uint32_t hash, cBase3DGameObject **object);
 
 private:
+    QOpenGLWidget* m_openGLWidget;
+
     std::unique_ptr<cCamera> m_engineCamera = nullptr;
     std::unique_ptr<cLighting> m_engineLighting = nullptr;
 

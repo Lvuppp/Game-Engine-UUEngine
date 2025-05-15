@@ -2,6 +2,7 @@
 #define OPENGLWIDGETVIEWMODEL_H
 
 #include "Core/Cores/EngineCore.h"
+#include "Core/Services/ModelBuilder.h"
 #include "ObjectCreatorDialog.h"
 
 #include <QMenu>
@@ -21,12 +22,14 @@ public:
 
 public slots:
     void createObject();
-    void setSkybox();
+    void createSkybox();
     void setDisableState(bool state);
+
+ private:
+    void createFigureObject(const std::string& name, cModelBuilder::Base3DFiguresType type);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
-
 
 private:
     void initializeGL() override;

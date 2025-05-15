@@ -1,32 +1,33 @@
 #ifndef MODELBUILDER_H
 #define MODELBUILDER_H
 
-#include <string>
-
-enum class SimpleModelType{
-    Cube,
-    Pyramid,
-    Sphere,
-    Prism,
-    Cone,
-    Cylinder
-};
+#include <cstdint>
 
 class cModel;
+class QOpenGLTexture;
 
 class cModelBuilder
 {
 public:
-    cModel *createSkybox(const float &size, const std::string &texture);
+    enum class Base3DFiguresType
+    {
+        Cube,
+        Pyramid,
+        Sphere,
+        Prism,
+        Cone,
+        Cylinder
+    };
+    cModel* createBaseFigure(Base3DFiguresType figureType);
+    cModel* createSkybox(float size, QOpenGLTexture* texture);
 
-    cModel *createCube(const float &width, const float &height, const float &depth);
-    cModel *createPyramide(const float &width, const float &height);
-    cModel *createSphere(const float & radius, const int & rings, const int & sectors);
-    cModel *createPrism(const float &width, const float &height, const float &depth, const float &angle);
-    cModel *createCone(const float & radius, const float & height, const int & sectors);
-    cModel *createCylinder(const float & radius, const float & height, const int & sectors);
-
+private:
+    cModel* createCube(float width, float height, float depth);
+    cModel* createPyramide(float width, float height);
+    cModel* createSphere(float  radius, uint32_t rings, uint32_t sectors);
+    cModel* createPrism(float width, float height, float depth, float angle);
+    cModel* createCone(float  radius, float  height, uint32_t sectors);
+    cModel* createCylinder(float  radius, float  height, uint32_t sectors);
 };
-
 
 #endif // MODELBUILDER_H

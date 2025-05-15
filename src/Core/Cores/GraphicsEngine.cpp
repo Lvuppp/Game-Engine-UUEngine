@@ -3,7 +3,7 @@
 #include "Entities/BaseEntities/Base3DGameObject.h"
 #include "Entities/BaseEntities/Camera.h"
 #include "Entities/BaseEntities/Lighting.h"
-#include "Entities/BaseEntities/SkyBox.h"
+#include "Entities/BaseEntities/Skybox.h"
 #include "Entities/Scene.h"
 
 #include "Utils/Assert.h"
@@ -29,8 +29,8 @@ void cGraphicsEngine::initGraphics()
 
     initShaders();
 
-    m_testCube = std::make_unique<cBase3DGameObject>("obj"_hash, m_modelBuilder.createCube(1.0f, 1.0f, 1.0f));
-    m_testCube->setCoordinates(QVector3D(0.0f, 0.0f, -5.0f));
+    //m_testCube = std::make_unique<cBase3DGameObject>("obj"_hash, m_modelBuilder.createCube(1.0f, 1.0f, 1.0f));
+    //m_testCube->setCoordinates(QVector3D(0.0f, 0.0f, -5.0f));
 
     m_engineCamera = new cCamera();
     m_engineCamera->setCoordinates(QVector3D(0.0f, 0.0f, 0.0f));
@@ -93,6 +93,8 @@ void cGraphicsEngine::render()
     m_skyBoxShaderProgram.bind();
 
     m_skyBoxShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
+
+    auto currentCamera = m_currentScene->getCurrentCamera();
     currentCamera->draw(&m_skyBoxShaderProgram, m_glFunctions, false);
 
     auto skyBox = m_currentScene->getCurrentSkyBox();
@@ -319,7 +321,7 @@ void cGraphicsEngine::testSceneShader()
     m_glFunctions->glDisable(GL_DEPTH_TEST);
 }
 
-void cGraphicsEngine::renderTestCube(QOpenGLShaderProgram* shader)
+void cGraphicsEngine::testSkyboxShader()
 {
     std::cout << "Testing Skybox Shader..." << std::endl;
 

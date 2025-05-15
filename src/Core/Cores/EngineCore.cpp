@@ -13,8 +13,11 @@
 #include "Core/Folders/SceneManager.h"
 
 #include "Utils/Hash.h"
+
 #include <cmath>
 #include <memory>
+
+#include <QOpenGLWidget>
 
 std::shared_ptr<cEngineCore> cEngineCore::m_instance = nullptr;
 
@@ -30,17 +33,26 @@ cEngineCore::cEngineCore()
 
     m_modelFolder = std::make_unique<cBaseFolder>();
     m_scriptFolder = std::make_unique<cBaseFolder>();
-    m_textureFolder = std::make_unique<cBaseFolder>();
+    m_textureManager = std::make_unique<cTextureManager>();
 
     m_modelLoader.setFactory(new OBJModelFactory());
     m_sceneManager = std::make_unique<cSceneManager>();
 
     m_projectProcessor = std::make_unique<cProjectProcessor>();
+
+    createScene("DefaultScene"_hash);
+    auto currentScene = getCurrentScene();
+/*
+    currentScene->addGameObject("BaseGameObject"_hash, m_modelBuilder.createCube(1.0f, 1.0f, 1.0f));
+
+    auto object = currentScene->gameObject("BaseGameObject"_hash);
+    object->translate(QVector3D(0.0f, 5.0f, 0.0f)); */
 }
 
-void cEngineCore::initGraphicsEngine()
+void cEngineCore::initGraphicsEngine(QOpenGLWidget *openGLWidget)
 {
     m_graphicsEngine->initGraphics();
+    m_openGLWidget = openGLWidget;
 }
 
 std::shared_ptr<cEngineCore> cEngineCore::getInstance()
@@ -55,21 +67,24 @@ std::shared_ptr<cEngineCore> cEngineCore::getInstance()
 
 void cEngineCore::update(float dt)
 {
-    //updateEngineCamera();
+    updateEngineCamera();
+    m_openGLWidget->update();
 }
 
 void cEngineCore::render()
 {
     m_graphicsEngine->render();
+    //m_graphicsEngine->testShaders();
 }
 
 void cEngineCore::updateEngineCamera()
 {
-    auto inputEngine = m_inputEngine.get();
+    auto currentScene = getCurrentScene();
+    auto engineCamera = currentScene->getCurrentCamera();
 
-    m_engineCamera->setCoordinates(inputEngine->getTranslate());
-    m_engineCamera->setRotateX(inputEngine->getRotateX());
-    m_engineCamera->setRotateY(inputEngine->getRotateY());
+    engineCamera->translate(m_inputEngine->getTranslate());
+    engineCamera->rotateX(m_inputEngine->getRotateX());
+    engineCamera->rotateY(m_inputEngine->getRotateY());
 }
 
 void cEngineCore::resizeScene(sVec2 size)
@@ -128,16 +143,16 @@ void cEngineCore::setNormalTexture(uint32_t hash, const std::string& path)
 {
     auto model = getCurrentScene()->gameObject(hash)->model();
 
-    model->setNormalMap(path);
-    loadTexture(hash, path);
+    auto texture = m_textureManager->loadTexture(path);
+    model->setNormalMap(texture);
 }
 
 void cEngineCore::setDiffuseTexture(uint32_t hash, const std::string& path)
 {
     auto model = getCurrentScene()->gameObject(hash)->model();
-    model->setDiffuseMap(path);
+    auto texture = m_textureManager->loadTexture(path);
+    model->setDiffuseMap(texture);
 }
-
 
 bool cEngineCore::createOBJModel(uint32_t hash, const std::string& path)
 {
@@ -163,87 +178,60 @@ bool cEngineCore::createFBXModel(uint32_t hash, const std::string& path)
 
 void cEngineCore::createCameraInScene(uint32_t hash)
 {
-    getCurrentScene()->addCamera(hash);
+    /* getCurrentScene()->addCamera(hash);
     getCurrentScene()->camera(hash)->
         setCoordinates(m_inputEngine->getWorldCoordinates(m_graphicsEngine->projectionMatrix(),
                                                           m_graphicsEngine->cameraViewMatrix()));
-
+ */
 }
 
 void cEngineCore::createLightingInScene(uint32_t hash)
 {
-    getCurrentScene()->addLighting(hash);
+    /* getCurrentScene()->addLighting(hash);
     getCurrentScene()->lighting(hash)->
         setCoordinates(m_inputEngine->getWorldCoordinates(m_graphicsEngine->projectionMatrix(),
                                                           m_graphicsEngine->cameraViewMatrix()));
-
+ */
 }
 
-void cEngineCore::createSkyBox(const float &size, const std::string &path)
+void cEngineCore::createSkyBox(uint32_t hash, const std::string &path, float size)
 {
-    getCurrentScene()->setSkybox(m_modelBuilder.createSkybox(size, path));
-    loadTexture("Skybox"_hash, path);
+    auto currentScene = m_sceneManager->currentScene();
+    auto texture = m_textureManager->loadTexture(path);
+    cModelBuilder modelBuilder;
+    currentScene->addSkyBox(hash, modelBuilder.createSkybox(size, texture));
 }
 
-bool cEngineCore::createCube(uint32_t hash, const float &width, const float &height, const float &depth)
+bool cEngineCore::createBase3DGameObject(uint32_t hash)
 {
-    if(!getCurrentScene()->addGameObject(hash, m_modelBuilder.createCube(width, height, depth)))
+    auto currentScene = getCurrentScene();
+    if (currentScene != nullptr)
+    {
         return false;
-
-    m_modelFolder->replace(hash, "CUBE(" + std::to_string(width) + " " + std::to_string(height) + " " + std::to_string(depth) + ")");
-    placeObjectOnMousePosition(hash);
-    return true;
+    }
 }
-
-void cEngineCore::createPyramide(uint32_t hash, const float &width, const float &height)
+bool cEngineCore::createBaseFigureObject(uint32_t hash, cModelBuilder::Base3DFiguresType figureType)
 {
-    getCurrentScene()->addGameObject(hash, m_modelBuilder.createPyramide(width, height));
-    m_modelFolder->replace(hash, "PYRAMID(" + std::to_string(width) + " " + std::to_string(height) + ")");
-    placeObjectOnMousePosition(hash);
-}
-
-bool cEngineCore::createSphere(uint32_t hash, const float &radius, const int &stacks, const int &sectors)
-{
-    if(!getCurrentScene()->addGameObject(hash, m_modelBuilder.createSphere(radius,stacks, sectors)))
+    auto currentScene = getCurrentScene();
+    if (currentScene == nullptr)
+    {
         return false;
+    }
 
-    m_modelFolder->replace(hash, "SPHERE(" + std::to_string(radius) + " " + std::to_string(stacks) + " " + std::to_string(sectors) + ")");
-    placeObjectOnMousePosition(hash);
+    cModelBuilder modelBuilder;
+    auto createdObject = currentScene->addGameObject(hash, modelBuilder.createBaseFigure(figureType));
+
+    if (createdObject == nullptr)
+    {
+        return false;
+    }
+
+    const auto& projectionMatrix = m_graphicsEngine->getProjectionMatrix();
+    const auto& viewMatrix = currentScene->getCurrentCamera()->modelMatrix();
+    const auto coords = m_inputEngine->getWorldCoordinates(projectionMatrix, viewMatrix, 0.0f);
+    createdObject->setCoordinates(coords);
+
     return true;
-}
-
-void cEngineCore::createPrism(uint32_t hash, const float &width, const float &height, const float &depth, const float &angle)
-{
-    getCurrentScene()->addGameObject(hash, m_modelBuilder.createPrism(width,height, depth, angle));
-    m_modelFolder->replace(hash, "PRISM(" + std::to_string(width) + " " + std::to_string(height) + " " + std::to_string(depth) + " " + std::to_string(angle) + ")");
-    placeObjectOnMousePosition(hash);
-}
-
-void cEngineCore::createCone(uint32_t hash, const float &width, const float &height, const int &sectors)
-{
-    getCurrentScene()->addGameObject(hash, m_modelBuilder.createCone(width, height, sectors));
-    m_modelFolder->replace(hash, "CONE(" + std::to_string(width) + " " + std::to_string(height) + " " + std::to_string(sectors) + ")");
-    placeObjectOnMousePosition(hash);
-}
-
-void cEngineCore::createCylinder(uint32_t hash, const float &width, const float &height, const int &sectors)
-{
-    getCurrentScene()->addGameObject(hash, m_modelBuilder.createCylinder(width, height, sectors));
-    m_modelFolder->replace(hash, "CYLINDER(" + std::to_string(width) + " " + std::to_string(height) + " " + std::to_string(sectors) + ")");
-    placeObjectOnMousePosition(hash);
-}
-
-void cEngineCore::changeCube(uint32_t hash, const float &width, const float &height, const float &depth)
-{
-    getCurrentScene()->gameObject(hash)->setModel(m_modelBuilder.createCube(width, height, depth));
-    m_modelFolder->replace(hash, "CUBE(" + std::to_string(width) + " " + std::to_string(height) + " " + std::to_string(depth) + ")");
-
-}
-
-void cEngineCore::changeSphere(uint32_t hash, const float &radius, const int &rings, const int &sectors)
-{
-    getCurrentScene()->gameObject(hash)->setModel(m_modelBuilder.createSphere(radius, rings, sectors));
-    m_modelFolder->replace(hash, "SPHERE(" + std::to_string(radius) + " " + std::to_string(rings) + " " + std::to_string(sectors) + ")");
 }
 
 void cEngineCore::mousePressEvent(QMouseEvent *event)
@@ -253,28 +241,37 @@ void cEngineCore::mousePressEvent(QMouseEvent *event)
 
 void cEngineCore::mouseMoveEvent(QMouseEvent *event)
 {
-    m_inputEngine->mouseMoveEvent(event);
-    m_graphicsEngine->rotateModelViewMatrix(m_inputEngine->getRotateX(), m_inputEngine->getRotateY());
+    auto currentScene = getCurrentScene();
+    auto engineCamera = currentScene->getCurrentCamera();
+
+    engineCamera->rotateX(m_inputEngine->getRotateX());
+    engineCamera->rotateY(m_inputEngine->getRotateY());
 }
 
 void cEngineCore::wheelEvent(QWheelEvent *event)
 {
-    m_inputEngine->wheelScrollEvent(event);
-    m_graphicsEngine->translateModelViewMatrix(m_inputEngine->getTranslate());
+    auto currentScene = getCurrentScene();
+    auto engineCamera = currentScene->getCurrentCamera();
+
+    engineCamera->translate(m_inputEngine->getTranslate());
 }
 
 void cEngineCore::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    // auto object = dynamic_cast<cBase3DGameObject*>(m_graphicsEngine->selectObject(event->pos()));
-    // emit emitObject(object->hash, &object);
+    auto currentScene = getCurrentScene();
+    auto engineCamera = currentScene->getCurrentCamera();
+
+    engineCamera->translate(m_inputEngine->getTranslate());
+    engineCamera->rotateX(m_inputEngine->getRotateX());
+    engineCamera->rotateY(m_inputEngine->getRotateY());
 }
 
 void cEngineCore::placeObjectOnMousePosition(uint32_t hash)
 {
-    getCurrentScene()->gameObject(hash)->
+    /* getCurrentScene()->gameObject(hash)->
         setCoordinates(m_inputEngine->getWorldCoordinates(m_graphicsEngine->projectionMatrix(),
                                                           m_graphicsEngine->cameraViewMatrix()));
-}
+ */}
 
 void cEngineCore::changeGameStatus()
 {
@@ -343,7 +340,7 @@ void cEngineCore::loadModel(uint32_t hash, const std::string &path)
 
 void cEngineCore::loadTexture(uint32_t hash, const std::string &path)
 {
-    m_textureFolder->replace(hash, cProjectInfo::projectFolder() + "/Textures/" + path.substr(path.find_last_of('/') + 1));
+    m_textureManager->replace(hash, cProjectInfo::projectFolder() + "/Textures/" + path.substr(path.find_last_of('/') + 1));
     cProjectInfo::copyToTextures(path);
 }
 
