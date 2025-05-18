@@ -6,7 +6,8 @@
 class cLighting : public cBaseEngineObject
 {
 public:
-    cLighting();
+    cLighting() = default;
+    cLighting(uint32_t id);
     ~cLighting() = default;
 
 public:
@@ -15,7 +16,7 @@ public:
     void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions, bool isUsingTexture) override;
 
 private:
-    float m_lightPower = 1.0f;
+    float m_lightPower = 5.0f;
     bool m_isLightingDynamic = false;
 };
 

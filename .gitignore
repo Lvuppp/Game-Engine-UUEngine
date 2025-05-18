@@ -5,3 +5,5 @@ _build_compile_commands
 compile_commands.json
 CMakeFiles
 CMakeCache.txt
+generated/
+schemas/*_generated.h

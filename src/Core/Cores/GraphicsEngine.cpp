@@ -27,6 +27,10 @@ void cGraphicsEngine::initGraphics()
     m_glFunctions = context->functions();
     ASSERT(m_glFunctions, "Failed to get OpenGL functions");
 
+    m_glFunctions->glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    m_glFunctions->glEnable(GL_DEPTH_TEST);
+    m_glFunctions->glEnable(GL_CULL_FACE);
+
     initShaders();
 
     //m_testCube = std::make_unique<cBase3DGameObject>("obj"_hash, m_modelBuilder.createCube(1.0f, 1.0f, 1.0f));
@@ -70,6 +74,7 @@ void cGraphicsEngine::render()
     m_glFunctions->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     m_glFunctions->glEnable(GL_DEPTH_TEST);
 
+
     m_depthShaderProgram.bind();
     m_depthShaderProgram.setUniformValue("u_projectionLightMatrix", m_projectionLightMatrix);
     m_depthShaderProgram.setUniformValue("u_shadowLightMatrix", m_shadowLightMatrix);
@@ -108,7 +113,7 @@ void cGraphicsEngine::render()
     m_sceneShaderProgram.bind();
 
     m_sceneShaderProgram.setUniformValue("u_shadowMap", GL_TEXTURE4 - GL_TEXTURE0);
-    m_sceneShaderProgram.setUniformValue("u_ShadowPointCloudFilteringQuality", 1.5f);
+    m_sceneShaderProgram.setUniformValue("u_shadowPointCloudFilteringQuality", 1.5f);
     m_sceneShaderProgram.setUniformValue("u_shadowMapSize", 1024);
     m_sceneShaderProgram.setUniformValue("u_projectionMatrix", m_projectionMatrix);
     m_sceneShaderProgram.setUniformValue("u_projectionLightMatrix", m_projectionLightMatrix);
@@ -116,10 +121,11 @@ void cGraphicsEngine::render()
     m_sceneShaderProgram.setUniformValue("u_lightMatrix", m_lightMatrix);
     m_sceneShaderProgram.setUniformValue("u_viewMatrix", currentCamera->modelMatrix());
     m_sceneShaderProgram.setUniformValue("u_isDrawDynamic", false);
-    m_sceneShaderProgram.setUniformValue("u_eyePosition", QVector4D(currentCamera->coordinates(), 1.0f));
-    m_sceneShaderProgram.setUniformValue("u_lightDirection", QVector4D(0.0f,0.0f,-1.0f, 0.0f)); // позиция света
-    m_sceneShaderProgram.setUniformValue("u_lightPower", 1.0f); // сила свечения
+    m_sceneShaderProgram.setUniformValue("u_eyePosition", QVector4D(0.0f, 0.0f, 0.0f, 1.0f));
+    m_sceneShaderProgram.setUniformValue("u_lightDirection", QVector4D(0.0f,0.0f,-1.0f, 0.0f));
+    m_sceneShaderProgram.setUniformValue("u_lightPower", 1.0f);
 
+    currentCamera->draw(&m_sceneShaderProgram, m_glFunctions, false);
     for (const auto& gameObject : m_currentScene->gameObjects())
     {
         gameObject->draw(&m_sceneShaderProgram, m_glFunctions, true);
@@ -134,7 +140,7 @@ void cGraphicsEngine::resizeScene(int w, int h)
     m_windowWidth = w;
     m_windowHeight = h;
     m_projectionMatrix.setToIdentity();
-    m_projectionMatrix.perspective(45.0f, static_cast<float>(w) / static_cast<float>(h), 0.1f, 100.0f);
+    m_projectionMatrix.perspective(45.0f, static_cast<float>(w) / static_cast<float>(h), 0.1f, 1000.0f);
 }
 
 cBaseEngineObject *cGraphicsEngine::selectObject(const QPoint &mouseCoordinates)

@@ -16,6 +16,18 @@ public:
         }
         return hash;
     }
+
+    static constexpr uint32_t hash(const std::string& str)
+    {
+        const auto strView = std::string_view(str);
+        uint32_t hash = 2166136261u;
+        for (char c : strView)
+        {
+            hash ^= static_cast<uint8_t>(c);
+            hash *= 16777619u;
+        }
+        return hash;
+    }
 };
 
 constexpr uint32_t operator"" _hash(const char* str, size_t len)

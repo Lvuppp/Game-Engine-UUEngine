@@ -3,11 +3,22 @@
 #include "Core/Folders/ModelFolder.h"
 #include "Entities/Models/ModelParticle.h"
 #include "Entities/VertexData.h"
-#include "Core/Services/ProjectInfo.h"
 
-cModel* OBJModelFactory::createModel(const std::string &filePath)
+#include <QFile>
+#include <QFileInfo>
+
+#include <iostream>
+
+OBJModelFactory::OBJModelFactory(cTextureManager* textureManager)
+    : m_library(textureManager)
 {
-    QFile objFile(filePath.c_str());
+
+}
+
+cModel* OBJModelFactory::createModel(std::string_view filePath)
+{
+    QFile objFile(filePath.data());
+    QFileInfo fileInfo(filePath.data());
 
     std::vector<QVector3D> coordinates;
     std::vector<QVector2D> textureCoordinates;
@@ -17,53 +28,69 @@ cModel* OBJModelFactory::createModel(const std::string &filePath)
     cModelParticle::Indexes indexes;
     std::vector<std::shared_ptr<cModelParticle>> models;
 
-    if(!objFile.exists()){
-        qDebug() << "cant read file";
+    if (objFile.exists() == false)
+    {
+        std::cout << "Cant read file" << std::endl;
         return new cModel(models);
     }
 
     objFile.open(QIODevice::ReadOnly);
     QTextStream stream(&objFile);
 
-    cMaterial *material = nullptr; // Fixed initialization to nullptr
-    cProjectInfo::copyToModels(filePath);
+    cMaterial* material = nullptr;
+    //file_utils::copyFile();
 
-    while(!stream.atEnd()){
+    while (stream.atEnd() == false)
+    {
+        const auto line = stream.readLine();
+        const auto splitedLine = line.split(' ');
+        const auto prefix = splitedLine[0];
 
-        auto split = stream.readLine().split(" ");
+        if (prefix == "v")
+        {
+            const auto coords = QVector3D{ splitedLine[1].toFloat(),splitedLine[2].toFloat(),splitedLine[3].toFloat() };
+            coordinates.emplace_back(coords);
+        }
+        else if (prefix == "vt")
+        {
+            const auto coords = QVector2D{ splitedLine[1].toFloat(),splitedLine[2].toFloat() };
+            textureCoordinates.emplace_back(coords);
+        }
+        else if (prefix == "vn")
+        {
+            const auto normalsCoords = QVector3D{ splitedLine[1].toFloat(),splitedLine[2].toFloat(),splitedLine[3].toFloat() };
+            normals.emplace_back(normalsCoords);
+        }
+        else if (prefix == "f")
+        {
+            for (auto i = 1u; i < splitedLine.size(); i++)
+            {
+                const auto vertexDataSplited = splitedLine[i].split("/");
 
-        if(split[0] == "v"){
-            coordinates.emplace_back(QVector3D(split[1].toFloat(),split[2].toFloat(),split[3].toFloat()));
-        }
-        else if(split[0] == "vt"){
-            textureCoordinates.emplace_back(QVector2D(split[1].toFloat(),split[2].toFloat()));
-        }
-        else if(split[0] == "vn"){
-            normals.emplace_back(QVector3D(split[1].toFloat(),split[2].toFloat(),split[3].toFloat()));
-        }
-        else if(split[0] == "f"){
-            for (int i = 1; i < split.size(); i++) {
-                auto vertexData = split[i].split("/");
-                vertexes.emplace_back(sVertexData(coordinates[vertexData[0].toInt() - 1], // Fixed toInt instead of toLong
-                                           textureCoordinates[vertexData[1].toInt() - 1],
-                                           normals[vertexData[2].toInt() - 1]));
-                indexes.emplace_back(static_cast<unsigned int>(indexes.size())); // Explicit cast to unsigned int
+                const auto vertexData = sVertexData{ coordinates[vertexDataSplited[0].toInt() - 1],
+                                           textureCoordinates[vertexDataSplited[1].toInt() - 1],
+                                           normals[vertexDataSplited[2].toInt() - 1] };
+
+                vertexes.emplace_back(vertexData);
+                indexes.emplace_back(static_cast<unsigned int>(indexes.size()));
             }
         }
-        else if(split[0] == "mtllib"){
-            auto mtlPath = QFileInfo(filePath.c_str());
-            cProjectInfo::copyToModels((mtlPath.absolutePath() + "/" + split[1]).toStdString()); // Fixed string concatenation
-            library.loadMaterialsFromFile((mtlPath.absolutePath() + "/" + split[1]).toStdString());
+        else if (prefix == "mtllib")
+        {
+            const auto mtlPath = (fileInfo.absolutePath() + "/" + splitedLine[1]).toStdString();
+            m_library.loadMaterialsFromFile(mtlPath);
         }
-        else if(split[0] == "usemtl"){
-            if(vertexes.empty() || indexes.empty()){
-                //material = library.material(split[1]);
+        else if (prefix == "usemtl")
+        {
+            if (vertexes.empty() || indexes.empty())
+            {
+                material = m_library.getMaterial(splitedLine[1].toStdString());
                 continue;
             }
 
             models.emplace_back(std::make_shared<cModelParticle>(vertexes, indexes, material));
 
-            //material = library.material(split[1]);
+            material = m_library.getMaterial(splitedLine[1].toStdString());
             vertexes.clear();
             indexes.clear();
         }
@@ -71,14 +98,15 @@ cModel* OBJModelFactory::createModel(const std::string &filePath)
 
     objFile.close();
 
-    if (!vertexes.empty() && !indexes.empty()) { // Ensure no empty data is added
+    if (vertexes.empty() == false && indexes.empty() == false)
+    {
         models.emplace_back(std::make_shared<cModelParticle>(vertexes, indexes, material));
     }
 
     return new cModel(models);
 }
 
-cModel* FBXModelFactory::createModel(const std::string &filePath)
+cModel* FBXModelFactory::createModel(std::string_view filePath)
 {
     return new cModel();
 }
@@ -92,7 +120,7 @@ void cModelLoader::setFactory(ModelAbstractFactory *strategy)
     m_factory = strategy;
 }
 
-cModel* cModelLoader::createModel(const std::string &filePath)
+cModel* cModelLoader::createModel(std::string_view filePath)
 {
     return m_factory->createModel(filePath);
 }

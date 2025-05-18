@@ -1,5 +1,5 @@
 #include "EngineOpenGLWidget.h"
-#include "Core/Cores/EngineCore.h"
+
 #include "ObjectCreatorDialog.h"
 
 #include "Core/Cores/EngineCore.h"
@@ -88,13 +88,15 @@ void cEngineOpenGLWidget::createContextMenu()
         createFigureObject("pyramid", cModelBuilder::Base3DFiguresType::Pyramid);
     });
     connect(addPrismAction, &QAction::triggered, this, [this]() {
-        createFigureObject("prism", cModelBuilder::Base3DFiguresType::Prism);   
+        createFigureObject("prism", cModelBuilder::Base3DFiguresType::Prism);
     });
 }
 
 void cEngineOpenGLWidget::createObject()
 {
-    m_engine->createBase3DGameObject("obj"_hash);
+    const auto modelPath = QFileDialog::getOpenFileName(nullptr, "Выберите файл", "", "Все файлы (**)");
+
+    m_engine->createCustomModelObject("obj"_hash, modelPath.toStdString());
 }
 
 void cEngineOpenGLWidget::createFigureObject(const std::string& name, cModelBuilder::Base3DFiguresType type)
@@ -110,7 +112,7 @@ void cEngineOpenGLWidget::createSkybox()
     {
         QFileInfo fileInfo(objectPath);
         QString fileName = fileInfo.fileName();
-        m_engine->createSkyBox("skybox"_hash, objectPath.toStdString());
+        m_engine->createSkyBox("skybox", objectPath.toStdString());
     }
 }
 
@@ -126,9 +128,6 @@ void cEngineOpenGLWidget::contextMenuEvent(QContextMenuEvent *event)
 void cEngineOpenGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
     m_engine->initGraphicsEngine(this);
 }
 
@@ -139,6 +138,7 @@ void cEngineOpenGLWidget::resizeGL(int w, int h)
 
 void cEngineOpenGLWidget::paintGL()
 {
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     m_engine->render();
 }

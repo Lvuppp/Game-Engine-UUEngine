@@ -1,11 +1,11 @@
 #include "EngineCore.h"
 
-#include "Core/Cores/EngineContext.h"
 #include "Core/Cores/GraphicsEngine.h"
 #include "Core/Cores/InputEngine.h"
 #include "Core/Cores/PhysicsEngine.h"
 #include "Core/Cores/ScriptEngine.h"
 
+#include "Core/Folders/TextureFolder.h"
 #include "Core/Services/ModelBuilder.h"
 #include "Core/Services/ModelLoader.h"
 #include "Core/Services/ProjectProcessor.h"
@@ -35,18 +35,13 @@ cEngineCore::cEngineCore()
     m_scriptFolder = std::make_unique<cBaseFolder>();
     m_textureManager = std::make_unique<cTextureManager>();
 
-    m_modelLoader.setFactory(new OBJModelFactory());
+    m_modelLoader.setFactory(new OBJModelFactory(m_textureManager.get()));
     m_sceneManager = std::make_unique<cSceneManager>();
 
-    m_projectProcessor = std::make_unique<cProjectProcessor>();
+    m_projectProcessor = std::make_unique<cProjectProcessor>(m_sceneManager.get(), m_textureManager.get());
 
-    createScene("DefaultScene"_hash);
+    createScene("DefaultScene");
     auto currentScene = getCurrentScene();
-/*
-    currentScene->addGameObject("BaseGameObject"_hash, m_modelBuilder.createCube(1.0f, 1.0f, 1.0f));
-
-    auto object = currentScene->gameObject("BaseGameObject"_hash);
-    object->translate(QVector3D(0.0f, 5.0f, 0.0f)); */
 }
 
 void cEngineCore::initGraphicsEngine(QOpenGLWidget *openGLWidget)
@@ -68,7 +63,6 @@ std::shared_ptr<cEngineCore> cEngineCore::getInstance()
 void cEngineCore::update(float dt)
 {
     updateEngineCamera();
-    m_openGLWidget->update();
 }
 
 void cEngineCore::render()
@@ -93,15 +87,15 @@ void cEngineCore::resizeScene(sVec2 size)
     m_inputEngine->setScreenCoords(size);
 }
 
-void cEngineCore::createScene(uint32_t hash)
+void cEngineCore::createScene(const std::string& name)
 {
-    m_sceneManager->createScene(hash);
+    m_sceneManager->createScene(name);
     m_graphicsEngine->setCurrentScene(getCurrentScene());
 }
 
 void cEngineCore::selectCurrentScene(const std::string &sceneName)
 {
-    auto currentScene = m_sceneManager->setCurrentScene(cHash::hash(sceneName));
+    auto currentScene = m_sceneManager->setCurrentScene(sceneName);
     m_graphicsEngine->setCurrentScene(currentScene.get());
 }
 
@@ -156,7 +150,7 @@ void cEngineCore::setDiffuseTexture(uint32_t hash, const std::string& path)
 
 bool cEngineCore::createOBJModel(uint32_t hash, const std::string& path)
 {
-    m_modelLoader.setFactory(new OBJModelFactory);
+    m_modelLoader.setFactory(new OBJModelFactory(m_textureManager.get()));
     if(!getCurrentScene()->addGameObject(hash, m_modelLoader.createModel(path)))
         return false;
 
@@ -176,7 +170,7 @@ bool cEngineCore::createFBXModel(uint32_t hash, const std::string& path)
     return true;
 }
 
-void cEngineCore::createCameraInScene(uint32_t hash)
+void cEngineCore::createCameraInScene(const std::string& name)
 {
     /* getCurrentScene()->addCamera(hash);
     getCurrentScene()->camera(hash)->
@@ -185,7 +179,7 @@ void cEngineCore::createCameraInScene(uint32_t hash)
  */
 }
 
-void cEngineCore::createLightingInScene(uint32_t hash)
+void cEngineCore::createLightingInScene(const std::string& name)
 {
     /* getCurrentScene()->addLighting(hash);
     getCurrentScene()->lighting(hash)->
@@ -194,22 +188,34 @@ void cEngineCore::createLightingInScene(uint32_t hash)
  */
 }
 
-void cEngineCore::createSkyBox(uint32_t hash, const std::string &path, float size)
+    void cEngineCore::createSkyBox(const std::string& name, const std::string &path, float size)
 {
     auto currentScene = m_sceneManager->currentScene();
     auto texture = m_textureManager->loadTexture(path);
     cModelBuilder modelBuilder;
-    currentScene->addSkyBox(hash, modelBuilder.createSkybox(size, texture));
+    currentScene->addSkyBox(cHash::hash(name), modelBuilder.createSkybox(size, texture));
 }
 
-bool cEngineCore::createBase3DGameObject(uint32_t hash)
+bool cEngineCore::createCustomModelObject(uint32_t hash, std::string_view path)
 {
     auto currentScene = getCurrentScene();
-    if (currentScene != nullptr)
+    auto model = m_modelLoader.createModel(path.data());
+
+    auto createdObject = currentScene->addGameObject(hash, model);
+
+    if (createdObject == nullptr)
     {
         return false;
     }
+
+    const auto& projectionMatrix = m_graphicsEngine->getProjectionMatrix();
+    const auto& viewMatrix = currentScene->getCurrentCamera()->modelMatrix();
+    const auto coords = m_inputEngine->getWorldCoordinates(projectionMatrix, viewMatrix, 0.0f);
+    createdObject->setCoordinates(coords);
+
+    return true;
 }
+
 bool cEngineCore::createBaseFigureObject(uint32_t hash, cModelBuilder::Base3DFiguresType figureType)
 {
     auto currentScene = getCurrentScene();
@@ -219,7 +225,11 @@ bool cEngineCore::createBaseFigureObject(uint32_t hash, cModelBuilder::Base3DFig
     }
 
     cModelBuilder modelBuilder;
-    auto createdObject = currentScene->addGameObject(hash, modelBuilder.createBaseFigure(figureType));
+    const auto model = modelBuilder.createBaseFigure(figureType);
+    const auto texture = m_textureManager->loadTexture("/home/egor/photo.jpg");
+
+    model->setDiffuseMap(texture);
+    auto createdObject = currentScene->addGameObject(hash, model);
 
     if (createdObject == nullptr)
     {
@@ -292,20 +302,15 @@ void cEngineCore::changeGameStatus()
 
 ////////////////////////////////////////////////////////////Project Processor
 
-void cEngineCore::initProjectProcessor(QVBoxLayout &layout)
+void cEngineCore::initProjectProcessor(QVBoxLayout& layout)
 {
     //m_projectProcessor->setLayout(layout);
 }
 
-
-void cEngineCore::createProject(const std::string &path, const std::string &name)
+void cEngineCore::createProject(const std::string& path, const std::string& name)
 {
-    //m_projectProcessor->createProject(path, name);
-    m_sceneManager->createScene(cHash::hash(name));
-    m_graphicsEngine->setCurrentScene(getCurrentScene());
-    emit setDisableState(false);
+    m_projectProcessor->createProject(path, name);
 }
-
 
 void cEngineCore::loadProject(const std::string &path)
 {
@@ -317,11 +322,13 @@ void cEngineCore::loadProject(const std::string &path)
 
 void cEngineCore::saveProject(const std::string &path, const std::string &projectName)
 {
-    // if(path == "" && cProjectInfo::projectPath() != "" && m_sceneManager->scenes().size() > 0){
+    // if (path.empty())
+    // {
     //     m_projectProcessor->saveProject(m_sceneManager->scenes());
     // }
-    // else{
-    //     m_projectProcessor->saveProject(m_sceneManager->scenes(),path);
+    // else
+    // {
+    //     m_projectProcessor->saveProject(m_sceneManager->scenes(), path);
     // }
 }
 
@@ -329,8 +336,6 @@ void cEngineCore::closeProject()
 {
     //m_projectProcessor->closeProject(m_sceneManager->scenes());
     m_sceneManager->clearFolder();
-
-    emit setDisableState(true);
 }
 
 void cEngineCore::loadModel(uint32_t hash, const std::string &path)
@@ -340,14 +345,12 @@ void cEngineCore::loadModel(uint32_t hash, const std::string &path)
 
 void cEngineCore::loadTexture(uint32_t hash, const std::string &path)
 {
-    m_textureManager->replace(hash, cProjectInfo::projectFolder() + "/Textures/" + path.substr(path.find_last_of('/') + 1));
-    cProjectInfo::copyToTextures(path);
+    //m_textureManager->replace(hash, cProjectInfo::projectFolder() + "/Textures/" + path.substr(path.find_last_of('/') + 1));
 }
 
 void cEngineCore::loadScript(uint32_t hash, const std::string &path)
 {
     m_scriptFolder->append(hash, path.substr(path.find_last_of('/') + 1));
-    cProjectInfo::copyToScripts(path);
 }
 
 std::string_view cEngineCore::getModel(uint32_t hash)

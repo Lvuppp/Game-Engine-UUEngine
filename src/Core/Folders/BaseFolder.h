@@ -16,7 +16,6 @@ public:
     void append(uint32_t hash, const std::string &fileName);
     void remove(uint32_t hash);
     void replace(uint32_t hash, const std::string &fileName);
-    void copyFileToProject();
 
     std::string_view getFile(uint32_t hash);
     std::vector<std::string_view> getFiles() const;

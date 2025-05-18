@@ -2,8 +2,8 @@
 
 #include "QOpenGLShaderProgram"
 
-cLighting::cLighting()
-    : cBaseEngineObject()
+cLighting::cLighting(uint32_t id)
+    : cBaseEngineObject(id)
     , m_lightPower(5.0f)
     , m_isLightingDynamic(false)
 {

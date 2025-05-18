@@ -4,25 +4,24 @@
 #include "Entities/Material.h"
 
 #include <vector>
-#include <QFile>
-#include <QTextStream>
-#include <QFileInfo>
 
-#include <QDebug>
+class cTextureManager;
 
 class cMaterialLibrary
 {
 public:
-    cMaterialLibrary();
+    cMaterialLibrary(cTextureManager* textureManager);
 
     void addMaterial(cMaterial* material);
-    void loadMaterialsFromFile(const std::string &path);
+    void loadMaterialsFromFile(std::string_view path);
 
-    cMaterial* material(quint32 index);
-    cMaterial* material(const std::string &mtlName);
-    quint32 countMaterials();
+    cMaterial* material(uint32_t index);
+    cMaterial* getMaterial(std::string_view mtlName);
+    uint32_t countMaterials();
 
 private:
+    cTextureManager* m_textureManager = nullptr;
+
     std::vector<cMaterial *> m_materials;
 };
 

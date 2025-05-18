@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <string>
 
 class cBase3DGameObject;
 class cCamera;
@@ -13,10 +14,13 @@ class cSkyBox;
 class cScene
 {
 public:
-    cScene();
-    cScene(std::vector<cBase3DGameObject*>&& gameObjects, std::vector<cLighting*>&& lighting,
+    cScene(const std::string& name);
+    cScene(const std::string& name, std::vector<cBase3DGameObject*>&& gameObjects, std::vector<cLighting*>&& lighting,
           std::vector<cCamera*>&& cameras, std::vector<cSkyBox*>&& skyBox);
     ~cScene();
+
+    uint32_t getId() const;
+    std::string_view getName() const;
 
     cBase3DGameObject* addGameObject(uint32_t name, cModel *model);
     bool addLighting(uint32_t name);
@@ -42,6 +46,9 @@ public:
     const std::vector<cCamera*>& cameras() const;
 
 private:
+    uint32_t m_id = 0u;
+    std::string m_name = "";
+
     cCamera* m_currentCamera = nullptr;
     cLighting* m_currentLighting = nullptr;
     cSkyBox* m_currentSkyBox = nullptr;

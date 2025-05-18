@@ -5,7 +5,7 @@ void cMaterial::setName(std::string_view mtlName)
     m_mtlName = mtlName;
 }
 
-std::string_view cMaterial::mtlName() const
+std::string_view cMaterial::getName() const
 {
     return m_mtlName;
 }

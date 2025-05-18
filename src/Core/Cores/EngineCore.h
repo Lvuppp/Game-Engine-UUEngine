@@ -99,15 +99,15 @@ public:
     void createSimpleScene();
 
 public:
-    void createScene(uint32_t hash);
-    void createCameraInScene(uint32_t hash);
-    void createLightingInScene(uint32_t hash);
-    void createSkyBox(uint32_t hash, const std::string &path, float size = 100.0f);
+    void createScene(const std::string& name);
+    void createCameraInScene(const std::string& name);
+    void createLightingInScene(const std::string& name);
+    void createSkyBox(const std::string& name, const std::string &path, float size = 100.0f);
 
     void selectCurrentScene(const std::string& sceneName);
     inline cScene *getCurrentScene();
 
-public slots:
+public:
     void createProject(const std::string& path, const std::string &name);
     void loadProject(const std::string& path);
     void saveProject(const std::string& path = 0, const std::string& projectName = 0);
@@ -126,9 +126,9 @@ public:
     bool createFBXModel(uint32_t hash, const std::string& modelPath);
 
 public:
-    bool createBase3DGameObject(uint32_t hash);
+    bool createCustomModelObject(uint32_t hash, std::string_view path);
     bool createBaseFigureObject(uint32_t hash, cModelBuilder::Base3DFiguresType figureType);
-    
+
 private:
     bool m_gameStatus = false;
 
@@ -138,9 +138,6 @@ signals:
 
 private:
     QOpenGLWidget* m_openGLWidget;
-
-    std::unique_ptr<cCamera> m_engineCamera = nullptr;
-    std::unique_ptr<cLighting> m_engineLighting = nullptr;
 
 private:
     static std::shared_ptr<cEngineCore> m_instance;

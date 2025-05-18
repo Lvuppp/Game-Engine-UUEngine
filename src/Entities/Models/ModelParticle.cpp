@@ -7,6 +7,7 @@
 cModelParticle::cModelParticle()
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    m_material = std::make_unique<cMaterial>();
 }
 
 cModelParticle::~cModelParticle()
@@ -25,7 +26,7 @@ cModelParticle::~cModelParticle()
 cModelParticle::cModelParticle(Vertexes& vertexes, Indexes& indexes, cMaterial* material)
 {
     m_indexes = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-    initModelParticle(vertexes,indexes, material);
+    initModelParticle(vertexes, indexes, material);
     setMaterial(material);
 }
 
@@ -73,20 +74,20 @@ void cModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLSha
     const auto isNormalMapSet = normalMap != nullptr;
     const auto isDiffuseMapSet = diffuseMap != nullptr;
 
-    if (isDiffuseMapSet)
+    if (isUsingTexture && isDiffuseMapSet)
     {
         diffuseMap->bind(0);
         shaderProgram->setUniformValue("u_model.diffuseMap", 0);
     }
 
-    if (isNormalMapSet)
+    if (isUsingTexture && isNormalMapSet)
     {
         normalMap->bind(1);
         shaderProgram->setUniformValue("u_model.normalMap", 1);
     }
 
     shaderProgram->setUniformValue("u_modelMatrix", modelMatrix);
-    shaderProgram->setUniformValue("u_model.isDiffuseMapUsing", isNormalMapSet);
+    shaderProgram->setUniformValue("u_model.isDiffuseMapUsing", isDiffuseMapSet);
     shaderProgram->setUniformValue("u_model.isNormalMapUsing", isNormalMapSet);
     shaderProgram->setUniformValue("u_model.diffuseColor", m_material->diffuseColor());
     shaderProgram->setUniformValue("u_model.specularColor", m_material->specularColor());
@@ -131,12 +132,12 @@ void cModelParticle::drawModelParticle(const QMatrix4x4 &modelMatrix, QOpenGLSha
     m_vertexes.release();
     m_indexes.release();
 
-    if (isDiffuseMapSet)
+    if (isUsingTexture && isDiffuseMapSet)
     {
         diffuseMap->release();
     }
 
-    if (isNormalMapSet)
+    if (isUsingTexture && isNormalMapSet)
     {
         normalMap->release();
     }
@@ -178,7 +179,6 @@ void cModelParticle::calculateTBN(Vertexes& vertexes)
         vertexes[i + 1].bitangent = bitangent;
         vertexes[i + 2].bitangent = bitangent;
     }
-
 }
 
 void cModelParticle::setDiffuseMap(QOpenGLTexture* texture)

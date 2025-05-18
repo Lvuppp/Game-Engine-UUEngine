@@ -2,29 +2,35 @@
 
 #include "Utils/Hash.h"
 
-bool cSceneManager::createScene(uint32_t hash)
+#include <algorithm>
+
+bool cSceneManager::createScene(const std::string& name)
 {
-    if (m_scenes.find(hash) != m_scenes.end())
+    const auto it = std::find_if(m_scenes.cbegin(), m_scenes.cend(), [hash = cHash::hash(name)](const auto& scene) {
+        return scene->getId() == hash;
+    });
+
+    if (it != m_scenes.end())
     {
         return false;
     }
 
-    m_scenes.insert(std::make_pair(hash, new cScene()));
-    m_currentScene = m_scenes[hash];
-
-    m_currentScene->addCamera("DefaultCamera"_hash);
-    m_currentScene->addLighting("DefaultLight"_hash);
-
-    m_currentScene->setCurrentCamera("DefaultCamera"_hash);
+    auto scene = std::make_shared<cScene>(name);
+    m_scenes.push_back(scene);
+    m_currentScene = scene;
 
     return true;
 }
 
-std::shared_ptr<cScene> cSceneManager::setCurrentScene(uint32_t hash)
+std::shared_ptr<cScene> cSceneManager::setCurrentScene(const std::string& name)
 {
-    if (m_scenes.find(hash) != m_scenes.end())
+    const auto it = std::find_if(m_scenes.cbegin(), m_scenes.cend(), [hash = cHash::hash(name)](const auto& scene) {
+        return scene->getId() == hash;
+    });
+
+    if (it != m_scenes.end())
     {
-        m_currentScene = m_scenes[hash];
+        m_currentScene = *it;
     }
     return m_currentScene;
 }
@@ -34,25 +40,25 @@ std::shared_ptr<cScene> cSceneManager::currentScene()
     return m_currentScene;
 }
 
-void cSceneManager::setScenes(std::unordered_map<uint32_t, std::shared_ptr<cScene>>&& scenes)
+void cSceneManager::loadScenes(std::vector<std::shared_ptr<cScene>>&& scenes)
 {
     clearFolder();
-    m_scenes = std::move(scenes);
+    m_scenes = std::move(scenes); // TODO: check if it's correct
 
-    if (!m_scenes.empty())
+    if (m_scenes.empty() == false)
     {
-        m_currentScene = m_scenes.begin()->second;
+        m_currentScene = m_scenes.front();
     }
 }
 
-std::unordered_map<uint32_t, std::shared_ptr<cScene>> cSceneManager::scenes() const
+const std::vector<std::shared_ptr<cScene>>& cSceneManager::getScenes() const
 {
     return m_scenes;
 }
 
 void cSceneManager::clearFolder()
 {
-    if (!m_scenes.empty())
+    if (m_scenes.empty() == false)
     {
         m_scenes.clear();
         m_currentScene = nullptr;

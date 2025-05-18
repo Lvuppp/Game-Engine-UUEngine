@@ -1,38 +1,110 @@
 #include "ProjectProcessor.h"
 
-#include "Core/Folders/MaterialLib.h"
-#include "Utils/TextUtils.h"
+#include "Entities/BaseEntities/Camera.h"
+#include "Entities/BaseEntities/Lighting.h"
+#include "Entities/BaseEntities/Base3DGameObject.h"
+#include "Entities/BaseEntities/BaseEngineObject.h"
+#include "Entities/Models/Model.h"
+#include "Entities/Material.h"
+#include "Core/Folders/TextureFolder.h"
+#include "Core/Folders/SceneManager.h"
 
-#include <QDir>
-#include <QRegularExpression>
-
-cProjectProcessor::cProjectProcessor()
+cProjectProcessor::cProjectProcessor(cSceneManager *sceneManager, cTextureManager *textureManager)
+    : m_sceneManager(sceneManager)
+    , m_textureManager(textureManager)
 {
-    // m_scriptFolder = cScriptFolder::getInstance();
-    // m_textureFolder = cTextureFolder::getInstance();
-    // m_modelFolder = cModelFolder::getInstance();
 }
 
-cProjectProcessor::~cProjectProcessor()
+void cProjectProcessor::createProject(std::string_view path, std::string_view name)
 {
-    delete m_projectLayout;
+    m_projectInfo.createNewProject(path, name);
+    m_textureManager->clean();
 }
 
-///////////// FILE FORMAT
-// #SCENE_NAME|SCRIPT_PATH
-// +SKYBOX
-// OBJECT_NAME|DIFFUSE_MAP|SCRIPT_PATH ...
-// +CAMERA
-// OBJECT_NAME|MODEL_MATRIX|SCRIPT_PATH ...
-// +LIGHTING
-// OBJECT_NAME|MODEL_MATRIX|SCRIPT_PATH ...
-// +BASE3DGAMEOBJECT
-// OBJECT_NAME|MODEL_MATRIX|(CUSTOM_MODEL|MODEL_NAME)|(CUBE|PYRAMID|MATERIAL_PARAMS)|SCRIPT_PATH ...
-// #SCENE_NAME ...
+void cProjectProcessor::loadProject(std::string_view path)
+{
+    m_projectInfo.openProject(path);
+    m_textureManager->loadTextures(m_projectInfo.getTexturesDirectory());
+}
+
+void cProjectProcessor::saveProject(std::string_view path)
+{
+    auto scenes = m_sceneManager->getScenes();
+    for (const auto& scene : scenes)
+    {
+        saveScene(path, scene.get());
+    }
+}
+
+void cProjectProcessor::saveScene(std::string_view path, cScene* scene)
+{
+    flatbuffers::FlatBufferBuilder builder;
+    
+}
+
+void cProjectProcessor::saveCameras(flatbuffers::FlatBufferBuilder& builder, std::vector<cCamera*>& cameras)
+{
+    std::vector<flatbuffers::Offset<UUEngine::Camera>> cameraOffsets;
+    for (const auto& camera : cameras)
+    {
+        auto baseParams = saveBaseParams(builder, camera);
+        UUEngine::CreateCamera(builder, baseParams);
+    }
+}
+
+void cProjectProcessor::saveLightings(flatbuffers::FlatBufferBuilder& builder, std::vector<cLighting*>& lightings)
+{
+    std::vector<flatbuffers::Offset<UUEngine::Lighting>> lightingOffsets;
+    for (const auto& lighting : lightings)
+    {
+        auto baseParams = saveBaseParams(builder, lighting);
+        UUEngine::CreateLighting(builder, baseParams);
+    }
+}
+
+void cProjectProcessor::saveGameObjects(flatbuffers::FlatBufferBuilder& builder, std::vector<cBase3DGameObject*>& gameObjects)
+{
+    std::vector<flatbuffers::Offset<UUEngine::BaseEngineObject>> gameObjectOffsets;
+    for (const auto& gameObject : gameObjects)
+    {
+        auto baseParams = saveBaseParams(builder, gameObject);
+        UUEngine::CreateBaseEngineObject(builder, baseParams);
+    }
+}
+
+void cProjectProcessor::saveSkybox(flatbuffers::FlatBufferBuilder& builder, cSkyBox* skybox)
+{
+
+}
+
+flatbuffers::Offset<UUEngine::BaseEngineObject> cProjectProcessor::saveBaseParams(flatbuffers::FlatBufferBuilder& builder, cBaseEngineObject* object)
+{
+    const auto id = object->getId();
+    const auto coordinates = object->coordinates();
+    const auto rotation = object->rotation();
+    const auto scale = object->scale();
+    const auto flags = object->getFlags();
 
 
+    const auto fbCoordinates = UUEngine::Vector3D(coordinates.x(), coordinates.y(), coordinates.z());
+    const auto fbRotation = UUEngine::Quaternion(rotation.x(), rotation.y(), rotation.z(), rotation.scalar());
 
-// //CREATE PROJECT FOLDER
+    auto baseParams = UUEngine::CreateBaseEngineObject(builder, id, fbCoordinates, fbRotation, scale, flags);
+    return baseParams;
+}
+
+flatbuffers::Offset<UUEngine::Model> cProjectProcessor::saveModel(flatbuffers::FlatBufferBuilder& builder, const std::string& objectName, cBase3DGameObject* gameObject)
+{
+    const auto model = gameObject->getModel();
+    auto model = UUEngine::CreateModel();
+    
+
+}
+
+flatbuffers::Offset<UUEngine::Material> cProjectProcessor::saveMaterial(flatbuffers::FlatBufferBuilder& builder, cMaterial* material)
+{
+}
+
 
 // void cProjectProcessor::createProject(const std::string &path, const std::string &name)
 // {

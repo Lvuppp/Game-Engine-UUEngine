@@ -1,100 +1,136 @@
 #include "MaterialLib.h"
 
-#include "Core/Services/ProjectInfo.h"
+#include "Core/Folders/TextureFolder.h"
+#include "Utils/Assert.h"
 
-cMaterialLibrary::cMaterialLibrary()
+#include <QFile>
+#include <QTextStream>
+#include <QFileInfo>
+
+cMaterialLibrary::cMaterialLibrary(cTextureManager* textureManager)
+    : m_textureManager(textureManager)
 {
-
 }
 
-void cMaterialLibrary::addMaterial(cMaterial *material)
+void cMaterialLibrary::addMaterial(cMaterial* material)
 {
-    if (!material)
+    if (material == nullptr)
+    {
+        ASSERT(false, "Material is nullptr");
         return;
+    }
 
-    if (std::find(m_materials.begin(), m_materials.end(), material) != m_materials.end())
+    auto it = std::find_if(m_materials.begin(), m_materials.end(), [currentMaterial = material](const auto& material) {
+        return material->getName() == currentMaterial->getName();
+    });
+
+    if (it != m_materials.end())
+    {
         return;
+    }
 
     m_materials.push_back(material);
 }
 
-void cMaterialLibrary::loadMaterialsFromFile(const std::string &path)
+void cMaterialLibrary::loadMaterialsFromFile(std::string_view filePath)
 {
-    QFile file(QString::fromStdString(path));
-
+    QFile file(filePath.data());
     QTextStream inputStream(&file);
+    QFileInfo fileInfo(filePath.data());
+    const auto absoluteFilePath = fileInfo.absolutePath();
 
-    if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "\nmtl file";
+    if (file.open(QIODevice::ReadOnly) == false)
+    {
+        ASSERT(false, "Can`t open mtl file");
         return;
     }
 
-    QFileInfo fileInfo(QString::fromStdString(path));
-
-    for (int i = 0; i < m_materials.size(); ++i)
+    for (auto i = 0u; i < m_materials.size(); ++i)
+    {
         delete m_materials[i];
+    }
     m_materials.clear();
 
-    cMaterial *newMtl = 0;
+    cMaterial* newMtl = nullptr;
 
-    while (!inputStream.atEnd()) {
+    while (inputStream.atEnd() == false)
+    {
+        const auto line = inputStream.readLine();
+        const auto splitedLine = line.split(' ');
+        const auto prefix = splitedLine[0];
 
-        std::string str = inputStream.readLine().toStdString();
+        if (prefix == "newmtl")
+        {
+            if (newMtl != nullptr)
+            {
+                addMaterial(newMtl);
+            }
 
-        QStringList list = QString::fromStdString(str).split(" ");
-
-        if (list[0] == "newmtl") {
-
-            addMaterial(newMtl);
-
-            newMtl = new cMaterial;
-            newMtl->setName(list[1].toStdString());
+            newMtl = new cMaterial();
+            newMtl->setName(splitedLine[1].toStdString());
         }
-        else if (list[0] == "Ns"){
-            newMtl->setShinnes(list[1].toFloat());
+        else if (prefix == "Ns")
+        {
+            newMtl->setShinnes(splitedLine[1].toFloat());
         }
-        else if (list[0] == "Ka"){
-            newMtl->setAmbienceColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
+        else if (prefix == "Ka")
+        {
+            const auto color = QVector3D(splitedLine[1].toFloat(), splitedLine[2].toFloat(), splitedLine[3].toFloat());
+            newMtl->setAmbienceColor(color);
         }
-        else if (list[0] == "Kd"){
-            newMtl->setDiffuseColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
+        else if (prefix == "Kd")
+        {
+            const auto color = QVector3D(splitedLine[1].toFloat(), splitedLine[2].toFloat(), splitedLine[3].toFloat());
+            newMtl->setDiffuseColor(color);
         }
-        else if (list[0] == "Ks"){
-            newMtl->setSpecularColor(QVector3D(list[1].toFloat(), list[2].toFloat(), list[3].toFloat()));
+        else if (prefix == "Ks")
+        {
+            const auto color = QVector3D(splitedLine[1].toFloat(), splitedLine[2].toFloat(), splitedLine[3].toFloat());
+            newMtl->setSpecularColor(color);
         }
-        else if (list[0] == "map_Kd"){
-            //newMtl->setDiffuseMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
-            //cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+        else if (prefix == "map_Kd")
+        {
+            const auto filePath = absoluteFilePath + '/' + splitedLine[1];
+            auto texture = m_textureManager->loadTexture(filePath.toStdString());
+            newMtl->setDiffuseMap(texture);
         }
-        else if (list[0] == "map_Bump"){
-            //newMtl->setNormalMap(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
-            //cProjectInfo::copyToModels(QString("%1/%2").arg(fileInfo.absolutePath(), list[1]).toStdString());
+        else if (prefix == "map_Bump") 
+        {
+            const auto filePath = absoluteFilePath + '/' + splitedLine[1];
+            auto texture = m_textureManager->loadTexture(filePath.toStdString());
+            newMtl->setNormalMap(texture);
         }
     }
+    file.close();
 
     addMaterial(newMtl);
-
-    file.close();
 }
 
 cMaterial *cMaterialLibrary::material(quint32 index)
 {
     if (index < m_materials.size())
+    {
         return m_materials[index];
-    else
-        return nullptr;
+    }
+
+    ASSERT(false, "Unknown Material!");
+    return nullptr;
 }
 
-cMaterial *cMaterialLibrary::material(const std::string &mtlName)
+cMaterial* cMaterialLibrary::getMaterial(std::string_view mtlName)
 {
     for (int i = 0; i < m_materials.size(); ++i)
-        if (m_materials[i]->mtlName() == mtlName)
+    {
+        if (m_materials[i]->getName() == mtlName)
+        {
             return m_materials[i];
+        }
+    }
 
     return nullptr;
 }
 
-quint32 cMaterialLibrary::countMaterials()
+uint32_t cMaterialLibrary::countMaterials()
 {
-    return m_materials.size();
+    return static_cast<uint32_t>(m_materials.size());
 }

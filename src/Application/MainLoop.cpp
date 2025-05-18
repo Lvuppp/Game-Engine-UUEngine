@@ -59,6 +59,7 @@ void cMainLoop::update(float dt)
 
 void cMainLoop::render()
 {
+    m_glWidget->repaint();
 }
 
 void cMainLoop::processInput()

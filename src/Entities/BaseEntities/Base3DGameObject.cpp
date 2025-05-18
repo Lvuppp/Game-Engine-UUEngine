@@ -7,7 +7,7 @@ cBase3DGameObject::cBase3DGameObject(uint32_t hash, cModel* model)
 {
 }
 
-cModel* cBase3DGameObject::model()
+cModel* cBase3DGameObject::getModel()
 {
     return m_model.get();
 }

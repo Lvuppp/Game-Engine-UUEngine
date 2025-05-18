@@ -1,25 +1,50 @@
 #ifndef PROJECTPROCESSOR_H
 #define PROJECTPROCESSOR_H
 
-#include "Entities/Scene.h"
-#include "Core/Services/ModelLoader.h"
-#include "Core/Services/ModelBuilder.h"
 #include "Core/Services/ProjectInfo.h"
-#include "Core/Folders/ScriptFolder.h"
-#include "Core/Folders/ModelFolder.h"
-#include "Core/Folders/TextureFolder.h"
 
-#include <string>
-#include <QFile>
-#include <QTextStream>
-#include <QHash>
-#include <QVBoxLayout>
+#include "BaseEngineObject_generated.h"
+#include "Scene_generated.h"
+
+#include "flatbuffers/flatbuffers.h"
+
+#include <vector>
+
+class cProjectInfo;
+class cSceneManager;
+class cTextureManager;
+class cScene;
+class cCamera;
+class cLighting;
+class cBase3DGameObject;
+class cSkyBox;
+class cMaterial;
+class cBaseEngineObject;
 
 class cProjectProcessor
 {
 public:
-    cProjectProcessor();
-    ~cProjectProcessor();
+    cProjectProcessor(cSceneManager *sceneManager, cTextureManager *textureManager);
+    ~cProjectProcessor() = default;
+
+    void loadProject(std::string_view path);
+    void saveProject(std::string_view path);
+    void createProject(std::string_view path, std::string_view name);
+    void closeProject(std::unordered_map<std::string, cScene*>& scenes);
+
+private:
+    void saveScene(std::string_view path, cScene* scene);
+    void saveCameras(flatbuffers::FlatBufferBuilder& builder, std::vector<cCamera*>& cameras);
+    void saveLightings(flatbuffers::FlatBufferBuilder& builder, std::vector<cLighting*>& lightings);
+    void saveGameObjects(flatbuffers::FlatBufferBuilder& builder, std::vector<cBase3DGameObject*>& gameObjects);
+    void saveSkybox(flatbuffers::FlatBufferBuilder& builder, cSkyBox* skybox);
+
+    flatbuffers::Offset<UUEngine::BaseEngineObject> saveBaseParams(flatbuffers::FlatBufferBuilder& builder, cBaseEngineObject* object);
+    flatbuffers::Offset<UUEngine::Model> saveModel(flatbuffers::FlatBufferBuilder& builder, const std::string& objectName, cBase3DGameObject* gameObject);
+    flatbuffers::Offset<UUEngine::Material> saveMaterial(flatbuffers::FlatBufferBuilder& builder, cMaterial* material);
+    //flatbuffers::Offset<UUEngine::BaseEngineObject> saveScripts(flatbuffers::FlatBufferBuilder& builder, std::vector<std::string>& scripts);
+
+    void loadBaseParams(const std::string& objectMatrix, cBaseEngineObject* object);
 
 //     void saveProject(const std::unordered_map<std::string, cScene *>& scenes, const std::string &path = "");
 //     std::unordered_map<std::string, cScene*> loadProject(std::string path);
@@ -51,15 +76,11 @@ public:
 //     void loadScripts(const std::string &objectName,const std::string &scripts);
 
 private:
-    //cTextureFolder *m_textureFolder;
-    cModelFolder *m_modelFolder;
-    cScriptFolder *m_scriptFolder;
     cProjectInfo m_projectInfo;
+    cSceneManager* m_sceneManager = nullptr;
+    cTextureManager* m_textureManager = nullptr;
 
-    cModelBuilder m_modelBuilder;
-    cModelLoader m_modelLoader;
-
-    QBoxLayout *m_projectLayout;
+    //QBoxLayout *m_projectLayout;
 };
 
 #endif // PROJECTPROCESSOR_H

@@ -11,35 +11,36 @@ class ModelAbstractFactory
 public:
     virtual ~ModelAbstractFactory() = default;
 
-    virtual cModel* createModel(const std::string& filePath) = 0;
+    virtual cModel* createModel(std::string_view filePath) = 0;
 
 };
 
 class OBJModelFactory : public ModelAbstractFactory
 {
 public:
-    cModel* createModel(const std::string& filePath) override;
+    OBJModelFactory(cTextureManager* textureManager);
+    cModel* createModel(std::string_view filePath) override;
 
 private:
-    cMaterialLibrary library;
+    cMaterialLibrary m_library;
 };
 
 class FBXModelFactory : public ModelAbstractFactory
 {
 public:
-    cModel* createModel(const std::string& filePath) override;
+    cModel* createModel(std::string_view filePath) override;
 
 private:
-    cMaterialLibrary library;
+    //cMaterialLibrary library;
 };
 
 class cModelLoader{
 public:
     void setFactory(ModelAbstractFactory *strategy);
-    cModel* createModel(const std::string& filePath);
+    cModel* createModel(std::string_view filePath);
 
 private:
-    ModelAbstractFactory *m_factory = nullptr;
-    cModelFolder *m_modelFolder = nullptr;
+    ModelAbstractFactory* m_factory = nullptr;
+    cModelFolder* m_modelFolder = nullptr;
 };
 #endif // OBJECTABSTRACTFACTORY_H

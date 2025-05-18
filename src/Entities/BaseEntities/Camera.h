@@ -7,6 +7,7 @@ class cCamera : public cBaseEngineObject
 {
 public:
     cCamera() = default;
+    cCamera(uint32_t id);
     ~cCamera() = default; 
     
     ObjectType objectType() const override;

@@ -17,11 +17,6 @@ void cBaseFolder::replace(uint32_t hash, const std::string &fileName)
     m_files[hash] = fileName;
 }
 
-void cBaseFolder::copyFileToProject()
-{
-
-}
-
 std::string_view cBaseFolder::getFile(uint32_t hash)
 {
     return m_files[hash].data();

@@ -16,6 +16,7 @@ public:
     void clean();
 
     QOpenGLTexture* loadTexture(std::string_view objectPath);
+    void loadTextures(std::string_view objectPath);
 
 private:
     std::map<uint32_t, QOpenGLTexture*> m_textures;

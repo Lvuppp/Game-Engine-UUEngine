@@ -14,20 +14,17 @@ class cSceneManager
 public:
     cSceneManager() = default;
 
-    cSceneManager(const cSceneManager&) = delete;
-    cSceneManager& operator=(const cSceneManager&) = delete;
-
-    bool createScene(uint32_t hash);
-    std::shared_ptr<cScene> setCurrentScene(uint32_t hash);
+    bool createScene(const std::string& name);
+    std::shared_ptr<cScene> setCurrentScene(const std::string& name);
     std::shared_ptr<cScene> currentScene();
 
-    void setScenes(std::unordered_map<uint32_t, std::shared_ptr<cScene>>&& scenes);
-    std::unordered_map<uint32_t, std::shared_ptr<cScene>> scenes() const;
+    void loadScenes(std::vector<std::shared_ptr<cScene>>&& scenes);
+    const std::vector<std::shared_ptr<cScene>>& getScenes() const;
     void clearFolder();
 
 private:
     std::shared_ptr<cScene> m_currentScene = nullptr;
-    std::unordered_map<uint32_t, std::shared_ptr<cScene>> m_scenes;
+    std::vector<std::shared_ptr<cScene>> m_scenes;
 };
 
 #endif // sceneManager_H

@@ -1,4 +1,4 @@
- #include "MainWindow.h"
+#include "MainWindow.h"
 
 #include "Core/Cores/EngineCore.h"
 #include "UI/EngineOpenGLWidget.h"
@@ -12,7 +12,7 @@ cMainWindow::cMainWindow(cEngineContext* context, QWidget *parent)
 {
     ui->setupUi(this);
 
-    m_viewModel.reset(new cMainWindowViewModel());
+    //m_viewModel.reset(new cMainWindowViewModel());
     m_projectWidget.reset(new cProjectWidgetViewModel(ui->projectHierarchyFrame));
     //m_objectInfo = new cObjectInfo(ui->objectParamsWidget);
 
@@ -33,14 +33,17 @@ cMainWindow::~cMainWindow()
 
 void cMainWindow::linkConnections()
 {
-    // connect(ui->gameStatusButton, &QPushButton::clicked, m_viewModel.get(), &cMainWindowViewModel::changeGameStatus);
+    auto projectActions = this->menuBar()->actions().at(0)->menu()->actions();
 
-    // auto projectActions = this->menuBar()->actions().at(0)->menu()->actions();
+    auto engine = cEngineCore::getInstance();
+    connect(projectActions[0], &QAction::triggered, [engine](){
+        cProjectCreator projectCreator;
+        connect(&projectCreator, &cProjectCreator::getFolderPath, [engine](const auto& path, const auto& name) {
+            engine->createProject(path, name);
+        });
 
-    // for (const auto& action : projectActions)
-    // {
-    //     connect(action, &QAction::triggered, m_viewModel.get(), &cMainWindowViewModel::processProject);
-    // }
+        projectCreator.exec();
+    });
 }
 
 cEngineOpenGLWidget* cMainWindow::getOpenGLWigdet() const

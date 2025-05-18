@@ -24,7 +24,7 @@ void cProjectCreator::accept()
         !dir.exists(QString::fromStdString(projectName)) &&
         !m_fileRegex.match(QString::fromStdString(projectName)).hasMatch()) {
 
-        emit getFolderPath(projectPath + " " + projectName);
+        emit getFolderPath(projectPath, projectName);
         QDialog::accept();
     } else {
         ui->errorLabel->setText("Can`t create project! Try again!");
@@ -36,5 +36,3 @@ void cProjectCreator::on_findFolderButton_clicked()
     QString path = QFileDialog::getExistingDirectory(nullptr, "Выберите папку", "", QFileDialog::ShowDirsOnly);
     ui->folderPathLine->setText(path);
 }
-
-

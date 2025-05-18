@@ -19,7 +19,7 @@ uniform mat4 u_projectionLightMatrix;
 uniform mat4 u_shadowLightMatrix;
 uniform mat4 u_lightMatrix;
 uniform float u_lightPower;
-uniform float u_ShadowPointCloudFilteringQuality;
+uniform float u_shadowPointCloudFilteringQuality;
 
 uniform vec4 u_eyePosition;
 uniform bool u_isDrawDynamic;
@@ -58,7 +58,7 @@ highp float SampleShadowMapLinear(sampler2D map, vec2 coords, float compare, vec
 highp float SampleShadowMapPCF(sampler2D map, vec2 coords, float compare, vec2 texelsize)
 {
     float result = 0.0;
-    float spcfq = u_ShadowPointCloudFilteringQuality;
+    float spcfq = u_shadowPointCloudFilteringQuality;
     for(float y = -spcfq; y < spcfq; y += 1.0)
         for(float x = -spcfq; x < spcfq; x += 1.0)
         {
@@ -118,5 +118,5 @@ void main(void)
     if(shadowCoef > 1.0)
         shadowCoef = 1.0;
 
-    gl_FragColor = resultColor * shadowCoef ;
+    gl_FragColor = resultColor * shadowCoef;
 }

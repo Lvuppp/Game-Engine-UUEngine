@@ -50,6 +50,11 @@ QQuaternion cBaseEngineObject::rotation() const
     return m_rotate;
 }
 
+uint32_t cBaseEngineObject::getFlags() const
+{
+    return m_flags;
+}
+
 void cBaseEngineObject::translate(const QVector3D &translation)
 {
     m_coordinates += translation;

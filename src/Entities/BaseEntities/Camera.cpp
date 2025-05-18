@@ -2,6 +2,11 @@
 
 #include "QOpenGLShaderProgram"
 
+cCamera::cCamera(uint32_t id)
+    : cBaseEngineObject(id)
+{
+}
+
 cBaseEngineObject::ObjectType cCamera::objectType() const
 {
     return cBaseEngineObject::ObjectType::Camera;

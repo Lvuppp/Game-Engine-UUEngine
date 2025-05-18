@@ -12,7 +12,7 @@ class cBase3DGameObject : public cBaseEngineObject
 public:
     cBase3DGameObject(uint32_t hash, cModel* model);
 
-    cModel* model();
+    cModel* getModel();
     void setModel(cModel* model);
 
     virtual void draw(QOpenGLShaderProgram* shaderProgram, QOpenGLFunctions* functions, bool isUsingTexture) override;

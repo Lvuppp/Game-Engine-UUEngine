@@ -27,6 +27,7 @@ public:
     QQuaternion rotationY() const;
     QQuaternion rotation() const;
     QMatrix4x4 modelMatrix();
+    uint32_t getFlags() const;
 
     void setCoordinates(const QVector3D &coordinates);
     void setRotateX(const QQuaternion &rotation);

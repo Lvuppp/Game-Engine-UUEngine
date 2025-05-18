@@ -4,20 +4,26 @@
 #include "BaseEntities/Camera.h"
 #include "BaseEntities/Lighting.h"
 #include "BaseEntities/Skybox.h"
-#include "Utils/Assert.h"
 
-cScene::cScene()
+#include "Utils/Assert.h"
+#include "Utils/Hash.h"
+
+cScene::cScene(const std::string& name)
+    : m_id(cHash::hash(name))
+    , m_name(name)
 {
-    m_currentCamera = new cCamera();
-    m_currentLighting = new cLighting();
+    m_currentCamera = new cCamera("DefaultCamera"_hash);
+    m_currentLighting = new cLighting("DefaultLight"_hash);
 
     m_cameras.emplace_back(m_currentCamera);
     m_lightings.emplace_back(m_currentLighting);
 }
 
-cScene::cScene(std::vector<cBase3DGameObject*>&& gameObjects, std::vector<cLighting*>&& lighting,
+cScene::cScene(const std::string& name, std::vector<cBase3DGameObject*>&& gameObjects, std::vector<cLighting*>&& lighting,
              std::vector<cCamera*>&& cameras, std::vector<cSkyBox*>&& skyBoxes)
-    : m_skyBoxes(std::move(skyBoxes))
+    : m_id(cHash::hash(name))
+    , m_name(name)
+    , m_skyBoxes(std::move(skyBoxes))
     , m_cameras(std::move(cameras))
     , m_lightings(std::move(lighting))
     , m_gameObjects(std::move(gameObjects))
@@ -46,6 +52,16 @@ cScene::~cScene()
     {
         delete object;
     }
+}
+
+uint32_t cScene::getId() const
+{
+    return m_id;
+}
+
+std::string_view cScene::getName() const
+{
+    return m_name;
 }
 
 cBase3DGameObject* cScene::addGameObject(uint32_t name, cModel *model)
@@ -150,7 +166,10 @@ bool cScene::addSkyBox(uint32_t hash, cModel *model)
         return false;
     }
 
-    m_skyBoxes.emplace_back(new cSkyBox(hash, model));
+    auto skyBox = new cSkyBox(hash, model);
+    m_skyBoxes.emplace_back(skyBox);
+    m_currentSkyBox = skyBox;
+    
     return true;
 }
 

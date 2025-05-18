@@ -11,7 +11,7 @@ public:
     cMaterial() = default;
 
     void setName(std::string_view mtlName);
-    std::string_view mtlName() const;
+    std::string_view getName() const;
 
     void setDiffuseColor(const QVector3D& diffuseColor);
     const QVector3D& diffuseColor() const;
@@ -32,9 +32,7 @@ public:
     QOpenGLTexture* getNormalMap() const;
 
 private:
-    std::string_view m_mtlName;
-    std::string_view m_diffuseMapPath = "null";
-    std::string_view m_normalMapPath = "null";
+    std::string m_mtlName;
 
     QVector3D m_diffuseColor = QVector3D(0.7f, 0.7f, 0.7f);
     QVector3D m_ambienceColor = QVector3D(1.0f, 1.0f, 1.0f);
